@@ -16,7 +16,13 @@ class UserSeeder extends Seeder
             [
                 'name'=>'Admin',
                 'email'=>'admin@test.com',
-                'is_admin'=>'1',
+                'role'=>'admin',
+                'password'=> bcrypt('123456'),
+            ],
+            [
+                'name'=>'Agent',
+                'email'=>'agent@test.com',
+                'role'=>'agent',
                 'password'=> bcrypt('123456'),
             ],
             [
