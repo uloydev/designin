@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  text-decoration: none;
+  scroll-behavior: smooth;
+}
+#landingPage .nav__link--logo {
+  font-family: 'Montserrat', sans-serif;
+  color: #404040;
+  text-transform: lowercase;
+  font-size: 48px;
+  font-weight: 600;
+}
