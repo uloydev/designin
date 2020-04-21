@@ -24,10 +24,10 @@ class Authenticate extends Middleware
     public function handle($request, Closure $next)
     {
         if(Auth::check()){
-            if (Auth::user()->is_admin == 1) {
-                return redirect()->route('admin.home');
+            if (Auth::user()->role == 'user') {
+                return $next($request);
             }
-            return $next($request);
+            return redirect()->route(Auth::user()->role . '.home');
         }
         return redirect()->route('login');
     }
