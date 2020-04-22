@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify'=>true]);
 
-Route::view('/', 'landing');
+Route::get('/', 'HomeController@index');
+Route::get('/service/search', 'HomeController@serviceSearch');
 
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::get('/', 'HomeController@index')->name('admin.home');
