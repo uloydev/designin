@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
         MetaSeeder::class,
         ServiceSeeder::class,
         PackageSeeder::class,
+        CarouselImageSeeder::class,
+        NewsSeeder::class,
       ]);
     }
 }

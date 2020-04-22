@@ -72,6 +72,39 @@
         <a href="" class="nav__link"></a>
       </nav>
     </header>
+    {{-- carousel images --}}
+    <h4>Carousel</h4>
+    @foreach ($images as $image)
+    <img src="{{$image->url}}" alt="{{$image->name}}">
+    @endforeach
+    {{-- end of carousel image --}}
+    <hr>
+    {{-- service list peek --}}
+    <h4>Services</h4>
+    @foreach ($services as $service)
+    <div>title : {{ $service->title }}</div>
+    @if (!is_null($service->image))
+    <div>image : {{ $service->image }}</div>        
+    @endif
+    <div>description : {{ $service->description }}</div>
+    <div>title : {{ $service->title }}</div>
+    <div>agent : {{ $service->agent->name }}</div>
+    @endforeach
+    <a href="{{route('services')}}">view more</a>
+    {{-- end of service list peek --}}
+    <hr>
+    {{-- news --}}
+    <h4>News</h4>
+    @foreach ($news as $item)
+    <div>title : {{ $item->title }}</div>
+    @if (!is_null($item->header_image))
+    <div>header image : {{ $item->header_image }}</div>
+    @endif
+    <div>content : {{ $item->content }}</div>
+    <div>author : {{ $item->author }}</div>
+    @endforeach
+    {{$news->links()}}
+    {{-- end of news --}}
     <script src="{{ asset('js/jquery.js') }}" charset="utf-8"></script>
     <script src="{{ asset('js/customer.js') }}" charset="utf-8"></script>
   </body>
