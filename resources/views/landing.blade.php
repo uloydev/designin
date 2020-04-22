@@ -2,77 +2,246 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {{-- <meta name="keywords" content="@foreach ($keywords as $keyword) {{ $keyword->value }} @endforeach"> --}}
-    <meta name="keywords" content="desain grafis, jasa desain grafis, jasa design graphic, jasa logo, desain logo, design logo,
-      desain, desain kemasan, desain instagram, jasa desain, jasa design, desain kaos, desainer kaos, jasa design grafis,
-      jasa graphic design, jasa design graphic, logo futsal,poster kebersihan,jagalah kebersihan,jaga kebersihan, logo komunitas,
-      logo hijabers,logo ayam,logo rumah,logo futsal keren,label makanan,logo sekolah,design spanduk,desain spanduk,
-      contoh logo perusahaan,seragam kantoran,logo makanan,jasa desainer,design kaos reuni,jasa disain,kontes,
-      brosur laundry,poster makanan,jasa design,jasa desain, poster hewan langka, kaos reunian,logo distro, desain kemasan,logo hijab,
-      karanganbunga, desain jaket, pembuatan logo, gambar bus, sribu.com, desain kaos lengan panjang, logo rumah makan,
-      contoh banner makanan, logo kaos, poster jagalah kebersihan, logo ayam geprek, desain kemasan makanan, jasa design grafis,
-      desain kemeja, desainer jaket, lambang futsal, spanduk laundry, baju seragam kerja, logo otomotif, contoh logo organisasi,
-      banner makanan, desain xbanner, logo thai tea, desain kaos olahraga, logo wedding organizer, logo makanan ringan,
-      logo organisasi, logo reuni,
-      logo kelompok tani, logo pecinta alam, logo produk, gambar jagalah kebersihan,
-      banner reunian, gambar keripik pisang, logo olahraga, logo minuman, logo air, seragam kantor,
-      brosur perumahan, logo perusahaan, design company profile, model kaos olah raga,
-      lomba desain, logo persahabatan, logo rajawali, desain baju olahraga keren,
-      logo bengkel ,logo keren buat kaos ,model baju perawat ,logo sound system
-     ,lambang sepak bola yang belum dipakai ,kartu nama perusahaan ,logo akuntansi ,jasa pembuat logo
-     ,banner warkop ,logo pemuda ,poster olahraga ,futsal team logo
-     ,logo memancing      ,logo sepatu      ,logo futsal polos      ,logo indonesia,
-          baju seragam,logo bintang,desainer cover buku,logo laundry
-    ,rumah juara,logo salad buah,logo mancing mania,logo perpustakaan
-    ,desain baju lengan panjang,lambang futsal keren,contoh label makanan keripik,logo majelis
-    ,logo bengkel motor,logo pangkas rambut,logo kosmetik,logo sahabat
-    ,label minuman,logo kecantikan,desain kaos reuni,contoh spanduk makanan
-    ,desain kaos polo,aneka logam,gambaran es krim,sampul buku
-    ,contoh logo olshop,contoh logo makanan,banner pernikahan,desain produk makanan
-    ,spanduk ayam geprek,logo pondok pesantren,logo majelis ta lim,contoh banner laundry
-    ,poster produk,logo ramadhan,logo kue kering,kemasan snack
-    ,banner thai tea,logo arsitektur,logo teknik,logo produk makanan
-    ,logo warung makan,desain baju kemeja,logo handphone,resto logo
-    ,logo komputer,sertifikat pelatihan,poster air,desain baju futsal
-    ,download aplikasi vco,logo pendidik,logo sekolah menengah atas,logo sekolah dasar
-    ,desainer online,contoh banner,logo sekolah menengah pertama,desain kaos distro
-    ,logo minangkabau,logo angka,stempel catering,contoh logo stiker kue kering
-    ,logo rental mobil,spanduk nasi goreng,logo keripik singkong,logo toko kue
-    ,contoh spanduk reuni,poster promosi,logo perusahaan makanan,logo fried chicken
-    ,logo kedai kopi,,desain kemeja organisasi,label kue,logo rumah makan padang
-    ,spanduk pernikahan,contoh kaos reuni smp,logo warung kopi,desainer packaging
-    ,contoh logo makanan ringan,poster politik,spanduk makanan,logo distro keren
-    ,desain kaos bola,contoh kartu nama perusahaan,logo kaos keren,banner reuni
-    ,desain kemeja komunitas,logo squad mobile legend,tema moto gp,design contes
-    ,logo teknik sipil,desain kaos olahraga terbaru,gambar bengkel motor,logo bank sampah
-    ,jasa pembuatan kemasan produk,desain kaos lengan panjang depan belakang,jasa desain logo murah,logo toko bangunan
-    ,banner ayam geprek,logo fotografer,desain hijab,contoh gambar label makanan
-    ,logo ayam bakar,logo tour and travel,spanduk thai tea,contoh poster hewan langka,
-    desain label baju,gambar fried chicken,logo makanan dan minuman,contoh spanduk promosi makanan
-    ,lambang komunitas,desain seragam      ,logo olshop kosmetik      ,desain stiker makanan,desain kemeja polos,
-    model kaos olah raga terbaru ,nama tim futsal yang belum dipakai,logo kuliner,logo go green,logo pesantren,desain kemeja keren,
-    logo pomade,logo pencak silat,logo furniture,brosur catering,potofolio ,logo clothingan,bocor hk,jasa desain interior,
-    juang profil id,logo jual pulsa,design toko bangunan,brosur laundry kiloan,contoh poster produk,logo ojek online,logo roti bakar,
-    logo ikatan alumni,stempel toko bangunan,desain kaos reuni smp keren,model baju perawat korea,logo akreditasi,
-    stiker kue kering unik,desain cutting sticker mobil,logo ayam goreng,seragam spg,contoh label kue kering
-    ,gambar shark,lambang futsal polos,logo futsal polos keren,gambar poster hewan langka
-    ,desain logo futsal terbaru,poster teknologi,gambar logo makanan,desain kerudung
-    ,logo teknologi,logo notaris,logo keripik pisang,desain kaos olahraga lengan panjang">
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <title>Desainin | No-fuss graphic design service solutions</title>
+    <link rel="stylesheet" href="{{ asset('plugin/slick/slick.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('plugin/slick/slick-theme.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.min.css') }}">
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="{{ asset('css/customer.css') }}">
   </head>
   <body id="landingPage">
     <header>
       <nav>
-        <a href="" class="nav__link nav__link--logo">Desainin</a>
-        <a href="" class="nav__link"></a>
-        <a href="" class="nav__link"></a>
-        <a href="" class="nav__link"></a>
-        <a href="" class="nav__link"></a>
+        <div class="container">
+          <ul>
+            <li class="nav__list nav__list--logo">
+              <a href="{{ url('/') }}" class="nav__link">Desainin.id</a>
+              <i class='bx bx-menu-alt-right nav__toggle'></i>
+            </li>
+            <li class="nav__list nav__list--blog"><a href="" class="nav__link">blog</a></li>
+            <li class="nav__list"><a href="" class="nav__link">my profile</a></li>
+            <li class="nav__list"><a href="" class="nav__link">my transaction</a></li>
+            <li class="nav__list"><a href="" class="nav__link">my subscription</a></li>
+          </ul>
+        </div>
       </nav>
+      <div class="container">
+        <h1 class="header__text">Find designer just like <br class="d-none d-md-block"> turning your hand</h1>
+        <a href="#services" class="header__btn">Order What You Want</a>
+      </div>
     </header>
+    <main>
+      <section id="services">
+        <div class="container">
+          <h1 class="section__heading">our services</h1>
+          <div class="row">
+            {{-- foreach --}}
+            <div class="px-3">
+              <img src="{{ asset('img/t-shirt.png') }}" class="services__icon">
+              <p class="services__name">T-Shirt</p>
+              <a href="#" class="services__btn btn-light">order now</a>
+            </div>
+            <div class="px-3">
+              <img src="{{ asset('img/t-shirt.png') }}" class="services__icon">
+              <p class="services__name">T-Shirt</p>
+              <a href="#" class="services__btn btn-light">order now</a>
+            </div>
+            <div class="px-3">
+              <img src="{{ asset('img/t-shirt.png') }}" class="services__icon">
+              <p class="services__name">T-Shirt</p>
+              <a href="#" class="services__btn btn-light">order now</a>
+            </div>
+            <div class="px-3">
+              <img src="{{ asset('img/t-shirt.png') }}" class="services__icon">
+              <p class="services__name">T-Shirt</p>
+              <a href="#" class="services__btn btn-light">order now</a>
+            </div>
+            {{-- endforeach --}}
+          </div>
+        </div>
+      </section>
+      <section id="reasons">
+        <div class="container">
+          <h1 class="section__heading">Why you should trust <strong>Desainin</strong></h1>
+          <div class="row">
+            <div class="col-12 col-md-5 col-lg-6 reason-trust">
+              <a href="javascript:void(0);" class="reason-trust__btn"><i class='bx bx-play'></i></a>
+              <img src="{{ asset('img/how-we-work.png') }}" width="100%">
+              <div class="reason-trust__overlay">
+                <div class="reason-trust__modal">
+                  <a href="" class="reason-trust__close-btn"><i class='bx bx-x' ></i></a>
+                  <iframe class="reason-trust__video embed-video" src="https://www.youtube.com/embed/xpQLFH5OCEY??enablejsapi=1&start=0"
+                  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-7 col-lg-6 reason-slider">
+              {{-- foreach --}}
+              <div class="reason-slider__item">
+                <p class="reason-slider__title">Reason 1</p>
+                <p class="reason-slider__desc">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+              </div>
+              <div class="reason-slider__item">
+                <p class="reason-slider__title">Reason 1</p>
+                <p class="reason-slider__desc">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+              </div>
+              {{-- endforeach --}}
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="subscription">
+        <div class="container">
+          <h1 class="section__heading">Subscripe for more benefit to you</h1>
+          <div class="subscription__slider row">
+            {{-- foreach --}}
+            <div class="px-3">
+              <figure class="subscription__item">
+                <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img">
+                <figcaption class="subscription__caption">
+                  <p class="subscription__name">Social Media</p>
+                  <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
+                </figcaption>
+                <div class="subscription__detail">
+                  <p class="subscription__name">Social Media</p>
+                  <p class="subscription__desc">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio facere doloribus assumenda.
+                    Vel explicabo dolorem suscipit, fugiat fuga adipisci iste reiciendis ipsa esse officiis,
+                    voluptas quis velit. Ratione.
+                  </p>
+                  <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
+                </div>
+              </figure>
+            </div>
+            {{-- endforeach --}}
+          </div>
+        </div>
+      </section>
+      <section id="testimonies">
+        <div class="container">
+          <h1 class="section__heading text-center">Testimoni</h1>
+          <div class="row testimonies-slider">
+            {{-- foreach --}}
+            <div class="px-2">
+              <div class="card testimony-card">
+                <div class="card__header testimony-card__header">
+                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony" class="card__img card__img--circle testimony__img">
+                  <p class="testimony__name">People name</p>
+                  <p class="card__text">People jobs</p>
+                </div>
+                <div class="card__body testimony-card__detail">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+              </div>
+            </div>
+            <div class="px-2">
+              <div class="card testimony-card">
+                <div class="card__header testimony-card__header">
+                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony" class="card__img card__img--circle testimony__img">
+                  <p class="testimony__name">People name</p>
+                  <p class="card__text">People jobs</p>
+                </div>
+                <div class="card__body testimony-card__detail">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+              </div>
+            </div>
+            <div class="px-2">
+              <div class="card testimony-card">
+                <div class="card__header testimony-card__header">
+                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony" class="card__img card__img--circle testimony__img">
+                  <p class="testimony__name">People name</p>
+                  <p class="card__text">People jobs</p>
+                </div>
+                <div class="card__body testimony-card__detail">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+              </div>
+            </div>
+            <div class="px-2">
+              <div class="card testimony-card">
+                <div class="card__header testimony-card__header">
+                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony" class="card__img card__img--circle testimony__img">
+                  <p class="testimony__name">People name</p>
+                  <p class="card__text">People jobs</p>
+                </div>
+                <div class="card__body testimony-card__detail">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+              </div>
+            </div>
+            {{-- endforeach --}}
+          </div>
+        </div>
+      </section>
+      <section id="client">
+        <div class="container">
+          <h1 class="section__heading text-center">Our client</h1>
+          <div class="row">
+            {{-- foreach --}}
+            <div class="px-2">
+              <div class="client__item">
+                <img src="{{ asset('img/client.png') }}" class="client__img">
+              </div>
+            </div>
+            {{-- endforeach --}}
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="footer__info col-12 col-md-6 col-lg-4">
+            <a href="{{ url('/') }}">
+              <img src="{{ asset('img/logo.png') }}">
+            </a>
+            <address class="footer__address">South Jakarta, England</address>
+            <a class="footer__link" href="mailto:joe@example.com?subject=feedback">email@email.com</a>
+            <a href="rtel:087776196047" class="footer__link">087776196047</a>
+          </div>
+          <div class="footer__legal col-12 col-md-6 col-lg-7">
+            <ul class="footer__socmed">
+              <li class="footer__socmed-item">
+                <a href=""><i class='bx bxl-facebook' ></i></a>
+              </li>
+              <li class="footer__socmed-item"><a href="" class="footer__socmed-link"><i class='bx bxl-twitter' ></i></a></li>
+              <li class="footer__socmed-item"><a href="" class="footer__socmed-link"><i class='bx bxl-instagram' ></i></a></li>
+              <li class="footer__socmed-item"><a href="" class="footer__socmed-link"><i class='bx bxl-linkedin' ></i></a></li>
+            </ul>
+            <small class="footer__copyright">&copy; {{ date('Y') }} Copyright Dickson synergy inc. All rights reserved.</small>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div class="overlay"></div>
     <script src="{{ asset('js/jquery.js') }}" charset="utf-8"></script>
+    <script src="{{ asset('plugin/slick/slick.min.js') }}"></script>
     <script src="{{ asset('js/customer.js') }}" charset="utf-8"></script>
   </body>
 </html>
