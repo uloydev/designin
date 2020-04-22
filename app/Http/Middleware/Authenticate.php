@@ -26,6 +26,8 @@ class Authenticate extends Middleware
         if(Auth::check()){
             if (Auth::user()->role == 'user') {
                 return $next($request);
+            }elseif(!Auth::user()->email_verified_at){
+                return $next($request);
             }
             return redirect()->route(Auth::user()->role . '.home');
         }

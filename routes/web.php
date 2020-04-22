@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
 
 Route::view('/', 'landing');
 
@@ -21,14 +21,14 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
     Route::get('/', 'HomeController@index')->name('admin.home');
 });
 
-Route::middleware('auth')->prefix('user')->namespace('User')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('user')->namespace('User')->group(function () {
     Route::get('/', 'HomeController@index')->name('user.home');
 });
 
 Route::prefix('agent')->namespace('Agent')->group(function () {
     Route::get('register', 'RegisterController@showRegistrationForm')->name('agent.register');
     Route::post('register', 'RegisterController@register');
-    Route::middleware('agent')->group(function () {
+    Route::middleware(['agent', 'verified'])->group(function () {
         Route::get('/', 'HomeController@index')->name('agent.home');
     });
 });
