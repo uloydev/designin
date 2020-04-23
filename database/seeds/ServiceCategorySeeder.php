@@ -24,7 +24,7 @@ class ServiceCategorySeeder extends Seeder
             ],
         ];
         foreach ($categories as $key => $value) {
-            ServiceCategori::create($value);
+            ServiceCategory::create($value);
         }
     }
 }

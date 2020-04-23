@@ -13,6 +13,8 @@ Route::get('blog', 'HomeController@blog');
 
 Route::post('contact-us', 'ContactController@contactUs');
 
+Route::Resource('profile', 'ProfileController')->middleware('auth');
+
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::get('/', 'HomeController@index')->name('admin.home');
     Route::Resource('faq', 'FaqController');

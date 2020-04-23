@@ -19,7 +19,10 @@ class DatabaseSeeder extends Seeder
         CarouselImageSeeder::class,
         BlogSeeder::class,
         FaqSeeder::class,
-        ContactUsSeeder::class
+        ContactUsSeeder::class,
+        ServiceCategorySeeder::class,
+        UserProfileSeeder::class,
+        UserPortfolioSeeder::class
       ]);
     }
 }
