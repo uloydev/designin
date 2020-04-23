@@ -17,7 +17,9 @@ class DatabaseSeeder extends Seeder
         ServiceSeeder::class,
         PackageSeeder::class,
         CarouselImageSeeder::class,
-        NewsSeeder::class,
+        BlogSeeder::class,
+        FaqSeeder::class,
+        ContactUsSeeder::class
       ]);
     }
 }

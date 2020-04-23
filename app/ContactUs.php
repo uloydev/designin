@@ -10,6 +10,6 @@ class ContactUs extends Model
 
     public function admin()
     {
-        return $this->belongsTo('App/User', 'admin_id');
+        return $this->belongsTo('App\User', 'admin_id');
     }
 }

@@ -18,7 +18,7 @@ class CreateBlogsTable extends Migration
             $table->string('title');
             $table->string('header_image')->nullable();
             $table->text('content');
-            $table->string('author');
+            $table->integer('author_id');
             $table->enum('category', ['blog', 'news', 'promo']);
             $table->timestamps();
         });
