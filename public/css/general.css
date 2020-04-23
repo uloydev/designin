@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  text-decoration: none;
+  scroll-behavior: smooth;
+}
+:root {
+  --text-color: #3e3e3e;
+  --primary-color: #1dbf73;
+  --secondary-color: #f9ac47;
+  --fourth-color: #e6cc73;
+  --third-color: #358cc4;
+  --almost-white: #f8f9fa;
+  --primary-color-hover: #16b86c;
+}
+html {
+  font-family: 'Roboto', sans-serif;
+  color: var(--text-color);
+}
+details summary::-webkit-details-marker {
+  display:none;
+}

@@ -20,8 +20,12 @@ class Agent
             if (Auth::user()->role == 'agent') {
                 return $next($request);
             }
-            return redirect()->route(Auth::user()->role . '.home')->with(['error'=>"you don't have permission to access agent page"]);
+            else {
+              return redirect()->route(Auth::user()->role . '.home')->with(['error'=>"you don't have permission to access agent page"]);
+            }
         }
-        return redirect()->route('login');
+        else {
+          return redirect()->route('login');
+        }
     }
 }

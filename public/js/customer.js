@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $(".nav__toggle").click(function() {
-    $(".overlay").addClass('overlay--active');
-    $(".overlay").click(function() {
+    $(".overlay--nav-showed").addClass('overlay--active');
+    $(".overlay--nav-showed").click(function() {
       $(this).removeClass('overlay--active');
       $("nav").removeClass('nav--showed');
       $("body").removeAttr('style');
@@ -9,7 +9,7 @@ $(document).ready(function() {
 
     if ($("nav").hasClass('nav--showed')) {
       $("nav").removeClass('nav--showed');
-      $(".overlay.overlay--active").removeClass('overlay--active');
+      $(".overlay--nav-showed.overlay--active").removeClass('overlay--active');
       $("body").removeAttr('style');
     }
     else {
