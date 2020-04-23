@@ -2,11 +2,10 @@
   <div class="container">
     <ul>
       <li class="nav__list nav__list--logo">
-        <a href="{{ url('/') }}" class="nav__link">
-          <img src="{{ asset('img/logo.png') }}">
-        </a>
+        <a href="{{ url('/') }}" class="nav__link">Desainin</a>
         <i class='bx bx-menu-alt-right nav__toggle'></i>
       </li>
+      <li class="nav__list"><a href="{{ route('contact-us.index') }}" class="nav__link">Contact us</a></li>
       <li class="nav__list"><a href="{{ route('faq.index') }}" class="nav__link">faq</a></li>
       <li class="nav__list nav__list--separate"><a href="{{ route('blog.index') }}" class="nav__link">blog</a></li>
       @auth

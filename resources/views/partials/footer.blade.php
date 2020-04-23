@@ -5,7 +5,10 @@
         <a href="{{ url('/') }}">
           <img src="{{ asset('img/logo.png') }}">
         </a>
-        <address class="footer__address">South Jakarta, England</address>
+        <address class="footer__address">
+          Metropolitan Tower 22nd Floor, Jl. R.A.Kartini No.Kav. 14, RT.10/RW.4,
+          West Cilandak, Cilandak, South Jakarta City, Jakarta 12430
+        </address>
         <a class="footer__link" href="mailto:joe@example.com?subject=feedback">email@email.com</a>
         <a href="rtel:087776196047" class="footer__link">087776196047</a>
       </div>

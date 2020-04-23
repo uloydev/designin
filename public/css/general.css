@@ -5,6 +5,7 @@
   box-sizing: border-box;
   outline: none;
   text-decoration: none;
+  list-style-type: none;
   scroll-behavior: smooth;
 }
 :root {
