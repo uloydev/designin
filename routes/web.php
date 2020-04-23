@@ -5,10 +5,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['verify'=>true]);
 
 Route::get('/', 'HomeController@index');
-Route::get('/service/search', 'HomeController@serviceSearch');
+Route::get('/services/search', 'HomeController@serviceSearch');
+Route::get('/services', 'HomeController@services')->name('services');
 Route::resource('faq', 'FaqController');
 Route::resource('blog', 'BlogController');
-
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::get('/', 'HomeController@index')->name('admin.home');
 });

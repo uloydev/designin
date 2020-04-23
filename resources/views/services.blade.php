@@ -12,3 +12,4 @@
 </div>
 <hr>
 @endforeach
+{{$services->links()}}

@@ -15,6 +15,33 @@
         <a href="#services" class="header__btn">Order What You Want</a>
       </div>
     </header>
+    {{-- <h4>Carousel</h4>
+    @foreach ($images as $image)
+    <img src="{{$image->url}}" alt="{{$image->name}}">
+    @endforeach
+    <hr>
+    <h4>Services</h4>
+    @foreach ($services as $service)
+    <div>title : {{ $service->title }}</div>
+    @if (!is_null($service->image))
+    <div>image : {{ $service->image }}</div>        
+    @endif
+    <div>description : {{ $service->description }}</div>
+    <div>title : {{ $service->title }}</div>
+    <div>agent : {{ $service->agent->name }}</div>
+    @endforeach
+    <a href="{{route('services')}}">view more</a>
+    <hr>
+    <h4>News</h4>
+    @foreach ($news as $item)
+    <div>title : {{ $item->title }}</div>
+    @if (!is_null($item->header_image))
+    <div>header image : {{ $item->header_image }}</div>
+    @endif
+    <div>content : {{ $item->content }}</div>
+    <div>author : {{ $item->author }}</div>
+    @endforeach
+    {{$news->links()}} --}}
     <main>
       <section id="services">
         <div class="container">
