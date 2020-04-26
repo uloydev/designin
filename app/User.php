@@ -40,4 +40,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function service(){
         return $this->hasMany('App\Service', 'agent_id');
     }
+
+    public function profile(){
+        return $this->belongsTo('App\UserProfile', 'id', 'user_id');
+    }
 }
