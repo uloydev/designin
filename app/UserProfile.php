@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserProfile extends Model
 {
-    protected $fillable = ['avatar', 'handphone', 'name_card', 'bank', 'account_number', 'user_id'];
+    protected $fillable = ['avatar', 'handphone', 'address', 'name_card', 'bank', 'account_number', 'user_id'];
 
     public function portfolio()
     {

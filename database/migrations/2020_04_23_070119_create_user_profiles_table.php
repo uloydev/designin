@@ -17,7 +17,7 @@ class CreateUserProfilesTable extends Migration
             $table->id();
             $table->string('avatar')->default('/img/people.jpg');
             $table->string('handphone');
-            $table->text('alamat');
+            $table->text('address');
             $table->string('name_card')->nullable();
             $table->string('bank')->nullable();
             $table->string('account_number')->nullable();
