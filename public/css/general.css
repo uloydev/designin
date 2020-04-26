@@ -8,7 +8,11 @@
   list-style-type: none;
   scroll-behavior: smooth;
 }
+a {
+  color: inherit;
+}
 :root {
+  --almost-black: #2a2a2a;
   --text-color: #3e3e3e;
   --primary-color: #1dbf73;
   --secondary-color: #f9ac47;
@@ -23,4 +27,19 @@ html {
 }
 details summary::-webkit-details-marker {
   display:none;
+}
+.rotate-180 {
+  transform: rotate(180deg);
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.slick-arrow.slick-disabled {
+  opacity: 0.5;
+}
+.embed-video {
+  max-width: 100%;
 }

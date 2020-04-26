@@ -5,12 +5,4 @@
 <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.min.css') }}">
 <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 <link rel="stylesheet" href="{{ asset('plugin/jquery-tabs/dist/jquery.tabs.min.css') }}">
-@auth
-  @if (Auth::user()->role == 'admin')
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-  @elseif (Auth::user()->role == 'user')
-    <link rel="stylesheet" href="{{ asset('css/customer.css') }}">
-  @endif
-@else
-  <link rel="stylesheet" href="{{ asset('css/customer.css') }}">
-@endauth
+<link rel="stylesheet" href="{{ asset('css/native.css') }}">
