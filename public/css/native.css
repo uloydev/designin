@@ -545,22 +545,20 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
   background-color: var(--almost-white);
 }
 #faqPage header {
+  overflow: hidden;
   width: 100%;
   background-color: var(--almost-white);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+}
+#faqPage .faq-header__cover {
+  max-width: 100%;
+  margin-bottom: 30px;
 }
 #faqPage header > .container {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  padding: 60px 0;
+  padding: 40px 0 40px;
   height: calc(100% - 80px);
-  align-items: center;
-  justify-content: center;
 }
 #faqPage .faq-header__heading {
-  font-size: 3rem;
+  font-size: 2.5rem;
   text-align: center;
 }
 #faqPage .faq-header__heading strong {
@@ -579,7 +577,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
   display: flex;
   position: relative;
   width: 100%;
-  margin-top: 45px;
+  margin-top: 30px;
 }
 #faqPage .faq-header__search-input {
   padding: 0 calc(20px + 60px) 0 30px;
@@ -590,13 +588,14 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
   font-size: 20px;
   letter-spacing: 2px;
   font-weight: bold;
-  border-radius: 30px;
+  border-radius: 40px;
   box-shadow: 8px 4px 15px 4px rgba(23,23,23,0.15);
 }
 #faqPage .faq-header__search-input::placeholder {
-  font-size: 20px;
+  font-size: 17px;
   letter-spacing: normal;
   font-weight: normal;
+  text-align: center;
 }
 #faqPage .faq-header__search-btn {
   background-color: var(--primary-color) !important;
@@ -1079,11 +1078,23 @@ footer .row {
     font-size: 34px;
   }
 
-  #faqPage header {
-    height: 60vh;
+  #faqPage header > .container {
+    padding: 100px 0 100px;
   }
-  #faqPage .faq-header__search-form {
-    width: 80%;
+  #faqPage .faq-header__cover {
+    max-height: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #faqPage .faq-header__caption {
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    justify-content: center
+  }
+  #faqPage .faq-header__heading {
+    font-size: 3rem;
   }
   #faqPage .question-cat .jq-tab-title:first-child {
     padding-top: 0;
@@ -1124,9 +1135,6 @@ footer .row {
     display: flex;
     width: 100%;
     align-items: center;
-  }
-  #landingPage .nav__list:not(.nav__list--logo)::after {
-    background-color: var(--almost-white);
   }
   .nav__list {
     margin-left: 20px;
@@ -1178,6 +1186,10 @@ footer .row {
   .nav-dropdown-list__item {
     margin-left: 0;
   }
+
+  #landingPage .nav__list:not(.nav__list--logo)::after {
+    background-color: var(--almost-white);
+  }
   #landingPage header {
     height: 80vh;
   }
@@ -1200,11 +1212,6 @@ footer .row {
     text-align: left;
   }
 
-  #faqPage .faq-header__search-form {
-    width: 60%;
-    max-width: 800px;
-  }
-
   #blogIndexPage #main-article .col-md-3 .article__title {
     font-size: 17px;
   }
@@ -1215,6 +1222,17 @@ footer .row {
   }
   #blogIndexPage main .article__content {
     font-size: 16px;
+  }
+
+  #faqPage .faq-header__cover {
+      max-width: 50%;
+      margin-bottom: 0;
+  }
+  #faqPage .faq-header__search-form {
+      margin-top: 60px;
+  }
+  #faqPage .faq-header__search-input::placeholder {
+      text-align: left;
   }
 
   .footer__socmed-item {

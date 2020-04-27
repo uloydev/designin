@@ -5,11 +5,16 @@
   <header>
     @include('partials.nav')
     <div class="container">
-      <h1 class="faq-header__heading">How can we <strong>help you?</strong></h1>
-      <form class="faq-header__search-form" action="index.html" method="post">
-        <input type="search" placeholder="How can we help you?" class="faq-header__search-input" name="search_faq" autofocus required>
-        <button type="submit" class="faq-header__search-btn"><i class='bx bx-search-alt'></i></button>
-      </form>
+      <div class="row mx-0">
+        <img src="{{ asset('img/faq.png') }}" class="faq-header__cover">
+        <div class="col-12 col-lg-6 faq-header__caption pr-0">
+          <h1 class="faq-header__heading">How can we <br class="d-lg-none"> <strong>help you?</strong></h1>
+          <form class="faq-header__search-form" action="index.html" method="post">
+            <input type="search" placeholder="Find anything you want..." class="faq-header__search-input" name="search_faq" autofocus required>
+            <button type="submit" class="faq-header__search-btn"><i class='bx bx-search-alt'></i></button>
+          </form>
+        </div>
+      </div>
     </div>
   </header>
 @endsection
