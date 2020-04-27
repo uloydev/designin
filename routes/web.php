@@ -21,7 +21,6 @@ route::prefix('profile')->middleware('profile')->group(function () {
     route::get('/', 'ProfileController@index')->name('profile.index');
     route::get('edit', 'ProfileController@edit')->name('profile.edit');
     route::match(['update', 'put'], 'edit', 'ProfileController@update');
-
 });
 
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
@@ -31,7 +30,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::Resource('user', 'UserController');
         Route::Resource('agent', 'AgentController');
         Route::Resource('admin', 'AdminController');
-        Route::Resource('faq', 'FaqController');
+        Route::Resource('faq', 'FaqController')->except(['show']);
         Route::Resource('blog', 'BlogController');
     });
 });
