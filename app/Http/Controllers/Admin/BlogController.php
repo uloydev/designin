@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Blog;
+use App\BlogCategory;
+use Auth;
 
 class BlogController extends Controller
 {
@@ -14,7 +17,8 @@ class BlogController extends Controller
      */
     public function index()
     {
-        return view('blog.index');
+        $blogs = Blog::latest()->paginate(10);
+        return view('blog.index')->with('blogs', $blogs);
     }
 
     /**
@@ -24,7 +28,8 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('blog.create');
+        $categories = BlogCategory::all();
+        return view('blog.create')->with('categories', $categories);
     }
 
     /**
@@ -35,7 +40,16 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+            'category_id'=>'required',
+            'content'=>'required',
+        ]);
+        $request->request->add([
+            'author_id'=>'1'
+        ]);
+        Blog::create($request->all());
+        return redirect()->back()->with(['success'=>'Blog Created Successfully', 'categories'=>BlogCategory::all()]);
     }
 
     /**
@@ -46,7 +60,13 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        //
+        $blog = Blog::find($id);
+        if($blog){
+            $related_blogs = Blog::orderByRaw('RAND()')->where('id', '!=', $id)->take(3)->get();
+            return view('blog.single')->with(['blog'=>$blog, 'related'=>$related_blogs, 'popular'=>$this->popular, 'categories' => $this->categories]);
+        }else{
+            return abort('404');
+        }
     }
 
     /**
@@ -57,7 +77,13 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        return view('blog.edit');
+        $blog = Blog::find($id);
+        if($blog){
+            $categories = BlogCategory::all();
+            return view('blog.edit')->with(['blog'=>$blog, 'categories'=>$categories]);
+        }else{
+            return abort('404');
+        }
     }
 
     /**
@@ -69,7 +95,13 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+            'category_id'=>'required',
+            'content'=>'required',
+        ]);
+        Blog::update($request->all())->where('id', $id);
+        return redirect()->back()->with(['success'=>'Blog Updated Successfully', 'blog'=>Blog::find($id), 'categories'=>BlogCategory::all()]);
     }
 
     /**
@@ -80,6 +112,7 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Blog::delete()->where('id', $id);
+        return redirect()->route('manage.blog.index')->with(['success'=>'Blog Deleted Successfully']); 
     }
 }

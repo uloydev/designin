@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Faq;
 
 class FaqController extends Controller
 {
@@ -14,7 +15,8 @@ class FaqController extends Controller
      */
     public function index()
     {
-        //
+        $faqs = Faq::paginate(10);
+        return view('admin.faq.index')->with('faqs'->$faqs);
     }
 
     /**
@@ -24,7 +26,7 @@ class FaqController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.faq.create');
     }
 
     /**
@@ -35,18 +37,12 @@ class FaqController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $request->vlaidate([
+            'question'=>'required',
+            'answer'=>'required'
+        ]);
+        Faq::create($request->all());
+        return redirect()->route('manage.faq.create')->with('success', 'Faq Created Successfully');
     }
 
     /**
@@ -57,7 +53,8 @@ class FaqController extends Controller
      */
     public function edit($id)
     {
-        //
+        $faq = Faq::where('id', $id)->get();
+        return view('admin.faq.edit')->with('faq', $faq);
     }
 
     /**
@@ -69,7 +66,13 @@ class FaqController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->vlaidate([
+            'question'=>'required',
+            'answer'=>'required'
+        ]);
+        Faq::create($request->all());
+        $faq = Faq::where('id', $id)->get();
+        return redirect()->back()->with(['success'=> 'Faq Updated Successfully', 'faq'=>$faq]);
     }
 
     /**
@@ -80,6 +83,7 @@ class FaqController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Faq::where('id', $id)->delete();
+        return redirect()->route('manage.faq.index')->with('success', 'Faq Deleted Successfully');
     }
 }

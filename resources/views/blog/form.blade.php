@@ -8,9 +8,10 @@
 </div>
 <div class="form-group">
   <label for="blog-category">Category</label>
-  <select class="custom-select" id="blog-category" name="category" required>
-    <option selected>News</option>
-    <option>Promo</option>
+  <select class="custom-select" id="blog-category" name="category_id" required>
+    @foreach ($categories as $category)
+    <option value="{{$category->id}}">{{$category->name}}</option>
+    @endforeach
   </select>
   <button type="button" class="btn btn-link px-0" data-toggle="modal" data-target="#blog-add-category">Add new category</button>
 </div>

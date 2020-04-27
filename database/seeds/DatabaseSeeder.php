@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
         ContactUsSeeder::class,
         ServiceCategorySeeder::class,
         UserProfileSeeder::class,
-        UserPortfolioSeeder::class
+        UserPortfolioSeeder::class,
+        BlogCategorySeeder::class
       ]);
     }
 }

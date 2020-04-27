@@ -19,7 +19,7 @@ class ContactController extends Controller
             'email' => 'required|email',
             'message' => 'required'
         ]);
-        Product::create($request->all());
+        ContactUs::create($request->all());
         return redirect()->route('contact-us.send')
                         ->with('success','Message Has Been Sent.');
     }

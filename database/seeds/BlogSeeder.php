@@ -19,20 +19,23 @@ class BlogSeeder extends Seeder
                 'title'=>'title 1',
                 'content'=>'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias omnis assumenda amet debitis tenetur consequuntur sed cumque possimus ducimus quae. Expedita consectetur sit amet? Eveniet fuga blanditiis quos maiores est?',
                 'author_id'=>$author_id,
-                'category'=>'news'
+                'category_id'=>1,
+                'hits'=>123
             ],
             [
                 'title'=> 'title 2',
                 'header_image'=>'https://cdn.pixabay.com/photo/2019/10/04/18/36/milky-way-4526277_960_720.jpg',
                 'content' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias omnis assumenda amet debitis tenetur consequuntur sed cumque possimus ducimus quae. Expedita consectetur sit amet? Eveniet fuga blanditiis quos maiores est?',
                 'author_id'=>$author_id,
-                'category'=>'blog'
+                'category_id'=>1,
+                'hits'=>1234
             ],
             [
                 'title'=>'title 3',
                 'content'=>'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias omnis assumenda amet debitis tenetur consequuntur sed cumque possimus ducimus quae. Expedita consectetur sit amet? Eveniet fuga blanditiis quos maiores est?',
                 'author_id'=>$author_id,
-                'category'=>'promo'
+                'category_id'=>1,
+                'hits'=>120
                 
             ],
             [
@@ -40,7 +43,8 @@ class BlogSeeder extends Seeder
                 'header_image'=>'https://cdn.pixabay.com/photo/2013/11/28/10/36/road-220058_960_720.jpg',
                 'content' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias omnis assumenda amet debitis tenetur consequuntur sed cumque possimus ducimus quae. Expedita consectetur sit amet? Eveniet fuga blanditiis quos maiores est?',
                 'author_id'=>$author_id,
-                'category'=>'blog'
+                'category_id'=>1,
+                'hits'=>1200
             ],
         ];
         foreach ($blogs as $key => $value) {
