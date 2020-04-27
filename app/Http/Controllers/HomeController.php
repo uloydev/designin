@@ -8,6 +8,7 @@ use App\CarouselImage;
 use App\Blog;
 use App\Faq;
 use App\ServiceCategory;
+use App\FaqCategory;
 
 class HomeController extends Controller
 {
@@ -50,8 +51,9 @@ class HomeController extends Controller
 
     public function faq()
     {
-        $faqs = Faq::all();
-        return view('faq')->with('faqs', $faqs);
+        $faqs = Faq::with('faqCategory')->get();
+        $faqCategories = FaqCategory::with('faqs')->get();
+        return view('faq.index', ['faqs' => $faqs, 'faqCategories' => $faqCategories]);
     }
 
 }

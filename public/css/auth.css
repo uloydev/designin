@@ -20,6 +20,16 @@ a {
   text-decoration: none;
 }
 
+form.slide-up {
+  width: 100% !important;
+}
+
+.form-title a {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
 .form-structor {
 background-color: #222;
 border-radius: 15px;

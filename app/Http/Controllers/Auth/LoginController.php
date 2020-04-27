@@ -28,7 +28,10 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/user';
+    protected function redirectTo()
+    {
+        return Auth::user()->role . '/';
+    }
 
     /**
      * Create a new controller instance.
@@ -38,21 +41,5 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-    }
-
-    public function login(Request $request)
-    {   
-        $input = $request->all();
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-        if(Auth::attempt(array('email' => $input['email'], 'password' => $input['password'])))
-        {
-            return redirect()->route(Auth::user()->role . '.home');
-        }else{
-            return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
-        }
     }
 }

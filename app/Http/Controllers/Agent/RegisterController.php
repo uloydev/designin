@@ -37,13 +37,4 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
-
-    protected function showRegistrationForm()
-    {
-        return view('agent.register');
-    }
-
-    protected function redirectTo(){
-        return '/agent';
-    }
 }

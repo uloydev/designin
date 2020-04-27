@@ -18,8 +18,8 @@
           <li class="nav__list nav__list--separate nav__list--dropdown">
             <span class="nav__link">blog <i class='bx bxs-chevron-down dropdown-icon'></i></span>
             <ul class="nav-dropdown-list">
-              <li class="nav__list nav-dropdown-list__item"><a href="{{ route('blog.index') }}" class="nav__link">home</a></li>
-              <li class="nav__list nav-dropdown-list__item pb-0"><a href="{{ route('blog.create') }}" class="nav__link">create</a></li>
+              <li class="nav__list nav-dropdown-list__item"><a href="{{ route('manage.blog.index') }}" class="nav__link">home</a></li>
+              <li class="nav__list nav-dropdown-list__item pb-0"><a href="{{ route('manage.blog.create') }}" class="nav__link">create</a></li>
             </ul>
           </li>
         @endif

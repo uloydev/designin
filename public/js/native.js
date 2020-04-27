@@ -50,7 +50,18 @@ $(document).ready(function() {
   $("#blogIndexPage #main-article .col-12").filter(':not(:nth-child(-n+2))').addClass('col-md-3');
   $("#blogIndexPage main section .article__time").css('left', articleCategoryWidth + 30);
 
-  //plugin
+  //plugin & general
+  $("input[accept='image/*']").change(function(){
+    const blogCover = this;
+    if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        $(this).parent().prev().attr('id', 'cover-preview');
+        reader.onload = function (e) {
+            blogCover.parent().prev('#cover-preview').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(this.files[0]);
+    }
+  });
   $("#services .row").slick({
     infinite: false,
     slidesToShow: 3,
@@ -125,12 +136,9 @@ $(document).ready(function() {
   });
 
   if ($('#blogCreatePage #blog-content').length == 1) {
-    $('#blogCreatePage #blog-content').summernote({
-      minHeight: 300,
-      spellCheck: true,
-      disableGrammar: true,
-      fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather'],
-      placeholder: 'Content of your article...',
+    const blogContent = new FroalaEditor('#blog-content', {
+      placeholderText: 'Content of your article...',
+      heightMin: 300
     });
   }
 });
