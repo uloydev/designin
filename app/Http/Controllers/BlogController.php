@@ -27,6 +27,12 @@ class BlogController extends Controller
     {
         $blog = Blog::find($id);
         if($blog){
+            if (!$blog->hits) {
+                $blog->hits = 1;
+            }else{
+                $blog->hits += 1;
+            }
+            $blog->update();
             $related_blogs = Blog::orderByRaw('RAND()')->where('id', '!=', $id)->take(3)->get();
             return view('blog.single')->with(['blog'=>$blog, 'related'=>$related_blogs, 'popular'=>$this->popular, 'categories' => $this->categories]);
         }else{
