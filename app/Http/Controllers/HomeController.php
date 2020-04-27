@@ -42,12 +42,6 @@ class HomeController extends Controller
         }
     }
 
-    public function blog()
-    {
-        $blogs = Blog::paginate(5);
-        return view('blog')->with('blogs', $blogs);
-    }
-
     public function faq()
     {
         $faqs = Faq::all();

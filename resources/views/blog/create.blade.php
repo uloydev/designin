@@ -3,7 +3,7 @@
 @section('page-id', 'blogCreate')
 @section('content')
   <div class="container py-4">
-    <form action="{{ route('blog.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('manage.blog.store') }}" method="post" enctype="multipart/form-data">
       @csrf
       @include('blog.form')
       <button type="submit" class="btn btn-success btn-block">Add new article</button>

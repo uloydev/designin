@@ -9,7 +9,10 @@ Route::get('/services/search', 'HomeController@serviceSearch');
 Route::get('/services', 'HomeController@services')->name('services');
 Route::get('contact-us', 'ContactController@showContactUsForm')->name('contact-us.index');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
-Route::get('blog', 'HomeController@blog')->name('blog.index');
+Route::get('blog', 'BlogController@index')->name('blog.index');
+Route::get('blog/{id}', 'BlogController@show')->name('blog.single');
+// Route::get('create', 'Admin\BlogController@create');
+// Route::post('create', 'Admin\BlogController@store')->name('blog.store');
 
 Route::post('contact-us', 'ContactController@contactUs');
 

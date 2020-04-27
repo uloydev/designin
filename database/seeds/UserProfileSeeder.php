@@ -15,28 +15,28 @@ class UserProfileSeeder extends Seeder
         $profiles = [
             [
                 'handphone'=>'08123456789',
-                'alamat'=>'jonggol',
+                'address'=>'jonggol',
                 'bank'=>'bni',
                 'account_number'=>'12345667899',
                 'user_id'=>1
             ],
             [
                 'handphone'=>'08123456789',
-                'alamat'=>'jonggol',
+                'address'=>'jonggol',
                 'bank'=>'bni',
                 'account_number'=>'12345667899',
                 'user_id'=>2
             ],
             [
                 'handphone'=>'08123456789',
-                'alamat'=>'jonggol',
+                'address'=>'jonggol',
                 'bank'=>'bni',
                 'account_number'=>'12345667899',
                 'user_id'=>3
             ],
             [
                 'handphone'=>'08123456789',
-                'alamat'=>'jonggol',
+                'address'=>'jonggol',
                 'bank'=>'bni',
                 'account_number'=>'12345667899',
                 'user_id'=>4
