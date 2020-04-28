@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
+    protected $table = 'service';
+    protected $with = ['category'];
     protected $fillable = [
-        'title', 'description', 'image', 'agent_id', 'category_id'
+        'title', 'description', 'image', 'agent_id', 'service_category_id'
     ];
 
     public function package()
@@ -17,6 +19,10 @@ class Service extends Model
 
     public function agent()
     {
-        return $this->belongsTo('App\User', 'agent_id');
+        return $this->belongsTo('App\User', 'agent_id')->withDefault();
+    }
+    public function category()
+    {
+        return $this->belongsTo('App\ServiceCategory')->withDefault();
     }
 }

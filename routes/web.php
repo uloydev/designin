@@ -16,14 +16,14 @@ Route::get('blog/{id}', 'BlogController@show')->name('blog.single');
 Route::post('contact-us', 'ContactController@contactUs');
 
 // profile route for all user role
-route::prefix('profile')->middleware('profile')->group(function () {
-    route::get('/', 'ProfileController@index')->name('profile.index');
-    route::get('edit', 'ProfileController@edit')->name('profile.edit');
-    route::match(['update', 'put'], 'edit', 'ProfileController@update');
+Route::prefix('profile')->middleware('profile')->group(function () {
+    Route::get('/', 'ProfileController@index')->name('profile.index');
+    Route::get('edit', 'ProfileController@edit')->name('profile.edit');
+    Route::match(['update', 'put'], 'edit', 'ProfileController@update');
 });
 
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
-    Route::get('/', 'HomeController@index')->name('admin.home');
+    Route::get('dashboard', 'HomeController@index')->name('admin.home');
     Route::prefix('manage')->name('manage.')->group(function(){
         Route::get('/', 'HomeController@index');
         Route::resource('user', 'UserController');

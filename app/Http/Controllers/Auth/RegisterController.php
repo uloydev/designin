@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Auth;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller

@@ -24,7 +24,7 @@
     @foreach ($services as $service)
     <div>title : {{ $service->title }}</div>
     @if (!is_null($service->image))
-    <div>image : {{ $service->image }}</div>        
+    <div>image : {{ $service->image }}</div>
     @endif
     <div>description : {{ $service->description }}</div>
     <div>title : {{ $service->title }}</div>
@@ -47,28 +47,13 @@
         <div class="container">
           <h1 class="section__heading">our services</h1>
           <div class="row">
-            {{-- foreach --}}
+            @foreach ($serviceCategories as $category)
             <div class="px-3">
-              <img src="{{ asset('img/t-shirt.png') }}" class="services__icon">
-              <p class="services__name">T-Shirt</p>
-              <a href="#" class="services__btn btn-light">order now</a>
+              <img src="{{ Storage::url('img/' . $category->image_url) }}" class="services__icon">
+              <p class="services__name">{{ $category->name }}</p>
+              <a href="{{ url('services') }}" class="services__btn btn-light">See detail</a>
             </div>
-            <div class="px-3">
-              <img src="{{ asset('img/t-shirt.png') }}" class="services__icon">
-              <p class="services__name">T-Shirt</p>
-              <a href="#" class="services__btn btn-light">order now</a>
-            </div>
-            <div class="px-3">
-              <img src="{{ asset('img/t-shirt.png') }}" class="services__icon">
-              <p class="services__name">T-Shirt</p>
-              <a href="#" class="services__btn btn-light">order now</a>
-            </div>
-            <div class="px-3">
-              <img src="{{ asset('img/t-shirt.png') }}" class="services__icon">
-              <p class="services__name">T-Shirt</p>
-              <a href="#" class="services__btn btn-light">order now</a>
-            </div>
-            {{-- endforeach --}}
+            @endforeach
           </div>
         </div>
       </section>

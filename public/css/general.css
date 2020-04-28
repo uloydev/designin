@@ -58,3 +58,36 @@ input[type="search"]::-webkit-search-results-decoration {
 .embed-video {
   max-width: 100%;
 }
+@media screen and (min-width: 768px) {
+    .text-md-center {
+        text-align: center;
+    }
+    .text-md-left {
+        text-align: left;
+    }
+    .text-md-right {
+        text-align: right;
+    }
+}
+@media screen and (min-width: 993px) {
+    .text-lg-center {
+        text-align: center;
+    }
+    .text-lg-left {
+        text-align: left;
+    }
+    .text-lg-right {
+        text-align: right;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .text-xl-center {
+        text-align: center;
+    }
+    .text-xl-left {
+        text-align: left;
+    }
+    .text-xl-right {
+        text-align: right;
+    }
+}
