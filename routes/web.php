@@ -31,13 +31,14 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('admin', 'AdminController');
         Route::resource('faq', 'FaqController')->except(['show']);
         Route::resource('blog', 'BlogController');
+        Route::resource('blog-category', 'BlogCategoryController');
     });
 });
 
 Route::middleware(['auth', 'verified'])->prefix('user')->namespace('User')->group(function () {
-  Route::get('/', 'HomeController@index')->name('user.home');
+  Route::get('dashboard', 'HomeController@index')->name('user.home');
 });
 
 Route::prefix('agent')->namespace('Agent')->middleware(['agent', 'verified'])->group(function () {
-  Route::get('/', 'HomeController@index')->name('agent.home');
+  Route::get('dashboard', 'HomeController@index')->name('agent.home');
 });

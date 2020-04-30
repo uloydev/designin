@@ -21,8 +21,9 @@
           </button>
         </div>
         <div class="modal-body">
-          <form class="" id="form-add-category" action="index.html" method="post">
-            <input type="text" placeholder="Add your new category" class="form-control">
+          <form class="" id="form-add-category" action="{{route('manage.blog-category.store')}}" method="post">
+            @csrf
+            <input type="text" placeholder="Add your new category" class="form-control" nmae="name">
           </form>
         </div>
         <div class="modal-footer">
