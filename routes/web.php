@@ -22,22 +22,30 @@ Route::prefix('profile')->middleware('profile')->group(function () {
     Route::match(['update', 'put'], 'edit', 'ProfileController@update');
 });
 
-Route::namespace('Admin')->middleware('admin')->prefix('admin')->name('manage.')->group(function () {
-    Route::get('dashboard', 'AdminController@index')->name('dashboard');
-    Route::prefix('manage')->group(function(){
+Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
+    Route::redirect('/', 'dashboard');
+    Route::get('dashboard', 'HomeController@index')->name('admin.home');
+    Route::prefix('manage')->name('manage.')->group(function(){
         Route::get('/', 'HomeController@index');
         Route::resource('user', 'UserController');
         Route::resource('agent', 'AgentController');
         Route::resource('admin', 'AdminController')->except('index');
         Route::resource('faq', 'FaqController')->except(['show']);
         Route::resource('blog', 'BlogController');
+        Route::resource('blog-category', 'BlogCategoryController');
     });
 });
 
 Route::middleware(['auth', 'verified'])->prefix('user')->namespace('User')->group(function () {
-  Route::get('/', 'HomeController@index')->name('user.home');
+    Route::redirect('/', 'dashboard');
+    Route::get('dashboard', 'HomeController@index')->name('user.home');
 });
 
-Route::prefix('agent')->namespace('Agent')->middleware(['agent', 'verified'])->group(function () {
-  Route::get('/', 'HomeController@index')->name('agent.home');
+Route::prefix('agent')->namespace('Agent')->group(function () {
+    Route::get('profile/{agent_id}', 'HomeController@showAgentProfile')->name('agent.profile');
+    Route::middleware(['agent', 'verified'])->name('agent.')->group(function () {
+        Route::redirect('/', 'dashboard');
+        Route::get('dashboard', 'HomeController@index')->name('home');
+        Route::resource('portfolio', 'PortfolioController');
+    });
 });
