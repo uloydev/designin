@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Blog::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence($nbWords = 10, $variableNbWords = true),
-        'header_image' => 'article.png',
+        'header_image' => 'article3.jpg',
         'content' => $faker->paragraph($nbSentences = 6, $variableNbSentences = true),
         'author_id' => 1,
         'category_id' => $faker->numberBetween(1, 2),

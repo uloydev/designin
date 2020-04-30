@@ -59,7 +59,7 @@ The above copyright notice and this permission notice shall be included in all c
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="examples/tables.html">
+              <a class="nav-link" href="{{ route('manage.agent.index') }}">
                 <i class="ni ni-bullet-list-67 text-default"></i>
                 <span class="nav-link-text">Agent</span>
               </a>
@@ -73,13 +73,11 @@ The above copyright notice and this permission notice shall be included in all c
                 <ul class="nav nav-sm flex-column">
                   <li class="nav-item">
                     <a href="../../pages/maps/google.html" class="nav-link">
-                      <span class="sidenav-mini-icon"> G </span>
                       <span class="sidenav-normal"> Google </span>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/maps/vector.html" class="nav-link">
-                      <span class="sidenav-mini-icon"> V </span>
                       <span class="sidenav-normal"> Vector </span>
                     </a>
                   </li>
@@ -187,14 +185,14 @@ The above copyright notice and this permission notice shall be included in all c
     </div>
   </div>
   @yield('element')
-  <script src="{{ asset('js/jquery.js') }}"></script>
-  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('plugin/argon-dashboard/assets/vendor/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ asset('plugin/argon-dashboard/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('plugin/argon-dashboard/assets/vendor/js-cookie/js.cookie.js') }}"></script>
   <script src="{{ asset('plugin/argon-dashboard/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
   <script src="{{ asset('plugin/argon-dashboard/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
   <script src="{{ asset('plugin/argon-dashboard/assets/vendor/chart.js/dist/Chart.min.js') }}"></script>
   <script src="{{ asset('plugin/argon-dashboard/assets/vendor/chart.js/dist/Chart.extension.js') }}"></script>
-  <script src="{{ asset('plugin/argon-dashboard/assets/js/argon.min.js') }}"></script>
+  <script src="{{ asset('plugin/argon-dashboard/assets/js/argon.js') }}"></script>
   <script src="{{ asset('plugin/slick/slick.min.js') }}"></script>
   <script src="{{ asset('js/native.js') }}" charset="utf-8"></script>
 </body>

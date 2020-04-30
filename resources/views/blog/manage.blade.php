@@ -10,7 +10,7 @@
                           <h3 class="mb-0">All Article</h3>
                         </div>
                         <div class="col text-right">
-                          <a href="{{ route('manage.blog.index') }}" class="btn btn-sm btn-primary">See all</a>
+                            <a href="{{ route('manage.blog.create') }}" class="btn btn-sm btn-primary">create new article</a>
                         </div>
                     </div>
                 </div>

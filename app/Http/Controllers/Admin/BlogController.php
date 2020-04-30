@@ -20,7 +20,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::with(['blogCategory', 'author'])->latest()->paginate(10);
+        $blogs = Blog::with(['category', 'author'])->orderBy('created_at', 'DESC')->paginate(10);
         $number = $blogs->firstItem();
         return view('blog.manage', ['blogs' => $blogs, 'number' => $number]);
     }
@@ -72,13 +72,13 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        $blog = Blog::with(['blogCategory', 'author'])->findOrFail($id);
+        $blog = Blog::with(['category', 'author'])->findOrFail($id);
         $popular = Blog::orderBy('hits', 'desc')->take(3)->get();
         $blog_categories = BlogCategory::all();
-        $related_blogs = Blog::with(['blogCategory', 'author'])->orderByRaw('RAND()')->where('id', '!=', $id)->take(3)->get();
+        $related_blogs = Blog::with(['category', 'author'])->inRandomOrder()->take(3)->get()->except($id);
         return view('blog.single', [
             'blog' => $blog,
-            'related' => $related_blogs,
+            'relates' => $related_blogs,
             'popular' => $popular,
             'categories' => $blog_categories
         ]);
