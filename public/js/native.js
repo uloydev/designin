@@ -52,7 +52,13 @@ $(document).ready(function() {
     $("#blogIndexPage main section .article__time").css('left', articleCategoryWidth + 30);
 
     //admin js
-    
+    $(".btn[data-target='#delete-article']").click(function() {
+        const modalTarget = $(this).data('target');
+        const articleTitle =  $(this).data('article-title');
+        const articleId = $(this).data('article-id');
+        $(".modal#delete-article").find('.modal-article-title').text(articleTitle);
+        $(".modal#delete-article").find('form').attr('action','/admin/manage/blog/' + articleId);
+    });
 
     //plugin & general
     $("input[accept='image/*']").change(function(){

@@ -17,13 +17,13 @@ class DatabaseSeeder extends Seeder
         ServiceSeeder::class,
         PackageSeeder::class,
         CarouselImageSeeder::class,
-        BlogSeeder::class,
         FaqSeeder::class,
         FaqCategorySeeder::class,
         ContactUsSeeder::class,
         ServiceCategorySeeder::class,
         UserProfileSeeder::class,
         UserPortfolioSeeder::class,
+        BlogSeeder::class,
         BlogCategorySeeder::class
       ]);
     }

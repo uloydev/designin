@@ -17,7 +17,7 @@
 @section('content')
     <div class="container">
         @foreach ($categories as $category)
-            <h1 class="mb-5 text-center text-md-left">{{ $category->name }}</h1>
+            <h1 class="mb-5 text-center text-md-left">{{ $category->name ?? '' }}</h1>
             <section class="category row">
             @foreach ($category->services as $service)
                 <div class="col-12 col-md-6 mb-md-5 col-lg-4 col-xl-3">

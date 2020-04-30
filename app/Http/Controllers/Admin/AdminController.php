@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Blog;
+use App\User;
+use App\BlogCategory;
 
 class AdminController extends Controller
 {
@@ -14,7 +17,13 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $articles = Blog::orderBy('created_at', 'DESC')->take(10)->get();
+        $totalPromos = Blog::whereHas('category', function($query){
+            $query->where('name', 'Promo');
+        })->count();
+        $agents = User::where('role', 'agent')->get();
+        $users = User::where('role', 'user')->get();
+        return view('admin.dashboard', ['articles' => $articles, 'agents' => $agents, 'users' => $users, 'totalPromos' => $totalPromos]);
     }
 
     /**

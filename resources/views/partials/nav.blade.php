@@ -14,29 +14,17 @@
       <li class="nav__list"><a href="{{ route('contact-us.index') }}" class="nav__link">Contact us</a></li>
       <li class="nav__list"><a href="{{ route('faq.index') }}" class="nav__link">faq</a></li>
       @auth
-        @if (Auth::user()->role == 'admin')
-        <li class="nav__list nav__list--separate nav__list--dropdown">
-            <span class="nav__link">blog <i class='bx bxs-chevron-down dropdown-icon'></i></span>
-            <ul class="nav-dropdown-list">
-                <li class="nav__list nav-dropdown-list__item">
-                    <a href="{{ route('manage.blog.index') }}" class="nav__link">home</a>
-                </li>
-                <li class="nav__list nav-dropdown-list__item pb-0">
-                    <a href="{{ route('manage.blog.create') }}" class="nav__link">create</a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav__list"><a href="{{ route('admin.home') }}" class="nav__link">Dashboard</a></li>
-        @else
         <li class="nav__list nav__list--separate"><a href="{{ route('blog.index') }}" class="nav__link">Blog</a></li>
+        @if (Auth::user()->role == 'admin')
+        <li class="nav__list"><a href="{{ route('manage.dashboard') }}" class="nav__link">Dashboard</a></li>
+        @else
         <li class="nav__list"><a href="" class="nav__link">my profile</a></li>
-        @endif
         <li class="nav__list"><a href="" class="nav__link">my transaction</a></li>
         <li class="nav__list"><a href="" class="nav__link">my subscription</a></li>
+        @endif
         <li class="nav__list">
           <a class="nav__link" href="{{ route('logout') }}"
-             onclick="event.preventDefault();
-                           document.getElementById('logout-form').submit();">
+             onclick="event.preventDefault();document.getElementById('logout-form').submit();">
               {{ __('Logout') }}
           </a>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -45,7 +33,7 @@
         </li>
       @endauth
       @guest
-        <li class="nav__list"><a href="{{ route('login') }}" class="nav__link">Login / Signup</a></li>
+        <li class="nav__list"><a href="{{ route('login') }}" class="nav__link">{{ __('Login / Sign up') }}</a></li>
       @endguest
     </ul>
   </div>

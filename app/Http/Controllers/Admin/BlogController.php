@@ -18,7 +18,8 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::latest()->paginate(10);
-        return view('blog.index')->with('blogs', $blogs);
+        $number = $blogs->firstItem();
+        return view('blog.manage', ['blogs' => $blogs, 'number' => $number]);
     }
 
     /**
@@ -60,13 +61,9 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        $blog = Blog::find($id);
-        if($blog){
-            $related_blogs = Blog::orderByRaw('RAND()')->where('id', '!=', $id)->take(3)->get();
-            return view('blog.single')->with(['blog'=>$blog, 'related'=>$related_blogs, 'popular'=>$this->popular, 'categories' => $this->categories]);
-        }else{
-            return abort('404');
-        }
+        $blog = Blog::findOrFail($id);
+        $related_blogs = Blog::inRandomOrder()->where('id', $id)->take(3)->get();
+        return view('blog.single', ['blog' => $blog, 'related '=> $related_blogs, 'popular'=>$this->popular, 'categories' => $this->categories]);
     }
 
     /**
@@ -77,13 +74,9 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $blog = Blog::find($id);
-        if($blog){
-            $categories = BlogCategory::all();
-            return view('blog.edit')->with(['blog'=>$blog, 'categories'=>$categories]);
-        }else{
-            return abort('404');
-        }
+        $article = Blog::findOrFail($id);
+        $categories = BlogCategory::all();
+        return view('blog.edit', ['article'=> $article, 'categories' => $categories]);
     }
 
     /**
@@ -113,6 +106,6 @@ class BlogController extends Controller
     public function destroy($id)
     {
         Blog::delete()->where('id', $id);
-        return redirect()->route('manage.blog.index')->with(['success'=>'Blog Deleted Successfully']); 
+        return redirect()->route('manage.blog.index')->with(['success'=>'Blog Deleted Successfully']);
     }
 }

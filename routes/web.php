@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify'=>true]);
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('landing-page');
 Route::get('/services/search', 'HomeController@serviceSearch');
 Route::get('/services', 'HomeController@services')->name('services');
 Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
@@ -22,13 +22,13 @@ Route::prefix('profile')->middleware('profile')->group(function () {
     Route::match(['update', 'put'], 'edit', 'ProfileController@update');
 });
 
-Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
-    Route::get('dashboard', 'HomeController@index')->name('admin.home');
-    Route::prefix('manage')->name('manage.')->group(function(){
+Route::namespace('Admin')->middleware('admin')->prefix('admin')->name('manage.')->group(function () {
+    Route::get('dashboard', 'AdminController@index')->name('dashboard');
+    Route::prefix('manage')->group(function(){
         Route::get('/', 'HomeController@index');
         Route::resource('user', 'UserController');
         Route::resource('agent', 'AgentController');
-        Route::resource('admin', 'AdminController');
+        Route::resource('admin', 'AdminController')->except('index');
         Route::resource('faq', 'FaqController')->except(['show']);
         Route::resource('blog', 'BlogController');
     });
