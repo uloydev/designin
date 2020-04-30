@@ -24,7 +24,7 @@ Route::prefix('profile')->middleware('profile')->group(function () {
 
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::redirect('/', 'dashboard');
-    Route::get('dashboard', 'HomeController@index')->name('admin.home');
+    Route::get('dashboard', 'HomeController@index')->name('admin.dashboard');
     Route::prefix('manage')->name('manage.')->group(function(){
         Route::get('/', 'HomeController@index');
         Route::resource('user', 'UserController');

@@ -35,7 +35,7 @@ The above copyright notice and this permission notice shall be included in all c
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" href="{{ route('manage.dashboard') }}">
+              <a class="nav-link active" href="{{ route('admin.dashboard') }}">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
@@ -133,7 +133,7 @@ The above copyright notice and this permission notice shall be included in all c
                 <div class="dropdown-header noti-title">
                   <h6 class="text-overflow m-0">Welcome!</h6>
                 </div>
-                <a href="{{ route('manage.dashboard') }}" class="dropdown-item">
+                <a href="{{ route('admin.dashboard') }}" class="dropdown-item">
                   <i class="ni ni-single-02"></i>
                   <span>My profile</span>
                 </a>

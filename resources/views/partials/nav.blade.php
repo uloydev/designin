@@ -16,7 +16,7 @@
       @auth
         <li class="nav__list nav__list--separate"><a href="{{ route('blog.index') }}" class="nav__link">Blog</a></li>
         @if (Auth::user()->role == 'admin')
-        <li class="nav__list"><a href="{{ route('manage.dashboard') }}" class="nav__link">Dashboard</a></li>
+        <li class="nav__list"><a href="{{ route('admin.dashboard') }}" class="nav__link">Dashboard</a></li>
         @else
         <li class="nav__list"><a href="" class="nav__link">my profile</a></li>
         <li class="nav__list"><a href="" class="nav__link">my transaction</a></li>
