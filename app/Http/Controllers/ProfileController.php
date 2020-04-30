@@ -4,20 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\Profile;
+use App\UserProfile;
 use App\UserPortfolio;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-        $profile = Profile::with('user')->where('user_id', Auth::user()->id)->get();
+        $profile = UserProfile::with('user')->where('user_id', Auth::user()->id)->get();
         return view('profile.index')->with('profile', $profile);
     }
     
     function edit()
     {
-        $profile = Profile::with('user')->where('user_id', Auth::user()->id)->get();
+        $profile = UserProfile::with('user')->where('user_id', Auth::user()->id)->get();
         return view('profile.edit')->with('user', $profile);
     }
 
@@ -87,10 +87,10 @@ class ProfileController extends Controller
                 $data['avatar'] = $avatar;
             }
         }
-        if(!empty(Profile::where('user_id', $user->id)->first())){
-            Profile::where('user_id', $user->id)->update($data);
+        if(!empty(UserProfile::where('user_id', $user->id)->first())){
+            UserProfile::where('user_id', $user->id)->update($data);
         }else{
-            Profile::create($data);
+            UserProfile::create($data);
         }
         return redirect()->back()->with('Profile Updated Successfully');
     }

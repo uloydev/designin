@@ -23,6 +23,7 @@ Route::prefix('profile')->middleware('profile')->group(function () {
 });
 
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
+    Route::redirect('/', 'dashboard');
     Route::get('dashboard', 'HomeController@index')->name('admin.home');
     Route::prefix('manage')->name('manage.')->group(function(){
         Route::get('/', 'HomeController@index');
@@ -36,9 +37,15 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
 });
 
 Route::middleware(['auth', 'verified'])->prefix('user')->namespace('User')->group(function () {
-  Route::get('dashboard', 'HomeController@index')->name('user.home');
+    Route::redirect('/', 'dashboard');
+    Route::get('dashboard', 'HomeController@index')->name('user.home');
 });
 
-Route::prefix('agent')->namespace('Agent')->middleware(['agent', 'verified'])->group(function () {
-  Route::get('dashboard', 'HomeController@index')->name('agent.home');
+Route::prefix('agent')->namespace('Agent')->group(function () {
+    Route::get('profile/{agent_id}', 'HomeController@showAgentProfile')->name('agent.profile');
+    Route::middleware(['agent', 'verified'])->name('agent.')->group(function () {
+        Route::redirect('/', 'dashboard');
+        Route::get('dashboard', 'HomeController@index')->name('home');
+        Route::resource('portfolio', 'PortfolioController');
+    });
 });
