@@ -44,22 +44,23 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title'=>'required',
-            'header_image'=>'file|mimes:jpg,jpeg,png,gif,svg',
-            'category_id'=>'required',
-            'content'=>'required',
-        ]);
+        // $request->validate([
+        //     'title'=>'required',
+        //     'header_image'=>'file|mimes:jpg,jpeg,png,gif,svg',
+        //     'category_id'=>'required',
+        //     'content'=>'required',
+        // ]);
         $data = [
             'title'=>$request->title,
             'category_id'=>$request->category_id,
-            'content'=>$request->content,
+            'contents'=>$request->contents,
             'author_id'=>Auth::user()->id,
         ];
         if (!empty($request->header_image)) {
             $img_path = Storage::putFile($this->upload_path, $request->file('header_image'));
             $data['header_image'] = $img_path;
         }
+        dd($data);
         Blog::create($data);
         return redirect()->back()->with(['success'=>'Blog Created Successfully']);
     }

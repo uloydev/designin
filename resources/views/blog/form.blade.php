@@ -18,7 +18,7 @@
 </div>
 <div class="form-group">
   <label for="blog-content">Content</label>
-  <textarea id="blog-content" rows="8" name="content" required>{{ $article->content ?? '' }}</textarea>
+  <textarea id="blog-content" rows="8" name="contents" required>{{ $article->contents ?? '' }}</textarea>
 </div>
 <div class="form-group">
   <img src="" alt="cover preview">

@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
+    protected $table = 'blog';
     protected $with = ['category'];
-    protected $fillable = ['title', 'header_image', 'content', 'author_id', 'category_id', 'hits'];
+    protected $fillable = ['title', 'header_image', 'contents', 'author_id', 'category_id', 'hits'];
 
     public function author()
     {
