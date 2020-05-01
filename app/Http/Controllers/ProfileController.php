@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\UserProfile;
 use App\UserPortfolio;
 
@@ -11,29 +11,31 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $profile = UserProfile::with('user')->where('user_id', Auth::user()->id)->get();
+        $profile = UserProfile::with('user')->where('user_id', Auth::id())->get();
         return view('profile.index')->with('profile', $profile);
     }
     
     function edit()
     {
-        $profile = UserProfile::with('user')->where('user_id', Auth::user()->id)->get();
-        return view('profile.edit')->with('user', $profile);
+        $profile = UserProfile::with('user')->where('user_id', Auth::id())->get();
+        return view('profile.edit')->with('profile', $profile);
     }
-
+    
     public function update(Request $request)
     {
         $user = Auth::user();
+        $request->validate([
+            'name'=> 'required',
+            'email'=> 'required|email',
+            'avatar'=> 'file|mimes:jpg,jpeg,png,gif',
+            'handphone'=> 'required',
+            'address'=> 'required',
+            'bank'=> 'required',
+            'account_number'=> 'required|number',
+        ]);
         if ($user->role == 'agent') {
             $request->validate([
-                'name'=> 'required',
-                'email'=> 'required|email',
-                'avatar'=> 'file|mimes:jpg,jpeg,png,gif',
-                'handphone'=> 'required',
-                'address'=> 'required',
                 'name_card'=> 'file|mimes:jpg,jpeg,png',
-                'bank'=> 'required',
-                'account_number'=> 'required|number',
                 'portfolios.*'=>'mimes:jpg,jpeg,png',
                 'portfolio_titles.*'=>'required_with:portfolios'
             ]);
@@ -45,17 +47,17 @@ class ProfileController extends Controller
                 'bank'=> $request->bank,
                 'account_number'=> $request->account_number
             ];
-            if (!empty($request->avatar)) {
+            if ($request->hasFile('avatar')) {
                 $avatar = Storage::putFile('uploads/avatar', $request->file('avatar'));
                 $data['avatar'] = $avatar;
             }
-            if (!empty($request->name_card)) {
+            if ($request->hasFile('name_card')) {
                 $name_card = Storage::putFile('uploads/name-card', $request->file('name_card'));
                 $data['name_card'] = $name_card;
             }
-            if (!empty($request->portfolios)) {
+            if ($request->hasFile('portfolios')) {
                 foreach ($request->file('portfolios') as $index => $file) {
-                    $portfolio = Storage::putFile('uploads/portfolio', $request->file('portfolio'));
+                    $portfolio = Storage::putFile('uploads/portfolio', $file);
                     $portfolio_data = [
                         'title'=>$request->titles[$index], 
                         'image_url'=>$portfolio,
@@ -65,15 +67,6 @@ class ProfileController extends Controller
                 }
             }
         }else{
-            $request->validate([
-                'name'=> 'required',
-                'email'=> 'required|email',
-                'avatar'=> 'file|mimes:jpg,jpeg,png,gif',
-                'handphone'=> 'required',
-                'address'=> 'required',
-                'bank'=> 'required',
-                'account_number'=> 'required|number',
-            ]);
             $data = [
                 'name'=> $request->name,
                 'email'=> $request->email,
