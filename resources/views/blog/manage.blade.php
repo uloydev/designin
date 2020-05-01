@@ -1,6 +1,14 @@
 @extends('layouts.admin-master')
 @section('page-title', 'Blog Management')
 @section('content')
+    @if (session('success'))
+        <div class="alert alert-default alert-dismissible fade show" role="alert">
+            <span class="alert-text">{{ session('success') }}</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -33,7 +41,7 @@
                                 <td>{{ $article->category->name }}</td>
                                 <td>{{ Str::words($article->title, 6) }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('manage.blog.show', $article->id) }}" class="btn btn-primary btn-sm">See article</button>
+                                    <a href="{{ route('blog.show', $article->id) }}" class="btn btn-primary btn-sm">See article</button>
                                 </td>
                                 <td>{{ $article->created_at }}</td>
                                 <td class="text-center">

@@ -20,6 +20,7 @@ class CreateBlogsTable extends Migration
             $table->text('content');
             $table->integer('author_id');
             $table->integer('category_id');
+            $table->boolean('is_main')->default(true);
             $table->integer('hits')->nullable();
             $table->timestamps();
         });

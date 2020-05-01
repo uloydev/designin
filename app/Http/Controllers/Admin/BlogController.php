@@ -3,21 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BlogRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Blog;
 use App\BlogCategory;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
     private $upload_path = "uploads/images";
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $blogs = Blog::with(['category', 'author'])->orderBy('created_at', 'DESC')->paginate(10);
@@ -25,71 +22,40 @@ class BlogController extends Controller
         return view('blog.manage', ['blogs' => $blogs, 'number' => $number]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categories = BlogCategory::all();
         return view('blog.create')->with('categories', $categories);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(BlogRequest $request)
     {
-        $request->validate([
-            'title'=>'required',
-            'header_image'=>'file|mimes:jpg,jpeg,png,gif,svg',
-            'category_id'=>'required',
-            'content'=>'required',
-        ]);
         $data = [
-            'title'=>$request->title,
-            'category_id'=>$request->category_id,
-            'content'=>$request->content,
-            'author_id'=>Auth::user()->id,
+            'title' => $request->title,
+            'category_id' => $request->category_id,
+            'content' => $request->content,
+            'author_id'=>Auth::id(),
         ];
-        if (!empty($request->header_image)) {
-            $img_path = Storage::putFile($this->upload_path, $request->file('header_image'));
+        if ($request->hasFile('header_image')) {
+            $img_path = $request->file('header_image')->store('public/img');
             $data['header_image'] = $img_path;
         }
         Blog::create($data);
-        return redirect()->back()->with(['success'=>'Blog Created Successfully']);
+        return redirect()->route('manage.blog.index')->with('success', 'Blog Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $blog = Blog::with(['category', 'author'])->findOrFail($id);
         $popular = Blog::orderBy('hits', 'desc')->take(3)->get();
-        $blog_categories = BlogCategory::all();
         $related_blogs = Blog::with(['category', 'author'])->inRandomOrder()->take(3)->get()->except($id);
         return view('blog.single', [
             'blog' => $blog,
             'relates' => $related_blogs,
-            'popular' => $popular,
-            'categories' => $blog_categories
+            'popular' => $popular
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $article = Blog::findOrFail($id);
@@ -100,41 +66,29 @@ class BlogController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(BlogRequest $request, $id)
     {
-        $request->validate([
-            'title'=>'required',
-            'header_image'=>'file|mimes:jpg,jpeg,png,gif,svg',
-            'category_id'=>'required',
-            'content'=>'required',
-        ]);
         $data = [
-            'title'=>$request->title,
-            'category_id'=>$request->category_id,
-            'content'=>$request->content,
-            'author_id'=>Auth::user()->id,
+            'title' => $request->title,
+            'category_id' => $request->category_id,
+            'content' => $request->content,
+            'author_id' => Auth::id(),
         ];
         if (!empty($request->header_image)) {
             $img_path = Storage::putFile($this->upload_path, $request->file('header_image'));
             $data['header_image'] = $img_path;
         }
         Blog::where('id', $id)->update($data);
-        return redirect()->back()->with(['success'=>'Blog Updated Successfully']);
+        return redirect()->route('manage.blog.index')->with('success', 'Blog update succefully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         Blog::findOrFail($id)->delete();
-        return redirect()->route('manage.blog.index')->with(['success'=>'Blog Deleted Successfully']);
+        return redirect()->route('manage.blog.index')->with('success', 'Blog delete succefully');
     }
 }
