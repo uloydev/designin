@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify'=>true]);
@@ -9,8 +10,18 @@ Route::get('/services/search', 'HomeController@serviceSearch');
 Route::get('/services', 'HomeController@services')->name('services');
 Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
-Route::get('blog', 'BlogController@index')->name('blog.index');
-Route::get('blog/{id}', 'BlogController@show')->name('blog.single');
+Route::resource('blog', 'BlogController');
+Route::resource('blog/categories', 'BlogCategoryController')->names([
+    'index' => 'blog-categories.index',
+    'create' => 'blog-categories.create',
+    'show' => 'blog-categories.show',
+    'edit' => 'blog-categories.edit',
+    'update' => 'blog-categories.update',
+    'destroy' => 'blog-categories.destroy'
+]);
+// Route::get('blog', 'BlogController@index')->name('blog.index');
+// Route::get('blog/{id}', 'BlogController@show')->name('blog.single');
+
 // Route::get('create', 'Admin\BlogController@create');
 // Route::post('create', 'Admin\BlogController@store')->name('blog.store');
 Route::post('contact-us', 'ContactController@contactUs');
@@ -32,6 +43,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('faq', 'FaqController')->except(['show']);
         Route::resource('blog', 'BlogController');
         Route::resource('blog-category', 'BlogCategoryController');
+        Route::resource('service', 'ServiceController');
     });
 });
 

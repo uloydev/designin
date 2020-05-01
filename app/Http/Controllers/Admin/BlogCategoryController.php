@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\BlogCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use BlogCategory;
 
 class BlogCategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        return view('admin.blog-category.index')->with('categories', BlogCategory::all());
+        $blogCategory = BlogCategory::all();
+        return view('admin.blog-category.index', ['blogCategory', $blogCategory]);
     }
 
     /**

@@ -19,24 +19,24 @@ class BlogController extends Controller
 
     public function index()
     {
-        $blogs = Blog::latest()->paginate(10);
-        return view('blog.index')->with(['blogs'=> $blogs, 'popular'=>$this->popular, 'categories' => $this->categories]);
+        $blogs = Blog::latest()->paginate(5);
+        $populars = Blog::orderBy('hits', 'DESC')->take(3)->get();
+        $mainArticle = Blog::where('is_main', true)->orderBy('updated_at', 'DESC')->take(6)->get();
+        $categories = BlogCategory::all();
+        return view('blog.index', ['blogs'=> $blogs, 'populars' => $populars, 'categories' => $categories, 'mainArticle' => $mainArticle]);
     }
 
     public function show($id)
     {
-        $blog = Blog::find($id);
-        if($blog){
-            if (!$blog->hits) {
-                $blog->hits = 1;
-            }else{
-                $blog->hits += 1;
-            }
-            $blog->update();
-            $related_blogs = Blog::orderByRaw('RAND()')->where('id', '!=', $id)->take(3)->get();
-            return view('blog.single')->with(['blog'=>$blog, 'related'=>$related_blogs, 'popular'=>$this->popular, 'categories' => $this->categories]);
-        }else{
-            return abort('404');
-        }
+        $blog = Blog::with(['category', 'author'])->findOrFail($id);
+        $popular = Blog::orderBy('hits', 'desc')->take(3)->get();
+        $blog_categories = BlogCategory::all();
+        $related_blogs = Blog::with(['category', 'author'])->inRandomOrder()->take(3)->get()->except($id);
+        return view('blog.single', [
+            'blog' => $blog,
+            'relates' => $related_blogs,
+            'popular' => $popular,
+            'categories' => $blog_categories
+        ]);
     }
 }

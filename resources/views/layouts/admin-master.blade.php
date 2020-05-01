@@ -24,7 +24,7 @@ The above copyright notice and this permission notice shall be included in all c
   <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
 <body>
-  <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+  <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
       <div class="sidenav-header  align-items-center">
         <a class="navbar-brand" href="javascript:void(0)">
@@ -40,12 +40,27 @@ The above copyright notice and this permission notice shall be included in all c
                 <span class="nav-link-text">Dashboard</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('manage.blog.index') }}">
-                <i class="ni ni-planet text-orange"></i>
-                <span class="nav-link-text">Blog</span>
-              </a>
-            </li>
+              <li class="nav-item">
+                  <a class="nav-link collapsed" href="#navbar-maps" data-toggle="collapse" role="button"
+                     aria-expanded="false" aria-controls="navbar-maps">
+                      <i class="ni ni-map-big text-primary"></i>
+                      <span class="nav-link-text">Blog</span>
+                  </a>
+                  <div class="collapse" id="navbar-maps">
+                      <ul class="nav nav-sm flex-column">
+                          <li class="nav-item">
+                              <a href="{{ route('manage.blog.index') }}" class="nav-link">
+                                  <span class="sidenav-normal"> Article </span>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="{{ route('manage.blog-category.index') }}" class="nav-link">
+                                  <span class="sidenav-normal"> Category </span>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+              </li>
             <li class="nav-item">
               <a class="nav-link" href="examples/map.html">
                 <i class="ni ni-pin-3 text-primary"></i>
@@ -63,26 +78,6 @@ The above copyright notice and this permission notice shall be included in all c
                 <i class="ni ni-bullet-list-67 text-default"></i>
                 <span class="nav-link-text">Agent</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="#navbar-maps" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-maps">
-                <i class="ni ni-map-big text-primary"></i>
-                <span class="nav-link-text">Maps</span>
-              </a>
-              <div class="collapse" id="navbar-maps">
-                <ul class="nav nav-sm flex-column">
-                  <li class="nav-item">
-                    <a href="../../pages/maps/google.html" class="nav-link">
-                      <span class="sidenav-normal"> Google </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../../pages/maps/vector.html" class="nav-link">
-                      <span class="sidenav-normal"> Vector </span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
             </li>
           </ul>
         </div>
@@ -126,6 +121,7 @@ The above copyright notice and this permission notice shall be included in all c
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ Auth::user()->name }}
+                  <i class="ni ni-bold-down"></i>
               </a>
               <div class="dropdown-menu  dropdown-menu-right ">
                 <div class="dropdown-header noti-title">
@@ -176,7 +172,8 @@ The above copyright notice and this permission notice shall be included in all c
                 <a href="{{ route('manage.blog.index') }}" class="nav-link" target="_blank">Blog</a>
               </li>
               <li class="nav-item">
-                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
+                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"
+                   class="nav-link" target="_blank">MIT License</a>
               </li>
             </ul>
           </div>

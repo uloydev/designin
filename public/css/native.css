@@ -189,9 +189,6 @@ nav .container {
   font-weight: 600;
   height: 80px;
 }
-.nav__dropdown {
-
-}
 .nav--showed .nav__list:not(.nav__list--logo) {
   max-height: none;
   padding: 10px 0;
@@ -203,6 +200,9 @@ nav .container {
 .nav--showed .nav__list--logo {
   color: #383838;
 }
+
+
+
 body:not(#landingPage):not([id*='blog']):not(#faqPage) main {
   padding-top: 3rem;
   padding-bottom: 3rem;
@@ -989,6 +989,9 @@ body[id^='blog'] .article-popular__heading::after {
 body[id^='blog'] .article__title--popular {
   font-size: 15px !important;
   word-wrap: break-word;
+}
+#blogIndexPage .article-category {
+    margin-top: 100px;
 }
 #blogIndexPage .article-category__item::before {
   content: '';

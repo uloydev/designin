@@ -4,11 +4,11 @@
 @endsection
 @section('page-id', 'blogSingle')
 @section('content')
-  <div class="container">
+<div class="container">
     <div class="row justify-content-between py-5" id="single-article">
       <section class="col-12 col-md-8">
         <figure class="single-article__top">
-          <img src="{{ Storage::url('img/' . $blog->header_image) }}" alt="{{ $blog->title }}">
+          <img src="{{ Storage::url($blog->header_image) }}" alt="{{ $blog->title }}">
           <figcaption class="single-article__info">
             <h1 class="single-article__title">{{ $blog->title }}</h1>
             <a href="" class="single-article__category">{{ $blog->category->name }}</a>
