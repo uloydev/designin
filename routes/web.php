@@ -44,6 +44,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('blog', 'BlogController');
         Route::resource('blog-category', 'BlogCategoryController');
         Route::resource('service', 'ServiceController');
+        Route::resource('contact-us', 'ContactController')->except(['create', 'store', 'show']);
     });
 });
 

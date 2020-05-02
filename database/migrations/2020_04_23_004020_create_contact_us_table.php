@@ -20,7 +20,6 @@ class CreateContactUsTable extends Migration
             $table->text('message');
             $table->text('answer')->nullable();
             $table->boolean('is_answered')->nullable();
-            $table->integer('admin_id')->nullable();
             $table->timestamps();
         });
     }

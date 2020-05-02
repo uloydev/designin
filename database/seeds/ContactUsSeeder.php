@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\ContactUs;
-use App\User;
 
 class ContactUsSeeder extends Seeder
 {
@@ -13,7 +12,6 @@ class ContactUsSeeder extends Seeder
      */
     public function run()
     {
-        $admin_id = User::where('role', 'admin')->first()->id;
         $messages = [
             [
                 'name'=>'guest1',
@@ -25,8 +23,7 @@ class ContactUsSeeder extends Seeder
                 'email'=>'guest2@test.com',
                 'message'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, rerum velit aliquam aut similique totam nihil quasi iusto beatae in?',
                 'answer'=>'Lorem ipsum dolor sit',
-                'is_answered'=>1,
-                'admin_id'=>$admin_id
+                'is_answered'=>1
             ],
             [
                 'name'=>'guest3',
@@ -38,8 +35,7 @@ class ContactUsSeeder extends Seeder
                 'email'=>'guest4@test.com',
                 'message'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, rerum velit aliquam aut similique totam nihil quasi iusto beatae in?',
                 'answer'=>'Lorem ipsum dolor sit',
-                'is_answered'=>1,
-                'admin_id'=>$admin_id
+                'is_answered'=>1
             ],
         ];
         foreach ($messages as $key => $value) {
