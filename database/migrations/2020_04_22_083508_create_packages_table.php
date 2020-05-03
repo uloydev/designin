@@ -13,7 +13,7 @@ class CreatePackagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('packages', function (Blueprint $table) {
+        Schema::create('package', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->text('description');

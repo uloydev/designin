@@ -7,17 +7,18 @@
       <div class="row justify-content-center" id="main-article">
         @foreach ($mainArticle as $main)
         <div class="col-12">
-          <article>
-            <img src="{{ asset('img/article.jpg') }}" alt="Desainin article image" class="article__cover">
-            <div class="article__caption">
-              <p class="article__title mb-3">
-                {{ $main->title }}
-              </p>
-              <span class="article__category">{{ $main->category->name }}</span>
-              <time class="article__time">{{ $main->created_at->format('D m, Y') }}</time>
-            </div>
-            <a href="{{ route('blog.show', $main->id) }}" class="article__link"></a>
-          </article>
+            <a href="{{ route('blog.show', $main->id) }}" class="article__link">
+                <article>
+                    <img src="{{ asset('storage/' . $main->header_image) }}" alt="Desainin article image" class="article__cover">
+                    <div class="article__caption">
+                        <p class="article__title mb-3">
+                            {{ Str::words($main->title, 10) }}
+                        </p>
+                        <span class="article__category">{{ $main->category->name }}</span>
+                        <time class="article__time">{{ $main->created_at->format('D m, Y') }}</time>
+                    </div>
+                </article>
+            </a>
         </div>
         @endforeach
       </div>
@@ -30,12 +31,12 @@
       <section class="col-12 col-md-8">
           @foreach ($blogs as $blog)
           <article>
-              <img src="{{ asset('img/article2.jpg') }}" class="article__img">
+              <img src="{{ asset('storage/' . $main->header_image) }}" class="article__img">
               <div class="article__detail">
                 <p class="article__title">
-                  <a href="#">{{ $blog->title }}</a>
+                  <a href="#">{{ Str::words($blog->title, 5) }}</a>
                 </p>
-                <p class="article__content">{{ Str::words($blog->content, 5) }}</p>
+                <p class="article__content">{{ Str::words($blog->contents, 20) }}</p>
                 <span class="article__category">{{ $blog->category->name }}</span>
                 <time class="article__time">{{ $blog->created_at->format('D m, Y') }}</time>
               </div>
@@ -52,12 +53,13 @@
               <article class="mb-5">
                 <div class="article__detail">
                   <p class="article__title article__title--popular">
-                    <a href="">{{ $popular->title }}</a>
+                    <a href="">{{ Str::words($popular->title, 8) }}</a>
                   </p>
                   <span class="article-popular__category">{{ $popular->category->name }}</span>
                   <time class="article-popular__time">{{ $popular->created_at->format('D m, Y') }}</time>
                 </div>
-                <img src="{{ asset('img/article2.jpg') }}" class="article__img article__img--popular">
+                <img src="{{ asset('storage/' . $popular->header_image) }}" class="article__img article__img--popular"
+                     alt="{{ $popular->title }} Article Image">
               </article>
           @endforeach
         </div>
@@ -68,7 +70,7 @@
           <ul>
               @foreach ($categories as $category)
                   <li class="article-category__item mb-3">
-                      <a href="{{ route('blog-categories.show', $category->id) }}">{{ $category->name }}</a>
+                      <a href="{{ route('blog-category.show', $category->id) }}">{{ $category->name }}</a>
                   </li>
               @endforeach
           </ul>

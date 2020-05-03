@@ -2,15 +2,21 @@
   <dictionary name="bariq">
     <words>
       <w>cilandak</w>
+      <w>csrf</w>
       <w>desainin</w>
       <w>fillable</w>
       <w>fortawesome</w>
+      <w>handphone</w>
+      <w>jonggol</w>
       <w>kartini</w>
       <w>linkedin</w>
       <w>navbar</w>
       <w>nucleo</w>
+      <w>signup</w>
       <w>socmed</w>
       <w>succefully</w>
+      <w>successfuly</w>
+      <w>toggler</w>
     </words>
   </dictionary>
 </component>

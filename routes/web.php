@@ -13,12 +13,12 @@ Route::get('faq', 'HomeController@faq')->name('faq.index');
 Route::get('testimony', 'HomeController@testimonies')->name('testimony');
 Route::resource('blog', 'BlogController');
 Route::resource('blog/categories', 'BlogCategoryController')->names([
-    'index' => 'blog-categories.index',
-    'create' => 'blog-categories.create',
-    'show' => 'blog-categories.show',
-    'edit' => 'blog-categories.edit',
-    'update' => 'blog-categories.update',
-    'destroy' => 'blog-categories.destroy'
+    'index' => 'blog-category.index',
+    'create' => 'blog-category.create',
+    'show' => 'blog-category.show',
+    'edit' => 'blog-category.edit',
+    'update' => 'blog-category.update',
+    'destroy' => 'blog-category.destroy'
 ]);
 // Route::get('blog', 'BlogController@index')->name('blog.index');
 // Route::get('blog/{id}', 'BlogController@show')->name('blog.single');

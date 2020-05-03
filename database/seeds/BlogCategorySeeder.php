@@ -3,15 +3,8 @@
 use Illuminate\Database\Seeder;
 use App\BlogCategory;
 
-class BlogCategorySeeder extends Seeder
-{
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
+class BlogCategorySeeder extends Seeder {
+    public function run() {
         $categories = [
             [
                 'name'=>'News'
@@ -20,7 +13,7 @@ class BlogCategorySeeder extends Seeder
                 'name'=>'Promo'
             ],
         ];
-        foreach ($categories as $key => $value) {
+        foreach ($categories as $value) {
             BlogCategory::create($value);
         }
     }

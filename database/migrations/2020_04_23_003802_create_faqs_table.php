@@ -13,7 +13,7 @@ class CreateFaqsTable extends Migration
      */
     public function up()
     {
-        Schema::create('faqs', function (Blueprint $table) {
+        Schema::create('faq', function (Blueprint $table) {
             $table->id();
             $table->text('question');
             $table->text('answer');

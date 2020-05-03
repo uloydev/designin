@@ -4,21 +4,25 @@ namespace App\Http\Controllers\Admin;
 
 use App\BlogCategory;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class BlogCategoryController extends Controller
 {
 
     public function index()
     {
-        $blogCategory = BlogCategory::all();
-        return view('admin.blog-category.index', ['blogCategory', $blogCategory]);
+        return view('blog.');
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|Response|View
      */
     public function create()
     {
@@ -28,8 +32,8 @@ class BlogCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -43,19 +47,19 @@ class BlogCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param BlogCategory $blogCategory
+     * @return Application|Factory|View
      */
-    public function show($id)
+    public function show(BlogCategory $blogCategory)
     {
-        //
+        return view('blog.category', ['blogCategory', $blogCategory]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
@@ -66,9 +70,9 @@ class BlogCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -83,7 +87,7 @@ class BlogCategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function destroy($id)
     {

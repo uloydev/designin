@@ -105,10 +105,14 @@
                                 <td>{{ $article->category->name }}</td>
                                 <td>{{ Str::words($article->title, 8) }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('manage.blog.show', $article->id) }}" class="btn btn-primary">See article</a>
+                                    <a href="{{ route('manage.blog.show', $article->id) }}" class="btn btn-primary">
+                                        See article
+                                    </a>
                                 </td>
                                 <td class="text-center">
-                                    <a class="btn btn-warning" href="{{ route('manage.blog.edit', $article->id) }}">Edit</a>
+                                    <a class="btn btn-warning" href="{{ route('manage.blog.edit', $article->id) }}">
+                                        Edit
+                                    </a>
                                     <button type="button" class="btn btn-danger show-modal" data-toggle="modal"
                                     data-article-title="{{ Str::slug($article->title, '-') }}"
                                     data-target="#delete-article" data-article-id="{{ $article->id }}">Delete</button>
@@ -127,7 +131,9 @@
                 <div class="card-header bg-transparent border-0">
                     <div class="row mx-0 justify-content-between align-items-center">
                         <h3 class="text-white mb-0">Our Services</h3>
-                        <a href="{{ route('manage.service.index') }}" class="btn btn-sm btn-secondary">See all services</a>
+                        <a href="{{ route('manage.service.index') }}" class="btn btn-sm btn-secondary">
+                            See all services
+                        </a>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -144,8 +150,8 @@
                             <tr>
                                 <td>
                                     <div class="media align-items-center">
-                                        <img class="rounded-circle mr-2" height="30" alt="Image placeholder"
-                                             src="{{ Storage::url('img/t-shirt.png')  }}">
+                                        <img class="rounded-circle mr-2" height="30" width="30" alt="Image placeholder"
+                                             src="{{ asset('storage/' . $service->image)  }}">
                                         <div class="media-body">
                                             <span class="name mb-0 text-sm">{{ $service->title  }}</span>
                                         </div>
@@ -155,20 +161,25 @@
                                 <td>{{ $service->agent->name }}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
-                                           aria-haspopup="true" aria-expanded="false">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item text-primary" href="{{ route('manage.service.show', $service->id) }}">
+                                            <a class="dropdown-item text-primary"
+                                               href="{{ route('manage.service.show', $service->id) }}">
                                                 See details
                                             </a>
-                                            <a class="dropdown-item text-warning" href="{{ route('manage.service.edit', $service->id)  }}">
+                                            <a class="dropdown-item text-warning"
+                                               href="{{ route('manage.service.edit', $service->id)  }}">
                                                 Edit
                                             </a>
-                                            <form class="dropdown-item" action="{{ route('manage.service.destroy', $service->id) }}" method="post">
+                                            <form action="{{ route('manage.service.destroy', $service->id) }}"
+                                                  class="dropdown-item" method="post">
                                                 @csrf @method('DELETE')
-                                                <button type="submit" class="btn btn-link p-0 text-danger">delete</button>
+                                                <button type="submit" class="btn btn-link p-0 text-danger">
+                                                    delete
+                                                </button>
                                             </form>
                                         </div>
                                     </div>

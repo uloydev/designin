@@ -14,7 +14,9 @@
         <option value="{{$category->id}}">{{$category->name}}</option>
         @endforeach
     </select>
-    <button type="button" class="btn btn-link px-0" data-toggle="modal" data-target="#blog-add-category">Add new category</button>
+    <button type="button" class="btn btn-link px-0" data-toggle="modal" data-target="#blog-add-category">
+        Add new category
+    </button>
 </div>
 <div class="form-group">
   <label for="blog-content">Content</label>
@@ -23,10 +25,16 @@
 <div class="form-group">
   <img src="" alt="cover preview">
   <div class="custom-file">
-    <input type="file" name="header_image" class="custom-file-input" id="blog-cover" accept="image/*">
+    <input accept="image/*" class="custom-file-input" id="blog-cover" name="header_image" required type="file">
     <label class="custom-file-label" for="blog-cover">Pick a cover</label>
   </div>
 </div>
+@if ($mainArticles <= 6)
+<div class="custom-control custom-switch form-group">
+    <input type="checkbox" name="is_main" class="custom-control-input" id="is_main">
+    <label class="custom-control-label" for="is_main">Make article primary</label>
+</div>
+@endif
 
 @section('script')
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}" charset="utf-8"></script>

@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     @include('partials.stylesheet')
     @yield('css')
-    <link href="https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+      <link href="{{ asset('plugin/nice-select/css/nice-select.css') }}" rel="stylesheet" />
+      <link href="{{ asset("css/froala-editor.pkgd.css") }}" rel="stylesheet" type="text/css" />
     <title>Blog - Desainin | @yield('page-title')</title>
   </head>
   <body id="@yield('page-id')Page">
@@ -15,8 +16,10 @@
     </main>
     @include('partials.footer')
     @include('partials.script')
-    @yield('script')
     @yield('element')
-    <script src="https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/js/froala_editor.pkgd.min.js"></script>
+    @yield('script')
+    <script src="{{ asset('js/bs-custom-file-input.min.js') }}"></script>
+    <script src="{{ asset("js/froala-editor.pkgd.min.js") }}"></script>
+    <script src="{{ asset('plugin/nice-select/js/jquery.nice-select.js') }}"></script>
   </body>
 </html>

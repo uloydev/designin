@@ -23,7 +23,7 @@
                 <div class="col-12 col-md-6 mb-md-5 col-lg-4 col-xl-3">
                     <a href="">
                         <div class="service card p-0">
-                            <img src="{{ Storage::url($service->image)}}" class="card__img" alt="Desainin Service Category">
+                            <img src="{{ asset('storage/' . $service->image) }}" class="card__img" alt="Desainin Service Category">
                             <div class="card__header">
                                 <h2 class="card__heading service__title">{{ $service->title }}</h2>
                             </div>
