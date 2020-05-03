@@ -8,15 +8,6 @@ use App\BlogCategory;
 
 class BlogController extends Controller
 {
-    private $popular;
-    private $categories;
-
-    public function __construct()
-    {
-        $this->popular = Blog::orderBy('hits', 'desc')->take(3)->get();
-        $this->categories = BlogCategory::all();
-    }
-
     public function index()
     {
         $blogs = Blog::latest()->paginate(5);
@@ -29,6 +20,8 @@ class BlogController extends Controller
     public function show($id)
     {
         $blog = Blog::with(['category', 'author'])->findOrFail($id);
+        $blog->hits = (!$blog->hits) ? 1 : $blog->hits++;
+        $blog->update();
         $popular = Blog::orderBy('hits', 'desc')->take(3)->get();
         $blog_categories = BlogCategory::all();
         $related_blogs = Blog::with(['category', 'author'])->inRandomOrder()->take(3)->get()->except($id);

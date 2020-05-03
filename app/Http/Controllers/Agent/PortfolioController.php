@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\UserPortfolio;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class PortfolioController extends Controller
 {
@@ -43,13 +43,13 @@ class PortfolioController extends Controller
             'portfolios.*'=>'required|file|mimes:jpg,jpeg,png',
             'portfolio_titles.*'=>'required'
         ]);
-        if (!empty($request->portfolios)) {
+        if ($request->hasFile('portfolios')) {
             foreach ($request->file('portfolios') as $index => $file) {
-                $portfolio = Storage::putFile('uploads/portfolio', $request->file('portfolio'));
+                $portfolio = Storage::putFile('uploads/portfolio', $file);
                 $portfolio_data = [
                     'title'=>$request->titles[$index], 
                     'image_url'=>$portfolio,
-                    'user_id'=>Auth::user()->id
+                    'user_id'=>Auth::id()
                 ];
                 UserPortfolio::create($portfolio_data);
             }
@@ -65,12 +65,8 @@ class PortfolioController extends Controller
      */
     public function show($id)
     {
-        $portfolio = UserPortfolio::where('user_id', Auth::user()->id)->where('id', $id)->get();
-        if (empty($portfolio)) {
-            return abort('404');
-        }else{
-            return view('agent.portfolio.show')->with('portfolio', $portfolio);
-        }
+        $portfolio = UserPortfolio::where('user_id', Auth::user()->id)->findOrFail($id);
+        return view('agent.portfolio.show')->with('portfolio', $portfolio);
     }
 
     /**
@@ -81,12 +77,8 @@ class PortfolioController extends Controller
      */
     public function edit($id)
     {
-        $portfolio = UserPortfolio::where('user_id', Auth::user()->id)->where('id', $id)->get();
-        if (empty($portfolio)) {
-            return abort('404');
-        }else{
-            return view('agent.portfolio.edit')->with('portfolio', $portfolio);
-        }
+        $portfolio = UserPortfolio::where('user_id', Auth::user()->id)->findOrFail($id);
+        return view('agent.portfolio.edit')->with('portfolio', $portfolio);
     }
 
     /**
@@ -102,18 +94,13 @@ class PortfolioController extends Controller
             'title'=>'required', 
             'image'=>'file|mimes:jpg,jpeg,png,gif,svg',
         ]);
-        if (!empty($request->image)) {
+        $portfolio_data = [
+            'title'=>$request->titles,
+            'user_id'=>Auth::user()->id
+        ];
+        if ($request->hasFile('image')) {
             $portfolio = Storage::putFile('uploads/portfolio', $request->file('image'));
-            $portfolio_data = [
-                'title'=>$request->titles, 
-                'image_url'=>$portfolio,
-                'user_id'=>Auth::user()->id
-            ];
-        }else{
-            $portfolio_data = [
-                'title'=>$request->titles,
-                'user_id'=>Auth::user()->id
-            ];
+            $portfolio_data['image_url'] = $portfolio;
         }
         UserPortfolio::create($portfolio_data);
         return redirect()->back()->with('success', 'Portfolio Updated Successfully');
@@ -127,13 +114,9 @@ class PortfolioController extends Controller
      */
     public function destroy($id)
     {
-        $portfolio = UserPortfolio::where('user_id', Auth::user()->id)->where('id', $id)->get();
-        if (empty($portfolio)) {
-            return abort('404');
-        }else{
-            Storage::delete($portfolio->image_url);
-            UserPortfolio::where('id', $id)->delete();
-            return redirect()->back()->with('success','Portfolio Deleted Successfully');
-        }
+        $portfolio = UserPortolio::where('user_id', Auth::id())->findOrFail($id);
+        Storage::delete($portfolio->image_url);
+        $portfolio->delete();
+        return redirect()->back()->with('success','Portfolio Deleted Successfully');
     }
 }
