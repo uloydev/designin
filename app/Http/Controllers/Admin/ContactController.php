@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\ContactUs;
+use App\Mail\ContactUsNotification;
 
 class ContactController extends Controller
 {
@@ -47,6 +49,7 @@ class ContactController extends Controller
         $message->answer = $request->answer;
         $message->is_answered = true;
         $message->save();
+        Mail::to($message->email)->send(new ContctUsNotification($message));
         return redirect()->back()->with('success', 'Message Updated Successfully');
     }
 
