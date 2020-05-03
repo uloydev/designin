@@ -65,7 +65,7 @@ class PortfolioController extends Controller
      */
     public function show($id)
     {
-        $portfolio = UserPortfolio::where('user_id', Auth::user()->id)->findOrFail($id);
+        $portfolio = UserPortfolio::where('user_id', Auth::id())->findOrFail($id);
         return view('agent.portfolio.show')->with('portfolio', $portfolio);
     }
 
@@ -77,7 +77,7 @@ class PortfolioController extends Controller
      */
     public function edit($id)
     {
-        $portfolio = UserPortfolio::where('user_id', Auth::user()->id)->findOrFail($id);
+        $portfolio = UserPortfolio::where('user_id', Auth::id())->findOrFail($id);
         return view('agent.portfolio.edit')->with('portfolio', $portfolio);
     }
 
@@ -96,7 +96,7 @@ class PortfolioController extends Controller
         ]);
         $portfolio_data = [
             'title'=>$request->titles,
-            'user_id'=>Auth::user()->id
+            'user_id'=>Auth::id()
         ];
         if ($request->hasFile('image')) {
             $portfolio = Storage::putFile('uploads/portfolio', $request->file('image'));

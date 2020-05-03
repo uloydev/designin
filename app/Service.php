@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     protected $table = 'service';
-    protected $with = ['serviceCategory', 'agent'];
+    protected $with = ['serviceCategory', 'agent', 'testimonies'];
     protected $fillable = [
         'title', 'description', 'image', 'agent_id', 'service_category_id'
     ];
@@ -21,8 +21,14 @@ class Service extends Model
     {
         return $this->belongsTo('App\User', 'agent_id')->withDefault();
     }
+
     public function serviceCategory()
     {
         return $this->belongsTo('App\ServiceCategory');
+    }
+
+    public function testimonies()
+    {
+        return $this->hasMany('App\Testimony');
     }
 }
