@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
-    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
-    <title>@yield('title')</title>
+      @include('partials.meta')
+      <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+      <title>@yield('title')</title>
   </head>
   <body>
     @yield('content')

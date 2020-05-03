@@ -3,3 +3,13 @@
 .sidenav {
     z-index: 1000;
 }
+.nav-pills .nav-link:hover {
+    background-color: #E2E2E2;
+}
+.nav-pills .nav-link.active {
+    background-color: #4052af;
+}
+footer {
+    width: 100%;
+    padding: 15px 0;
+}

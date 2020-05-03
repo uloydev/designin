@@ -22,9 +22,9 @@
           <div class="row">
             @foreach ($serviceCategories as $category)
             <div class="px-3">
-              <img src="{{ Storage::url('img/' . $category->image_url) }}" class="services__icon">
-              <p class="services__name">{{ $category->name }}</p>
-              <a href="{{ url('services') }}" class="services__btn btn-light">See detail</a>
+                <img src="{{ asset('storage/' . $category->image_url) }}" class="services__icon">
+                <p class="services__name">{{ $category->name }}</p>
+                <a href="{{ url('services') }}" class="services__btn btn-light">See detail</a>
             </div>
             @endforeach
           </div>
@@ -39,9 +39,11 @@
               <img src="{{ asset('img/how-we-work.png') }}" width="100%">
               <div class="reason-trust__overlay">
                 <div class="reason-trust__modal">
-                  <a href="" class="reason-trust__close-btn"><i class='bx bx-x' ></i></a>
-                  <iframe class="reason-trust__video embed-video" src="https://www.youtube.com/embed/xpQLFH5OCEY??enablejsapi=1&start=0"
-                  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <a href="" class="reason-trust__close-btn"><i class='bx bx-x' ></i></a>
+                    <iframe class="reason-trust__video embed-video"
+                            src="https://www.youtube.com/embed/xpQLFH5OCEY??enablejsapi=1&start=0" frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
                 </div>
               </div>
             </div>
@@ -50,19 +52,27 @@
               <div class="reason-slider__item">
                 <p class="reason-slider__title">Reason 1</p>
                 <p class="reason-slider__desc">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore
+                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                    ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                    nulla pariatur.
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                    est laborum.
                 </p>
               </div>
               <div class="reason-slider__item">
                 <p class="reason-slider__title">Reason 2</p>
                 <p class="reason-slider__desc">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore
+                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                    ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                    nulla pariatur.
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                    est laborum.
                 </p>
               </div>
               {{-- endforeach --}}
@@ -85,7 +95,8 @@
                 <div class="subscription__detail">
                   <p class="subscription__name">Social Media</p>
                   <p class="subscription__desc">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio facere doloribus assumenda.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio facere doloribus
+                    assumenda.
                     Vel explicabo dolorem suscipit, fugiat fuga adipisci iste reiciendis ipsa esse officiis,
                     voluptas quis velit. Ratione.
                   </p>
@@ -105,60 +116,80 @@
             <div class="px-2">
               <div class="card testimony-card">
                 <div class="card__header testimony-card__header">
-                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony" class="card__img card__img--circle testimony__img">
+                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony"
+                       class="card__img card__img--circle testimony__img">
                   <p class="testimony__name">People name</p>
                   <p class="card__text">People jobs</p>
                 </div>
                 <div class="card__body testimony-card__detail">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                    ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                    nulla pariatur.
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                    est laborum.
                 </div>
               </div>
             </div>
             <div class="px-2">
               <div class="card testimony-card">
                 <div class="card__header testimony-card__header">
-                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony" class="card__img card__img--circle testimony__img">
+                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony"
+                       class="card__img card__img--circle testimony__img">
                   <p class="testimony__name">People name</p>
                   <p class="card__text">People jobs</p>
                 </div>
                 <div class="card__body testimony-card__detail">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                    ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                    nulla pariatur.
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                    est laborum.
                 </div>
               </div>
             </div>
             <div class="px-2">
               <div class="card testimony-card">
                 <div class="card__header testimony-card__header">
-                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony" class="card__img card__img--circle testimony__img">
+                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony"
+                       class="card__img card__img--circle testimony__img">
                   <p class="testimony__name">People name</p>
                   <p class="card__text">People jobs</p>
                 </div>
                 <div class="card__body testimony-card__detail">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                    ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                    nulla pariatur.
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                    est laborum.
                 </div>
               </div>
             </div>
             <div class="px-2">
               <div class="card testimony-card">
                 <div class="card__header testimony-card__header">
-                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony" class="card__img card__img--circle testimony__img">
+                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony"
+                       class="card__img card__img--circle testimony__img">
                   <p class="testimony__name">People name</p>
                   <p class="card__text">People jobs</p>
                 </div>
                 <div class="card__body testimony-card__detail">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                    ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                    nulla pariatur.
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                    est laborum.
                 </div>
               </div>
             </div>

@@ -18,7 +18,7 @@ class ServiceSeeder extends Seeder
             DB::table('service')->insert([
         		'title' => 'Desain ' . $faker->word,
         		'description' => $faker->paragraph,
-                'image' => 'img/stories.jpeg',
+                'image' => 'files/stories.jpeg',
         		'agent_id' => 2,
         		'service_category_id' => $faker->unique()->numberBetween(1, 6)
            	]);

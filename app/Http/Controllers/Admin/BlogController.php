@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BlogRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -13,41 +12,39 @@ use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
-    private $upload_path = "uploads/images";
 
     public function index()
     {
         $blogs = Blog::with(['category', 'author'])->orderBy('created_at', 'DESC')->paginate(10);
         $number = $blogs->firstItem();
-        return view('blog.manage', ['blogs' => $blogs, 'number' => $number]);
+        $blogCategories = BlogCategory::all();
+        return view('blog.manage-article', ['blogs' => $blogs, 'number' => $number, 'blogCategories' => $blogCategories]);
     }
 
     public function create()
     {
+        $mainArticles = Blog::where('is_main', true)->count();
         $categories = BlogCategory::all();
-        return view('blog.create')->with('categories', $categories);
+        return view('blog.create-article', ['categories' => $categories, 'mainArticles' => $mainArticles]);
     }
 
-    public function store(BlogRequest $request)
+    public function store(Request $request)
     {
-        // $request->validate([
-        //     'title'=>'required',
-        //     'header_image'=>'file|mimes:jpg,jpeg,png,gif,svg',
-        //     'category_id'=>'required',
-        //     'content'=>'required',
-        // ]);
-        $data = [
-            'title'=>$request->title,
-            'category_id'=>$request->category_id,
-            'contents'=>$request->contents,
-            'author_id'=>Auth::user()->id,
-        ];
-        if ($request->hasFile('header_image')) {
-            $img_path = $request->file('header_image')->store('public/img');
-            $data['header_image'] = $img_path;
+        $img_path = $request->file('header_image')->store('public/files');
+        $createBlog = new Blog;
+        $createBlog->title = $request->title;
+        $createBlog->header_image = $request->header_image;
+        $createBlog->category_id = $request->category_id;
+        $createBlog->contents = $request->contents;
+        $createBlog->header_image = $img_path;
+        $createBlog->author_id = Auth::id();
+        if (count(Blog::all()) <= 6) {
+            $createBlog->is_main = $request->is_main;
         }
-        dd($data);
-        Blog::create($data);
+        else {
+            $createBlog->is_main = false;
+        }
+        $createBlog->save();
         return redirect()->route('manage.blog.index')->with('success', 'Blog Created Successfully');
     }
 
@@ -66,8 +63,9 @@ class BlogController extends Controller
     public function edit($id)
     {
         $article = Blog::findOrFail($id);
+        $mainArticles = Blog::where('is_main', true)->count();
         $categories = BlogCategory::all();
-        return view('blog.edit', ['article'=> $article, 'categories' => $categories]);
+        return view('blog.edit', ['article'=> $article, 'categories' => $categories, 'mainArticles' => $mainArticles]);
     }
 
     /**
@@ -77,8 +75,14 @@ class BlogController extends Controller
      * @param  int  $id
      * @return RedirectResponse
      */
-    public function update(BlogRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        $request->validate([
+            'title'=>'required',
+            'header_image'=>'file|mimes:jpg,jpeg,png,gif,svg',
+            'category_id'=>'required',
+            'content'=>'required',
+        ]);
         $data = [
             'title' => $request->title,
             'category_id' => $request->category_id,

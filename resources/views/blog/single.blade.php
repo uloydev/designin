@@ -8,14 +8,16 @@
     <div class="row justify-content-between py-5" id="single-article">
       <section class="col-12 col-md-8">
         <figure class="single-article__top">
-          <img src="{{ Storage::url($blog->header_image) }}" alt="{{ $blog->title }}">
+          <img src="{{ asset('storage/' . $blog->header_image) }}" alt="{{ $blog->title }}">
           <figcaption class="single-article__info">
             <h1 class="single-article__title">{{ $blog->title }}</h1>
-            <a href="" class="single-article__category">{{ $blog->category->name }}</a>
+            <a href="{{ route('blog-category.show', $blog->category_id) }}" class="single-article__category">
+                {{ $blog->category->name }}
+            </a>
             <time class="single-article__time">{{ $blog->updated_at->format('d M, Y') }}</time>
           </figcaption>
         </figure>
-        <div class="singe-article__bottom">{!! $blog->content !!}</div>
+        <div class="singe-article__bottom">{!! $blog->contents !!}</div>
       </section>
       <aside class="col-12 col-md-4 col-lg-3 mt-4 mt-md-0">
         <div class="article-popular">

@@ -1,43 +1,53 @@
 $(document).ready(function() {
     //user js
-    $(".nav__list--dropdown").click(function() {
-        $(this).find('.dropdown-icon').toggleClass('rotate-180');
-        $(this).find('.nav-dropdown-list').toggleClass('nav-dropdown-list--showed');
-    });
-    $(".nav__toggle").click(function() {
-        $(".overlay--nav-showed").addClass('overlay--active');
-        $(".overlay--nav-showed").click(function() {
-            $(this).removeClass('overlay--active');
-            $("nav").removeClass('nav--showed');
-            $("body").removeAttr('style');
-      });
+    const navToggle = document.querySelector('.nav__toggle');
+    const primaryNav = document.querySelector('#primaryNav');
+    navToggle.addEventListener('click', function () {
+        const overlayNavShowed = document.querySelector('.overlay--nav-showed');
 
-      if ($(window).width() <= 992) {
-          if ($("nav").hasClass('nav--showed')) {
-              $("nav").removeClass('nav--showed');
-              $(".overlay--nav-showed.overlay--active").removeClass('overlay--active');
-              $("body").removeAttr('style');
+        if (overlayNavShowed.length === 1) {
+            if (!overlayNavShowed.classList.contains('overlay--active')) {
+                overlayNavShowed.classList.add('overlay--active');
+            }
+            else {
+                overlayNavShowed.classList.add('overlay--active');
+            }
+        }
+
+        if (window.screen.width <= 992) {
+            if (primaryNav.classList.contains('nav--showed')) {
+                primaryNav.classList.remove('nav--showed');
+                document.querySelector('body').removeAttribute('style');
+            }
+            else {
+                primaryNav.classList.add('nav--showed');
+                document.querySelector('body').style.cssText = 'overflow: hidden';
+            }
         }
         else {
-            $("nav").addClass('nav--showed');
-            $("body").css('overflow', 'hidden');
+            primaryNav.classList.remove('nav--showed');
+            overlayNavShowed.classList.remove('overlay--active');
         }
-      }
-      else {
-          $("nav").removeClass('nav--showed');
-          $(".overlay--nav-showed.overlay--active").removeClass('overlay--active');
-      }
+
+        overlayNavShowed.addEventListener('click', function () {
+            overlayNavShowed.classList.remove('overlay--active');
+            document.querySelector('body').style.removeProperty('overflow');
+            document.querySelector('#primaryNav').classList.remove('nav--showed');
+        });
     });
 
     $("header > .container, main, footer, body[id*='blog'] header").click(function() {
         $(".nav--showed").removeClass('nav--showed');
-        $(".nav-dropdown-list").removeClass('nav-dropdown-list--showed');
         $(".nav__list--dropdown .dropdown-icon").removeClass('rotate-180');
     });
 
-    $(".reason-trust__btn").click(function() {
-        $(".reason-trust__overlay").addClass('reason-trust__overlay--show');
-    });
+    if (window.location.href === '/') {
+        const btnReasonVideo = document.querySelector('.reason-trust__btn');
+        const reasonOverlay = document.querySelector('.reason-trust__overlay');
+        btnReasonVideo.addEventListener('click', function () {
+            reasonOverlay.classList.add('reason-trust__overlay--show');
+        });
+    }
     $(".reason-trust__close-btn").click(function(e) {
         e.preventDefault();
         const videoPromo = $(".reason-trust__video").clone();
@@ -47,27 +57,64 @@ $(document).ready(function() {
     });
 
     const articleCategoryWidth = $("#blogIndexPage main .article__category").outerWidth(true);
-    $("#blogIndexPage #main-article .col-12").filter(":nth-child(-n+2)").addClass('col-md-6')
-    $("#blogIndexPage #main-article .col-12").filter(':not(:nth-child(-n+2))').addClass('col-md-3');
-    $("#blogIndexPage main section .article__time").css('left', articleCategoryWidth + 30);
+    $('#blogIndexPage #main-article .col-12').filter(":nth-child(-n+2)").addClass('col-md-6');
+    $('#blogIndexPage #main-article .col-12').filter(':not(:nth-child(-n+2))').addClass('col-md-3');
+    $("#blogIndexPage main section .article__time").css('left', articleCategoryWidth + 40);
+    $("body[id^='blog'] main section nav").addClass('nav-pagination');
 
     //admin js
-    $(".btn[data-target='#delete-article']").click(function() {
-        const modalTarget = $(this).data('target');
-        const articleTitle =  $(this).data('article-title');
-        const articleId = $(this).data('article-id');
-        $(".modal#delete-article").find('.modal-article-title').text(articleTitle);
-        $(".modal#delete-article").find('form').attr('action','/admin/manage/blog/' + articleId);
+    const btnArticles = document.querySelectorAll('.btn[data-target="#delete-article');
+    btnArticles.forEach(function (btnArticle) {
+        let articleId = btnArticle.dataset.articleId;
+        let articleTitle = btnArticle.dataset.articleTitle;
+        btnArticle.addEventListener("click", function () {
+            let modalArticlesName = document.querySelectorAll('.modal-article-title');
+            modalArticlesName.forEach(function (modalArticleName) {
+                modalArticleName.textContent = articleTitle;
+            });
+            const formDeleteArticle = document.querySelector('#delete-article form');
+            formDeleteArticle.setAttribute('action', 'admin/manage/blog/' + articleId);
+        });
+    });
+
+    const btnCategories = document.querySelectorAll('.btn[data-target="#delete-category-article');
+    btnCategories.forEach(function (btnCategory) {
+        let idCategory = btnCategory.dataset.categoryId;
+        let nameCategory = btnCategory.dataset.categoryName;
+        btnCategory.addEventListener("click", function () {
+            let modalCategoryNames = document.querySelectorAll('.modal-category-name');
+            modalCategoryNames.forEach(function (modalCategoryName) {
+                modalCategoryName.textContent = nameCategory;
+            });
+            const formDeleteCategory = document.querySelector('.modal#delete-category-article form');
+            formDeleteCategory.setAttribute('action', 'admin/manage/blog-category/' + idCategory);
+        });
+    });
+
+    const thisRoute = window.location.href;
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(function (navLink) {
+        let url = navLink.href;
+        if(url === thisRoute) {
+            navLink.classList.add('active');
+        }
     });
 
     //plugin & general
-    $("input[accept='image/*']").change(function(){
-        const blogCover = this;
+    if (window.location.href.indexOf('blog/categories') > -1) {
+        $("#blogCategoryPage .category-header__filter").niceSelect();
+    }
+    if (window.location.href.indexOf('admin') > -1) {
+        bsCustomFileInput.init();
+    }
+
+    $('input[accept="image/*"]').change(function(){
         if (this.files && this.files[0]) {
-            var reader = new FileReader();
+            let reader = new FileReader();
             $(this).parent().prev().attr('id', 'cover-preview');
+            console.log($(this).val());
             reader.onload = function (e) {
-                blogCover.parent().prev('#cover-preview').attr('src', e.target.result);
+                $('#cover-preview').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
       }
@@ -145,7 +192,7 @@ $(document).ready(function() {
       ]
     });
 
-    if ($('#blogCreatePage #blog-content').length == 1) {
+    if ($('#blogCreatePage #blog-content').length === 1) {
       const blogContent = new FroalaEditor('#blog-content', {
         placeholderText: 'Content of your article...',
         heightMin: 300

@@ -13,7 +13,7 @@ class CreateCarouselImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('carousel_images', function (Blueprint $table) {
+        Schema::create('carousel_image', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('url');

@@ -9,12 +9,8 @@ The above copyright notice and this permission notice shall be included in all c
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Desainin admin master template">
-  <meta name="author" content="Creative Tim">
+  @include('partials.meta')
   <title>Desainin Admin - @yield('page-title')</title>
-  <link rel="icon" href="{{ asset('img/favicon.png') }}">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
   <link rel="stylesheet" href="{{ asset('plugin/argon-dashboard/assets/vendor/nucleo/css/nucleo.css') }}">
   <link rel="stylesheet" href="{{ asset('plugin/argon-dashboard/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}">
@@ -35,31 +31,16 @@ The above copyright notice and this permission notice shall be included in all c
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" href="{{ route('admin.dashboard') }}">
+              <a class="nav-link {{ \Request::is('admin/dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
             </li>
               <li class="nav-item">
-                  <a class="nav-link collapsed" href="#navbar-maps" data-toggle="collapse" role="button"
-                     aria-expanded="false" aria-controls="navbar-maps">
+                  <a class="nav-link" href="{{ route('manage.blog.index') }}">
                       <i class="ni ni-map-big text-primary"></i>
                       <span class="nav-link-text">Blog</span>
                   </a>
-                  <div class="collapse" id="navbar-maps">
-                      <ul class="nav nav-sm flex-column">
-                          <li class="nav-item">
-                              <a href="{{ route('manage.blog.index') }}" class="nav-link">
-                                  <span class="sidenav-normal"> Article </span>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="{{ route('manage.blog-category.index') }}" class="nav-link">
-                                  <span class="sidenav-normal"> Category </span>
-                              </a>
-                          </li>
-                      </ul>
-                  </div>
               </li>
             <li class="nav-item">
               <a class="nav-link" href="examples/map.html">
@@ -191,6 +172,7 @@ The above copyright notice and this permission notice shall be included in all c
   <script src="{{ asset('plugin/argon-dashboard/assets/vendor/chart.js/dist/Chart.extension.js') }}"></script>
   <script src="{{ asset('plugin/argon-dashboard/assets/js/argon.js') }}"></script>
   <script src="{{ asset('plugin/slick/slick.min.js') }}"></script>
+  <script src="{{ asset('js/bs-custom-file-input.min.js') }}"></script>
   <script src="{{ asset('js/native.js') }}" charset="utf-8"></script>
 </body>
 </html>
