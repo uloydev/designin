@@ -30,6 +30,17 @@
                             <div class="card__body service__content">
                                 <p>{{ $service->description }}</p>
                                 <p>{{ $service->agent->name }}</p>
+                                @php
+                                    $rating = 0;
+                                    if($service->testimonies->count() != 0){
+                                        $score = 0;
+                                        foreach ($service->testimonies as $testimony) {
+                                            $score += $testimony->rating;
+                                        }
+                                        $rating = $score / $service->testimonies->count();
+                                    }
+                                @endphp
+                                <p>rating : {{ $rating }}</p>
                             </div>
                         </div>
                     </a>

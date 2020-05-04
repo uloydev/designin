@@ -10,6 +10,7 @@ Route::get('/services/search', 'HomeController@serviceSearch');
 Route::get('/services', 'HomeController@services')->name('services');
 Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
+Route::get('testimony', 'HomeController@testimonies')->name('testimony');
 Route::resource('blog', 'BlogController');
 Route::resource('blog/categories', 'BlogCategoryController')->names([
     'index' => 'blog-category.index',
@@ -46,12 +47,16 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('service', 'ServiceController');
         Route::resource('service-category', 'ServiceCategoryController');
         Route::resource('contact-us', 'ContactController')->except(['create', 'store', 'show']);
+        Route::resource('testimony', 'TestimonyController')->only(['index', 'update', 'destroy']);
     });
 });
 
 Route::middleware(['auth', 'verified'])->prefix('user')->namespace('User')->group(function () {
     Route::redirect('/', 'dashboard');
-    Route::get('dashboard', 'HomeController@index')->name('user.home');
+    Route::name('user.')->group(function () {
+        Route::get('dashboard', 'HomeController@index')->name('home');
+        Route::resource('testimony', 'TestimonyController')->only(['index', 'create', 'store']);
+    });
 });
 
 Route::prefix('agent')->namespace('Agent')->group(function () {
@@ -59,6 +64,8 @@ Route::prefix('agent')->namespace('Agent')->group(function () {
     Route::middleware(['agent', 'verified'])->name('agent.')->group(function () {
         Route::redirect('/', 'dashboard');
         Route::get('dashboard', 'HomeController@index')->name('home');
+        Route::get('testimony', 'TestimonyController@index')->name('testimony.index');
+        Route::get('testimony/{service_id}', 'TestimonyController@show')->name('testimony.show');
         Route::resource('portfolio', 'PortfolioController');
     });
 });

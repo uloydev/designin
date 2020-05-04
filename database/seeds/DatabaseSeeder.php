@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
         UserProfileSeeder::class,
         UserPortfolioSeeder::class,
         BlogSeeder::class,
-        BlogCategorySeeder::class
+        BlogCategorySeeder::class,
+        TestimonySeeder::class
       ]);
     }
 }
