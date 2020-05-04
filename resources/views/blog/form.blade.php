@@ -20,12 +20,12 @@
 </div>
 <div class="form-group">
   <label for="blog-content">Content</label>
-  <textarea id="blog-content" rows="8" name="contents" required>{{ $article->contents ?? '' }}</textarea>
+  <textarea id="blog-content" rows="8" name="contents" required>{!! $article->contents ?? '' !!}</textarea>
 </div>
 <div class="form-group">
   <img src="" alt="cover preview">
   <div class="custom-file">
-    <input accept="image/*" class="custom-file-input" id="blog-cover" name="header_image" required type="file">
+    <input accept="image/*" class="custom-file-input" id="blog-cover" name="header_image" type="file">
     <label class="custom-file-label" for="blog-cover">Pick a cover</label>
   </div>
 </div>

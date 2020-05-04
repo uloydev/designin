@@ -8,7 +8,7 @@
     <div class="row justify-content-between py-5" id="single-article">
       <section class="col-12 col-md-8">
         <figure class="single-article__top">
-          <img src="{{ asset('storage/' . $blog->header_image) }}" alt="{{ $blog->title }}">
+          <img src="{{ Storage::url($blog->header_image) }}" alt="{{ $blog->title }}">
           <figcaption class="single-article__info">
             <h1 class="single-article__title">{{ $blog->title }}</h1>
             <a href="{{ route('blog-category.show', $blog->category_id) }}" class="single-article__category">

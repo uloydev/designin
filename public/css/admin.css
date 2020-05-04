@@ -9,7 +9,61 @@
 .nav-pills .nav-link.active {
     background-color: #4052af;
 }
+#servicePage #v-pills-tab {
+    height: 100%;
+}
+#servicePage #v-pills-tab .nav-link {
+    /*flex-grow: 1;*/
+    text-align: center;
+    padding: 20px 0;
+}
+#servicePage .service__title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+#servicePage .service__detail {
+
+}
+#servicePage .service__content {
+    display: flex;
+    padding-bottom: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+#servicePage .service__content img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 7px;
+}
+#servicePage .service__action {
+    display: flex;
+    padding: 10px 0;
+    justify-content: space-between;
+}
 footer {
     width: 100%;
     padding: 15px 0;
+}
+
+@media screen and (min-width: 768px) {
+    #servicePage .service__content {
+        flex-direction: row;
+        padding-bottom: 0;
+        margin: 10px 0 20px;
+    }
+    #servicePage .service__content figure {
+        flex-direction: row;
+    }
+    #servicePage .service__content img {
+        width: auto;
+        max-height: 300px;
+        margin-left: 0;
+        margin-right: 30px;
+        margin-bottom: 0;
+    }
 }

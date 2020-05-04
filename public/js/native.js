@@ -2,51 +2,58 @@ $(document).ready(function() {
     //user js
     const navToggle = document.querySelector('.nav__toggle');
     const primaryNav = document.querySelector('#primaryNav');
-    navToggle.addEventListener('click', function () {
-        const overlayNavShowed = document.querySelector('.overlay--nav-showed');
+    if (navToggle) {
+        navToggle.addEventListener('click', function () {
+            const overlayNavShowed = document.querySelector('.overlay--nav-showed');
 
-        if (overlayNavShowed.length === 1) {
-            if (!overlayNavShowed.classList.contains('overlay--active')) {
-                overlayNavShowed.classList.add('overlay--active');
+            if (overlayNavShowed.length === 1) {
+                if (!overlayNavShowed.classList.contains('overlay--active')) {
+                    overlayNavShowed.classList.add('overlay--active');
+                }
+                else {
+                    overlayNavShowed.classList.add('overlay--active');
+                }
+            }
+
+            if (window.screen.width <= 992) {
+                if (primaryNav.classList.contains('nav--showed')) {
+                    primaryNav.classList.remove('nav--showed');
+                    document.querySelector('body').removeAttribute('style');
+                }
+                else {
+                    primaryNav.classList.add('nav--showed');
+                    document.querySelector('body').style.cssText = 'overflow: hidden';
+                }
             }
             else {
-                overlayNavShowed.classList.add('overlay--active');
-            }
-        }
-
-        if (window.screen.width <= 992) {
-            if (primaryNav.classList.contains('nav--showed')) {
                 primaryNav.classList.remove('nav--showed');
-                document.querySelector('body').removeAttribute('style');
+                overlayNavShowed.classList.remove('overlay--active');
             }
-            else {
-                primaryNav.classList.add('nav--showed');
-                document.querySelector('body').style.cssText = 'overflow: hidden';
-            }
-        }
-        else {
-            primaryNav.classList.remove('nav--showed');
-            overlayNavShowed.classList.remove('overlay--active');
-        }
 
-        overlayNavShowed.addEventListener('click', function () {
-            overlayNavShowed.classList.remove('overlay--active');
-            document.querySelector('body').style.removeProperty('overflow');
-            document.querySelector('#primaryNav').classList.remove('nav--showed');
+            overlayNavShowed.addEventListener('click', function () {
+                overlayNavShowed.classList.remove('overlay--active');
+                document.querySelector('body').style.removeProperty('overflow');
+                document.querySelector('#primaryNav').classList.remove('nav--showed');
+            });
         });
-    });
+    }
 
     $("header > .container, main, footer, body[id*='blog'] header").click(function() {
         $(".nav--showed").removeClass('nav--showed');
         $(".nav__list--dropdown .dropdown-icon").removeClass('rotate-180');
     });
 
-    if (window.location.href === '/') {
-        const btnReasonVideo = document.querySelector('.reason-trust__btn');
-        const reasonOverlay = document.querySelector('.reason-trust__overlay');
+    const btnReasonVideo = document.querySelector('#landingPage .reason-trust__btn');
+    const reasonOverlay = document.querySelector('#landingPage .reason-trust__overlay');
+    if (btnReasonVideo) {
         btnReasonVideo.addEventListener('click', function () {
             reasonOverlay.classList.add('reason-trust__overlay--show');
         });
+    }
+
+    const btnCloseReasonVideo = document.querySelector('.reason-trust__close-btn');
+    if (btnCloseReasonVideo) {
+
     }
     $(".reason-trust__close-btn").click(function(e) {
         e.preventDefault();
@@ -73,7 +80,7 @@ $(document).ready(function() {
                 modalArticleName.textContent = articleTitle;
             });
             const formDeleteArticle = document.querySelector('#delete-article form');
-            formDeleteArticle.setAttribute('action', 'admin/manage/blog/' + articleId);
+            formDeleteArticle.action = '/admin/manage/blog/' + articleId;
         });
     });
 
@@ -86,10 +93,15 @@ $(document).ready(function() {
             modalCategoryNames.forEach(function (modalCategoryName) {
                 modalCategoryName.textContent = nameCategory;
             });
-            const formDeleteCategory = document.querySelector('.modal#delete-category-article form');
-            formDeleteCategory.setAttribute('action', 'admin/manage/blog-category/' + idCategory);
+            const formDeleteCategory = document.querySelector('#delete-category-article form');
+            formDeleteCategory.setAttribute('action', '/admin/manage/blog-category/' + idCategory);
         });
     });
+
+    const createArticleImg = document.querySelector('#blogCreatePage input[type="file"]')
+    if (createArticleImg) {
+        createArticleImg.required = true;
+    }
 
     const thisRoute = window.location.href;
     const navLinks = document.querySelectorAll('.nav-link');
@@ -100,12 +112,45 @@ $(document).ready(function() {
         }
     });
 
+    $("#serviceCategoryPage .btn[data-target='#create-edit-category']").click(function () {
+        let categoryId = $(this).data('category-id');
+        let categoryName = $(this).data('category-name');
+
+        $(".modal#create-edit-category form input[name='service_category']").val(categoryName);
+        if ($(this).attr('id') === 'edit-category') {
+            $(".modal#create-edit-category form").attr('action', '/admin/manage/blog-category/' + categoryId);
+            $(".modal#create-edit-category form input[name='image_url']").prop('required', false);
+        }
+        else {
+            $(".modal#create-edit-category form").attr('action', '/admin/manage/blog-category');
+            $(".modal#create-edit-category form input[name='image_url']").prop('required', true);
+        }
+    });
+    $("#serviceCategoryPage .btn[data-target='#delete-category']").click(function () {
+        let categoryId = $(this).data('category-id');
+        let categoryName = $(this).parent().find('span').text();
+
+        $("#serviceCategoryPage .service-category-title").text(categoryName);
+        $("#serviceCategoryPage #delete-category form").attr('action', '/admin/manage/blog-category/' + categoryId);
+    });
+
     //plugin & general
     if (window.location.href.indexOf('blog/categories') > -1) {
         $("#blogCategoryPage .category-header__filter").niceSelect();
     }
     if (window.location.href.indexOf('admin') > -1) {
         bsCustomFileInput.init();
+    }
+
+    if ($(window).width() > 768 && $("#faqs").length === 1) {
+        $('#faqs').jqTabs({
+            direction: 'vertical'
+        });
+    }
+    else if ($(window).width() < 768 && $("#faqs").length === 1) {
+        $('#faqs').jqTabs({
+            direction: 'horizontal'
+        });
     }
 
     $('input[accept="image/*"]').change(function(){
@@ -192,10 +237,10 @@ $(document).ready(function() {
       ]
     });
 
-    if ($('#blogCreatePage #blog-content').length === 1) {
-      const blogContent = new FroalaEditor('#blog-content', {
-        placeholderText: 'Content of your article...',
-        heightMin: 300
-      });
+    if($("#blog-content").length === 1) {
+        $("#blog-content").summernote({
+            placeholder: 'Insert your content here',
+            minHeight: 300
+        });
     }
 });

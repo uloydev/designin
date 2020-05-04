@@ -30,7 +30,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title" id="modal-title-default">
-                    Delete article <span id="modal-article-title"></span>
+                    Delete article <span class="modal-category-name"></span>
                 </h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -38,7 +38,7 @@
             </div>
             <div class="modal-body">
                 Are you sure wanna delete article with title
-                <strong id="modal-category-name"></strong>
+                <strong class="modal-category-name"></strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Cancel</button>

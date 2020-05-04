@@ -3,14 +3,16 @@
 @section('page-id', 'blogCreate')
 @section('content')
   <div class="container py-4">
-    <form action="{{ route('manage.blog.store') }}" method="post" enctype="multipart/form-data">
-      @include('blog.form')
-      <button type="submit" class="btn btn-success btn-block">Add new article</button>
-    </form>
+      <form action="{{ route('manage.blog.store') }}" method="post" enctype="multipart/form-data">
+          @include('blog.form')
+          <a href="" class="btn text-warning"><i class='bx bx-left-arrow-alt' ></i> Back</a>
+          <button type="submit" class="btn btn-success float-right">Add new article</button>
+      </form>
   </div>
 @endsection
 @section('element')
-  <div class="modal fade" id="blog-add-category" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="add-categoryLabel" aria-hidden="true">
+  <div class="modal fade" id="blog-add-category" data-backdrop="static" tabindex="-1" role="dialog"
+       aria-labelledby="add-categoryLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -22,7 +24,7 @@
         <div class="modal-body">
           <form class="" id="form-add-category" action="{{route('manage.blog-category.store')}}" method="post">
             @csrf
-            <input type="text" placeholder="Add your new category" class="form-control" nmae="name">
+            <input type="text" placeholder="Add your new category" class="form-control" name="name">
           </form>
         </div>
         <div class="modal-footer">

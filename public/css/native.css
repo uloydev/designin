@@ -20,7 +20,7 @@ header > .container {
 :not(#blogCreatePage) .btn-light {
     background-color: var(--almost-white);
 }
-body:not(#blogCreatePage) [class*='btn'] {
+body:not(#blogCreatePage):not(#blogEditPage) [class*='btn'] {
   font-weight: bold;
   border-radius: 7px;
   text-transform: capitalize;
@@ -32,17 +32,17 @@ body:not(#blogCreatePage) [class*='btn'] {
   cursor: pointer;
   background-color: var(--almost-white);
 }
-:not(#blogCreatePage) .btn-light:hover {
+:not(#blogCreatePage):not(#blogEditPage) .btn-light:hover {
   background-color: #e2e6ea;
 }
-:not(#blogCreatePage) .slick-arrow {
+:not(#blogCreatePage):not(#blogEditPage) .slick-arrow {
   font-size: 34px;
   z-index: 1;
 }
-:not(#blogCreatePage) .bxs-chevron-left {
+:not(#blogCreatePage):not(#blogEditPage) .bxs-chevron-left {
   left: 15px;
 }
-:not(#blogCreatePage) .bxs-chevron-right {
+:not(#blogCreatePage):not(#blogEditPage) .bxs-chevron-right {
   right: 15px;
 }
 .container {

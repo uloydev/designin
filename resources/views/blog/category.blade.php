@@ -33,7 +33,7 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <article class="category-article">
                             <a href="" class="category-article__open category-article__img">
-                                <img src="{{ asset('storage/' . $article->header_image) }}" alt="Article Image">
+                                <img src="{{ Storage::url($article->header_image) }}" alt="Article Image">
                             </a>
                             <div class="category-article__caption">
                                 <p class="category-article__title">

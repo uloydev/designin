@@ -1,6 +1,6 @@
 @extends('layouts.blog-master')
 @section('page-title', 'Edit article')
-@section('page-id', 'blogCreate')
+@section('page-id', 'blogEdit')
 @section('content')
   <div class="container py-4">
   <form action="{{ route('manage.blog.update', $article->id) }}" method="post" enctype="multipart/form-data">

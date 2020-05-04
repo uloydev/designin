@@ -151,7 +151,7 @@
                                 <td>
                                     <div class="media align-items-center">
                                         <img class="rounded-circle mr-2" height="30" width="30" alt="Image placeholder"
-                                             src="{{ asset('storage/' . $service->image)  }}">
+                                             src="{{ Storage::url($service->image)  }}">
                                         <div class="media-body">
                                             <span class="name mb-0 text-sm">{{ $service->title  }}</span>
                                         </div>
@@ -194,29 +194,5 @@
     </div>
 @endsection
 @section('element')
-    <div class="modal fade" id="delete-article" tabindex="-1" role="dialog"
-    aria-labelledby="delete-article" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="modal-title-default">
-                        Delete article <span class="modal-article-title"></span>
-                    </h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Are you sure wanna delete the article with title <strong class="modal-article-title"></strong>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Cancel</button>
-                    <form action="{{--routing on js--}}" method="post">
-                        @csrf @method("DELETE")
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('partials.blog-delete')
 @endsection

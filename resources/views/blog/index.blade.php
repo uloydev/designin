@@ -9,7 +9,7 @@
         <div class="col-12">
             <a href="{{ route('blog.show', $main->id) }}" class="article__link">
                 <article>
-                    <img src="{{ asset('storage/' . $main->header_image) }}" alt="Desainin article image" class="article__cover">
+                    <img src="{{ Storage::url($main->header_image) }}" alt="Desainin article image" class="article__cover">
                     <div class="article__caption">
                         <p class="article__title mb-3">
                             {{ Str::words($main->title, 10) }}
@@ -31,7 +31,7 @@
       <section class="col-12 col-md-8">
           @foreach ($blogs as $blog)
           <article>
-              <img src="{{ asset('storage/' . $main->header_image) }}" class="article__img">
+              <img src="{{ Storage::url($main->header_image) }}" class="article__img">
               <div class="article__detail">
                 <p class="article__title">
                   <a href="#">{{ Str::words($blog->title, 5) }}</a>
@@ -58,7 +58,7 @@
                   <span class="article-popular__category">{{ $popular->category->name }}</span>
                   <time class="article-popular__time">{{ $popular->created_at->format('D m, Y') }}</time>
                 </div>
-                <img src="{{ asset('storage/' . $popular->header_image) }}" class="article__img article__img--popular"
+                <img src="{{ Storage::url($popular->header_image) }}" class="article__img article__img--popular"
                      alt="{{ $popular->title }} Article Image">
               </article>
           @endforeach

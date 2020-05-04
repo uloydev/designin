@@ -19,7 +19,7 @@ The above copyright notice and this permission notice shall be included in all c
   <link rel="stylesheet" href="{{ asset('plugin/slick/slick-theme.css') }}"/>
   <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
-<body>
+<body id="@yield('page-id')Page">
   <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
       <div class="sidenav-header  align-items-center">
@@ -43,7 +43,7 @@ The above copyright notice and this permission notice shall be included in all c
                   </a>
               </li>
             <li class="nav-item">
-              <a class="nav-link" href="examples/map.html">
+              <a class="nav-link" href="{{ route('manage.service.index') }}">
                 <i class="ni ni-pin-3 text-primary"></i>
                 <span class="nav-link-text">Services</span>
               </a>

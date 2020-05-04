@@ -22,7 +22,7 @@
           <div class="row">
             @foreach ($serviceCategories as $category)
             <div class="px-3">
-                <img src="{{ asset('storage/' . $category->image_url) }}" class="services__icon">
+                <img src="{{ Storage::url($category->image_url) }}" class="services__icon">
                 <p class="services__name">{{ $category->name }}</p>
                 <a href="{{ url('services') }}" class="services__btn btn-light">See detail</a>
             </div>

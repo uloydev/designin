@@ -19,22 +19,11 @@ class BlogCategoryController extends Controller
         return view('blog.');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Application|Factory|Response|View
-     */
     public function create()
     {
         return view('admin.blog-category.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -44,12 +33,6 @@ class BlogCategoryController extends Controller
         return redirect()->back()->with('success', 'Blog Category Successfuly Created');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param BlogCategory $blogCategory
-     * @return Application|Factory|View
-     */
     public function show(BlogCategory $blogCategory)
     {
         return view('blog.category', ['blogCategory', $blogCategory]);
@@ -67,13 +50,6 @@ class BlogCategoryController extends Controller
         return view('admin.blog-category.edit')->with('category', $blog_category);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param  int  $id
-     * @return RedirectResponse
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -83,15 +59,11 @@ class BlogCategoryController extends Controller
         return redirect()->route('manage.blog-category.edit')->with('success', 'Blog Category Successfuly Updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return RedirectResponse
-     */
     public function destroy($id)
     {
-        BlogCategory::where('id', $id)->delete();
-        return redirect()->route('manage.blog-category.index')->with('success', 'Blog Category Successfuly Deleted');
+        $category = BlogCategory::findOrFail($id);
+        $category->blogs()->delete();
+        $category->delete();
+        return redirect()->back()->with('success', 'Blog Category Successfuly Deleted');
     }
 }

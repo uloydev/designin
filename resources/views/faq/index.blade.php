@@ -39,21 +39,5 @@
       </section>
     </div>
   </div>
-@endsection
-@section('script')
   <div class="overlay overlay--nav-showed"></div>
-  <script>
-    $(document).ready(function() {
-      if ($(window).width() > 768) {
-        $('#faqs').jqTabs({
-          direction: 'vertical'
-        });
-      }
-      else {
-        $('#faqs').jqTabs({
-          direction: 'horizontal'
-        });
-      }
-    });
-  </script>
 @endsection
