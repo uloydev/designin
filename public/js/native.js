@@ -134,6 +134,38 @@ $(document).ready(function() {
         $("#serviceCategoryPage #delete-category form").attr('action', '/admin/manage/blog-category/' + categoryId);
     });
 
+    $("#manageAgentPage .btn[data-target='#modal-remove-agent'], #manageAgentPage .btn[data-target='#modal-edit-agent']")
+        .click(function () {
+            if ($(this).attr('id') === 'btn-create-agent') {
+                $("button[form='form-edit-agent']").text('Add new agent');
+                $("#manageAgentPage #modal-edit-agent form").find("input[name='_method']").prop('disabled', true);
+                $("#manageAgentPage #modal-edit-agent form").attr('action', '/admin/manage/agent/');
+            }
+            else {
+                let agentId = $(this).data('id'),
+                    agentName = $(this).parents("tr").find("#agent__name").text(),
+                    agentEmail = $(this).parents("tr").find("#agent__email").text(),
+                    agentPhone = $(this).parents("tr").find("#agent__phone").text(),
+                    agentBank = $(this).parents("tr").find("#agent__bankbank").text(),
+                    agentAccount = $(this).parents("tr").find("#agent__acc-number").text(),
+                    agentAddress = $(this).data('address');
+
+                if ($(this).hasClass('edit-agent')) {
+                    $("#manageAgentPage #form-edit-agent").find("input[name='_method']").prop('disabled', false);
+                }
+
+                $("#manageAgentPage #form-edit-agent input[name='agent_name']").val(agentName);
+                $("#manageAgentPage #form-edit-agent input[name='agent_email']").val(agentEmail);
+                $("#manageAgentPage #form-edit-agent input[name='agent_phone']").val(agentPhone);
+                $("#manageAgentPage #form-edit-agent input[name='agent_bank']").val(agentBank);
+                $("#manageAgentPage #form-edit-agent input[name='agent_account']").val(agentAccount);
+                $("#manageAgentPage #form-edit-agent textarea[name='agent_address']").val(agentAddress);
+                $("#manageAgentPage .agent-name").text(agentName);
+                $("#manageAgentPage .modal[id*='agent'] form")
+                    .attr('action', '/admin/manage/agent/' + agentId);
+            }
+    });
+
     //plugin & general
     if (window.location.href.indexOf('blog/categories') > -1) {
         $("#blogCategoryPage .category-header__filter").niceSelect();

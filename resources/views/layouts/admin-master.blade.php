@@ -7,17 +7,17 @@ The above copyright notice and this permission notice shall be included in all c
 =========================================================
 -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  @include('partials.meta')
-  <title>Desainin Admin - @yield('page-title')</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-  <link rel="stylesheet" href="{{ asset('plugin/argon-dashboard/assets/vendor/nucleo/css/nucleo.css') }}">
-  <link rel="stylesheet" href="{{ asset('plugin/argon-dashboard/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('plugin/argon-dashboard/assets/css/argon.css') }}">
-  <link rel="stylesheet" href="{{ asset('plugin/slick/slick.css') }}"/>
-  <link rel="stylesheet" href="{{ asset('plugin/slick/slick-theme.css') }}"/>
-  <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    @include('partials.meta')
+    <title>Desainin Admin - @yield('page-title')</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet" href="{{ asset('plugin/argon-dashboard/assets/vendor/nucleo/css/nucleo.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugin/argon-dashboard/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugin/argon-dashboard/assets/css/argon.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugin/slick/slick.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('plugin/slick/slick-theme.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
 <body id="@yield('page-id')Page">
   <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
@@ -138,7 +138,10 @@ The above copyright notice and this permission notice shall be included in all c
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
             <div class="copyright text-center  text-lg-left  text-muted">
-              &copy; {{ date('Y') }} <a href="{{ route('landing-page') }}" class="font-weight-bold ml-1" target="_blank">Designin</a>
+                &copy; {{ date('Y') }}
+                <a href="{{ route('landing-page') }}" class="font-weight-bold ml-1" target="_blank">
+                    Desainin
+                </a>
             </div>
           </div>
           <div class="col-lg-6">
