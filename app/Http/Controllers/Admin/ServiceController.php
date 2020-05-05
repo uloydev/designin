@@ -27,16 +27,6 @@ class ServiceController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return void
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
@@ -54,17 +44,6 @@ class ServiceController extends Controller
 
         $service->save();
         return redirect()->back()->with('create', 'Succesfully create new service');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Service $service
-     * @return void
-     */
-    public function show(Service $service)
-    {
-        //
     }
 
     /**
@@ -108,6 +87,8 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
+        Storage::delete($service->image);
+        $service->delete();
+        return redirect()->route('manage.service.index');
     }
 }

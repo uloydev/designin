@@ -46,8 +46,8 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('faq', 'FaqController')->except(['show']);
         Route::resource('blog', 'BlogController');
         Route::resource('blog-category', 'BlogCategoryController');
-        Route::resource('service', 'ServiceController');
-        Route::resource('service-category', 'ServiceCategoryController');
+        Route::resource('service', 'ServiceController')->except(['create', 'show']);
+        Route::resource('service-category', 'ServiceCategoryController')->except(['create', 'show', 'edit']);
         Route::resource('contact-us', 'ContactController')->except(['create', 'store', 'show']);
         Route::resource('testimony', 'TestimonyController')->only(['index', 'update', 'destroy']);
     });
