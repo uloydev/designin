@@ -36,6 +36,7 @@ Route::prefix('profile')->middleware('profile')->group(function () {
 
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
+    Route::get('setting', 'AdminController@setting')->name('admin.setting');
     Route::prefix('manage')->name('manage.')->group(function(){
         Route::get('/', 'HomeController@index');
         Route::resource('user', 'UserController');

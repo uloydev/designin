@@ -6,9 +6,7 @@ use App\BlogCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class BlogCategoryController extends Controller
@@ -29,7 +27,7 @@ class BlogCategoryController extends Controller
         $request->validate([
             'name'=> 'required'
         ]);
-        dd(BlogCategory::create($request->all()));
+        BlogCategory::create($request->all());
         return redirect()->back()->with('success', 'Blog Category Successfuly Created');
     }
 

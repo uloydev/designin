@@ -194,5 +194,5 @@
     </div>
 @endsection
 @section('element')
-    @include('partials.blog-delete')
+    @include('blog.delete')
 @endsection

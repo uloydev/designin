@@ -9,6 +9,18 @@
 .nav-pills .nav-link.active {
     background-color: #4052af;
 }
+.carousel-control-prev, .carousel-control-next {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: auto;
+    bottom: auto;
+    border-radius: 50%;
+    padding: 6px;
+}
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    height: 10px;
+    width: 10px;
+}
+
 #servicePage #v-pills-tab {
     height: 100%;
 }
@@ -45,6 +57,10 @@
     padding: 10px 0;
     justify-content: space-between;
 }
+
+#serviceEditPage #service-edit-form .btn {
+    display: block;
+}
 footer {
     width: 100%;
     padding: 15px 0;
@@ -65,5 +81,19 @@ footer {
         margin-left: 0;
         margin-right: 30px;
         margin-bottom: 0;
+    }
+    #servicePage .carousel-item {
+        padding-top: 34px;
+    }
+
+    #serviceEditPage #service-edit-form .btn {
+        display: inline-block;
+    }
+    #serviceEditPage #service-edit-form button {
+        float: right;
+    }
+
+    footer {
+        margin-top: 30px;
     }
 }

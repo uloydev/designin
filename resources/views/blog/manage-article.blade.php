@@ -11,6 +11,17 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
+    @elseif($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <p class="alert-text mb-0">
+                @foreach ($errors->all() as $error)
+                    <span class="d-block">{{ $error }}</span>
+                @endforeach
+            </p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     @endif
     <div class="row">
         <div class="col-12 px-0">
@@ -65,13 +76,15 @@
                                         <td>{{ $article->category->name }}</td>
                                         <td>{{ Str::words($article->title, 6) }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('blog.show', $article->id) }}" class="btn btn-primary btn-sm">
+                                            <a href="{{ route('blog.show', $article->id) }}"
+                                            class="btn btn-primary btn-sm">
                                                 See article
                                             </a>
                                         </td>
                                         <td>{{ $article->created_at }}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning" href="{{ route('manage.blog.edit', $article->id) }}">
+                                            <a class="btn btn-warning"
+                                            href="{{ route('manage.blog.edit', $article->id) }}">
                                                 Edit
                                             </a>
                                             <button type="button" class="btn btn-danger show-modal" data-toggle="modal"
@@ -117,9 +130,9 @@
                                                 <a href="{{ route('manage.blog-category.edit', $category->id) }}"
                                                    class="btn btn-warning"> Edit
                                                 </a>
-                                                <button type="button" class="btn btn-danger show-modal" data-toggle="modal"
+                                                <button type="button" class="btn btn-danger show-modal"
+                                                        data-toggle="modal" data-target="#delete-category-article"
                                                         data-category-name="{{ Str::slug($category->name, '-') }}"
-                                                        data-target="#delete-category-article"
                                                         data-category-id="{{ $category->id }}">
                                                     Delete
                                                 </button>
@@ -136,6 +149,6 @@
     </div>
 @endsection
 @section('element')
-    @include('partials.blog-delete')
-    @include('partials.blog-addCategory')
+    @include('blog.delete')
+    @include('blog.add-category')
 @endsection
