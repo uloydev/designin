@@ -8,13 +8,15 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class BlogCategoryController extends Controller
 {
 
     public function index()
     {
-        return view('blog.');
+        $blogCategories = BlogCategory::paginate(10);
+        return view('admin.blog-category.index', ['categories' => $blogCategories]);
     }
 
     public function create()
@@ -28,12 +30,7 @@ class BlogCategoryController extends Controller
             'name'=> 'required'
         ]);
         BlogCategory::create($request->all());
-        return redirect()->back()->with('success', 'Blog Category Successfuly Created');
-    }
-
-    public function show(BlogCategory $blogCategory)
-    {
-        return view('blog.category', ['blogCategory', $blogCategory]);
+        return redirect()->route('manage.blog-category.index');
     }
 
     /**
@@ -44,24 +41,30 @@ class BlogCategoryController extends Controller
      */
     public function edit($id)
     {
-        $blog_category = BlogCategory::where('id', $id)->get();
+        $blog_category = BlogCategory::findOrFail($id);
         return view('admin.blog-category.edit')->with('category', $blog_category);
     }
 
     public function update(Request $request, $id)
     {
+        $blogCategory = BlogCatgory::findOrFail($id);
         $request->validate([
             'category'=>'required'
         ]);
-        BlogCategory::update($request->all())->where('id', $id);
-        return redirect()->route('manage.blog-category.edit')->with('success', 'Blog Category Successfuly Updated');
+        $blogCategory->name = $request->category;
+        $blogCategory->save();
+        return redirect()->route('manage.blog-category.index');
     }
 
     public function destroy($id)
     {
         $category = BlogCategory::findOrFail($id);
-        $category->blogs()->delete();
+        $blogs = $category->blogs();
+        foreach ($blogs as $blog) {
+            Storage::delete($blog->header_image);
+            $blog->delete();
+        }
         $category->delete();
-        return redirect()->back()->with('success', 'Blog Category Successfuly Deleted');
+        return redirect()->route('manage.blog-category.index');
     }
 }
