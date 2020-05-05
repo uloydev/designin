@@ -39,6 +39,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
     Route::get('setting', 'AdminController@setting')->name('admin.setting');
     Route::prefix('manage')->name('manage.')->group(function(){
         Route::get('/', 'HomeController@index');
+        Route::get('agent/search', 'AgentController@search')->name('agent.search');
         Route::resource('user', 'UserController');
         Route::resource('agent', 'AgentController');
         Route::resource('admin', 'AdminController')->except('index');

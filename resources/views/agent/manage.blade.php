@@ -6,8 +6,9 @@
         <!-- Card header -->
         <div class="card-header border-0 justify-content-between d-flex align-items-center flex-column flex-md-row">
             <h3 class="mb-0">Agent management</h3>
-            <form action="" class="flex-grow-1 mx-5 my-3 my-md-0" method="get">
-                <input type="search" placeholder="Search agent name" class="form-control">
+            <form action="{{ route('manage.agent.search') }}" class="flex-grow-1 mx-5 my-3 my-md-0" method="get">
+                <input type="search" name="search_agent" placeholder="Search agent by name or email and click enter"
+                class="form-control" value="{{ old('') }}">
             </form>
             <button type="button" class="btn btn-default btn-sm" id="btn-create-agent"
             data-toggle="modal" data-target="#modal-edit-agent">
@@ -71,6 +72,9 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="col-12">
+            {{ $agents->links() }}
         </div>
     </div>
     @include('agent.manipulate')
