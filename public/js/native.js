@@ -1,4 +1,4 @@
-$(document).ready(function() {
+
     //user js
     const navToggle = document.querySelector('.nav__toggle');
     const primaryNav = document.querySelector('#primaryNav');
@@ -112,18 +112,40 @@ $(document).ready(function() {
         }
     });
 
+    // $("#servicePage .tab-pane .service-parent").slick({
+    //     infinite: false,
+    //     adaptiveHeight: true
+    // });
+    $("#servicePage .nav-pills .nav-link:first-child").addClass('active');
+    $("#servicePage .tab-pane:first-child").addClass('active show');
+    $("#servicePage .carousel").carousel({
+        interval: 0,
+        wrap: false
+    });
+    $("#servicePage .btn[data-target='#modal-delete-service']").click(function () {
+        let serviceId = $(this).data("id");
+        let serviceTitle = $(this).data('title');
+
+        $("#modal-delete-service .modal-service-title").text(serviceTitle);
+        $("#modal-delete-service form").attr("action", '/admin/manage/service/' + serviceId);
+    });
+
     $("#serviceCategoryPage .btn[data-target='#create-edit-category']").click(function () {
         let categoryId = $(this).data('category-id');
         let categoryName = $(this).data('category-name');
 
         $(".modal#create-edit-category form input[name='service_category']").val(categoryName);
         if ($(this).attr('id') === 'edit-category') {
-            $(".modal#create-edit-category form").attr('action', '/admin/manage/blog-category/' + categoryId);
-            $(".modal#create-edit-category form input[name='image_url']").prop('required', false);
+            $("#create-edit-category .modal-title").text('Edit category');
+            $("#create-edit-category form").attr('action', '/admin/manage/blog-category/' + categoryId);
+            $("#create-edit-category input[name='image_url']").prop('required', false);
+            $("#create-edit-category label[for='imgCategory']").text('Change icon');
         }
         else {
-            $(".modal#create-edit-category form").attr('action', '/admin/manage/blog-category');
-            $(".modal#create-edit-category form input[name='image_url']").prop('required', true);
+            $("#create-edit-category .modal-title").text('Add new category');
+            $("#create-edit-category form").attr('action', '/admin/manage/blog-category');
+            $("#create-edit-category form input[name='image_url']").prop('required', true);
+            $("#create-edit-category label[for='imgCategory']").text('Pick icon');
         }
     });
     $("#serviceCategoryPage .btn[data-target='#delete-category']").click(function () {
@@ -275,4 +297,3 @@ $(document).ready(function() {
             minHeight: 300
         });
     }
-});
