@@ -13,26 +13,15 @@ class AgentController extends Controller
 
     public function index()
     {
-        $agents = User::where('role', 'agent')->get();
+        $agents = User::where('role', 'agent')->paginate(10);
         return view('agent.manage', ['agents' => $agents]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('agent.register');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -49,37 +38,18 @@ class AgentController extends Controller
         return redirect()->back()->with('success', 'Agent Account Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $agent = User::where('role', 'agent')->findOrFail($id);
         return view('agent.show', ['agent', $agent]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $agent = User::where('role', 'agent')->findOrFail($id);
         return view('agent.edit', ['agent', $agent]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -102,12 +72,6 @@ class AgentController extends Controller
         return redirect()->back()->with('success', 'Agent Account Updated Successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $agent = User::where('role', 'agent')->findOrFail($id);
@@ -123,5 +87,18 @@ class AgentController extends Controller
         Storage::delete($profile->name_card);
         $profile->delete();
         $agent->delete();
+    }
+
+    public function search(Request $request)
+    {
+        $agents = User::where([
+            ['role', 'agent'],
+            ['name', 'LIKE', '%' . $request->search_agent . '%']
+        ])->orWhere([
+            ['role', 'agent'],
+            ['email', 'LIKE', '%' . $request->search_agent . '%']
+        ])->paginate(10);
+        $agents->appends($request->only('search_agent'));
+        return view('agent.manage', ['agents' => $agents]);
     }
 }
