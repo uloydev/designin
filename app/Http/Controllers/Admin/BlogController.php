@@ -32,16 +32,14 @@ class BlogController extends Controller
     {
         $img_path = $request->file('header_image')->store('public/files');
         $createBlog = new Blog;
+        $createBlog->header_image = $img_path;
         $createBlog->title = $request->title;
-        $createBlog->header_image = $request->header_image;
         $createBlog->category_id = $request->category_id;
         $createBlog->contents = $request->contents;
-        $createBlog->header_image = $img_path;
         $createBlog->author_id = Auth::id();
-        if (count(Blog::all()) <= 6) {
+        if (Blog::all()->count() <= 6) {
             $createBlog->is_main = $request->is_main;
-        }
-        else {
+        }else {
             $createBlog->is_main = false;
         }
         $createBlog->save();
@@ -77,29 +75,29 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $blog = Blog::findOrFail($id);
         $request->validate([
             'title'=>'required',
             'header_image'=>'file|mimes:jpg,jpeg,png,gif,svg',
             'category_id'=>'required',
-            'content'=>'required',
+            'contents'=>'required',
         ]);
-        $data = [
-            'title' => $request->title,
-            'category_id' => $request->category_id,
-            'content' => $request->content,
-            'author_id' => Auth::id(),
-        ];
-        if (!empty($request->header_image)) {
-            $img_path = Storage::putFile($this->upload_path, $request->file('header_image'));
-            $data['header_image'] = $img_path;
+        $blog->title = $request->title;
+        $blog->contents = $request->contents;
+        $blog->category_id = $request->category_id;
+        if ($request->hasFile('header_image')) {
+            Storage::delete($blog->header_image);
+            $blog->header_image = Storage::putFile($this->upload_path, $request->file('header_image'));
         }
-        Blog::where('id', $id)->update($data);
+        $blog->save();
         return redirect()->route('manage.blog.index')->with('success', 'Blog update succefully');
     }
 
     public function destroy($id)
     {
-        Blog::findOrFail($id)->delete();
+        $blog = Blog::findOrFail($id);
+        Storage::delete($blog->header_image);
+        $blog->delete();
         return redirect()->route('manage.blog.index')->with('success', 'Blog delete succefully');
     }
 }
