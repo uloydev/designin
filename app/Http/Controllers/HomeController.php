@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
+use App\Testimony;
 use Illuminate\Http\Request;
 use App\Service;
 use App\CarouselImage;
@@ -17,10 +19,14 @@ class HomeController extends Controller
         $images = CarouselImage::all();
         $serviceCategories = ServiceCategory::all();
         $blogs = Blog::paginate(5);
+        $clients = Client::all();
+        $testimonies = Testimony::where('is_main', true)->get();
         return view('landing')->with([
             'images' => $images,
             'serviceCategories' => $serviceCategories,
             'blogs' => $blogs,
+            'testimonies' => $testimonies,
+            'clients' => $clients
         ]);
     }
 

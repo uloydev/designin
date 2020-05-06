@@ -56,6 +56,7 @@ The above copyright notice and this permission notice shall be included in all c
                                     <span class="nav-link-text">Agent</span>
                                 </a>
                             </li>
+                            <hr>
                             <li class="nav-item">
                                 <a href="{{ route('manage.') }}" class="nav-link">
                                     <i class="ni ni-single-02 text-yellow"></i>
@@ -71,20 +72,6 @@ The above copyright notice and this permission notice shall be included in all c
             <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-                            <div class="form-group mb-0">
-                                <div class="input-group input-group-alternative input-group-merge">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                    </div>
-                                    <input class="form-control" placeholder="Search" type="text">
-                                </div>
-                            </div>
-                            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main"
-                                    aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </form>
                         <ul class="navbar-nav align-items-center  ml-md-auto ">
                             <li class="nav-item d-xl-none">
                                 <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
@@ -109,12 +96,12 @@ The above copyright notice and this permission notice shall be included in all c
                                     {{ Auth::user()->name }} <i class="ni ni-bold-down"></i>
                                 </a>
                                 <div class="dropdown-menu  dropdown-menu-right ">
-                                    <div class="dropdown-header noti-title">
+                                    <div class="dropdown-header">
                                         <h6 class="text-overflow m-0">Welcome!</h6>
                                     </div>
                                     <a href="{{ route('admin.dashboard') }}" class="dropdown-item">
                                         <i class="ni ni-single-02"></i>
-                                        <span>My profile</span>
+                                        <span>Setting</span>
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a href="{{ route('logout') }}" class="dropdown-item"
@@ -187,5 +174,6 @@ The above copyright notice and this permission notice shall be included in all c
         <script src="{{ asset('plugin/slick/slick.min.js') }}"></script>
         <script src="{{ asset('js/bs-custom-file-input.min.js') }}"></script>
         <script src="{{ asset('js/native.js') }}" charset="utf-8"></script>
+        @yield('script')
     </body>
 </html>

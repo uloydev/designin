@@ -22,6 +22,7 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $test = array(0, 20, 10, 30, 15, 40, 20, 60, 60);
         $articles = Blog::latest()->take(10)->get();
         $totalPromo = Blog::whereHas('category', function($query){
             $query->where('name', 'Promo');
@@ -34,7 +35,8 @@ class AdminController extends Controller
             'agents' => $agents,
             'users' => $users,
             'totalPromo' => $totalPromo,
-            'services' => $services
+            'services' => $services,
+            'test' => $test
         ]);
     }
 

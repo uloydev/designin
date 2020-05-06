@@ -8,7 +8,7 @@
             <h3 class="mb-0">Agent management</h3>
             <form action="{{ route('manage.agent.search') }}" class="flex-grow-1 mx-5 my-3 my-md-0" method="get">
                 <input type="search" name="search_agent" placeholder="Search agent by name or email and click enter"
-                class="form-control" value="{{ $query ?? '' }}">
+                class="form-control" value="{{ $query }}">
             </form>
             <button type="button" class="btn btn-default btn-sm" id="btn-create-agent"
             data-toggle="modal" data-target="#modal-edit-agent">
@@ -30,7 +30,7 @@
                 </tr>
                 </thead>
                 <tbody class="list">
-                @forelse ($agents as $agent)
+                @foreach ($agents as $agent)
                     <tr>
                         <td>
                             <div class="media align-items-center">
@@ -69,13 +69,7 @@
                             </div>
                         </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6">
-                            No agent found
-                        </td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>

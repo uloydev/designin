@@ -80,6 +80,18 @@
 @section('content')
     <div class="row">
         <div class="col-12">
+            <div class="card bg-default">
+                <div class="card-body">
+                    <div class="chart">
+                        <!-- Chart wrapper -->
+                        <canvas id="income-value" class="chart-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <div class="card">
                 <div class="card-header border-0">
                     <div class="row mx-0 align-items-center justify-content-between">
@@ -195,4 +207,69 @@
 @endsection
 @section('element')
     @include('blog.delete')
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function () {
+            var SalesChart = (function() {
+                const $chart = $('#income-value');
+                function init($chart) {
+                    let salesChart = new Chart($chart, {
+                        type: 'line',
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    gridLines: {
+                                        lineWidth: 1,
+                                        color: Charts.colors.gray[900],
+                                        zeroLineColor: Charts.colors.gray[900]
+                                    },
+                                    ticks: {
+                                        callback: function(value) {
+                                            if (!(value % 10)) {
+                                                return '$' + value + 'k';
+                                            }
+                                        }
+                                    }
+                                }]
+                            },
+                            tooltips: {
+                                callbacks: {
+                                    label: function(item, data) {
+                                        let label = data.datasets[item.datasetIndex].label || '',
+                                            yLabel = item.yLabel,
+                                            content = '';
+
+                                        if (data.datasets.length > 1) {
+                                            content += '<span>$' + yLabel + 'k</span>';
+                                        }
+
+                                        content += '<span>$' + yLabel + 'k</span>';
+                                        return content;
+                                    }
+                                }
+                            }
+                        },
+                        data: {
+                            labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                            datasets: [{
+                                label: 'Performance',
+                                data: [
+                                    @for($i = 0; $i < count($test); $i++)
+                                    {{ $test[$i] }},
+                                    @endfor
+                                ]
+                            }]
+                        }
+                    });
+                    // Save to jQuery object
+                    $chart.data('chart', salesChart);
+                }
+                if ($chart.length) {
+                    init($chart);
+                }
+
+            })();
+        });
+    </script>
 @endsection

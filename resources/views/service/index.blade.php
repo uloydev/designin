@@ -42,7 +42,7 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-{{ Str::slug($category->name, '-') }}-tab">
                         <div class="carousel slide" id="carouselService{{ Str::slug($category->name, '-') }}"
-                             data-ride="carousel">
+                             data-ride="carousel" data-interval="0" data-wrap="false">
                             <div class="carousel-inner">
                                 @if (count($category->services) > 1)
                                     @foreach ($category->services as $service)

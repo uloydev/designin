@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         ServiceSeeder::class,
         PackageSeeder::class,
         CarouselImageSeeder::class,
+        ClientSeeder::class,
         FaqSeeder::class,
         FaqCategorySeeder::class,
         ContactUsSeeder::class,

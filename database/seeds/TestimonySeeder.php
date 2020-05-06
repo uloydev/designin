@@ -13,7 +13,7 @@ class TestimonySeeder extends Seeder
      */
     public function run()
     {
-        $user_id = User::where('role', 'user')->first()->id; 
+        $user_id = User::where('role', 'user')->first()->id;
         for ($i=1; $i <= 10; $i++) {
             $testimony = [
                 'content'=>"i like it, testimony $i",
@@ -21,7 +21,7 @@ class TestimonySeeder extends Seeder
                 'user_id'=>$user_id,
                 'service_id'=>($i % 3) + 1
             ];
-            $testimony['is_main'] = $i % 2 == 0 ? true : false;
+            $testimony['is_main'] = $i % 2 === 0 ? true : false;
             Testimony::create($testimony);
         }
     }

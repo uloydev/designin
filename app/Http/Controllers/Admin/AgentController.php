@@ -91,14 +91,15 @@ class AgentController extends Controller
 
     public function search(Request $request)
     {
+        $query = $request->search_agent;
         $agents = User::where([
             ['role', 'agent'],
-            ['name', 'LIKE', '%' . $request->search_agent . '%']
+            ['name', 'LIKE', '%' . $query . '%']
         ])->orWhere([
             ['role', 'agent'],
-            ['email', 'LIKE', '%' . $request->search_agent . '%']
+            ['email', 'LIKE', '%' . $query . '%']
         ])->paginate(10);
         $agents->appends($request->only('search_agent'));
-        return view('agent.manage', ['agents' => $agents]);
+        return view('agent.manage', ['agents' => $agents, 'query' => $query]);
     }
 }

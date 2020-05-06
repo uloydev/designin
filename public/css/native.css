@@ -541,11 +541,19 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
   color: var(--primary-color)
 }
 #landingPage .subscription__btn:hover {
-  background-color: var(--primary-color-hover);
+  background-color: var(--primary-color-hover) !important;
   color: #fff;
 }
 #landingPage #testimonies {
   background-color: var(--primary-color);
+}
+#landingPage #testimonies #no-testimony {
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    color: #f2f2f2;
+    padding: 30px 0;
+    font-weight: bold;
 }
 #landingPage #testimonies .container {
   padding-bottom: 70px;
@@ -1198,224 +1206,231 @@ footer .row {
 }
 
 @media screen and (min-width: 768px) {
-  #landingPage .header__text {
-    font-size: 45px;
-    text-align: right;
-  }
-  #landingPage header {
-    height: 60vh;
-  }
-  #landingPage header > .container {
-    padding-bottom: 40px;
-    height: calc(100% - 80px);
-  }
-  #landingPage .header__btn {
-    margin: 0;
-  }
-  #landingPage .reason-slider__title {
-    font-size: 21px;
-  }
+    #landingPage .header__text {
+        font-size: 45px;
+        text-align: right;
+    }
+    #landingPage header {
+        height: 60vh;
+    }
+    #landingPage header > .container {
+        padding-bottom: 40px;
+        height: calc(100% - 80px);
+    }
+    #landingPage .header__btn {
+        margin: 0;
+    }
+    #landingPage .reason-slider__title {
+        font-size: 21px;
+    }
+    #landingPage #client {
+        padding: 60px 0;
+    }
+    #landingPage #client .slick-arrow {
+        top: 50%;
+        transform: translateY(100%);
+    }
 
-  #blogIndexPage main .article__title {
-    font-size: 20px;
-  }
-  #blogIndexPage main section .article__img {
-      width: 150px;
-  }
-  #blogIndexPage main .article__img {
-    height: 150px;
-  }
-  #blogIndexPage main .article__content {
-    display: block;
-    font-size: 13px;
-  }
-  #blogIndexPage aside {
-    max-width: 400px;
-  }
-  #blogIndexPage main section .article__time {
-      /*left: 0;*/
-      right: auto;
-  }
+    #blogIndexPage main .article__title {
+        font-size: 20px;
+    }
+    #blogIndexPage main section .article__img {
+        width: 150px;
+    }
+    #blogIndexPage main .article__img {
+        height: 150px;
+    }
+    #blogIndexPage main .article__content {
+        display: block;
+        font-size: 13px;
+    }
+    #blogIndexPage aside {
+        max-width: 400px;
+    }
+    #blogIndexPage main section .article__time {
+        /*left: 0;*/
+        right: auto;
+    }
 
-  #blogSinglePage .single-article__title {
-    font-size: 34px;
-  }
+    #blogSinglePage .single-article__title {
+        font-size: 34px;
+    }
 
-  #blogCategoryPage .category-article__img {
-      height: 300px;
-      display: block;
-  }
-  #blogCategoryPage .category-header__content {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-  }
-  #blogCategoryPage .category-article {
-      height: calc(100% - 30px);
-  }
+    #blogCategoryPage .category-article__img {
+        height: 300px;
+        display: block;
+    }
+    #blogCategoryPage .category-header__content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #blogCategoryPage .category-article {
+        height: calc(100% - 30px);
+    }
 
-  #faqPage header > .container {
-    padding: 100px 0 100px;
-  }
-  #faqPage .faq-header__cover {
-    max-height: 300px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  #faqPage .faq-header__caption {
-    display: flex;
-    flex-direction: column;
-    padding-left: 50px;
-    justify-content: center
-  }
-  #faqPage .faq-header__heading {
-    font-size: 3rem;
-  }
-  #faqPage .question-cat .jq-tab-title:first-child {
-    padding-top: 0;
-  }
-  #faqPage .question-cat .jq-tab-title {
-    padding: 1rem;
-  }
+    #faqPage header > .container {
+        padding: 100px 0 100px;
+    }
+    #faqPage .faq-header__cover {
+        max-height: 300px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #faqPage .faq-header__caption {
+        display: flex;
+        flex-direction: column;
+        padding-left: 50px;
+        justify-content: center
+    }
+    #faqPage .faq-header__heading {
+        font-size: 3rem;
+    }
+    #faqPage .question-cat .jq-tab-title:first-child {
+        padding-top: 0;
+    }
+    #faqPage .question-cat .jq-tab-title {
+        padding: 1rem;
+    }
 
-  #servicesPage .service-header__img {
-      height: 400px;
-  }
-  #servicesPage .service-header__heading {
-      font-size: 3rem;
-  }
+    #servicesPage .service-header__img {
+        height: 400px;
+    }
+    #servicesPage .service-header__heading {
+        font-size: 3rem;
+    }
 
-  .footer__legal {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .footer__socmed {
-    width: 100%;
-    justify-content: flex-end;
-  }
-  .footer__socmed-item {
-    margin-left: 25px;
-  }
-  .footer__copyright {
-    text-align: right;
-  }
-  .footer__info {
-    align-items: flex-start;
-  }
+    .footer__legal {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .footer__socmed {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    .footer__socmed-item {
+        margin-left: 25px;
+    }
+    .footer__copyright {
+        text-align: right;
+    }
+    .footer__info {
+        align-items: flex-start;
+    }
 }
 
 @media screen and (min-width: 993px) {
-  nav {
-    position: static;
-    height: 80px;
-  }
-  nav .container {
-    flex-direction: row;
-  }
-  nav ul {
-    display: flex;
-    width: 100%;
-    align-items: center;
-  }
-  .nav__list {
-    margin-left: 20px;
-    height: 40px;
-    font-size: 16px;
-    text-shadow: none;
-    padding: 0;
-    font-weight: 600;
-    position: relative;
-  }
-  .nav__list--logo {
-    margin-left: 0;
-    font-size: 34px;
-    margin-right: auto;
-  }
-  .nav__toggle {
-    display: none;
-  }
-  .nav__list:not(.nav__list--logo) {
-    max-height: none;
-  }
-  .nav__list.nav__list--separate {
-    padding-right: 20px;
-    border-right: 1px solid var(--almost-white);
-  }
+    nav {
+        position: static;
+        height: 80px;
+    }
+    nav .container {
+        flex-direction: row;
+    }
+    nav ul {
+        display: flex;
+        width: 100%;
+        align-items: center;
+    }
+    .nav__list {
+        margin-left: 20px;
+        height: 40px;
+        font-size: 16px;
+        text-shadow: none;
+        padding: 0;
+        font-weight: 600;
+        position: relative;
+    }
+    .nav__list--logo {
+        margin-left: 0;
+        font-size: 34px;
+        margin-right: auto;
+    }
+    .nav__toggle {
+        display: none;
+    }
+    .nav__list:not(.nav__list--logo) {
+        max-height: none;
+    }
+    .nav__list.nav__list--separate {
+        padding-right: 20px;
+        border-right: 1px solid var(--almost-white);
+    }
 
-  body:not(#landingPage):not([id*='blog']):not(#faqPage) main {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
-  }
+    body:not(#landingPage):not([id*='blog']):not(#faqPage) main {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
 
-  #landingPage .nav__list:not(.nav__list--logo)::after {
-    background-color: var(--almost-white);
-  }
-  #landingPage header {
-    height: 80vh;
-  }
-  #landingPage .reason-slider .slick-arrow {
-    top: auto;
-    bottom: 0;
-  }
-  #landingPage .reason-slider .bxs-chevron-left {
-    right: auto;
-    left: 0;
-  }
-  #landingPage .reason-slider .slick-dots {
-    bottom: 0;
-  }
-  #landingPage .reason-slider .slick-dots li button:before {
-    font-size: 10px;
-  }
-  #landingPage .reason-trust__overlay--show .reason-trust__video {
-      width: 80%;
-      max-width: 800px;
-  }
+    #landingPage .nav__list:not(.nav__list--logo)::after {
+        background-color: var(--almost-white);
+    }
+    #landingPage header {
+        height: 80vh;
+    }
+    #landingPage .reason-slider .slick-arrow {
+        top: auto;
+        bottom: 0;
+    }
+    #landingPage .reason-slider .bxs-chevron-left {
+        right: auto;
+        left: 0;
+    }
+    #landingPage .reason-slider .slick-dots {
+        bottom: 0;
+    }
+    #landingPage .reason-slider .slick-dots li button:before {
+        font-size: 10px;
+    }
+    #landingPage .reason-trust__overlay--show .reason-trust__video {
+        width: 80%;
+        max-width: 800px;
+    }
 
-  #contactUsPage .contact-us__heading {
-    text-align: left;
-  }
+    #contactUsPage .contact-us__heading {
+        text-align: left;
+    }
 
-  #blogIndexPage #main-article .col-md-3 .article__title {
-    font-size: 17px;
-  }
-  #blogIndexPage #main-article .article__title {
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: bold;
-  }
-  #blogIndexPage main .article__content {
-    font-size: 16px;
-  }
+    #blogIndexPage #main-article .col-md-3 .article__title {
+        font-size: 17px;
+    }
+    #blogIndexPage #main-article .article__title {
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: bold;
+    }
+    #blogIndexPage main .article__content {
+        font-size: 16px;
+    }
 
-  #faqPage .faq-header__cover {
-      max-width: 50%;
-      margin-bottom: 0;
-  }
-  #faqPage .faq-header__search-form {
-      margin-top: 60px;
-  }
-  #faqPage .faq-header__search-input::placeholder {
-      text-align: left;
-  }
+    #faqPage .faq-header__cover {
+        max-width: 50%;
+        margin-bottom: 0;
+    }
+    #faqPage .faq-header__search-form {
+        margin-top: 60px;
+    }
+    #faqPage .faq-header__search-input::placeholder {
+        text-align: left;
+    }
 
-  #servicesPage header .service-header__heading {
-      font-size: 3.5rem;
-  }
+    #servicesPage header .service-header__heading {
+        font-size: 3.5rem;
+    }
 
-  .footer__socmed-item {
-    font-size: 24px;
-  }
-  .footer__legal {
-    justify-content: flex-end;
-  }
+    .footer__socmed-item {
+        font-size: 24px;
+    }
+    .footer__legal {
+        justify-content: flex-end;
+    }
 }
 
 @media screen and (min-width: 1200px) {
-  nav ul > .container > .nav__list:not(.nav__list--logo) {
-    font-size: 18px;
-    margin-left: 40px;
-  }
+    nav ul > .container > .nav__list:not(.nav__list--logo) {
+        font-size: 18px;
+        margin-left: 40px;
+    }
 }

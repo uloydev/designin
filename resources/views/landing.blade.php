@@ -11,7 +11,7 @@
     <header>
       @include('partials.nav')
       <div class="container">
-        <h1 class="header__text">Find designer just like <br class="d-none d-md-block"> turning your hand</h1>
+        <h1 class="header__text">Find designer just like <br class="d-none d-md-block"> <span style="color: #94E5EB"></span></h1>
         <a href="#services" class="header__btn">Order What You Want</a>
       </div>
     </header>
@@ -110,104 +110,47 @@
       </section>
       <section id="testimonies">
         <div class="container">
-          <h1 class="section__heading text-center">Testimoni</h1>
-          <div class="row testimonies-slider">
-            {{-- foreach --}}
-            <div class="px-2">
-              <div class="card testimony-card">
-                <div class="card__header testimony-card__header">
-                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony"
-                       class="card__img card__img--circle testimony__img">
-                  <p class="testimony__name">People name</p>
-                  <p class="card__text">People jobs</p>
+            <h1 class="section__heading text-center">Testimony</h1>
+            @if (count($testimonies) > 0)
+                <div class="row testimonies-slider">
+                    @foreach ($testimonies as $testimony)
+                        <div class="px-2">
+                            <div class="card testimony-card">
+                                <div class="card__header testimony-card__header">
+                                    <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony"
+                                         class="card__img card__img--circle testimony__img">
+                                    <p class="testimony__name">{{ $testimony->user->name }}</p>
+                                    <p class="card__text">{{ $testimony->created_at->format('d M Y') }}</p>
+                                </div>
+                                <div class="card__body testimony-card__detail" style="text-align: center">
+                                    {{ $testimony->content }}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-                <div class="card__body testimony-card__detail">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                    ea commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                    nulla pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
+            @else
+                <div class="row">
+                    <div class="col-12" id="no-testimony">No testimony</div>
                 </div>
-              </div>
-            </div>
-            <div class="px-2">
-              <div class="card testimony-card">
-                <div class="card__header testimony-card__header">
-                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony"
-                       class="card__img card__img--circle testimony__img">
-                  <p class="testimony__name">People name</p>
-                  <p class="card__text">People jobs</p>
-                </div>
-                <div class="card__body testimony-card__detail">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                    nulla pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
-                </div>
-              </div>
-            </div>
-            <div class="px-2">
-              <div class="card testimony-card">
-                <div class="card__header testimony-card__header">
-                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony"
-                       class="card__img card__img--circle testimony__img">
-                  <p class="testimony__name">People name</p>
-                  <p class="card__text">People jobs</p>
-                </div>
-                <div class="card__body testimony-card__detail">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                    nulla pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
-                </div>
-              </div>
-            </div>
-            <div class="px-2">
-              <div class="card testimony-card">
-                <div class="card__header testimony-card__header">
-                  <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony"
-                       class="card__img card__img--circle testimony__img">
-                  <p class="testimony__name">People name</p>
-                  <p class="card__text">People jobs</p>
-                </div>
-                <div class="card__body testimony-card__detail">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                    nulla pariatur.
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
-                </div>
-              </div>
-            </div>
-            {{-- endforeach --}}
-          </div>
+            @endif
         </div>
       </section>
       <section id="client">
         <div class="container">
           <h1 class="section__heading text-center">Our client</h1>
           <div class="row">
-            {{-- foreach --}}
-            <div class="px-2">
-              <div class="client__item">
-                <img src="{{ asset('img/client.png') }}" class="client__img">
-              </div>
-            </div>
-            {{-- endforeach --}}
+              @forelse ($clients as $client)
+                  <div class="px-2">
+                      <div class="client__item">
+                          <img src="{{ Storage::url($client->logo) }}" class="client__img" alt="client logo">
+                      </div>
+                  </div>
+              @empty
+                  <div class="client__item">
+                      No client found
+                  </div>
+              @endforelse
           </div>
         </div>
       </section>
