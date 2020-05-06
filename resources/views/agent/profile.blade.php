@@ -88,8 +88,8 @@
                             <div class="form-group">
                                 <label class="form-control-label" for="bank">Bank</label>
                                 <select name="bank" id="bank" class="custom-select">
-                                    @foreach ($listBank as $key => $value)
-                                        <option value="{{ $value }}">{{ $value }}</option>
+                                    @foreach ($listBank as $bank)
+                                        <option value="{{ $bank->value }}">{{ $bank->label }}</option>
                                     @endforeach
                                 </select>
                             </div>
