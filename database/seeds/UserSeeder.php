@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
                 'name'=>'Agent',
                 'email'=>'agent@test.com',
                 'role'=>'agent',
+                'email_verified_at' => now(),
                 'password'=> Hash::make('123456'),
             ],
             [

@@ -33,36 +33,39 @@ The above copyright notice and this permission notice shall be included in all c
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <a class="nav-link {{ \Request::is('admin/dashboard') ? 'active' : '' }}"
-                                   href="{{ route('admin.dashboard') }}">
+                                   href="{{ route(Auth::user()->role . '.' .'dashboard') }}">
                                     <i class="ni ni-tv-2 text-primary"></i>
                                     <span class="nav-link-text">Dashboard</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('manage.blog.index') }}">
-                                    <i class="ni ni-map-big text-primary"></i>
-                                    <span class="nav-link-text">Blog</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('manage.service.index') }}">
-                                    <i class="ni ni-pin-3 text-primary"></i>
-                                    <span class="nav-link-text">Services</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('manage.agent.index') }}">
-                                    <i class="ni ni-bullet-list-67 text-default"></i>
-                                    <span class="nav-link-text">Agent</span>
-                                </a>
-                            </li>
-                            <hr>
-                            <li class="nav-item">
-                                <a href="{{ route('manage.') }}" class="nav-link">
-                                    <i class="ni ni-single-02 text-yellow"></i>
-                                    <span class="nav-link-text">Setting</span>
-                                </a>
-                            </li>
+                            @if (Auth::user()->role == 'admin')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('manage.blog.index') }}">
+                                        <i class="ni ni-map-big text-primary"></i>
+                                        <span class="nav-link-text">Blog</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('manage.agent.index') }}">
+                                        <i class="ni ni-bullet-list-67 text-default"></i>
+                                        <span class="nav-link-text">Agent</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('manage.service.index') }}">
+                                        <i class="ni ni-pin-3 text-primary"></i>
+                                        <span class="nav-link-text">Services</span>
+                                    </a>
+                                </li>
+                            @else
+                                <hr>
+                                <li class="nav-item">
+                                    <a href="{{ route('agent.profile', Auth::id()) }}" class="nav-link">
+                                        <i class="ni ni-single-02 text-yellow"></i>
+                                        <span class="nav-link-text">Setting Profile</span>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -72,6 +75,9 @@ The above copyright notice and this permission notice shall be included in all c
             <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div class="navbar-nav align-items-center">
+                            <h1 class="text-white h2 mb-0">@yield('page-name')</h1>
+                        </div>
                         <ul class="navbar-nav align-items-center  ml-md-auto ">
                             <li class="nav-item d-xl-none">
                                 <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
@@ -89,7 +95,7 @@ The above copyright notice and this permission notice shall be included in all c
                                 </a>
                             </li>
                         </ul>
-                        <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+                        <ul class="navbar-nav align-items-center  ml-auto ml-md-0">
                             <li class="nav-item dropdown">
                                 <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                                    aria-expanded="false">
@@ -173,6 +179,7 @@ The above copyright notice and this permission notice shall be included in all c
         <script src="{{ asset('plugin/argon-dashboard/assets/js/argon.js') }}"></script>
         <script src="{{ asset('plugin/slick/slick.min.js') }}"></script>
         <script src="{{ asset('js/bs-custom-file-input.min.js') }}"></script>
+        <script src="{{ asset('js/typed.min.js') }}"></script>
         <script src="{{ asset('js/native.js') }}" charset="utf-8"></script>
         @yield('script')
     </body>

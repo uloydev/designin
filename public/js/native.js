@@ -68,14 +68,6 @@ $(document).ready(function () {
     $('#blogIndexPage #main-article .col-12').filter(':not(:nth-child(-n+2))').addClass('col-md-3');
     $("#blogIndexPage main section .article__time").css('left', articleCategoryWidth + 40);
     $("body[id^='blog'] main section nav").addClass('nav-pagination');
-    var headText = new Typed(".header__text span", {
-        strings: [" turning your hand", ' turn around your body'],
-        startDelay: 100,
-        typeSpeed: 80,
-        backDelay: 300,
-        backSpeed: 80,
-        loop: true
-    });
 
     //admin js
 
@@ -205,6 +197,17 @@ $(document).ready(function () {
     else if ($(window).width() < 768 && $("#faqs").length === 1) {
         $('#faqs').jqTabs({
             direction: 'horizontal'
+        });
+    }
+
+    if (window.location.pathname === '/') {
+        var headText = new Typed(".header__text span", {
+            strings: [" turning your hand", ' turn around your body'],
+            startDelay: 100,
+            typeSpeed: 80,
+            backDelay: 300,
+            backSpeed: 80,
+            loop: true
         });
     }
 

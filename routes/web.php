@@ -46,7 +46,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('faq', 'FaqController')->except(['show']);
         Route::resource('blog', 'BlogController');
         Route::resource('blog-category', 'BlogCategoryController');
-        Route::resource('service', 'ServiceController')->except(['create', 'show']);
+        Route::resource('service', 'ServiceController')->except(['create']);
         Route::resource('service-category', 'ServiceCategoryController')->except(['create', 'show', 'edit']);
         Route::resource('contact-us', 'ContactController')->except(['create', 'store', 'show']);
         Route::resource('testimony', 'TestimonyController')->only(['index', 'update', 'destroy']);
@@ -62,10 +62,10 @@ Route::middleware(['auth', 'verified'])->prefix('user')->namespace('User')->grou
 });
 
 Route::prefix('agent')->namespace('Agent')->group(function () {
-    Route::get('profile/{agent_id}', 'HomeController@showAgentProfile')->name('agent.profile');
+    Route::get('profile', 'AgentController@profile')->name('agent.profile');
     Route::middleware(['agent', 'verified'])->name('agent.')->group(function () {
         Route::redirect('/', 'dashboard');
-        Route::get('dashboard', 'HomeController@index')->name('home');
+        Route::get('dashboard', 'HomeController@index')->name('dashboard');
         Route::get('testimony', 'TestimonyController@index')->name('testimony.index');
         Route::get('testimony/{service_id}', 'TestimonyController@show')->name('testimony.show');
         Route::resource('portfolio', 'PortfolioController');

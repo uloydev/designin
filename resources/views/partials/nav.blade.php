@@ -21,14 +21,11 @@
                 <a href="{{ route('blog.index') }}" class="nav__link">Blog</a>
             </li>
             @auth
-                @if (Auth::user()->role == 'admin')
+                @if (Auth::user()->role == 'admin' || Auth::user()->role == 'agent')
                     <li class="nav__list">
-                        <a href="{{ route('admin.dashboard') }}" class="nav__link">Dashboard</a>
+                        <a href="{{ route(Auth::user()->role . '.dashboard') }}" class="nav__link">Dashboard</a>
                     </li>
                 @else
-                    <li class="nav__list">
-                        <a href="" class="nav__link">my profile</a>
-                    </li>
                     <li class="nav__list">
                         <a href="" class="nav__link">my transaction</a>
                     </li>
