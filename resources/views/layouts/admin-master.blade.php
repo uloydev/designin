@@ -32,7 +32,7 @@ The above copyright notice and this permission notice shall be included in all c
                     <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link {{ \Request::is('admin/dashboard') ? 'active' : '' }}"
+                                <a class="nav-link {{ \Request::is(Auth::user()->role . '/dashboard') ? 'active' : '' }}"
                                    href="{{ route(Auth::user()->role . '.' .'dashboard') }}">
                                     <i class="ni ni-tv-2 text-primary"></i>
                                     <span class="nav-link-text">Dashboard</span>
@@ -58,11 +58,31 @@ The above copyright notice and this permission notice shall be included in all c
                                     </a>
                                 </li>
                             @else
-                                <hr>
                                 <li class="nav-item">
-                                    <a href="{{ route('agent.profile', Auth::id()) }}" class="nav-link">
+                                    <a class="nav-link" href="#navbar-components" data-toggle="collapse" role="button"
+                                       aria-expanded="false" aria-controls="navbar-components">
+                                        <i class="ni ni-ui-04 text-info"></i>
+                                        <span class="nav-link-text">Feed</span>
+                                    </a>
+                                    <div class="collapse" id="navbar-components" style="">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                <a href="{{ route('agent.service.index') }}" class="nav-link">
+                                                    <span class="sidenav-normal"> My Service </span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="" class="nav-link">
+                                                    <span class="sidenav-normal"> Queue Order </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('agent.profile.index') }}" class="nav-link">
                                         <i class="ni ni-single-02 text-yellow"></i>
-                                        <span class="nav-link-text">Setting Profile</span>
+                                        <span class="nav-link-text">Profile</span>
                                     </a>
                                 </li>
                             @endif

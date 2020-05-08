@@ -11,6 +11,6 @@ class ServiceCategory extends Model
 
     public function services()
     {
-        return $this->hasMany('App\Service');
+        return $this->hasMany('App\Service', 'service_category_id', 'id');
     }
 }

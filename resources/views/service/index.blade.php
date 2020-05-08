@@ -11,6 +11,28 @@
     </header>
 @endsection
 @section('content')
+    @if (session('success_update'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <span class="alert-text">{{ session('success_update') }}</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @elseif (session('success_delete'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <span class="alert-text">{{ session('success_delete') }}</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @elseif (session('success_create'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <span class="alert-text">{{ session('success_create') }}</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <div class="row">
         @if (session('create'))
             <div class="col-12 alert alert-success alert-dismissible fade show" role="alert">
@@ -44,8 +66,8 @@
                         <div class="carousel slide" id="carouselService{{ Str::slug($category->name, '-') }}"
                              data-ride="carousel" data-interval="0" data-wrap="false">
                             <div class="carousel-inner">
-                                @if (count($category->services) > 1)
-                                    @foreach ($category->services as $service)
+                                @if (count($services->where('service_category_id', $category->id)) > 1)
+                                    @foreach ($services->where('service_category_id', $category->id) as $service)
                                         <article class="carousel-item {{ $loop->first ? 'active' : '' }}">
                                             <figure class="service__content">
                                                 <img src="{{ Storage::url($service->image) }}"
@@ -56,22 +78,27 @@
                                                 </figcaption>
                                             </figure>
                                             <div class="service__action">
-                                                @if (Auth::user()->role == 'agent' AND $service->agent_id == Auth::id())
-                                                <a href="{{ route('manage.service.edit', $service->id) }}"
-                                                   class="btn btn-success">
-                                                    Edit
-                                                </a>
+                                                @if (Auth::user()->role == 'agent')
+                                                    <a href="{{ route('agent.service.edit', $service->id) }}"
+                                                       class="btn btn-success">
+                                                        Edit
+                                                    </a>
+                                                    <button type="button" class="btn btn-danger" id="from-agent"
+                                                            data-toggle="modal" data-target="#modal-delete-service"
+                                                            data-id="{{ $service->id }}" data-title="{{ $service->title }}">
+                                                        Remove Service
+                                                    </button>
                                                 @else
-                                                <a href="{{ route('manage.service.edit', $service->id) }}"
-                                                   class="btn btn-success">
-                                                    Edit
-                                                </a>
+                                                    <a href="{{ route('manage.service.edit', $service->id) }}"
+                                                       class="btn btn-success">
+                                                        Edit
+                                                    </a>
+                                                    <button type="button" class="btn btn-danger"
+                                                            data-toggle="modal" data-target="#modal-delete-service"
+                                                            data-id="{{ $service->id }}" data-title="{{ $service->title }}">
+                                                        Remove Service
+                                                    </button>
                                                 @endif
-                                                <button type="button" class="btn btn-danger"
-                                                        data-toggle="modal" data-target="#modal-delete-service"
-                                                        data-id="{{ $service->id }}" data-title="{{ $service->title }}">
-                                                    Remove Service
-                                                </button>
                                             </div>
                                         </article>
                                     @endforeach
@@ -87,7 +114,8 @@
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
                                     </a>
-                                @elseif (count($category->services) === 1)
+                                @elseif (count($services->where('service_category_id', $category->id)) === 1)
+                                    @foreach ($services->where('service_category_id', $category->id) as $service)
                                     <article>
                                         <figure class="service__content">
                                             <img src="{{ Storage::url($service->image) }}"
@@ -98,22 +126,30 @@
                                             </figcaption>
                                         </figure>
                                         <div class="service__action">
-                                            @if (Auth::user()->role == 'agent' AND $service->agent_id == Auth::id())
-                                            <a href="{{ route('manage.service.edit', $service->id) }}" class="btn btn-success">
-                                                Edit
-                                            </a>
+                                            @if (Auth::user()->role == 'agent')
+                                                <a href="{{ route('agent.service.edit', $service->id) }}"
+                                                   class="btn btn-success">
+                                                    Edit
+                                                </a>
+                                                <button type="button" class="btn btn-danger" id="from-agent"
+                                                        data-toggle="modal" data-target="#modal-delete-service"
+                                                        data-id="{{ $service->id }}" data-title="{{ $service->title }}">
+                                                    Remove Service
+                                                </button>
                                             @else
-                                            <a href="{{ route('manage.service.edit', $service->id) }}" class="btn btn-success">
-                                                Edit
-                                            </a>
+                                                <a href="{{ route('manage.service.edit', $service->id) }}"
+                                                   class="btn btn-success">
+                                                    Edit
+                                                </a>
+                                                <button type="button" class="btn btn-danger"
+                                                        data-toggle="modal" data-target="#modal-delete-service"
+                                                        data-id="{{ $service->id }}" data-title="{{ $service->title }}">
+                                                    Remove Service
+                                                </button>
                                             @endif
-                                            <button type="button" class="btn btn-danger"
-                                            data-toggle="modal" data-target="#modal-delete-service"
-                                            data-id="{{ $service->id }}" data-title="{{ $service->title }}">
-                                                Remove Service
-                                            </button>
                                         </div>
                                     </article>
+                                    @endforeach
                                 @else
                                     <div class="alert alert-secondary" role="alert">
                                         No record found

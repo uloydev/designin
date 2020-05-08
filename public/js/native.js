@@ -2,18 +2,17 @@ $(document).ready(function () {
     //user js
     const navToggle = document.querySelector('.nav__toggle');
     const primaryNav = document.querySelector('#primaryNav');
+    $(".nav__toggle").click(function () {
+        if ($(".overlay--nav-showed").hasClass('overlay--active')) {
+            $(".overlay--nav-showed").removeClass('overlay--active')
+        }
+        else {
+            $(".overlay--nav-showed").addClass('overlay--active')
+        }
+    });
     if (navToggle) {
         navToggle.addEventListener('click', function () {
             const overlayNavShowed = document.querySelector('.overlay--nav-showed');
-
-            if (overlayNavShowed.length === 1) {
-                if (!overlayNavShowed.classList.contains('overlay--active')) {
-                    overlayNavShowed.classList.add('overlay--active');
-                }
-                else {
-                    overlayNavShowed.classList.add('overlay--active');
-                }
-            }
 
             if (window.screen.width <= 992) {
                 if (primaryNav.classList.contains('nav--showed')) {
@@ -69,8 +68,26 @@ $(document).ready(function () {
     $("#blogIndexPage main section .article__time").css('left', articleCategoryWidth + 40);
     $("body[id^='blog'] main section nav").addClass('nav-pagination');
 
-    //admin js
+    let serviceId = $("#serviceEditPage #service-edit-form input[name='service_id']").val();
+    if (window.location.href.indexOf('agent/service/' + serviceId + '/edit') > -1) {
+        $("#serviceEditPage #service-edit-form").attr('action', '/agent/service/' + serviceId);
+    }
+    else if (window.location.href.indexOf('admin/manage/service/' + serviceId + '/edit') > -1) {
+        $("#serviceEditPage #service-edit-form").attr('action', '/admin/manage/service/' + serviceId);
+    }
 
+    if (window.location.href.indexOf('agent/service') > -1) {
+        $("#servicePage #form-add-service").attr('action', '/agent/service');
+    }
+    else if (window.location.href.indexOf('admin/manage/service') > -1) {
+        $("#servicePage #form-add-service").attr('action', '/admin/manage/service');
+    }
+
+    if ($(window).width() >= 993) {
+        $("#userProfilePage .profile-main__orderBy").removeClass('wide');
+    }
+
+    //admin js
     const btnArticles = document.querySelectorAll('.btn[data-target="#delete-article');
     btnArticles.forEach(function (btnArticle) {
         let articleId = btnArticle.dataset.articleId;
@@ -120,7 +137,12 @@ $(document).ready(function () {
         let serviceTitle = $(this).data('title');
 
         $("#modal-delete-service .modal-service-title").text(serviceTitle);
-        $("#modal-delete-service form").attr("action", '/admin/manage/service/' + serviceId);
+        if ($(this).attr('id') === 'from-agent') {
+            $("#modal-delete-service form").attr("action", '/agent/service/' + serviceId);
+        }
+        else {
+            $("#modal-delete-service form").attr("action", '/admin/manage/service/' + serviceId);
+        }
     });
 
     $("#serviceCategoryPage .btn[data-target='#create-edit-category']").click(function () {
@@ -181,6 +203,29 @@ $(document).ready(function () {
             }
         });
 
+    $("#agentProfilePage .profile__input").change(function () {
+        $(this).parent().submit();
+    });
+
+    $("#agentProfilePage .profile__form-edit .profile__file").change(function () {
+        if ($(this).val().length !== 0) {
+            let nameCard =  $(this)[0].files[0].name;
+            $(this).next().text(nameCard);
+        }
+        else {
+            $(this).next().text("Upload Name Card");
+        }
+    });
+    $("#serviceEditPage #service-edit-form #serviceLogo").change(function () {
+        if ($(this).val().length !== 0) {
+            let nameCard =  $(this)[0].files[0].name;
+            $(this).next().text(nameCard);
+        }
+        else {
+            $(this).next().text("Update Logo");
+        }
+    });
+
     //plugin & general
     if (window.location.href.indexOf('blog/categories') > -1) {
         $("#blogCategoryPage .category-header__filter").niceSelect();
@@ -201,7 +246,7 @@ $(document).ready(function () {
     }
 
     if (window.location.pathname === '/') {
-        var headText = new Typed(".header__text span", {
+        const headText = new Typed(".header__text span", {
             strings: [" turning your hand", ' turn around your body'],
             startDelay: 100,
             typeSpeed: 80,
@@ -211,15 +256,21 @@ $(document).ready(function () {
         });
     }
 
-    $('input[accept="image/*"]').change(function(){
-        if (this.files && this.files[0]) {
+    $("#userProfilePage .profile-main__orderBy").niceSelect();
+
+    const fileImage = $('input[accept="image/*"]');
+    fileImage.parent().prev().attr('id', 'cover-preview');
+    fileImage.change(function(){
+        if (this.files && this.files[0] && this.files.length !== 0) {
             let reader = new FileReader();
-            $(this).parent().prev().attr('id', 'cover-preview');
             console.log($(this).val());
             reader.onload = function (e) {
                 $('#cover-preview').attr('src', e.target.result);
             }
             reader.readAsDataURL(this.files[0]);
+        }
+        else {
+            $('#cover-preview').attr('src', '');
         }
     });
     $("#services .row").slick({
@@ -282,6 +333,7 @@ $(document).ready(function () {
         infinite: false,
         rows: 1,
         slidesPerRow: 2,
+        adaptiveHeight: false,
         slidesToShow: 2,
         prevArrow: "<a href='javascript:void(0);' class='bx bxs-chevron-left'></a>",
         nextArrow: "<a href='javascript:void(0);' class='bx bxs-chevron-right'></a>",

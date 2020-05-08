@@ -79,12 +79,6 @@ class ServiceController extends Controller
         return redirect()->route('manage.service.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Service $service
-     * @return void
-     */
     public function destroy(Service $service)
     {
         Storage::delete($service->image);

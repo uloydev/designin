@@ -64,9 +64,9 @@
             </div>
 
             <div class="modal-body text-center">
-                <p>Are you sure wanna delete service with title <br>
-                    <strong class="modal-service-title"></strong>?
-                    <span class="text-danger">You couldn't be undo this!</span>
+                <p>Are you sure wanna delete service with title
+                    <strong class="modal-service-title"></strong>? <br>
+                    <span class="text-danger"><strong>You couldn't be undo this!</strong></span>
                 </p>
                 <form method="post" id="form-delete-service">
                     @csrf @method('DELETE')
@@ -74,7 +74,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-danger" form="form-delete-service">Yes, remove it</button>
             </div>
         </div>

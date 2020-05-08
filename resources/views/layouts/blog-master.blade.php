@@ -16,5 +16,6 @@
     @yield('element')
     @include('partials.script')
     @yield('script')
+    <div class="overlay overlay--nav-showed"></div>
   </body>
 </html>

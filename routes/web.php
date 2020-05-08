@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['verify'=>true]);
 
 Route::get('/', 'HomeController@index')->name('landing-page');
-Route::get('/services/search', 'HomeController@serviceSearch');
-Route::get('/services', 'HomeController@services')->name('services');
+Route::get('services/search', 'HomeController@serviceSearch');
+Route::get('services', 'HomeController@services')->name('services');
 Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
 Route::get('testimony', 'HomeController@testimonies')->name('testimony');
-Route::resource('blog', 'BlogController');
+Route::resource('blog', 'BlogController')->only(['index', 'show']);
 Route::resource('blog/categories', 'BlogCategoryController')->names([
     'index' => 'blog-category.index',
     'create' => 'blog-category.create',
@@ -53,21 +53,22 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
     });
 });
 
-Route::middleware(['auth', 'verified'])->prefix('user')->namespace('User')->group(function () {
-    Route::redirect('/', 'dashboard');
-    Route::name('user.')->group(function () {
+Route::name('user.')->prefix('user')->group(function () {
+    Route::resource('profile', 'ProfileController');
+    Route::namespace('User')->group(function() {
         Route::get('dashboard', 'HomeController@index')->name('home');
         Route::resource('testimony', 'TestimonyController')->only(['index', 'create', 'store']);
     });
 });
 
-Route::prefix('agent')->namespace('Agent')->group(function () {
-    Route::get('profile', 'AgentController@profile')->name('agent.profile');
-    Route::middleware(['agent', 'verified'])->name('agent.')->group(function () {
+Route::prefix('agent')->name('agent.')->group(function () {
+    Route::resource('profile', 'ProfileController');
+    Route::namespace('Agent')->middleware(['agent', 'verified'])->group(function () {
         Route::redirect('/', 'dashboard');
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
         Route::get('testimony', 'TestimonyController@index')->name('testimony.index');
         Route::get('testimony/{service_id}', 'TestimonyController@show')->name('testimony.show');
+        Route::resource('service', 'ServiceController');
         Route::resource('portfolio', 'PortfolioController');
     });
 });

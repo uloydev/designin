@@ -40,6 +40,15 @@ class HomeController extends Controller
     public function services(Request $request)
     {
         $services = Service::all();
+        foreach ($services as $service) {
+            if ($service->testimonies->count() != 0){
+                $score = 0;
+                foreach ($service->testimonies as $testimony) {
+                    $score += $testimony->rating;
+                }
+                $rating = $score / $service->testimonies->count();
+            }
+        }
         if (isset($request->category)) {
             $categories = ServiceCategory::where('id', $request->category)->get();
             $services = Service::where('service_category_id', $request->category)->paginate(10);
@@ -47,7 +56,7 @@ class HomeController extends Controller
         else {
             $categories = ServiceCategory::all();
         }
-        return view('services', compact('categories', 'services'));
+        return view('services', compact('categories', 'services', 'rating'));
     }
 
     public function faq()

@@ -20,6 +20,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function profile(){
-        return $this->belongsTo('App\UserProfile', 'id', 'user_id');
+        return $this->hasOne('App\UserProfile', 'user_id', 'id');
     }
 }

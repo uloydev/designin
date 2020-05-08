@@ -43,6 +43,6 @@ class VerificationController extends Controller
 
     protected function redirectTo()
     {
-        return '/' . Auth::user()->role;
+        return 'user/dashboard';
     }
 }

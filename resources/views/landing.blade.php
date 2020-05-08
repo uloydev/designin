@@ -18,13 +18,15 @@
     <main>
       <section id="services">
         <div class="container">
-          <h1 class="section__heading">our services</h1>
+          <h1 class="section__heading">our service</h1>
           <div class="row">
             @foreach ($serviceCategories as $category)
             <div class="px-3">
-                <img src="{{ Storage::url($category->image_url) }}" class="services__icon">
+                <img src="{{ Storage::url($category->image_url) }}" class="services__icon" alt="Our service">
                 <p class="services__name">{{ $category->name }}</p>
-                <a href="{{ url('services') }}" class="services__btn btn-light">See detail</a>
+                <a href="{{ route('services') . '#' . Str::slug($category->name, '-') }}" class="services__btn btn-light">
+                    See all available service
+                </a>
             </div>
             @endforeach
           </div>
@@ -36,7 +38,7 @@
           <div class="row">
             <div class="col-12 col-md-5 col-lg-6 reason-trust">
               <a href="javascript:void(0);" class="reason-trust__btn"><i class='bx bx-play'></i></a>
-              <img src="{{ asset('img/how-we-work.png') }}" width="100%">
+              <img src="{{ asset('img/how-we-work.png') }}" width="100%" alt="How desainin work">
               <div class="reason-trust__overlay">
                 <div class="reason-trust__modal">
                     <a href="" class="reason-trust__close-btn"><i class='bx bx-x' ></i></a>
@@ -82,12 +84,12 @@
       </section>
       <section id="subscription">
         <div class="container">
-          <h1 class="section__heading">Subscripe for more benefit to you</h1>
+          <h1 class="section__heading">Subscribe for more benefit to you</h1>
           <div class="subscription__slider row">
             {{-- foreach --}}
             <div class="px-3">
               <figure class="subscription__item">
-                <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img">
+                <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img" alt="Desainin subscription">
                 <figcaption class="subscription__caption">
                   <p class="subscription__name">Social Media</p>
                   <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
@@ -104,6 +106,60 @@
                 </div>
               </figure>
             </div>
+              <div class="px-3">
+                  <figure class="subscription__item">
+                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img" alt="Desainin subscription">
+                      <figcaption class="subscription__caption">
+                          <p class="subscription__name">Social Media</p>
+                          <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
+                      </figcaption>
+                      <div class="subscription__detail">
+                          <p class="subscription__name">Social Media</p>
+                          <p class="subscription__desc">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio facere
+                              doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste reiciendis
+                              ipsa esse officiis, voluptas quis velit. Ratione.
+                          </p>
+                          <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
+                      </div>
+                  </figure>
+              </div>
+              <div class="px-3">
+                  <figure class="subscription__item">
+                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img" alt="Desainin subscription">
+                      <figcaption class="subscription__caption">
+                          <p class="subscription__name">Social Media</p>
+                          <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
+                      </figcaption>
+                      <div class="subscription__detail">
+                          <p class="subscription__name">Social Media</p>
+                          <p class="subscription__desc">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio facere
+                              doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste reiciendis
+                              ipsa esse officiis, voluptas quis velit. Ratione.
+                          </p>
+                          <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
+                      </div>
+                  </figure>
+              </div>
+              <div class="px-3">
+                  <figure class="subscription__item">
+                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img" alt="Desainin subscription">
+                      <figcaption class="subscription__caption">
+                          <p class="subscription__name">Social Media</p>
+                          <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
+                      </figcaption>
+                      <div class="subscription__detail">
+                          <p class="subscription__name">Social Media</p>
+                          <p class="subscription__desc">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio facere
+                              doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste reiciendis
+                              ipsa esse officiis, voluptas quis velit. Ratione.
+                          </p>
+                          <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
+                      </div>
+                  </figure>
+              </div>
             {{-- endforeach --}}
           </div>
         </div>
@@ -117,7 +173,7 @@
                         <div class="px-2">
                             <div class="card testimony-card">
                                 <div class="card__header testimony-card__header">
-                                    <img src="{{ asset('img/people.jpg') }}" alt="desainin testimony"
+                                    <img src="{{ asset('img/people.webp') }}" alt="desainin testimony"
                                          class="card__img card__img--circle testimony__img">
                                     <p class="testimony__name">{{ $testimony->user->name }}</p>
                                     <p class="card__text">{{ $testimony->created_at->format('d M Y') }}</p>

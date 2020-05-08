@@ -19,7 +19,7 @@ class ServiceSeeder extends Seeder
         		'title' => 'Desain ' . $faker->word,
         		'description' => $faker->paragraph,
                 'image' => 'files/stories.jpeg',
-        		'agent_id' => 2,
+        		'agent_id' => $faker->unique()->numberBetween(2, 3),
         		'service_category_id' => $faker->unique()->numberBetween(1, 6)
            	]);
         }

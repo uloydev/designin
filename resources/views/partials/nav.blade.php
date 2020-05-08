@@ -32,6 +32,9 @@
                     <li class="nav__list">
                         <a href="" class="nav__link">my subscription</a>
                     </li>
+                    <li class="nav__list">
+                        <a href="{{ route('user.profile.index') }}" class="nav__link">my profile</a>
+                    </li>
                 @endif
                 <li class="nav__list">
                     <a class="nav__link" href="javascript:void(0);"

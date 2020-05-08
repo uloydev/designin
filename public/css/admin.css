@@ -61,6 +61,20 @@
 #serviceEditPage #service-edit-form .btn {
     display: block;
 }
+
+#agentProfilePage .profile__form-edit .custom-file-input {
+    opacity: 0 !important;
+}
+#agentProfilePage .profile__label {
+    cursor: pointer;
+}
+#agentProfilePage .profile__label .fas {
+    position: absolute;
+    right: 0;
+    transform: translateX(200%) translateY(300%);
+    color: #50a090;
+}
+
 footer {
     width: 100%;
     padding: 15px 0;

@@ -16,51 +16,43 @@
 @endsection
 @section('content')
     <div class="container">
-        @foreach ($categories as $category)
-            <h1 class="mb-5 text-center text-md-left">{{ $category->name ?? '' }}</h1>
-            <section class="category row">
-            @foreach ($category->services as $service)
-                <div class="col-12 col-md-6 mb-md-5 col-lg-4 col-xl-3">
-                    <a href="">
-                        <div class="service card p-0">
-                            <img src="{{ Storage::url($service->image) }}" class="card__img" alt="Desainin Service Category">
-                            <div class="card__header">
-                                <h2 class="card__heading service__title">{{ $service->title }}</h2>
-                            </div>
-                            <div class="card__body service__content">
-                                <p>{{ $service->description }}</p>
-                                <p>{{ $service->agent->name }}</p>
-                                @php
-                                    $rating = 0;
-                                    if($service->testimonies->count() != 0){
-                                        $score = 0;
-                                        foreach ($service->testimonies as $testimony) {
-                                            $score += $testimony->rating;
-                                        }
-                                        $rating = $score / $service->testimonies->count();
-                                    }
-                                @endphp
-                                <p>rating : {{ $rating }}</p>
+        @forelse ($categories as $category)
+            <section class="category" id="{{ Str::slug($category->name, '-') }}">
+                <h1 class="mb-5 text-center text-md-left">{{ $category->name ?? '' }}</h1>
+                <div class="row">
+                    @forelse ($category->services as $service)
+                        <div class="col-12 col-md-6 mb-md-5 col-lg-4 col-xl-3">
+                            <a href="">
+                                <div class="service card p-0">
+                                    <img src="{{ Storage::url($service->image) }}" class="card__img"
+                                         alt="Desainin Service Category">
+                                    <div class="card__header">
+                                        <h2 class="card__heading service__title">{{ $service->title }}</h2>
+                                    </div>
+                                    <div class="card__body service__content">
+                                        <p>{{ $service->description }}</p>
+                                        <p class="mt-3 service__rating">Rating : {{ ceil($rating) }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="col-12">
+                            <div class="alert alert--light text-center" style="font-size: 18px">
+                                <p class="mb-3">All service in category {{ $category->name }} is not available now.</p>
+                                <p>
+                                    <a href="{{ route('contact-us.index') }}" class="text-link">Contact us</a>
+                                    if you really need it
+                                </p>
                             </div>
                         </div>
-                    </a>
+                    @endforelse
                 </div>
-            @endforeach
-        </section>
-        @endforeach
-        {{-- @foreach ($services as $service)
-        <div>service : {{$service->title}}</div>
-        <div>description : {{$service->description}}</div>
-        <div>agent : {{$service->agent->name}}</div>
-        <div>package :</div>
-        <div>
-            <ul>
-                @foreach ($service->package as $package)
-                <li>{{ $package->title }} seharga {{ $package->price }}</li>
-                @endforeach
-            </ul>
-        </div>
-        <hr>
-        @endforeach --}}
+            </section>
+        @empty
+            <div class="alert alert--light">
+                No service category
+            </div>
+        @endforelse
     </div>
 @endsection

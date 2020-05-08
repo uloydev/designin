@@ -1,16 +1,20 @@
 @extends('layouts.admin-master')
+@section('page-title')
+    Edit Service {{ $service->title }}
+@endsection
+@section('page-name')
+    Edit Service <strong class="font-weight-bolder">{{ $service->title }}</strong>
+@endsection()
 @section('page-id', 'serviceEdit')
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h1>Edit service <strong>{{ $service->title }}</strong></h1>
-                </div>
-                <div class="card-body pt-0">
-                    <form action="{{ route('manage.service.update', $service->id) }}" method="post"
-                          id="service-edit-form" enctype="multipart/form-data">
+                <div class="card-body">
+                    <form action="{{-- routing on js bcz this page used both in admin & agent edit service --}}" method="post"
+                    id="service-edit-form" enctype="multipart/form-data">
                         @csrf @method('PUT')
+                        <input type="hidden" value="{{ $service->id }}" name="service_id" required readonly>
                         <div class="form-group">
                             <label for="service-title" class="mb-3">Service Name</label>
                             <input type="text" name="service_title" class="form-control text-dark"
@@ -39,14 +43,14 @@
                         </div>
                         <div class="form-group">
                             <p class="text-darker">Service Logo</p>
-                            <img src="" alt="Service Logo Preview">
+                            <img src="{{ Storage::url($service->image) }}" alt="Service Logo Preview" height="200">
                             <div class="custom-file">
                                 <input type="file" name="service_img" class="custom-file-input d-none"
                                        id="serviceLogo" accept="image/*">
                                 <label class="custom-file-label" for="serviceLogo">Update Logo</label>
                             </div>
                         </div>
-                        <a href="" class="btn btn-link text-muted">Cancel</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-link text-muted">Cancel</a>
                         <button type="submit" class="btn btn-success">Update service</button>
                     </form>
                 </div>
