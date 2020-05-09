@@ -29,7 +29,7 @@ class Authenticate extends Middleware
             }elseif(!Auth::user()->email_verified_at){
                 return $next($request);
             }
-            return redirect()->route(Auth::user()->role . '.home');
+            return redirect()->route(Auth::user()->role . '.dashboard');
         }
         return redirect()->route('login');
     }

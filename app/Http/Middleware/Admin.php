@@ -20,7 +20,7 @@ class Admin
             if (Auth::user()->role == 'admin') {
                 return $next($request);
             }
-            return redirect()->route(Auth::user()->role . '.home')->with(['error'=>"you don't have permission to access admin page"]);
+            return redirect()->route(Auth::user()->role . '.dashboard')->with(['error'=>"you don't have permission to access admin page"]);
         }
         return redirect()->route('login');
     }
