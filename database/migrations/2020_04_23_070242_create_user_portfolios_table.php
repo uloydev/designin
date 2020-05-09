@@ -13,7 +13,7 @@ class CreateUserPortfoliosTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_portfolios', function (Blueprint $table) {
+        Schema::create('user_portfolio', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('image_url');

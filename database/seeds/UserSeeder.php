@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -24,6 +25,7 @@ class UserSeeder extends Seeder
                 'name'=>'Agent',
                 'email'=>'agent@test.com',
                 'role'=>'agent',
+                'email_verified_at' => now(),
                 'password'=> Hash::make('123456'),
             ],
             [
@@ -34,6 +36,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name'=>'User',
+                'email_verified_at' => Carbon::now(),
                 'email'=>'user@test.com',
                 'password'=> Hash::make('123456'),
             ],

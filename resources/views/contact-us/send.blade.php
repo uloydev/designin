@@ -7,7 +7,7 @@
 @section('content')
   <div class="container">
     <div class="row justify-content-between contact-us">
-      <section class="contact-us__illustraition col-12 col-lg-6 col-xl-5">
+      <section class="contact-us__illustration col-12 col-lg-6 col-xl-5">
         <img src="{{ asset('img/contact-us.jpg') }}" class="contact-us__img" alt="Contact us Desainin" draggable="false">
       </section>
       <section class="contact-us__message col-12 col-lg-6">
@@ -22,4 +22,7 @@
       </section>
     </div>
   </div>
+@endsection
+@section('element')
+    <div class="overlay overlay--nav-showed"></div>
 @endsection

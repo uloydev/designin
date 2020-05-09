@@ -53,7 +53,7 @@ class FaqController extends Controller
      */
     public function edit($id)
     {
-        $faq = Faq::where('id', $id)->get();
+        $faq = Faq::findOrFail($id);
         return view('admin.faq.edit')->with('faq', $faq);
     }
 
@@ -71,7 +71,7 @@ class FaqController extends Controller
             'answer'=>'required'
         ]);
         Faq::create($request->all());
-        $faq = Faq::where('id', $id)->get();
+        $faq = Faq::findOrFail($id);
         return redirect()->back()->with(['success'=> 'Faq Updated Successfully', 'faq'=>$faq]);
     }
 

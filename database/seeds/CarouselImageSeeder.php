@@ -3,15 +3,8 @@
 use Illuminate\Database\Seeder;
 use App\CarouselImage;
 
-class CarouselImageSeeder extends Seeder
-{
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
+class CarouselImageSeeder extends Seeder {
+    public function run() {
         $images = [
             [
                 'name'=>'dummy image 1',

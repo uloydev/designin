@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Fira+Sans");
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans');
 html, body {
 position: relative;
 height: 100vh;
@@ -31,7 +31,7 @@ form.slide-up {
 }
 
 .form-structor {
-background-color: #222;
+background-color: #6b92a4;
 border-radius: 15px;
 height: 550px;
 width: 70%;

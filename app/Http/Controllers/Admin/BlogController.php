@@ -3,116 +3,101 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Blog;
 use App\BlogCategory;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $blogs = Blog::latest()->paginate(10);
-        return view('blog.index')->with('blogs', $blogs);
+        $blogs = Blog::with(['category', 'author'])->orderBy('created_at', 'DESC')->paginate(10);
+        $number = $blogs->firstItem();
+        $blogCategories = BlogCategory::all();
+        return view('blog.manage-article', ['blogs' => $blogs, 'number' => $number, 'blogCategories' => $blogCategories]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        $mainArticles = Blog::where('is_main', true)->count();
         $categories = BlogCategory::all();
-        return view('blog.create')->with('categories', $categories);
+        return view('blog.create-article', ['categories' => $categories, 'mainArticles' => $mainArticles]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $request->validate([
-            'title'=>'required',
-            'category_id'=>'required',
-            'content'=>'required',
-        ]);
-        $request->request->add([
-            'author_id'=>'1'
-        ]);
-        Blog::create($request->all());
-        return redirect()->back()->with(['success'=>'Blog Created Successfully', 'categories'=>BlogCategory::all()]);
+        $img_path = $request->file('header_image')->store('public/files');
+        $createBlog = new Blog;
+        $createBlog->header_image = $img_path;
+        $createBlog->title = $request->title;
+        $createBlog->category_id = $request->category_id;
+        $createBlog->contents = $request->contents;
+        $createBlog->author_id = Auth::id();
+        if (Blog::all()->count() <= 6) {
+            $createBlog->is_main = $request->is_main;
+        }else {
+            $createBlog->is_main = false;
+        }
+        $createBlog->save();
+        return redirect()->route('manage.blog.index')->with('success', 'Blog Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        $blog = Blog::find($id);
-        if($blog){
-            $related_blogs = Blog::orderByRaw('RAND()')->where('id', '!=', $id)->take(3)->get();
-            return view('blog.single')->with(['blog'=>$blog, 'related'=>$related_blogs, 'popular'=>$this->popular, 'categories' => $this->categories]);
-        }else{
-            return abort('404');
-        }
+        $blog = Blog::with(['category', 'author'])->findOrFail($id);
+        $popular = Blog::orderBy('hits', 'desc')->take(3)->get();
+        $related_blogs = Blog::with(['category', 'author'])->inRandomOrder()->take(3)->get()->except($id);
+        return view('blog.single', [
+            'blog' => $blog,
+            'relates' => $related_blogs,
+            'popular' => $popular
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $blog = Blog::find($id);
-        if($blog){
-            $categories = BlogCategory::all();
-            return view('blog.edit')->with(['blog'=>$blog, 'categories'=>$categories]);
-        }else{
-            return abort('404');
-        }
+        $article = Blog::findOrFail($id);
+        $mainArticles = Blog::where('is_main', true)->count();
+        $categories = BlogCategory::all();
+        return view('blog.edit', ['article'=> $article, 'categories' => $categories, 'mainArticles' => $mainArticles]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
+        $blog = Blog::findOrFail($id);
         $request->validate([
             'title'=>'required',
+            'header_image'=>'file|mimes:jpg,jpeg,png,gif,svg',
             'category_id'=>'required',
-            'content'=>'required',
+            'contents'=>'required',
         ]);
-        Blog::update($request->all())->where('id', $id);
-        return redirect()->back()->with(['success'=>'Blog Updated Successfully', 'blog'=>Blog::find($id), 'categories'=>BlogCategory::all()]);
+        $blog->title = $request->title;
+        $blog->contents = $request->contents;
+        $blog->category_id = $request->category_id;
+        if ($request->hasFile('header_image')) {
+            Storage::delete($blog->header_image);
+            $blog->header_image = Storage::putFile($this->upload_path, $request->file('header_image'));
+        }
+        $blog->save();
+        return redirect()->route('manage.blog.index')->with('success', 'Blog update succefully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        Blog::delete()->where('id', $id);
-        return redirect()->route('manage.blog.index')->with(['success'=>'Blog Deleted Successfully']); 
+        $blog = Blog::findOrFail($id);
+        Storage::delete($blog->header_image);
+        $blog->delete();
+        return redirect()->route('manage.blog.index')->with('success', 'Blog delete succefully');
     }
 }

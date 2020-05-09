@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Service;
+use Faker\Factory as Faker;
 
 class ServiceSeeder extends Seeder
 {
@@ -12,34 +13,15 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
-        $services = [
-            [
-                'title'=>'Design baju',
-                'description'=>'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate labore reprehenderit repellendus veritatis adipisci aliquam fuga iste consequuntur earum est.',
-                'agent_id'=>2,
-                'category_id'=>2,
-            ],
-            [
-                'title'=>'Design interior',
-                'description'=>'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate labore reprehenderit repellendus veritatis adipisci aliquam fuga iste consequuntur earum est.',
-                'agent_id'=>2,
-                'category_id'=>2,
-            ],
-            [
-                'title'=>'Design logo',
-                'description'=>'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate labore reprehenderit repellendus veritatis adipisci aliquam fuga iste consequuntur earum est.',
-                'agent_id'=>2,
-                'category_id'=>2,
-            ],
-            [
-                'title'=>'Design aplikasi',
-                'description'=>'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate labore reprehenderit repellendus veritatis adipisci aliquam fuga iste consequuntur earum est.',
-                'agent_id'=>2,
-                'category_id'=>2,
-            ],
-        ];
-        foreach ($services as $key => $value) {
-            Service::create($value);
+        for ($service = 1; $service <= 10; $service++) {
+            $faker = Faker::create('id_ID');
+            DB::table('service')->insert([
+        		'title' => 'Desain ' . $faker->word,
+        		'description' => $faker->paragraph,
+                'image' => 'files/stories.jpeg',
+        		'agent_id' => $faker->unique()->numberBetween(2, 3),
+        		'service_category_id' => $faker->unique()->numberBetween(1, 6)
+           	]);
         }
     }
 }

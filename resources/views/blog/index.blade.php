@@ -5,86 +5,22 @@
   <header>
     <div class="container">
       <div class="row justify-content-center" id="main-article">
-        {{-- main article --}}
+        @foreach ($mainArticle as $main)
         <div class="col-12">
-          <article>
-            <img src="{{ asset('img/article.jpg') }}" alt="Desainin article image" class="article__cover">
-            <div class="article__caption">
-              <p class="article__title mb-3">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, sapiente, maiores. Quod, dignissimos.
-              </p>
-              <span class="article__category">News</span>
-              <time class="article__time">April 23, 2020</time>
-            </div>
-            <a href="" class="article__link"></a>
-          </article>
+            <a href="{{ route('blog.show', $main->id) }}" class="article__link">
+                <article>
+                    <img src="{{ Storage::url($main->header_image) }}" alt="Desainin article image" class="article__cover">
+                    <div class="article__caption">
+                        <p class="article__title mb-3">
+                            {{ Str::words($main->title, 10) }}
+                        </p>
+                        <span class="article__category">{{ $main->category->name }}</span>
+                        <time class="article__time">{{ $main->created_at->format('D m, Y') }}</time>
+                    </div>
+                </article>
+            </a>
         </div>
-        <div class="col-12">
-          <article>
-            <img src="{{ asset('img/article.jpg') }}" alt="Desainin article image" class="article__cover">
-            <div class="article__caption">
-              <p class="article__title mb-3">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe deserunt, voluptas qui repudiandae.
-              </p>
-              <span class="article__category">News</span>
-              <time class="article__time">April 23, 2020</time>
-            </div>
-            <a href="" class="article__link"></a>
-          </article>
-        </div>
-        <div class="col-12">
-          <article>
-            <img src="{{ asset('img/article.jpg') }}" alt="Desainin article image" class="article__cover">
-            <div class="article__caption">
-              <p class="article__title mb-3">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur odit, quae neque laudantium?
-              </p>
-              <span class="article__category">News</span>
-              <time class="article__time">April 23, 2020</time>
-            </div>
-            <a href="" class="article__link"></a>
-          </article>
-        </div>
-        <div class="col-12">
-          <article>
-            <img src="{{ asset('img/article.jpg') }}" alt="Desainin article image" class="article__cover">
-            <div class="article__caption">
-              <p class="article__title mb-3">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni nemo qui inventore dolor.
-              </p>
-              <span class="article__category">News</span>
-              <time class="article__time">April 23, 2020</time>
-            </div>
-            <a href="" class="article__link"></a>
-          </article>
-        </div>
-        <div class="col-12">
-          <article>
-            <img src="{{ asset('img/article.jpg') }}" alt="Desainin article image" class="article__cover">
-            <div class="article__caption">
-              <p class="article__title mb-3">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita suscipit perferendis blanditiis sequi.
-              </p>
-              <span class="article__category">News</span>
-              <time class="article__time">April 23, 2020</time>
-            </div>
-            <a href="" class="article__link"></a>
-          </article>
-        </div>
-        <div class="col-12">
-          <article>
-            <img src="{{ asset('img/article.jpg') }}" alt="Desainin article image" class="article__cover">
-            <div class="article__caption">
-              <p class="article__title mb-3">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum deleniti, reiciendis sapiente laborum?
-              </p>
-              <span class="article__category">News</span>
-              <time class="article__time">April 23, 2020</time>
-            </div>
-            <a href="" class="article__link"></a>
-          </article>
-        </div>
-        {{-- end of main article --}}
+        @endforeach
       </div>
     </div>
   </header>
@@ -93,96 +29,50 @@
   <div class="container">
     <div class="row justify-content-md-between">
       <section class="col-12 col-md-8">
-        <article>
-          <img src="{{ asset('img/article2.jpg') }}" class="article__img">
-          <div class="article__detail">
-            <p class="article__title">
-              <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi</a>
-            </p>
-            <p class="article__content">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi ab ad ipsam tempora fugit, magnam aliquam optio
-              consequuntur dolores commodi!
-            </p>
-            <span class="article__category">News</span>
-            <time class="article__time">April 23, 2020</time>
-          </div>
-        </article>
-        <article>
-          <img src="{{ asset('img/article2.jpg') }}" class="article__img">
-          <div class="article__detail">
-            <p class="article__title">
-              <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, enim.</a>
-            </p>
-            <p class="article__content">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae quis sapiente tenetur laudantium veritatis inventore
-              dolorem ad fugiat architecto minima.
-            </p>
-            <span class="article__category">News</span>
-            <time class="article__time">April 23, 2020</time>
-          </div>
-        </article>
-        <article>
-          <img src="{{ asset('img/article2.jpg') }}" class="article__img">
-          <div class="article__detail">
-            <p class="article__title">
-              <a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, sunt.</a>
-            </p>
-            <p class="article__content">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam facilis deserunt perferendis nostrum
-              temporibus similique fuga, exercitationem soluta minima ducimus.
-            </p>
-            <span class="article__category">News</span>
-            <time class="article__time">April 23, 2020</time>
-          </div>
-        </article>
+          @foreach ($blogs as $blog)
+          <article>
+              <img src="{{ Storage::url($main->header_image) }}" class="article__img">
+              <div class="article__detail">
+                <p class="article__title">
+                  <a href="#">{{ Str::words($blog->title, 5) }}</a>
+                </p>
+                <p class="article__content">{{ Str::words($blog->contents, 20) }}</p>
+                <span class="article__category">{{ $blog->category->name }}</span>
+                <time class="article__time">{{ $blog->created_at->format('D m, Y') }}</time>
+              </div>
+          </article>
+          @endforeach
+          {{ $blogs->links() }}
       </section>
       <aside class="col-12 col-md-4">
         <div class="article-popular">
           <h3 class="article-popular__heading">
             <span>Most Popular</span>
           </h3>
-          <article class="mb-5">
-            <div class="article__detail">
-              <p class="article__title article__title--popular">
-                <a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, sunt.</a>
-              </p>
-              <span class="article-popular__category">News</span>
-              <time class="article-popular__time">April 23, 2020</time>
-            </div>
-            <img src="{{ asset('img/article2.jpg') }}" class="article__img article__img--popular">
-          </article>
-          <article class="mb-5">
-            <div class="article__detail">
-              <p class="article__title article__title--popular">
-                <a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, sunt.</a>
-              </p>
-              <span class="article-popular__category">News</span>
-              <time class="article-popular__time">April 23, 2020</time>
-            </div>
-            <img src="{{ asset('img/article2.jpg') }}" class="article__img article__img--popular">
-          </article>
-          <article class="mb-5">
-            <div class="article__detail">
-              <p class="article__title article__title--popular">
-                <a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, sunt.</a>
-              </p>
-              <span class="article-popular__category">News</span>
-              <time class="article-popular__time">April 23, 2020</time>
-            </div>
-            <img src="{{ asset('img/article2.jpg') }}" class="article__img article__img--popular">
-          </article>
+          @foreach ($populars as $popular)
+              <article class="mb-5">
+                <div class="article__detail">
+                  <p class="article__title article__title--popular">
+                    <a href="">{{ Str::words($popular->title, 8) }}</a>
+                  </p>
+                  <span class="article-popular__category">{{ $popular->category->name }}</span>
+                  <time class="article-popular__time">{{ $popular->created_at->format('D m, Y') }}</time>
+                </div>
+                <img src="{{ Storage::url($popular->header_image) }}" class="article__img article__img--popular"
+                     alt="{{ $popular->title }} Article Image">
+              </article>
+          @endforeach
         </div>
         <div class="article-category">
           <h3 class="article-popular__heading">
             <span>Category</span>
           </h3>
           <ul>
-            <li class="article-category__item mb-3">
-              <a href="#">news</a>
-            </li>
-            <li class="article-category__item mb-3">
-              <a href="#">promo</a>
-            </li>
+              @foreach ($categories as $category)
+                  <li class="article-category__item mb-3">
+                      <a href="{{ route('blog-category.show', $category->id) }}">{{ $category->name }}</a>
+                  </li>
+              @endforeach
           </ul>
         </div>
       </aside>

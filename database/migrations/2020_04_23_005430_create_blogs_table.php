@@ -13,13 +13,14 @@ class CreateBlogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('blogs', function (Blueprint $table) {
+        Schema::create('blog', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('header_image')->nullable();
-            $table->text('content');
+            $table->longText('contents');
             $table->integer('author_id');
             $table->integer('category_id');
+            $table->boolean('is_main')->default(true);
             $table->integer('hits')->nullable();
             $table->timestamps();
         });
@@ -32,6 +33,6 @@ class CreateBlogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blogs');
+        Schema::dropIfExists('blog');
     }
 }

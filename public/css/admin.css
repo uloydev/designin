@@ -1,1 +1,113 @@
 @import "./general.css";
+
+.sidenav {
+    z-index: 1000;
+}
+.nav-pills .nav-link:hover {
+    background-color: #E2E2E2;
+}
+.nav-pills .nav-link.active {
+    background-color: #4052af;
+}
+.carousel-control-prev, .carousel-control-next {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: auto;
+    bottom: auto;
+    border-radius: 50%;
+    padding: 6px;
+}
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    height: 10px;
+    width: 10px;
+}
+
+#servicePage #v-pills-tab {
+    height: 100%;
+}
+#servicePage #v-pills-tab .nav-link {
+    /*flex-grow: 1;*/
+    text-align: center;
+    padding: 20px 0;
+}
+#servicePage .service__title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+#servicePage .service__detail {
+
+}
+#servicePage .service__content {
+    display: flex;
+    padding-bottom: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+#servicePage .service__content img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 7px;
+}
+#servicePage .service__action {
+    display: flex;
+    padding: 10px 0;
+    justify-content: space-between;
+}
+
+#serviceEditPage #service-edit-form .btn {
+    display: block;
+}
+
+#agentProfilePage .profile__form-edit .custom-file-input {
+    opacity: 0 !important;
+}
+#agentProfilePage .profile__label {
+    cursor: pointer;
+}
+#agentProfilePage .profile__label .fas {
+    position: absolute;
+    right: 0;
+    transform: translateX(200%) translateY(300%);
+    color: #50a090;
+}
+
+footer {
+    width: 100%;
+    padding: 15px 0;
+}
+
+@media screen and (min-width: 768px) {
+    #servicePage .service__content {
+        flex-direction: row;
+        padding-bottom: 0;
+        margin: 10px 0 20px;
+    }
+    #servicePage .service__content figure {
+        flex-direction: row;
+    }
+    #servicePage .service__content img {
+        width: auto;
+        max-height: 300px;
+        margin-left: 0;
+        margin-right: 30px;
+        margin-bottom: 0;
+    }
+    #servicePage .carousel-item {
+        padding-top: 34px;
+    }
+
+    #serviceEditPage #service-edit-form .btn {
+        display: inline-block;
+    }
+    #serviceEditPage #service-edit-form button {
+        float: right;
+    }
+
+    footer {
+        margin-top: 30px;
+    }
+}

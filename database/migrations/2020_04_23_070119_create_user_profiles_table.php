@@ -13,11 +13,11 @@ class CreateUserProfilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_profiles', function (Blueprint $table) {
+        Schema::create('user_profile', function (Blueprint $table) {
             $table->id();
-            $table->string('avatar')->default('/img/people.jpg');
-            $table->string('handphone');
-            $table->text('address');
+            $table->string('avatar')->nullable();
+            $table->string('handphone')->nullable();
+            $table->text('address')->nullable();
             $table->string('name_card')->nullable();
             $table->string('bank')->nullable();
             $table->string('account_number')->nullable();
