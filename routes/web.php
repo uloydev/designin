@@ -20,11 +20,6 @@ Route::resource('blog/categories', 'BlogCategoryController')->names([
     'update' => 'blog-category.update',
     'destroy' => 'blog-category.destroy'
 ]);
-// Route::get('blog', 'BlogController@index')->name('blog.index');
-// Route::get('blog/{id}', 'BlogController@show')->name('blog.single');
-
-// Route::get('create', 'Admin\BlogController@create');
-// Route::post('create', 'Admin\BlogController@store')->name('blog.store');
 Route::post('contact-us', 'ContactController@contactUs');
 
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
@@ -51,6 +46,7 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
         Route::get('/', 'ProfileController@index')->name('profile.index');
         Route::get('edit', 'ProfileController@edit')->name('profile.edit');
         Route::put('edit', 'ProfileController@update')->name('profile.update');
+        Route::put('edit/avatar', 'ProfileController@avatarUpdate')->name('profile.avatar.update');
     });
     Route::namespace('User')->group(function() {
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
@@ -62,6 +58,8 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
     Route::prefix('profile')->middleware('profile')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
         Route::put('edit', 'ProfileController@update')->name('profile.update');
+        Route::put('edit/avatar', 'ProfileController@avatarUpdate')->name('profile.avatar.update');
+
     });
     Route::namespace('Agent')->group(function () {
         Route::redirect('/', 'dashboard');

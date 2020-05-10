@@ -16,9 +16,9 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-3 order-lg-2">
                         <div class="card-profile-image">
-                            <form action="{{ route('agent.profile.update', $profile->id) }}"
+                            <form action="{{ route('agent.profile.avatar.update') }}"
                             id="upload-profile" method="post" enctype="multipart/form-data">
-                                @csrf
+                                @csrf @method('PUT')
                                 <input type="file" id="profile-img" name="avatar" class="d-none profile__input"
                                        accept="image/*" form="upload-profile">
                                 <label for="profile-img" class="profile__label">
@@ -62,7 +62,7 @@
                     <h3 class="mb-0">Edit profile </h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('agent.profile.update', $profile->id) }}" method="post"
+                    <form action="{{ route('agent.profile.update') }}" method="post"
                     enctype="multipart/form-data" class="profile__form-edit">
                         @csrf @method('PUT')
                         <div class="row">
@@ -121,7 +121,7 @@
                             <div class="form-group col-12">
                                 <div class="custom-file">
                                     <input type="file" class="form-control profile__file" name="name_card" id="name_card"
-                                    accept="application/pdf, image/*">
+                                    accept="image/*">
                                     <label class="custom-file-label" for="name_card">Upload Name Card</label>
                                 </div>
                             </div>
@@ -134,8 +134,8 @@
                         <div class="row">
                             <div class="form-group col-12">
                                 <div class="custom-file">
-                                    <input type="file" class="form-control profile__file" name="portfolios" id="portfolio"
-                                    accept="application/pdf, application/msword, .odt">
+                                    <input type="file" class="form-control profile__file" name="portfolios[]" id="portfolio"
+                                    accept="application/pdf, application/msword, .odt" multiple>
                                     <label class="custom-file-label" for="portfolio">Portfolio</label>
                                 </div>
                             </div>
@@ -158,11 +158,25 @@
                                     @endforeach
                                 </select>
                             </div>
-                            @error('portfolios')
+                            @error('bank')
                             <div class="alert alert-danger" role="alert">
                                 {{ $message }}
                             </div>
                             @enderror
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="account_number">Account number</label>
+                                    <input type="number" id="account_number" class="form-control" name="account_number"
+                                    placeholder="Your Account Number" value="{{ $profile->account_number }}" required>
+                                </div>
+                                @error('account_number')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-default">Update Profile</button>
                     </form>
