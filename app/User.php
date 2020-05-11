@@ -15,11 +15,20 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = ['password', 'remember_token'];
     protected $casts = ['email_verified_at' => 'datetime'];
 
-    public function service(){
+    public function service()
+    {
         return $this->hasMany('App\Service', 'agent_id');
     }
 
-    public function profile(){
+    public function profile()
+    {
         return $this->hasOne('App\UserProfile', 'user_id', 'id');
+    }
+
+    public function chatSession()
+    {
+        if ($this->role != 'admin') {
+            return $this->hasMany('App\ChatSession', $this->role.'_id')->where('blocked', 0);
+        }
     }
 }
