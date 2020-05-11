@@ -15,11 +15,7 @@ class HomeController extends Controller
 
     public function showAgentProfile($agent_id)
     {
-        $profile = UserProfile::where('user_id', $agent_id)->first();
-        if (empty($profile)) {
-            return abort('404');
-        }else{
-            return view('agent.profile')->with('profile', $profile);
-        }
+        $profile = UserProfile::where('user_id', $agent_id)->firstOrFail();
+        return view('agent.profile')->with('profile', $profile);
     }
 }

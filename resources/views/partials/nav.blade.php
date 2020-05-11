@@ -4,14 +4,22 @@
             <li class="nav__list nav__list--logo">
                 @if (\Request::is('blog*'))
                     <a class="nav__link" href="{{ route('landing-page') }}">
-                        <img alt="Desainin" src="{{ asset('img/logo.png') }}">
+                        <img alt="Desainin" src="{{ asset('img/logo.png') }}" height="30">
                     </a>
                 @else
                     <a href="{{ route('landing-page') }}" class="nav__link">Desainin</a>
                 @endif
                 <i class='bx bx-menu-alt-right nav__toggle'></i>
             </li>
-            <li class="nav__list">
+            <li class="nav__list nav__list--search">
+                <form action="" class="search-service" method="get">
+                    @csrf
+                    <input type="search" class="search-service__input" name="search_agent_job"
+                           placeholder="Find jobs or agent" required>
+                    <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
+                </form>
+            </li>
+            <li class="nav__list ml-lg-auto">
                 <a href="{{ route('contact-us.index') }}" class="nav__link">Contact us</a>
             </li>
             <li class="nav__list">
@@ -26,14 +34,22 @@
                         <a href="{{ route(Auth::user()->role . '.dashboard') }}" class="nav__link">Dashboard</a>
                     </li>
                 @else
-                    <li class="nav__list">
-                        <a href="" class="nav__link">my transaction</a>
-                    </li>
-                    <li class="nav__list">
-                        <a href="" class="nav__link">my subscription</a>
-                    </li>
-                    <li class="nav__list">
-                        <a href="{{ route('user.profile.index') }}" class="nav__link">my profile</a>
+                    <li class="nav__list nav__list--dropdown">
+                        <span class="nav__link">Order menu <i class='bx bxs-chevron-down dropdown-icon'></i></span>
+                        <ul class="nav-dropdown-list">
+                            <li class="nav__list">
+                                <a href="" class="nav__link">my transaction</a>
+                            </li>
+                            <li class="nav__list">
+                                <a href="" class="nav__link">my subscription</a>
+                            </li>
+                            <li class="nav__list">
+                                <a href="{{ route('user.job.index') }}" class="nav__link">my jobs</a>
+                            </li>
+                            <li class="nav__list">
+                                <a href="{{ route('user.order.index') }}" class="nav__link">my order</a>
+                            </li>
+                        </ul>
                     </li>
                 @endif
                 <li class="nav__list">

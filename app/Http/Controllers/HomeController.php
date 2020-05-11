@@ -54,9 +54,23 @@ class HomeController extends Controller
             $services = Service::where('service_category_id', $request->category)->paginate(10);
         }
         else {
-            $categories = ServiceCategory::all();
+            $categories = ServiceCategory::has('services')->get();
         }
-        return view('services', compact('categories', 'services', 'rating'));
+        return view('service.all', ['categories' => $categories, 'services' => $services, 'rating' => $rating]);
+    }
+
+    public function showService($id)
+    {
+        $service = Service::findOrFail($id);
+//        if ($service->testimonies->count() != 0){
+//            $score = 0;
+//            foreach ($service->testimonies as $testimony) {
+//                $score += $testimony->rating;
+//            }
+//            $rating = $score / $service->testimonies->count();
+//        }
+        $rating = 4;
+        return view('service.single', ['service' => $service, 'rating' => $rating]);
     }
 
     public function faq()

@@ -23,7 +23,7 @@
                     @csrf @method('DELETE')
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer justify-between">
                 <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-danger" form="service-category-form">Delete</button>
             </div>
@@ -57,7 +57,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer justify-between">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
             </div>

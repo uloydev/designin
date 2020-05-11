@@ -37,8 +37,25 @@ $(document).ready(function () {
         });
     }
 
+    $(".btn-modal").click(function () {
+        let modalTarget = $(this).data('target');
+        $(".modal" + modalTarget).addClass('show-modal');
+        $("body").css("overflow", "hidden");
+    });
+    $(".btn-close-modal").click(function (e) {
+        e.preventDefault();
+        $(this).parents(".show-modal").removeClass('show-modal');
+        $("body").removeAttr("style");
+    });
+
+    $("nav .nav__list--dropdown > .nav__link").click(function () {
+        $(this).next().toggleClass('nav-dropdown-list--showed');
+        $(".dropdown-icon").toggleClass('rotate-180');
+    });
+
     $("header > .container, main, footer, body[id*='blog'] header").click(function() {
         $(".nav--showed").removeClass('nav--showed');
+        $(".nav-dropdown-list").removeClass('nav-dropdown-list--showed');
         $(".nav__list--dropdown .dropdown-icon").removeClass('rotate-180');
     });
 
@@ -84,7 +101,7 @@ $(document).ready(function () {
     }
 
     if ($(window).width() >= 993) {
-        $("#userProfilePage .profile-main__orderBy").removeClass('wide');
+        $(".profile-main__orderBy").removeClass('wide');
     }
 
     //admin js
@@ -127,6 +144,15 @@ $(document).ready(function () {
         let url = navLink.href;
         if(url === thisRoute) {
             navLink.classList.add('active');
+        }
+    });
+
+    const profileNavRoute = window.location.href;
+    const profileNavLinks = document.querySelectorAll('.profile-nav__link');
+    profileNavLinks.forEach(function (profileNavLink) {
+        let url = profileNavLink.href;
+        if(url === profileNavRoute) {
+            profileNavLink.classList.add('profile-nav__link--active');
         }
     });
 
@@ -207,13 +233,14 @@ $(document).ready(function () {
         $(this).parent().submit();
     });
 
-    $("#agentProfilePage .profile__form-edit .profile__file").change(function () {
-        if ($(this).val().length !== 0) {
+    $("#agentProfilePage .profile__form-edit .profile__file, .file-custom__input").change(function () {
+        let labelText = $(this).data('label');
+        if ($.trim($(this).val()).length !== 0) {
             let nameCard =  $(this)[0].files[0].name;
             $(this).next().text(nameCard);
         }
         else {
-            $(this).next().text("Upload Name Card");
+            $(this).next().text(labelText);
         }
     });
     $("#serviceEditPage #service-edit-form #serviceLogo").change(function () {
@@ -226,10 +253,24 @@ $(document).ready(function () {
         }
     });
 
+    $("#manageJobPage .profile-main__btn-edit-job").click(function () {
+        let jobTitle = $(this).parents(".profile-main-item").find(".job-title").text();
+        let jobStartTime = $(this).parents(".profile-main-item").find(".job-start").text();
+        let jobEndTime = $(this).parents(".profile-main-item").find(".job-end").text();
+        let jobDesc = $(this).parents(".profile-main-item").find(".job-description").text();
+        const jobEditModal = $("#modal-edit-job");
+
+        jobEditModal.find("input[name='job_title").val(jobTitle);
+        jobEditModal.find("input[name='job_start_time']").val(jobStartTime);
+        jobEditModal.find("input[name='job_end_time']").val(jobEndTime);
+        jobEditModal.find("textarea[name='detail_job']").val(jobDesc);
+    });
+    $("#manageJobPage .profile-main__btn-delete-job").click(function () {
+        let jobTitle = $(this).parents(".profile-main-item").find(".job-title").text();
+        $(".modal__job-title").text(jobTitle);
+    });
+
     //plugin & general
-    if (window.location.href.indexOf('blog/categories') > -1) {
-        $("#blogCategoryPage .category-header__filter").niceSelect();
-    }
     if (window.location.href.indexOf('admin') > -1) {
         bsCustomFileInput.init();
     }
@@ -255,8 +296,6 @@ $(document).ready(function () {
             loop: true
         });
     }
-
-    $("#userProfilePage .profile-main__orderBy").niceSelect();
 
     const fileImage = $('input[accept="image/*"]');
     fileImage.parent().prev().attr('id', 'cover-preview');
@@ -333,7 +372,7 @@ $(document).ready(function () {
         infinite: false,
         rows: 1,
         slidesPerRow: 2,
-        adaptiveHeight: false,
+        adaptiveHeight: true,
         slidesToShow: 2,
         prevArrow: "<a href='javascript:void(0);' class='bx bxs-chevron-left'></a>",
         nextArrow: "<a href='javascript:void(0);' class='bx bxs-chevron-right'></a>",
@@ -347,10 +386,61 @@ $(document).ready(function () {
         ]
     });
 
-    if($("#blog-content").length === 1) {
-        $("#blog-content").summernote({
-            placeholder: 'Insert your content here',
-            minHeight: 300
+    $(".profile-main__orderBy, #blogCategoryPage .category-header__filter, "+
+      ".service-single__filter-review, .nice-select").niceSelect();
+    $("#servicesPage .category [id^='service-slider']").slick({
+        infinite: false,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        mobileFirst: true,
+        nextArrow: '<a href="javascript:void(0);" class="slick-next"><i class="bx bxs-chevron-right"></i></a>',
+        prevArrow: '<a href="javascript:void(0);" class="slick-prev"><i class="bx bxs-chevron-left"></i></a>',
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            },
+            {
+                breakpoint: 993,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 4
+                }
+            }
+        ]
+    });
+
+    $("#blog-content").summernote({
+        placeholder: 'Insert your content here',
+        minHeight: 300
+    });
+
+    $("#servicePage textarea[name='description'], #serviceEditPage textarea[name='service_description'], " +
+        "textarea[name='detail_job']").summernote({
+        minHeight: 300
+    });
+
+    if ($('#service-package-tab').length === 1) {
+        $("#service-package-tab").jqTabs({
+            direction: 'horizontal',
+            mainWrapperClass: 'single-package'
+        });
+    }
+
+    if ($(".datepicker-here").length > 0) {
+        $(".datepicker-here").datepicker({
+            language: 'en',
+            dateFormat: 'dd M yyyy'
         });
     }
 

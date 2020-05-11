@@ -3,26 +3,39 @@
 @section('page-id', 'blogIndex')
 @section('header')
   <header>
-    <div class="container">
-      <div class="row justify-content-center" id="main-article">
-        @foreach ($mainArticle as $main)
-        <div class="col-12">
-            <a href="{{ route('blog.show', $main->id) }}" class="article__link">
-                <article>
-                    <img src="{{ Storage::url($main->header_image) }}" alt="Desainin article image" class="article__cover">
-                    <div class="article__caption">
-                        <p class="article__title mb-3">
-                            {{ Str::words($main->title, 10) }}
-                        </p>
-                        <span class="article__category">{{ $main->category->name }}</span>
-                        <time class="article__time">{{ $main->created_at->format('D m, Y') }}</time>
-                    </div>
-                </article>
-            </a>
-        </div>
-        @endforeach
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-md-6 mb-4 mb-md-0">
+                  <h1 class="text-center text-md-left">Find any article here</h1>
+              </div>
+              <div class="col">
+                  <form action="" class="search-service" method="get">
+                      @csrf
+                      <input type="search" class="search-service__input" name="search_agent_job"
+                             placeholder="Type anything and hit enter..." required>
+                      <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
+                  </form>
+              </div>
+          </div>
+          <div class="row justify-content-center" id="main-article">
+              @foreach ($mainArticle as $main)
+                  <div class="col-12">
+                      <a href="{{ route('blog.show', $main->id) }}" class="article__link">
+                          <article>
+                              <img src="{{ Storage::url($main->header_image) }}" alt="Desainin article image" class="article__cover">
+                              <div class="article__caption">
+                                  <p class="article__title mb-3">
+                                      {{ Str::words($main->title, 10) }}
+                                  </p>
+                                  <span class="article__category">{{ $main->category->name }}</span>
+                                  <time class="article__time">{{ $main->created_at->format('D m, Y') }}</time>
+                              </div>
+                          </article>
+                      </a>
+                  </div>
+              @endforeach
+          </div>
       </div>
-    </div>
   </header>
 @endsection
 @section('content')

@@ -23,9 +23,6 @@ class ProfileController extends Controller
             $listBank = json_decode(File::get('js/bank_indonesia.json'));
             return view('agent.profile', ['profile' => $profile, 'listBank' => $listBank]);
         }
-        else if (Route::currentRouteName() == 'user.profile.index') {
-            return  view('user.profile', ['profile' => $profile]);
-        }
     }
 
     public function store()

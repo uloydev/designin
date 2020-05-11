@@ -1,8 +1,8 @@
 <div class="modal fade" id="create-service" tabindex="-1" role="dialog"
      aria-labelledby="create-edit-categoryLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header pb-0">
                 <h5 class="modal-title">Add new service</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -41,8 +41,8 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-link text-muted" data-dismiss="modal">Close</button>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-default" form="form-add-service">Add new service</button>
             </div>
         </div>

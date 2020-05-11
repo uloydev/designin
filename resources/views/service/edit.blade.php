@@ -1,11 +1,11 @@
 @extends('layouts.admin-master')
+@section('page-id', 'serviceEdit')
 @section('page-title')
     Edit Service {{ $service->title }}
 @endsection
 @section('page-name')
     Edit Service <strong class="font-weight-bolder">{{ $service->title }}</strong>
-@endsection()
-@section('page-id', 'serviceEdit')
+@endsection
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -24,7 +24,7 @@
                             <label for="service-description"></label>
                             <textarea name="service_description" id="service-description"
                              rows="7" class="form-control text-dark"
-                             placeholder="Service content">{{ $service->description }}</textarea>
+                             placeholder="Service content">{!! $service->description !!}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="service-category">Pick Service Category</label>

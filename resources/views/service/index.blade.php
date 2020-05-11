@@ -74,7 +74,9 @@
                                                      alt="Desainin Service {{ $service->serviceCategory->name }}">
                                                 <figcaption>
                                                     <p class="service__title">{{ $service->title }}</p>
-                                                    <p class="service__detail">{{ $service->description }}</p>
+                                                    <div class="service__detail">
+                                                        {!! Str::limit($service->description, 250) !!}
+                                                    </div>
                                                 </figcaption>
                                             </figure>
                                             <div class="service__action">

@@ -18,6 +18,9 @@ The above copyright notice and this permission notice shall be included in all c
         <link rel="stylesheet" href="{{ asset('plugin/argon-dashboard/assets/css/argon.css') }}">
         <link rel="stylesheet" href="{{ asset('plugin/slick/slick.css') }}"/>
         <link rel="stylesheet" href="{{ asset('plugin/slick/slick-theme.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('plugin/nice-select/css/nice-select.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.css" rel="stylesheet">
+        @yield('css')
         <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     </head>
     <body id="@yield('page-id')Page">
@@ -200,7 +203,9 @@ The above copyright notice and this permission notice shall be included in all c
         <script src="{{ asset('plugin/slick/slick.min.js') }}"></script>
         <script src="{{ asset('js/bs-custom-file-input.min.js') }}"></script>
         <script src="{{ asset('js/typed.min.js') }}"></script>
-        <script src="{{ asset('js/native.js') }}" charset="utf-8"></script>
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
+        <script src="{{ asset('plugin/nice-select/js/jquery.nice-select.js') }}"></script>
         @yield('script')
+        <script src="{{ asset('js/native.js') }}" charset="utf-8"></script>
     </body>
 </html>

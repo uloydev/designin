@@ -9,7 +9,17 @@
 @stop
 @section('header')
     <header>
-        <div class="container py-4 px-0">
+        <div class="container py-5 px-0">
+            <div class="row mb-5">
+                <div class="col">
+                    <form action="" class="search-service" method="get">
+                        @csrf
+                        <input type="search" class="search-service__input" name="search_agent_job"
+                               placeholder="Find any article..." required>
+                        <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
+                    </form>
+                </div>
+            </div>
             <div class="category-header__content">
                 <h1 class="text-center mb-3 mb-md-0">{{ $articleCategory->name }}</h1>
                 <form action="" method="get">

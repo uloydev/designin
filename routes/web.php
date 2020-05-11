@@ -7,7 +7,8 @@ Auth::routes(['verify'=>true]);
 
 Route::get('/', 'HomeController@index')->name('landing-page');
 Route::get('services/search', 'HomeController@serviceSearch');
-Route::get('services', 'HomeController@services')->name('services');
+Route::get('services', 'HomeController@services')->name('service.index');
+Route::get('service/{id}', 'HomeController@showService')->name('service.show');
 Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
 Route::get('testimony', 'HomeController@testimonies')->name('testimony');
@@ -54,8 +55,10 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
 });
 
 Route::name('user.')->prefix('user')->group(function () {
-    Route::resource('profile', 'ProfileController');
+    Route::resource('profile', 'ProfileController')->except('index');
     Route::namespace('User')->group(function() {
+        Route::resource('job', 'JobController');
+        Route::resource('order', 'OrderController');
         Route::get('dashboard', 'HomeController@index')->name('home');
         Route::resource('testimony', 'TestimonyController')->only(['index', 'create', 'store']);
     });

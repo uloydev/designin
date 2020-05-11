@@ -11,8 +11,8 @@
             @yield('content')
         </main>
         @include('partials.footer')
-        @yield('element')
-        @yield('script')
+        @stack('element')
         @include('partials.script')
+        @yield('script')
     </body>
 </html>

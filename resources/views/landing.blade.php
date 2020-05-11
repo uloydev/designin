@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{-- <meta name="keywords" content="@foreach ($keywords as $keyword) {{ $keyword->value }} @endforeach"> --}}
+{{--     <meta name="keywords" content="@foreach ($keywords as $keyword) {{ $keyword->value }} @endforeach"> --}}
     @include('partials.stylesheet')
     <title>Desainin | No-fuss graphic design service solutions</title>
   </head>
@@ -11,8 +11,17 @@
     <header>
       @include('partials.nav')
       <div class="container">
-        <h1 class="header__text">Find designer just like <br class="d-none d-md-block"> <span style="color: #94E5EB"></span></h1>
-        <a href="#services" class="header__btn">Order What You Want</a>
+          <div class="row flex-column align-items-end mx-0">
+              <h1 class="header__text">
+                  Find designer just like <br class="d-none d-md-block"> <span style="color: #94E5EB"></span>
+              </h1>
+          </div>
+          <div class="row mx-0 flex-column flex-md-row align-items-center justify-content-end">
+              <a href="javascript:void(0)" class="header__btn header__btn--secondary btn-modal" data-target="#modal-search-service">
+                  <i class='bx bx-search-alt mr-2 bx-sm'></i> Find your designer
+              </a>
+              <a href="#services" class="header__btn">Order What You Want <i class='bx bxs-cart-add ml-2 bx-sm'></i></a>
+          </div>
       </div>
     </header>
     <main>
@@ -24,7 +33,8 @@
             <div class="px-3">
                 <img src="{{ Storage::url($category->image_url) }}" class="services__icon" alt="Our service">
                 <p class="services__name">{{ $category->name }}</p>
-                <a href="{{ route('services') . '#' . Str::slug($category->name, '-') }}" class="services__btn btn-light">
+                <a href="{{ route('service.index') . '#' . Str::slug($category->name, '-') }}"
+                   class="services__btn btn-light">
                     See all available service
                 </a>
             </div>
@@ -212,6 +222,21 @@
       </section>
     </main>
     @include('partials.footer')
+    <div class="modal" id="modal-search-service">
+        <div class="modal__content">
+            <div class="modal__header">
+                <a href="javascript:void(0)" class="btn-close-modal btn-close-modal--search-service"><i class='bx bx-x' ></i></a>
+            </div>
+            <div class="modal__body">
+                <form action="" class="search-service" method="get">
+                    @csrf
+                    <input type="search" class="search-service__input" name="search_agent_job"
+                           placeholder="Find jobs or agent..." required>
+                    <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="overlay overlay--nav-showed"></div>
     @include('partials.script')
   </body>
