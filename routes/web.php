@@ -55,6 +55,8 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
     });
     Route::namespace('User')->group(function() {
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
+        Route::resource('order', 'OrderController');
+        Route::resource('job', 'JobController');
         Route::resource('testimony', 'TestimonyController')->only(['index', 'create', 'store']);
     });
 });
