@@ -20,9 +20,10 @@ Route::resource('blog/categories', 'BlogCategoryController')->names([
     'update' => 'blog-category.update',
     'destroy' => 'blog-category.destroy'
 ]);
-Route::name('message.')->group(function () {
-    Route::get('fetch', 'MessageController@fetch')->name('fetch');
-    Route::post('send', 'MessageController@send')->name('send');
+Route::name('message.')->prefix('message')->middleware('exceptAdmin')->group(function () {
+    Route::get('/', 'MessageController@index')->name('index');
+    Route::get('fetch/{session_id}', 'MessageController@fetch')->name('fetch');
+    Route::post('send/{session_id}', 'MessageController@send')->name('send');
 });
 Route::post('contact-us', 'ContactController@contactUs');
 
@@ -46,7 +47,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
 });
 
 Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(function () {
-    Route::prefix('profile')->middleware('profile')->group(function () {
+    Route::prefix('profile')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
         Route::get('edit', 'ProfileController@edit')->name('profile.edit');
         Route::put('edit', 'ProfileController@update')->name('profile.update');
@@ -59,7 +60,7 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
 });
 
 Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group(function () {
-    Route::prefix('profile')->middleware('profile')->group(function () {
+    Route::prefix('profile')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
         Route::put('edit', 'ProfileController@update')->name('profile.update');
         Route::put('edit/avatar', 'ProfileController@avatarUpdate')->name('profile.avatar.update');

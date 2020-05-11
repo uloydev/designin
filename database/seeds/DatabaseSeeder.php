@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
         BlogCategorySeeder::class,
         TestimonySeeder::class,
         OrderSeeder::class,
+        ChatSessionSeeder::class,
         MessageSeeder::class
       ]);
     }
