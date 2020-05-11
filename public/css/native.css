@@ -904,6 +904,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     transition: all 150ms;
     height: 100%;
     position: relative;
+    margin-bottom: 15px;
 }
 #servicesPage .service:hover {
     box-shadow: none;
@@ -1233,9 +1234,6 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     background-color: #16a65d !important;
 }
 
-#faqPage nav {
-  background-color: var(--almost-white);
-}
 #faqPage header {
   overflow: hidden;
   width: 100%;
@@ -1304,9 +1302,8 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
   background-color: var(--primary-color-hover) !important;
 }
 #faqPage main {
-  padding-top: 150px;
-  padding-bottom: 150px;
   background-color: #fff;
+    padding: 30px 0;
 }
 #faqPage main > .container > .row {
   justify-content: space-between;
@@ -1347,15 +1344,14 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #faqPage .faq-header {
   padding-right: 0;
 }
-
 #faqPage .question-cat, #faqPage .question-answer__item {
-  background-color: #fff;
+    background-color: #fff;
 }
 #faqPage .question-answer__item {
-  padding: 0;
-  border-bottom: 1px solid #ececec;
-  color: #888888;
-  margin-bottom: 30px;
+    padding: 0;
+    border-bottom: 1px solid #ececec;
+    color: #888888;
+    margin-bottom: 30px;
 }
 #faqPage .question-cat .jq-tab-title, #faqPage .question-cat .jq-tab-title.active {
   background-color: transparent;
@@ -1398,6 +1394,15 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #faqPage .question-answer__item details[open] .question-answer__problem .bxs-chevron-down {
   transform: rotate(180deg);
+}
+
+#faqPage .question-answer__show-more {
+    background-color: #fff;
+    display: flex;
+    max-width: 200px;
+    margin: 0 auto;
+    color: var(--secondary-color);
+    padding: 10px 1rem;
 }
 
 #contactUsPage main {
@@ -2080,6 +2085,10 @@ footer .row {
         height: calc(100% - 30px);
     }
 
+    #faqPage main {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
     #faqPage header > .container {
         padding: 100px 0 100px;
     }

@@ -8,6 +8,7 @@ Auth::routes(['verify'=>true]);
 Route::get('/', 'HomeController@index')->name('landing-page');
 Route::get('services/search', 'HomeController@serviceSearch');
 Route::get('services', 'HomeController@services')->name('services');
+Route::get('service/show/{id}', 'HomeController@showService')->name('service.show');
 Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
 Route::get('testimony', 'HomeController@testimonies')->name('testimony');

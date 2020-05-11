@@ -270,6 +270,20 @@ $(document).ready(function () {
         $(".modal__job-title").text(jobTitle);
     });
 
+    var faqCategoryActive = $("#faqPage .jq-tab-title.active").data('tab');
+    var faqActive = $(".question-answer__item[data-tab=" + faqCategoryActive +"]");
+    faqActive.hide();
+
+    const faqTotal = $("#faqPage .question-answer__item").length;
+    let showFaq = 10;
+    faqActive.slice(0, showFaq - 1).show();
+    $(".question-answer__show-more").click(function (e) {
+        e.preventDefault();
+        showFaq = (showFaq + 5 <= faqTotal) ? showFaq + 5 : faqTotal;
+        faqActive.slice(0, showFaq - 1).show();
+        if (showFaq === faqTotal) $(".question-answer__show-more").hide()
+    });
+
     //plugin & general
     if (window.location.href.indexOf('admin') > -1) {
         bsCustomFileInput.init();
