@@ -21,7 +21,7 @@ class Agent
                 return $next($request);
             }
             else {
-              return redirect()->back()->with('error', "you don't have permission to access agent page");
+              return redirect()->route(Auth::user()->role . '.dashboard')->with(['error'=>"you don't have permission to access agent page"]);
             }
         }
         else {

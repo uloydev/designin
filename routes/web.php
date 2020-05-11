@@ -7,8 +7,7 @@ Auth::routes(['verify'=>true]);
 
 Route::get('/', 'HomeController@index')->name('landing-page');
 Route::get('services/search', 'HomeController@serviceSearch');
-Route::get('services', 'HomeController@services')->name('service.index');
-Route::get('service/{id}', 'HomeController@showService')->name('service.show');
+Route::get('services', 'HomeController@services')->name('services');
 Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
 Route::get('testimony', 'HomeController@testimonies')->name('testimony');
@@ -21,19 +20,7 @@ Route::resource('blog/categories', 'BlogCategoryController')->names([
     'update' => 'blog-category.update',
     'destroy' => 'blog-category.destroy'
 ]);
-// Route::get('blog', 'BlogController@index')->name('blog.index');
-// Route::get('blog/{id}', 'BlogController@show')->name('blog.single');
-
-// Route::get('create', 'Admin\BlogController@create');
-// Route::post('create', 'Admin\BlogController@store')->name('blog.store');
 Route::post('contact-us', 'ContactController@contactUs');
-
-// profile route for all user role
-Route::prefix('profile')->middleware('profile')->group(function () {
-    Route::get('/', 'ProfileController@index')->name('profile.index');
-    Route::get('edit', 'ProfileController@edit')->name('profile.edit');
-    Route::match(['update', 'put'], 'edit', 'ProfileController@update');
-});
 
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
@@ -54,19 +41,23 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
     });
 });
 
-Route::name('user.')->prefix('user')->group(function () {
-    Route::resource('profile', 'ProfileController')->except('index');
+Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(function () {
+    Route::prefix('profile')->middleware('profile')->group(function () {
+        Route::get('/', 'ProfileController@index')->name('profile.index');
+        Route::get('edit', 'ProfileController@edit')->name('profile.edit');
+        Route::put('edit', 'ProfileController@update')->name('profile.update');
+        Route::put('edit/avatar', 'ProfileController@avatarUpdate')->name('profile.avatar.update');
+    });
     Route::namespace('User')->group(function() {
-        Route::resource('job', 'JobController');
-        Route::resource('order', 'OrderController');
-        Route::get('dashboard', 'HomeController@index')->name('home');
+        Route::get('dashboard', 'HomeController@index')->name('dashboard');
         Route::resource('testimony', 'TestimonyController')->only(['index', 'create', 'store']);
     });
 });
 
-Route::prefix('agent')->name('agent.')->group(function () {
-    Route::resource('profile', 'ProfileController');
-    Route::namespace('Agent')->middleware(['agent', 'verified'])->group(function () {
+Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group(function () {
+    Route::put('edit/avatar', 'ProfileController@avatarUpdate')->name('profile.avatar.update');
+    Rooute::resource('profile', 'ProfileController');
+    Route::namespace('Agent')->group(function () {
         Route::redirect('/', 'dashboard');
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
         Route::get('testimony', 'TestimonyController@index')->name('testimony.index');

@@ -20,4 +20,17 @@ class Authenticate extends Middleware
             return route('login');
         }
     }
+
+    public function handle($request, Closure $next)
+    {
+        if(Auth::check()){
+            if (Auth::user()->role == 'user') {
+                return $next($request);
+            }elseif(!Auth::user()->email_verified_at){
+                return $next($request);
+            }
+            return redirect()->route(Auth::user()->role . '.dashboard');
+        }
+        return redirect()->route('login');
+    }
 }

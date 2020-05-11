@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use App\UserProfile;
 use App\UserPortfolio;
 
@@ -13,35 +15,21 @@ class ProfileController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['verified', 'profile']);
     }
 
     public function index()
     {
-        $profile = UserProfile::firstWhere('user_id', Auth::id());
+        $profile = Auth::user()->profile;
         if (Route::currentRouteName() == 'agent.profile.index') {
             $listBank = json_decode(File::get('js/bank_indonesia.json'));
             return view('agent.profile', ['profile' => $profile, 'listBank' => $listBank]);
         }
     }
 
-    public function store()
-    {
-        $request->validate([
-            'name'=> 'required',
-            'email'=> 'required|email',
-            'avatar'=> 'file|mimes:jpg,jpeg,png,gif',
-            'handphone'=> 'required',
-            'address'=> 'required',
-            'bank'=> 'required',
-            'account_number'=> 'required|number',
-        ]);
-
-    }
-
     public function edit()
     {
-        $profile = UserProfile::where('user_id', Auth::id())->get();
+        $profile = UserProfile::firstWhere('user_id', Auth::id());
         return view('profile.edit')->with('profile', $profile);
     }
 
@@ -51,66 +39,76 @@ class ProfileController extends Controller
         $request->validate([
             'name'=> 'required',
             'email'=> 'required|email',
-            'avatar'=> 'file|mimes:jpg,jpeg,png,gif,webp',
             'handphone'=> 'required',
             'address'=> 'required',
             'bank'=> 'required',
-            'name_card' => 'file|mimetypes:application/pdf,image/jpeg,image/png,image/webp',
-            'account_number'=> 'required|number'
-        ]);
-
-        if ($user->role === 'agent') {
-            $request->validate([
-                'portfolios' => 'mimes:jpg,jpeg,png'
-                // 'portfolios.*'=>'mimes:jpg,jpeg,png',
-                // 'portfolio_titles.*'=>'required_with:portfolios'
+            'name_card' => 'file|mimetypes:image/jpeg,image/png,image/webp',
+            'account_number'=> 'required|numeric'
             ]);
-            $data = [
-                'name'=> $request->name,
-                'email'=> $request->email,
+        if ($user->role == 'agent') {
+            $request->validate([
+                'portfolios.*' => 'mimes:jpeg,png,webp'
+            ]);
+            $profile_data = [
                 'handphone'=> $request->handphone,
                 'address'=> $request->address,
                 'bank'=> $request->bank,
-                'account_number'=> $request->account_number
+                'account_number'=> $request->account_number,
+                'user_id' => $user->id
             ];
-            if ($request->hasFile('avatar')) {
-                $avatar = Storage::putFile('uploads/avatar', $request->file('avatar'));
-                $data['avatar'] = $avatar;
-            }
             if ($request->hasFile('name_card')) {
+                if (!empty($user->profile)) {
+                    Storage::delete($user->profile->name_card);
+                }
                 $name_card = Storage::putFile('uploads/name-card', $request->file('name_card'));
-                $data['name_card'] = $name_card;
+                $profile_data['name_card'] = $name_card;
             }
             if ($request->hasFile('portfolios')) {
+                $currentPortfolioCount = $user->profile->portfolio->count();
+                $portfolioCount = count($request->file('portfolios')) + $currentPortfolioCount;
+                if ($portfolioCount > 10) {
+                    $error = ValidationException::withMessages([
+                        'portfolios' => ["Sorry portfolio limit is 10 and you already have $currentPortfolioCount portfolio"]
+                    ]);
+                    throw $error;
+                }
                 foreach ($request->file('portfolios') as $index => $file) {
                     $portfolio = Storage::putFile('uploads/portfolio', $file);
-                    UserPortfolio::updateOrCreate(
-                        ['user_id' => $user->id],
-                        ['title' => $request->titles[$index], 'image_url' => $portfolio]
-                    );
+                    UserPortfolio::create([
+                        'title' => $file->getClientOriginalName(),
+                        'image_url' => $portfolio,
+                        'user_id' => $user->id
+                    ]);
                 }
             }
         }
-//        else{
-//            $data = [
-//                'name'=> $request->name,
-//                'email'=> $request->email,
-//                'handphone'=> $request->handphone,
-//                'address'=> $request->address,
-//                'bank'=> $request->bank,
-//                'account_number'=> $request->account_number
-//            ];
-//            if ($request->hasFile('avatar')) {
-//                $avatar = Storage::putFile('uploads/avatar', $request->file('avatar'));
-//                $data['avatar'] = $avatar;
-//            }
-//        }
-
-        if (!empty(UserProfile::firstWhere('user_id', $user->id))) {
-            UserProfile::where('user_id', $user->id)->update($data);
+        $user_data = [
+            'name' => $request->name
+        ];
+        if ($user->email != $request->email){
+            $user_data['email'] = $request->email;
+            $user_data['email_verified_at'] = NULL;
         }
-        else {
-            UserProfile::create($data);
+        $user->update($user_data);
+        UserProfile::updateOrCreate(['user_id'=>$user->id], $profile_data);
+        return redirect()->back()->with('success', 'Profile Updated Successfully');
+    }
+
+    public function avatarUpdate(Request $request)
+    {
+        $user = Auth::user();
+        $request->validate([
+            'avatar' => 'required|file|mimes:jpg,jpeg,png,gif,webp'
+        ]);
+        if ($request->hasFile('avatar')) {
+            if (!empty($user->profile)) {
+                Storage::delete($user->profile->avatar);
+            }
+            $avatar = Storage::putFile('uploads/avatar', $request->file('avatar'));
+            UserProfile::updateOrCreate(['user_id' => $user->id], [
+                'avatar' => $avatar,
+                'user_id' => $user->id
+            ]);
         }
         return redirect()->back()->with('success', 'Profile Updated Successfully');
     }

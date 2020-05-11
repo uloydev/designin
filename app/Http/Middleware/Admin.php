@@ -16,14 +16,12 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() AND Auth::user()->role == 'admin') {
-            return $next($request);
+        if (Auth::check()){
+            if (Auth::user()->role == 'admin') {
+                return $next($request);
+            }
+            return redirect()->route(Auth::user()->role . '.dashboard')->with(['error'=>"you don't have permission to access admin page"]);
         }
-        else if (Auth::check() AND Auth::user()->role != 'admin') {
-            return redirect()->back()->with('error', "you don't have permission to access admin page");
-        }
-        else {
-            return redirect()->route('login');
-        }
+        return redirect()->route('login');
     }
 }
