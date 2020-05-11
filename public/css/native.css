@@ -283,24 +283,27 @@ nav .container {
 .btn-success {
     background-color: var(--primary-color);
     color: #fff;
-    padding: 10px 1rem;
-    border-radius: 5px;
-    display: inline-block;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
     border: 1px solid var(--primary-color-hover);
-    box-shadow: 0 4px 3px rgba(41, 41, 41, 0.2);
 }
 .btn-success:hover {
     background-color: var(--primary-color-hover);
 }
-.btn-success:active, .btn-danger:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 3px rgba(41, 41, 41, 0.4);
-}
 .btn-success:active {
     background-color: #139e5d;
+}
+.btn-success, .btn-danger, .profile-aside__edit-btn {
+    box-shadow: 0 4px 3px rgba(41, 41, 41, 0.2);
+    border-radius: 5px;
+    display: inline-flex;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    justify-content: center;
+}
+.btn-success:active, .btn-danger:active, .profile-aside__edit-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 3px rgba(41, 41, 41, 0.4);
 }
 .file-custom {
     margin-bottom: 15px;
@@ -359,8 +362,6 @@ nav .container {
     width: 90%;
     border-radius: 8px;
     max-height: 95%;
-    overflow-x: hidden;
-    overflow-y: auto;
     background-color: #fff;
     position: relative;
 }
@@ -369,10 +370,9 @@ nav .container {
     letter-spacing: 1px;
     text-transform: capitalize;
     font-weight: bold;
-    padding: 20px 20px;
+    padding: 20px 20px 0;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #e7e7e7;
     justify-content: space-between;
 }
 .modal__title {
@@ -1627,8 +1627,18 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     font-weight: bold;
 }
 .profile-aside__edit-btn {
+    padding: 10px;
+    transition: all 150ms;
+    border: 1px solid var(--primary-color-hover);
+    display: inline-flex;
     background-color: var(--primary-color) !important;
     color: #fff;
+}
+.profile-aside__edit-btn:hover {
+    background-color: var(--primary-color-hover) !important;
+}
+.profile-aside__edit-btn:active {
+    background-color: #169e56;
 }
 
 body[id^='blog'] nav {
@@ -1916,6 +1926,14 @@ body[id*='blog'] .search-service__btn {
     display: block;
     object-fit: cover;
     height: 100%;
+}
+
+#manageJobPage #modal-create-job .modal__content {
+    overflow: hidden auto;
+}
+#manageJobPage #modal-delete-job .modal__header {
+    border-bottom: 1px solid #f4f4f4;
+    padding-bottom: 20px;
 }
 
 footer {

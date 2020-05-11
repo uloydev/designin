@@ -53,11 +53,14 @@
                     </select>
                     <textarea name="address" rows="8" class="input-custom mb-3" placeholder="Your Address" required></textarea>
                     <div class="file-custom">
-                        <input type="file" name="avatar" class="file-custom__input" id="avatar-file">
-                        <label for="avatar-file" class="file-custom__label">Choose file</label>
+                        <input type="file" name="avatar" class="file-custom__input" id="avatar-file" data-label="Upload photo profile">
+                        <label for="avatar-file" class="file-custom__label">Upload photo profile</label>
                     </div>
-                    <input type="file" name="name_card">
-                    <button type="submit" class="profile-aside__edit-btn">Update your profile</button>
+                    <div class="file-custom">
+                        <input type="file" name="name_card" class="file-custom__input" data-label="Upload name card">
+                        <label for="avatar-file" class="file-custom__label">Upload name card</label>
+                    </div>
+                    <button type="submit" class="profile-aside__edit-btn col">Update your profile</button>
                 </form>
             </div>
         </div>

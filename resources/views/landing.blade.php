@@ -33,7 +33,7 @@
             <div class="px-3">
                 <img src="{{ Storage::url($category->image_url) }}" class="services__icon" alt="Our service">
                 <p class="services__name">{{ $category->name }}</p>
-                <a href="{{ route('service.index') . '#' . Str::slug($category->name, '-') }}"
+                <a href="{{ route('services') . '#' . Str::slug($category->name, '-') }}"
                    class="services__btn btn-light">
                     See all available service
                 </a>
