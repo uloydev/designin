@@ -56,7 +56,7 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
 
 Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group(function () {
     Route::put('edit/avatar', 'ProfileController@avatarUpdate')->name('profile.avatar.update');
-    Rooute::resource('profile', 'ProfileController');
+    Route::resource('profile', 'ProfileController');
     Route::namespace('Agent')->group(function () {
         Route::redirect('/', 'dashboard');
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
