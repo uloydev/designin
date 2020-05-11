@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class Profile
+class ExceptAdmin
 {
     /**
      * Handle an incoming request.
