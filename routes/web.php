@@ -20,6 +20,10 @@ Route::resource('blog/categories', 'BlogCategoryController')->names([
     'update' => 'blog-category.update',
     'destroy' => 'blog-category.destroy'
 ]);
+Route::name('message.')->group(function () {
+    Route::get('fetch', 'MessageController@fetch')->name('fetch');
+    Route::post('send', 'MessageController@send')->name('send');
+});
 Route::post('contact-us', 'ContactController@contactUs');
 
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {

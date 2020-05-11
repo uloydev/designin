@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
         BlogSeeder::class,
         BlogCategorySeeder::class,
         TestimonySeeder::class,
-        OrderSeeder::class
+        OrderSeeder::class,
+        MessageSeeder::class
       ]);
     }
 }
