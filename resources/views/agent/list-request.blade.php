@@ -1,7 +1,7 @@
 @extends('layouts.admin-master')
-@section('page-title', 'List Request')
+@section('page-title', 'List Request | Unfinished Job')
 @section('page-id', 'listRequest')
-@section('page-name', 'List Request')
+@section('page-name', 'Unfinished Job')
 @section('header')
     <div class="row mb-5 justify-content-between">
         <div class="col-12">

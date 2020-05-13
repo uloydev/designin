@@ -75,7 +75,8 @@ The above copyright notice and this permission notice shall be included in all c
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="{{ route('agent.list-request.index') }}" class="nav-link">
+                                                <a href="{{ route('agent.list-request.index') }}"
+                                                class="nav-link {{ \Request::is('agent/list-request*') ? 'active' : '' }}">
                                                     <span class="sidenav-normal"> My Job </span>
                                                 </a>
                                             </li>

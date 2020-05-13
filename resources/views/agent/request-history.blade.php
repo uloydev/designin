@@ -1,7 +1,7 @@
 @extends('layouts.admin-master')
-@section('page-title', 'Job History')
+@section('page-title', 'List Request | Job History')
 @section('page-id', 'jobHistory')
-@section('page-name', 'Job History')
+@section('page-name', 'Finished Job')
 @section('css')
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 @endsection
@@ -48,12 +48,14 @@
                         Sort By
                     </label>
                     <div class="col-12 col-md-8">
-                        <select class="nice-select wide text-capitalize" id="filter-request">
-                            <option value="1">Highest budget</option>
-                            <option value="1">Cheapest budget</option>
-                            <option value="2">Highest duration</option>
-                            <option value="2">Cheapest duration</option>
-                        </select>
+                        <form action="" method="get">
+                            <select class="nice-select wide text-capitalize" id="filter-request">
+                                <option value="1">Highest budget</option>
+                                <option value="1">Cheapest budget</option>
+                                <option value="2">Highest duration</option>
+                                <option value="2">Cheapest duration</option>
+                            </select>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -88,7 +90,7 @@
                             excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
                             raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
                             labore sustainable VHS.
-                            <form action="" class="mt-3 border-top pt-4">
+                            <form action="{{--please using ajax--}}" class="mt-3 border-top pt-4">
                                 <div class="form-group">
                                     <label for="message-review" class="text-gray">Message to customer</label>
                                     <textarea name="rating_review" class="form-control" id="message-review" rows="10"
@@ -96,8 +98,8 @@
                                 </div>
                                 <div class="form-row align-items-center justify-between">
                                     <div class="col">
-                                            <label class="text-gray" id="rating">Rating</label>
-                                            <div class="review-rating"></div>{{-- fieldname: rating --}}
+                                        <label class="text-gray" id="rating">Rating</label>
+                                        <div class="review-rating"></div>{{-- fieldname: rating --}}
                                     </div>
                                     <button type="submit" class="btn btn-default">Send Review</button>
                                 </div>
@@ -132,7 +134,7 @@
                         You sure wanna remove
                         <span class="modal-job-history-title font-weight-600"></span> from  history ?
                     </p>
-                    <form action="" method="post" id="form-delete-job-history">
+                    <form action="{{--routing on js--}}" method="post" id="form-delete-job-history" class="d-none">
                         @csrf @method('DELETE')
                     </form>
                 </div>
