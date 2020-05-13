@@ -74,6 +74,8 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::get('testimony', 'TestimonyController@index')->name('testimony.index');
         Route::get('testimony/{service_id}', 'TestimonyController@show')->name('testimony.show');
         Route::resource('service', 'ServiceController');
+        Route::get('list-request/history', 'OrderController@history')->name('list-request.history');
+        Route::resource('list-request', 'OrderController');
         Route::resource('portfolio', 'PortfolioController');
     });
 });

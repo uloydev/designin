@@ -77,11 +77,11 @@
                                         <td>{{ Str::words($article->title, 6) }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('blog.show', $article->id) }}"
-                                            class="btn btn-primary btn-sm">
+                                            class="btn btn-primary btn-sm" target="_blank">
                                                 See article
                                             </a>
                                         </td>
-                                        <td>{{ $article->created_at }}</td>
+                                        <td>{{ $article->created_at->format('d M Y') }}</td>
                                         <td class="text-center">
                                             <a class="btn btn-warning"
                                             href="{{ route('manage.blog.edit', $article->id) }}">

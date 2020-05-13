@@ -67,7 +67,7 @@ The above copyright notice and this permission notice shall be included in all c
                                         <i class="ni ni-ui-04 text-info"></i>
                                         <span class="nav-link-text">Feed</span>
                                     </a>
-                                    <div class="collapse" id="navbar-components" style="">
+                                    <div class="collapse" id="navbar-components">
                                         <ul class="nav nav-sm flex-column">
                                             <li class="nav-item">
                                                 <a href="{{ route('agent.service.index') }}" class="nav-link">
@@ -75,15 +75,21 @@ The above copyright notice and this permission notice shall be included in all c
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="" class="nav-link">
-                                                    <span class="sidenav-normal"> Queue Order </span>
+                                                <a href="{{ route('agent.list-request.index') }}" class="nav-link">
+                                                    <span class="sidenav-normal"> My Job </span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ url('bid-history') }}" class="nav-link">
+                                                    <span class="sidenav-normal"> Bid History </span>
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('agent.profile.index') }}" class="nav-link">
+                                    <a href="{{ route('agent.profile.index') }}"
+                                    class="nav-link {{ \Request::is('agent/profiled*') ? 'active' : '' }}">
                                         <i class="ni ni-single-02 text-yellow"></i>
                                         <span class="nav-link-text">Profile</span>
                                     </a>
@@ -101,7 +107,7 @@ The above copyright notice and this permission notice shall be included in all c
                         <div class="navbar-nav align-items-center">
                             <h1 class="text-white h2 mb-0">@yield('page-name')</h1>
                         </div>
-                        <ul class="navbar-nav align-items-center  ml-md-auto ">
+                        <ul class="navbar-nav align-items-center ml-md-auto ml-3">
                             <li class="nav-item d-xl-none">
                                 <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
                                      data-target="#sidenav-main">
@@ -111,11 +117,6 @@ The above copyright notice and this permission notice shall be included in all c
                                         <i class="sidenav-toggler-line"></i>
                                     </div>
                                 </div>
-                            </li>
-                            <li class="nav-item d-sm-none">
-                                <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
-                                    <i class="ni ni-zoom-split-in"></i>
-                                </a>
                             </li>
                         </ul>
                         <ul class="navbar-nav align-items-center  ml-auto ml-md-0">
@@ -158,7 +159,7 @@ The above copyright notice and this permission notice shall be included in all c
                     <div class="row align-items-center justify-content-lg-between">
                         <div class="col-lg-6">
                             <div class="copyright text-center  text-lg-left  text-muted">
-                                &copy; {{ date('Y') }}
+                                <span id="footer_date"></span>
                                 <a href="{{ route('landing-page') }}" class="font-weight-bold ml-1" target="_blank">
                                     Desainin
                                 </a>
@@ -170,13 +171,7 @@ The above copyright notice and this permission notice shall be included in all c
                                     <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/presentation" class="nav-link"
-                                    target="_blank">
-                                        About Us
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('manage.blog.index') }}" class="nav-link" target="_blank">Blog</a>
+                                    <a href="{{ route('blog.index') }}" class="nav-link" target="_blank">Blog</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"
@@ -205,7 +200,8 @@ The above copyright notice and this permission notice shall be included in all c
         <script src="{{ asset('js/typed.min.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
         <script src="{{ asset('plugin/nice-select/js/jquery.nice-select.js') }}"></script>
-        @yield('script')
+        <script src="{{ asset('plugin/jquery-star-rating-plugin/src/jquery.star.rating.min.js') }}"></script>
+        @stack('script')
         <script src="{{ asset('js/native.js') }}" charset="utf-8"></script>
     </body>
 </html>

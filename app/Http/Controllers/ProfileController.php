@@ -15,7 +15,7 @@ class ProfileController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['verified', 'profile']);
+        $this->middleware(['verified', 'agent']);
     }
 
     public function index()
@@ -68,7 +68,9 @@ class ProfileController extends Controller
                 $portfolioCount = count($request->file('portfolios')) + $currentPortfolioCount;
                 if ($portfolioCount > 10) {
                     $error = ValidationException::withMessages([
-                        'portfolios' => ["Sorry portfolio limit is 10 and you already have $currentPortfolioCount portfolio"]
+                        'portfolios' => ["
+                            Sorry portfolio limit is 10 and you already have $currentPortfolioCount portfolio
+                        "]
                     ]);
                     throw $error;
                 }

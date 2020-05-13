@@ -30,8 +30,14 @@ body {
     --gray: #919191;
     --text-gray-dark: #4a4a4a;
 }
+.text-warning {
+    color: var(--secondary-color) !important;
+}
 img[src=''] {
   display: none;
+}
+.review-rating {
+    cursor: pointer;
 }
 .justify-between {
     justify-content: space-between !important;

@@ -2018,8 +2018,9 @@ footer .row {
     }
     #landingPage #modal-search-service .search-service__input {
         text-align: center;
-        font-size: 40px;
+        font-size: 2.5rem;
         height: 50px;
+        padding-left: 4.3rem;
     }
     #landingPage header {
         height: 60vh;

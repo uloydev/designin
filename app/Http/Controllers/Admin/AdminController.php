@@ -22,21 +22,23 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $test = array(0, 20, 10, 30, 15, 40, 20, 60, 60);
+        $test = [0, 20, 10, 30, 15, 40, 20, 60, 20, 100, 90, 50];
         $articles = Blog::latest()->take(10)->get();
+        $totalArticle = Blog::count();
         $totalPromo = Blog::whereHas('category', function($query){
             $query->where('name', 'Promo');
         })->count();
-        $agents = User::where('role', 'agent')->get();
-        $users = User::where('role', 'user')->get();
+        $totalAgent = User::where('role', 'agent')->count();
+        $totalCustomer = User::where('role', 'user')->count();
         $services = Service::take(10)->get();
         return view('admin.dashboard', [
             'articles' => $articles,
-            'agents' => $agents,
-            'users' => $users,
+            'totalAgent' => $totalAgent,
+            'totalCustomer' => $totalCustomer,
             'totalPromo' => $totalPromo,
             'services' => $services,
-            'test' => $test
+            'test' => $test,
+            'totalArticle' => $totalArticle
         ]);
     }
 

@@ -10,7 +10,7 @@
             <div class="row">
               <div class="col">
                 <h5 class="card-title text-uppercase text-muted mb-0">Total Blog Article</h5>
-                <span class="h2 font-weight-bold mb-0">{{ count($articles) }}</span>
+                <span class="h2 font-weight-bold mb-0">{{ $totalArticle }}</span>
               </div>
               <div class="col-auto">
                 <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -46,7 +46,7 @@
             <div class="row">
               <div class="col">
                 <h5 class="card-title text-uppercase text-muted mb-0">Total Agent</h5>
-                <span class="h2 font-weight-bold mb-0">{{ count($agents) }}</span>
+                <span class="h2 font-weight-bold mb-0">{{ $totalAgent }}</span>
               </div>
               <div class="col-auto">
                 <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -63,8 +63,8 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <h5 class="card-title text-uppercase text-muted mb-0">Total User</h5>
-                <span class="h2 font-weight-bold mb-0">{{ count($users) }}</span>
+                <h5 class="card-title text-uppercase text-muted mb-0">Total Customer</h5>
+                <span class="h2 font-weight-bold mb-0">{{ $totalCustomer }}</span>
               </div>
               <div class="col-auto">
                 <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -162,8 +162,8 @@
                             <tr>
                                 <td>
                                     <div class="media align-items-center">
-                                        <img class="rounded-circle mr-2" height="30" width="30" alt="Image placeholder"
-                                             src="{{ Storage::url($service->image)  }}">
+                                        <img class="rounded-circle mr-2" height="30" width="30"
+                                        alt="Image placeholder" src="{{ Storage::url($service->image)  }}">
                                         <div class="media-body">
                                             <span class="name mb-0 text-sm">{{ $service->title  }}</span>
                                         </div>
@@ -208,7 +208,7 @@
 @section('element')
     @include('blog.delete')
 @endsection
-@section('script')
+@push('script')
     <script>
         $(document).ready(function () {
             var SalesChart = (function() {
@@ -251,7 +251,9 @@
                             }
                         },
                         data: {
-                            labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                            labels: [
+                                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                            ],
                             datasets: [{
                                 label: 'Performance',
                                 data: [
@@ -272,4 +274,4 @@
             })();
         });
     </script>
-@endsection
+@endpush

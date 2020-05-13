@@ -3,6 +3,16 @@
 .sidenav {
     z-index: 1000;
 }
+.accordion .card-header:after {
+    display: none;
+}
+.progress {
+    height: 1.5rem;
+    border-radius: 1rem;
+}
+#navbar-search-main {
+    transform: none;
+}
 .nav-pills .nav-link:hover {
     background-color: #E2E2E2;
 }
@@ -78,6 +88,40 @@
     right: 0;
     transform: translateX(200%) translateY(300%);
     color: #50a090;
+}
+
+#listRequestPage .job-agent-title {
+    font-weight: bold;
+}
+.accordion .btn-link .fas {
+    transform: rotate(0);
+}
+.accordion .btn-link.collapsed .fas {
+    transform: rotate(-180deg);
+}
+.accordion__item + .accordion__item {
+    border-top: 1px solid #e1e1e1;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+}
+.accordion__item .card-footer li {
+    margin-bottom: 20px;
+    color: var(--gray);
+    display: flex;
+    font-weight: normal;
+    align-items: center;
+}
+#listRequestPage .accordion__item .progress-done {
+    display: none;
+}
+.sidenav .nav-link.active, #filter-job .nav-link.active {
+    font-weight: bolder;
+}
+#filter-job .nav {
+    padding: .3rem 1rem;
+}
+#filter-job .nav-item {
+    flex-grow: 1;
 }
 
 footer {

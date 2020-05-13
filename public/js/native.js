@@ -104,6 +104,32 @@ $(document).ready(function () {
         $(".profile-main__orderBy").removeClass('wide');
     }
 
+    //agent js
+    $(".btn[data-target='#modal-progress']").click(function () {
+        let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
+        let jobId = $(this).data('id');
+
+        $("#modal-progress .modal-job-title").text(jobTitle);
+    });
+    const progressVals = document.querySelectorAll("#listRequestPage .progress-value");
+    progressVals.forEach(function (progressVal) {
+       let textProgress = progressVal.textContent;
+        const progressDoneChecks = document.querySelectorAll('#listRequestPage .progress-done');
+        progressDoneChecks.forEach(function (progressDoneCheck) {
+            if (textProgress.includes('100%')) {
+                progressVal.nextElementSibling.style.display = 'block';
+            }
+        });
+    });
+
+    $("#jobHistoryPage .btn[data-target='#delete-history-job']").click(function () {
+        let historyId = $(this).data('id');
+        let historyTitle = $.trim($(this).parents('.job-history-title').text());
+
+        $("#delete-history-job form").attr('action', '/agent/list-request/' + historyId);
+        $("#delete-history-job .modal-job-history-title").text(historyTitle);
+    });
+
     //admin js
     const btnArticles = document.querySelectorAll('.btn[data-target="#delete-article');
     btnArticles.forEach(function (btnArticle) {
@@ -142,9 +168,12 @@ $(document).ready(function () {
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(function (navLink) {
         let url = navLink.href;
-        if(url === thisRoute) {
+        if (url === thisRoute) {
             navLink.classList.add('active');
         }
+        $("#navbar-components .nav-link.active").parents("#navbar-components").addClass('show');
+        $("#navbar-components .nav-link.active").parents("#navbar-components").prev().addClass('active')
+            .attr('aria-expanded', "true");
     });
 
     const profileNavRoute = window.location.href;
@@ -197,8 +226,8 @@ $(document).ready(function () {
         $("#serviceCategoryPage #delete-category form").attr('action', '/admin/manage/blog-category/' + categoryId);
     });
 
-    $("#manageAgentPage .btn[data-target='#modal-remove-agent'], #manageAgentPage .btn[data-target='#modal-edit-agent']")
-        .click(function () {
+    $("#manageAgentPage .btn[data-target='#modal-remove-agent'], " +
+        "#manageAgentPage .btn[data-target='#modal-edit-agent']").click(function () {
             if ($(this).attr('id') === 'btn-create-agent') {
                 $("button[form='form-edit-agent']").text('Add new agent');
                 $("#manageAgentPage #modal-edit-agent form").find("input[name='_method']").prop('disabled', true);
@@ -285,6 +314,13 @@ $(document).ready(function () {
     });
 
     //plugin & general
+    function realTime() {
+        let getDate = new Date().getFullYear();
+        $("#footer_date").text(getDate);
+    }
+    let realYearNow = setInterval(function () {
+        realTime()
+    }, 1000);
     if (window.location.href.indexOf('admin') > -1) {
         bsCustomFileInput.init();
     }
@@ -407,8 +443,8 @@ $(document).ready(function () {
         slidesToShow: 1,
         slidesToScroll: 1,
         mobileFirst: true,
-        nextArrow: '<a href="javascript:void(0);" class="slick-next"><i class="bx bxs-chevron-right"></i></a>',
-        prevArrow: '<a href="javascript:void(0);" class="slick-prev"><i class="bx bxs-chevron-left"></i></a>',
+        nextArrow: '<a href="javascript:void(0);" class="slick1-next"><i class="bx bxs-chevron-right"></i></a>',
+        prevArrow: '<a href="javascript:void(0);" class="slick1-prev"><i class="bx bxs-chevron-left"></i></a>',
         responsive: [
             {
                 breakpoint: 768,
@@ -457,5 +493,14 @@ $(document).ready(function () {
             dateFormat: 'dd M yyyy'
         });
     }
+
+    $(".review-rating").addRating({
+        fieldName: 'rating'
+    });
+    $(".review-rating .material-icons").mouseenter(function () {
+        $(this).css('color', '#151942').prevAll().css('color', '#151942');
+    }).mouseleave(function () {
+        $(this).removeAttr('style');
+    });
 
 });
