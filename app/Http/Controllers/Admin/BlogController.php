@@ -15,7 +15,7 @@ class BlogController extends Controller
 
     public function index()
     {
-        $blogs = Blog::with(['category', 'author'])->orderBy('created_at', 'DESC')->paginate(10);
+        $blogs = Blog::with(['category', 'author'])->latest()->paginate(10);
         $number = $blogs->firstItem();
         $blogCategories = BlogCategory::all();
         return view('blog.manage-article', ['blogs' => $blogs, 'number' => $number, 'blogCategories' => $blogCategories]);

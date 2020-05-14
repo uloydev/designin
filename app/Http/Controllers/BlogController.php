@@ -32,4 +32,16 @@ class BlogController extends Controller
             'categories' => $blog_categories
         ]);
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @return Blog [json]
+     */
+    public function search(Request $request)
+    {
+        $blogs = Blog::with(['category', 'author'])->where('title', 'LIKE', '%'.$request->get('query').'%')->get();
+        return ['blogs' => $blogs];
+    }
 }
