@@ -11,6 +11,10 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
+    @elseif(session('update_category'))
+        <div class="alert alert-default" role="alert">
+            {{ session('update_category') }}
+        </div>
     @elseif($errors->any())
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <p class="alert-text mb-0">
@@ -127,10 +131,13 @@
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $category->name  }}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('manage.blog-category.edit', $category->id) }}"
-                                                   class="btn btn-warning"> Edit
-                                                </a>
-                                                <button type="button" class="btn btn-danger show-modal"
+                                                <button type="button" class="btn btn-warning"
+                                                        data-toggle="modal" data-target="#edit-category-article"
+                                                        data-category-name="{{ Str::slug($category->name, '-') }}"
+                                                        data-category-id="{{ $category->id }}">
+                                                    Edit
+                                                </button>
+                                                <button type="button" class="btn btn-danger"
                                                         data-toggle="modal" data-target="#delete-category-article"
                                                         data-category-name="{{ Str::slug($category->name, '-') }}"
                                                         data-category-id="{{ $category->id }}">
@@ -149,6 +156,5 @@
     </div>
 @endsection
 @section('element')
-    @include('blog.delete')
-    @include('blog.add-category')
+    @include('blog.manipulate')
 @endsection

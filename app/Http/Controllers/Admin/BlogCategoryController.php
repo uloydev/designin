@@ -30,7 +30,7 @@ class BlogCategoryController extends Controller
             'name'=> 'required'
         ]);
         BlogCategory::create($request->all());
-        return redirect()->route('manage.blog-category.index');
+        return redirect()->back();
     }
 
     /**
@@ -42,18 +42,18 @@ class BlogCategoryController extends Controller
     public function edit($id)
     {
         $blog_category = BlogCategory::findOrFail($id);
-        return view('admin.blog-category.edit')->with('category', $blog_category);
+        return view('blog.-category.edit')->with('category', $blog_category);
     }
 
     public function update(Request $request, $id)
     {
-        $blogCategory = BlogCatgory::findOrFail($id);
+        $blogCategory = BlogCategory::findOrFail($id);
         $request->validate([
             'category'=>'required'
         ]);
-        $blogCategory->name = $request->category;
+        $blogCategory->name = $request->edit_category;
         $blogCategory->save();
-        return redirect()->route('manage.blog-category.index');
+        return redirect()->back()->with('update_category', 'Success update blog category');
     }
 
     public function destroy($id)

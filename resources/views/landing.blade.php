@@ -17,10 +17,13 @@
               </h1>
           </div>
           <div class="row mx-0 flex-column flex-md-row align-items-center justify-content-end">
-              <a href="javascript:void(0)" class="header__btn header__btn--secondary btn-modal" data-target="#modal-search-service">
+              <a href="javascript:void(0)" class="header__btn header__btn--secondary btn-modal"
+                 data-target="#modal-search-service">
                   <i class='bx bx-search-alt mr-2 bx-sm'></i> Find your designer
               </a>
-              <a href="#services" class="header__btn">Order What You Want <i class='bx bxs-cart-add ml-2 bx-sm'></i></a>
+              <a href="#services" class="header__btn">
+                  Order What You Want <i class='bx bxs-cart-add ml-2 bx-sm'></i>
+              </a>
           </div>
       </div>
     </header>
@@ -107,10 +110,9 @@
                 <div class="subscription__detail">
                   <p class="subscription__name">Social Media</p>
                   <p class="subscription__desc">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio facere doloribus
-                    assumenda.
-                    Vel explicabo dolorem suscipit, fugiat fuga adipisci iste reiciendis ipsa esse officiis,
-                    voluptas quis velit. Ratione.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio
+                    facere doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste
+                    reiciendis ipsa esse officiis, voluptas quis velit. Ratione.
                   </p>
                   <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
                 </div>
@@ -118,7 +120,8 @@
             </div>
               <div class="px-3">
                   <figure class="subscription__item">
-                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img" alt="Desainin subscription">
+                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img"
+                           alt="Desainin subscription">
                       <figcaption class="subscription__caption">
                           <p class="subscription__name">Social Media</p>
                           <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
@@ -126,9 +129,9 @@
                       <div class="subscription__detail">
                           <p class="subscription__name">Social Media</p>
                           <p class="subscription__desc">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio facere
-                              doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste reiciendis
-                              ipsa esse officiis, voluptas quis velit. Ratione.
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio
+                              facere doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste
+                              reiciendis ipsa esse officiis, voluptas quis velit. Ratione.
                           </p>
                           <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
                       </div>
@@ -136,7 +139,8 @@
               </div>
               <div class="px-3">
                   <figure class="subscription__item">
-                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img" alt="Desainin subscription">
+                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img"
+                           alt="Desainin subscription">
                       <figcaption class="subscription__caption">
                           <p class="subscription__name">Social Media</p>
                           <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
@@ -144,9 +148,9 @@
                       <div class="subscription__detail">
                           <p class="subscription__name">Social Media</p>
                           <p class="subscription__desc">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio facere
-                              doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste reiciendis
-                              ipsa esse officiis, voluptas quis velit. Ratione.
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio
+                              facere doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste
+                              reiciendis ipsa esse officiis, voluptas quis velit. Ratione.
                           </p>
                           <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
                       </div>
@@ -154,7 +158,8 @@
               </div>
               <div class="px-3">
                   <figure class="subscription__item">
-                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img" alt="Desainin subscription">
+                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img"
+                           alt="Desainin subscription">
                       <figcaption class="subscription__caption">
                           <p class="subscription__name">Social Media</p>
                           <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
@@ -162,9 +167,9 @@
                       <div class="subscription__detail">
                           <p class="subscription__name">Social Media</p>
                           <p class="subscription__desc">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio facere
-                              doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste reiciendis
-                              ipsa esse officiis, voluptas quis velit. Ratione.
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio
+                              facere doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste
+                              reiciendis ipsa esse officiis, voluptas quis velit. Ratione.
                           </p>
                           <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
                       </div>
@@ -225,7 +230,9 @@
     <div class="modal" id="modal-search-service">
         <div class="modal__content">
             <div class="modal__header">
-                <a href="javascript:void(0)" class="btn-close-modal btn-close-modal--search-service"><i class='bx bx-x' ></i></a>
+                <a href="javascript:void(0)" class="btn-close-modal btn-close-modal--search-service">
+                    <i class='bx bx-x' ></i>
+                </a>
             </div>
             <div class="modal__body">
                 <form action="" class="search-service" method="get">

@@ -24,7 +24,8 @@ The above copyright notice and this permission notice shall be included in all c
         <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     </head>
     <body id="@yield('page-id')Page">
-        <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+        <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white"
+             id="sidenav-main">
             <div class="scrollbar-inner">
                 <div class="sidenav-header  align-items-center">
                     <a class="navbar-brand" href="javascript:void(0)">
@@ -62,8 +63,8 @@ The above copyright notice and this permission notice shall be included in all c
                                 </li>
                             @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#navbar-components" data-toggle="collapse" role="button"
-                                       aria-expanded="false" aria-controls="navbar-components">
+                                    <a class="nav-link" href="#navbar-components" data-toggle="collapse"
+                                       role="button" aria-expanded="false" aria-controls="navbar-components">
                                         <i class="ni ni-ui-04 text-info"></i>
                                         <span class="nav-link-text">Feed</span>
                                     </a>
@@ -81,7 +82,7 @@ The above copyright notice and this permission notice shall be included in all c
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="{{ url('bid-history') }}" class="nav-link">
+                                                <a href="{{ route('agent.bid-history') }}" class="nav-link">
                                                     <span class="sidenav-normal"> Bid History </span>
                                                 </a>
                                             </li>
@@ -122,8 +123,8 @@ The above copyright notice and this permission notice shall be included in all c
                         </ul>
                         <ul class="navbar-nav align-items-center  ml-auto ml-md-0">
                             <li class="nav-item dropdown">
-                                <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                   aria-expanded="false">
+                                <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
                                     {{ Auth::user()->name }} <i class="ni ni-bold-down"></i>
                                 </a>
                                 <div class="dropdown-menu  dropdown-menu-right ">
@@ -136,7 +137,7 @@ The above copyright notice and this permission notice shall be included in all c
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a href="{{ route('logout') }}" class="dropdown-item"
-                                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                         <i class="ni ni-user-run"></i>
                                         <span>Logout</span>
                                     </a>
@@ -169,14 +170,16 @@ The above copyright notice and this permission notice shall be included in all c
                         <div class="col-lg-6">
                             <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                                 <li class="nav-item">
-                                    <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+                                    <a href="https://www.creative-tim.com" class="nav-link" target="_blank">
+                                        Creative Tim
+                                    </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('blog.index') }}" class="nav-link" target="_blank">Blog</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"
-                                       class="nav-link" target="_blank">MIT License</a>
+                                    class="nav-link" target="_blank">MIT License</a>
                                 </li>
                             </ul>
                         </div>
@@ -191,7 +194,8 @@ The above copyright notice and this permission notice shall be included in all c
         <script src="{{ asset('plugin/argon-dashboard/assets/vendor/js-cookie/js.cookie.js') }}"></script>
         <script src="{{ asset('plugin/argon-dashboard/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}">
         </script>
-        <script src="{{ asset('plugin/argon-dashboard/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}">
+        <script
+        src="{{ asset('plugin/argon-dashboard/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}">
         </script>
         <script src="{{ asset('plugin/argon-dashboard/assets/vendor/chart.js/dist/Chart.min.js') }}"></script>
         <script src="{{ asset('plugin/argon-dashboard/assets/vendor/chart.js/dist/Chart.extension.js') }}"></script>

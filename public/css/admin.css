@@ -124,6 +124,16 @@
     flex-grow: 1;
 }
 
+#listRequestPage #progress-job-val {
+    overflow: hidden;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    background-color: #efefef;
+}
+
 footer {
     width: 100%;
     padding: 15px 0;

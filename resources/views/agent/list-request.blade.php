@@ -2,6 +2,9 @@
 @section('page-title', 'List Request | Unfinished Job')
 @section('page-id', 'listRequest')
 @section('page-name', 'Unfinished Job')
+@section('css')
+    <link href="{{ asset('plugin/powerange/dist/powerange.min.css') }}" rel="stylesheet">
+@endsection
 @section('header')
     <div class="row mb-5 justify-content-between">
         <div class="col-12">
@@ -93,9 +96,9 @@
                                     Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin
                                     coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
                                     craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                    Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
-                                    raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                    labore sustainable VHS.
+                                    Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard
+                                    of them accusamus labore sustainable VHS.
                                 </div>
                                 <ul class="card-footer border-top-0 mb-0 pt-0">
                                     <li>
@@ -132,23 +135,27 @@
                 <div class="modal-header">
                     <h5 class="modal-title">
                         Report progress for job <span class="modal-job-title"></span>
-                        <form action="" method="post" class="d-none" id="form-update-job-progress">
-                            @csrf @method('PUT')
-                        </form>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="range" min="25" minlength="20" max="100" class="custom-range">
+                    <form action="" class="col px-4" method="post" id="form-update-job-progress">
+                        @csrf @method('PUT')
+                        <div class="form-row justify-between align-items-center">
+                            <div class="col-9">
+                                <input type="text" class="progress-job">
+                            </div>
+                            <div class="col-auto text-right" id="progress-job-val">0</div>
+                        </div>
+                    </form>
                     <div class="row mx-0 align-items-center mt-2">
                         <p class="mb-0">Progress right now: </p>
                         <div class="col">
                             <div class="progress mt-3">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                                     aria-valuemax="100" style="width: {{ '25' }}%">
-                                    25%
+                                <div class="progress-bar" role="progressbar" style="width: {{ '25' }}%">
+                                    {{ '25' }}%
                                 </div>
                             </div>
                         </div>
@@ -164,3 +171,7 @@
         </div>
     </div>
 @endsection
+@push('script')
+    <script src="{{ asset('plugin/powerange/dist/powerange.min.js') }}"></script>
+@endpush
+

@@ -130,6 +130,14 @@ $(document).ready(function () {
         $("#delete-history-job .modal-job-history-title").text(historyTitle);
     });
 
+    const jobProgress = document.querySelector('.progress-job');
+    if (jobProgress) {
+        let init = new Powerange(jobProgress);
+        jobProgress.onchange = function() {
+            document.getElementById('progress-job-val').innerHTML = jobProgress.value;
+        };
+    }
+
     //admin js
     const btnArticles = document.querySelectorAll('.btn[data-target="#delete-article');
     btnArticles.forEach(function (btnArticle) {
@@ -157,6 +165,15 @@ $(document).ready(function () {
             const formDeleteCategory = document.querySelector('#delete-category-article form');
             formDeleteCategory.setAttribute('action', '/admin/manage/blog-category/' + idCategory);
         });
+    });
+
+    $('.btn[data-target="#edit-category-article').click(function () {
+        let categoryId = $(this).data('category-id');
+        let nameCategory = $(this).data('category-name');
+
+        $('.modal-category-name').text(nameCategory);
+        $("input[name='edit_category']").val(nameCategory);
+        $('#edit-category-article form').attr('action', '/admin/manage/blog-category/' + categoryId);
     });
 
     const createArticleImg = document.querySelector('#blogCreatePage input[type="file"]')
@@ -420,17 +437,17 @@ $(document).ready(function () {
     });
     $("#testimonies .testimonies-slider, #client .row").slick({
         infinite: false,
-        rows: 1,
-        slidesPerRow: 2,
-        adaptiveHeight: true,
-        slidesToShow: 2,
         prevArrow: "<a href='javascript:void(0);' class='bx bxs-chevron-left'></a>",
         nextArrow: "<a href='javascript:void(0);' class='bx bxs-chevron-right'></a>",
+        adaptiveHeight: false,
+        slidesToShow: 3,
+        slidesToScroll: 3,
         responsive: [
             {
                 breakpoint: 768,
                 settings: {
-                    slidesToShow: 1
+                    slidesToShow: 1,
+                    slidesToScroll: 1
                 }
             }
         ]
@@ -494,9 +511,11 @@ $(document).ready(function () {
         });
     }
 
-    $(".review-rating").addRating({
-        fieldName: 'rating'
-    });
+    if ($(".review-rating").length > 0) {
+        $(".review-rating").addRating({
+            fieldName: 'rating'
+        });
+    }
     $(".review-rating .material-icons").mouseenter(function () {
         $(this).css('color', '#151942').prevAll().css('color', '#151942');
     }).mouseleave(function () {

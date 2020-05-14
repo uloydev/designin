@@ -63,6 +63,7 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
 });
 
 Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group(function () {
+    Route::view('bid-history', 'agent.bid-history')->name('bid-history');
     Route::prefix('profile')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
         Route::put('edit', 'ProfileController@update')->name('profile.update');

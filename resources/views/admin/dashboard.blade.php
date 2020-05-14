@@ -206,7 +206,7 @@
     </div>
 @endsection
 @section('element')
-    @include('blog.delete')
+    @include('blog.manipulate')
 @endsection
 @push('script')
     <script>
