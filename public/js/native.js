@@ -107,7 +107,6 @@ $(document).ready(function () {
     //agent js
     $(".btn[data-target='#modal-progress']").click(function () {
         let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
-        let jobId = $(this).data('id');
 
         $("#modal-progress .modal-job-title").text(jobTitle);
     });
@@ -115,7 +114,7 @@ $(document).ready(function () {
     progressVals.forEach(function (progressVal) {
        let textProgress = progressVal.textContent;
         const progressDoneChecks = document.querySelectorAll('#listRequestPage .progress-done');
-        progressDoneChecks.forEach(function (progressDoneCheck) {
+        progressDoneChecks.forEach(function () {
             if (textProgress.includes('100%')) {
                 progressVal.nextElementSibling.style.display = 'block';
             }
@@ -328,6 +327,10 @@ $(document).ready(function () {
         showFaq = (showFaq + 5 <= faqTotal) ? showFaq + 5 : faqTotal;
         faqActive.slice(0, showFaq - 1).show();
         if (showFaq === faqTotal) $(".question-answer__show-more").hide()
+    });
+
+    $("#add_category, #edit_category").keypress(function (e) {
+        if (e.which === 32) return false;
     });
 
     //plugin & general

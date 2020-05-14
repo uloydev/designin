@@ -38,7 +38,7 @@
                                     {!! Str::limit($service->description, 150) !!}
                                 </div>
                                 <div class="service__action">
-                                    <p class="service__rating">Rating : {{ $rating }}</p>
+                                    <p class="service__rating">Rating : {{ $service->rating }}</p>
                                     <span>Start at: <var>IDR 300,000</var></span>
                                     <a href="{{ route('service.show', $service->id) }}" class="service__goto">
                                         <span>click service</span>

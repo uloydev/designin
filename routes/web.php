@@ -13,14 +13,8 @@ Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
 Route::get('testimony', 'HomeController@testimonies')->name('testimony');
 Route::resource('blog', 'BlogController')->only(['index', 'show']);
-Route::resource('blog/categories', 'BlogCategoryController')->names([
-    'index' => 'blog-category.index',
-    'create' => 'blog-category.create',
-    'show' => 'blog-category.show',
-    'edit' => 'blog-category.edit',
-    'update' => 'blog-category.update',
-    'destroy' => 'blog-category.destroy'
-]);
+Route::get('search/blog', 'BlogController@search')->name('blog.search');
+Route::get('blog/categories/{id}', 'BlogCategoryController@show')->name('blog-category.show');
 Route::name('message.')->prefix('message')->middleware('exceptAdmin')->group(function () {
     Route::get('/', 'MessageController@index')->name('index');
     Route::get('fetch/{session_id}', 'MessageController@fetch')->name('fetch');
@@ -39,7 +33,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('admin', 'AdminController')->except('index');
         Route::resource('faq', 'FaqController')->except(['show']);
         Route::resource('blog', 'BlogController');
-        Route::resource('blog-category', 'BlogCategoryController');
+        Route::resource('blog-category', 'BlogCategoryController')->only(['store', 'update', 'destroy']);
         Route::resource('service', 'ServiceController')->except(['create']);
         Route::resource('service-category', 'ServiceCategoryController')->except(['create', 'show', 'edit']);
         Route::resource('contact-us', 'ContactController')->except(['create', 'store', 'show']);

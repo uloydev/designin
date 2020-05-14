@@ -16,6 +16,7 @@ class CreateTestimoniesTable extends Migration
         Schema::create('testimonies', function (Blueprint $table) {
             $table->id();
             $table->text('content');
+            $table->unsignedInteger('rating');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('service_id');
             $table->boolean('is_main')->nullable();
