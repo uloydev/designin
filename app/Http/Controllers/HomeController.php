@@ -39,37 +39,26 @@ class HomeController extends Controller
 
     public function services(Request $request)
     {
-        $services = Service::all();
-        foreach ($services as $service) {
-            if ($service->testimonies->count() != 0){
-                $score = 0;
-                foreach ($service->testimonies as $testimony) {
-                    $score += $testimony->rating;
-                }
-                $rating = $score / $service->testimonies->count();
-            }
-        }
         if (isset($request->category)) {
-            $categories = ServiceCategory::where('id', $request->category)->get();
-            $services = Service::where('service_category_id', $request->category)->paginate(10);
-        }
-        else {
+            $categories = array(ServiceCategory::findOrFail($request->category));
+        }else {
             $categories = ServiceCategory::has('services')->get();
         }
-        return view('service.all', ['categories' => $categories, 'services' => $services, 'rating' => $rating]);
+        foreach ($categories as $category) {
+            foreach ($category->services as $service) {
+                $rating = $service->testimonies->pluck('rating')->avg();
+                $rating = $rating ? $rating : 0;
+                $service->rating = $rating;
+            }
+        }
+        return view('service.all', ['categories' => $categories]);
     }
 
     public function showService($id)
     {
         $service = Service::findOrFail($id);
-//        if ($service->testimonies->count() != 0){
-//            $score = 0;
-//            foreach ($service->testimonies as $testimony) {
-//                $score += $testimony->rating;
-//            }
-//            $rating = $score / $service->testimonies->count();
-//        }
-        $rating = 4;
+        $rating = $service->testimonies->pluck('rating')->avg();
+        $rating = $rating ? $rating : 0;
         return view('service.single', ['service' => $service, 'rating' => $rating]);
     }
 
