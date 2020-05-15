@@ -1,8 +1,6 @@
 @extends('layouts.admin-master')
 @section('page-title', 'Blog Management')
-@section('header')
-<h1 class="text-white">Blog management</h1>
-@endsection
+@section('page-name', 'Blog Management')
 @section('content')
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">

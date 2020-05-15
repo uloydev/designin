@@ -19,19 +19,18 @@ class ServiceController extends Controller
         return view('service.index', ['serviceCategories' => $serviceCategories, 'services' => $services]);
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-        //
-    }
+        $service = new Service;
 
-    public function show($id)
-    {
-        //
+        $service->title = $request->title;
+        $service->description = $request->description;
+        $service->image = $request->file('image')->store('public/files');
+        $service->agent_id = $request->agent_id;
+        $service->service_category_id = $request->service_category_id;
+
+        $service->save();
+        return redirect()->back()->with('create', 'Succesfully create new service');
     }
 
     public function edit($id)
@@ -61,6 +60,6 @@ class ServiceController extends Controller
         $service = Service::findOrFail($id);
         Storage::delete($service->image);
         $service->delete();
-        return redirect()->back()->with('success_delete', 'Succefully delete service');
+        return redirect()->back()->with('delete', 'Succefully delete service');
     }
 }

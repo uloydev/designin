@@ -9,10 +9,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('manage.service.store') }}" method="post"
+                <form action="{{-- routing on js --}}" method="post"
                 id="form-add-service" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="agent_id" value="{{ $service->service_category_id }}" readonly required>
+                    <input type="hidden" name="agent_id" value="{{ $service->service_category_id }}" readonly>
                     <div class="form-group">
                         <label for="category-name" class="mb-3">Service Title</label>
                         <input type="text" name="title" class="form-control text-dark"

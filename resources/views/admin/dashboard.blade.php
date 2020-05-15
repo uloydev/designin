@@ -1,4 +1,6 @@
 @extends('layouts.admin-master')
+@section('page-id', 'adminDashboard')
+@section('page-name', 'Dashboard')
 @section('page-title', 'Dashboard')
 @section('header')
     <!-- Card stats -->

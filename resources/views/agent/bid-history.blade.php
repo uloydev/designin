@@ -118,6 +118,9 @@
                         Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
                         farm-to-table, raw denim aesthetic synth nesciunt you probably haven't
                         heard of them accusamus labore sustainable VHS.
+                        <p class="mt-3 mb-0">
+                            Status: <span class="badge badge-success">Won</span>
+                        </p>
                     </div>
                 </div>
                 <div class="p-3">
@@ -152,6 +155,9 @@
                         Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
                         farm-to-table, raw denim aesthetic synth nesciunt you probably haven't
                         heard of them accusamus labore sustainable VHS.
+                        <p class="mt-3 mb-0">
+                            Status: <span class="badge badge-success">Won</span>
+                        </p>
                     </div>
                 </div>
                 <div class="p-3">
@@ -186,6 +192,9 @@
                         Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
                         farm-to-table, raw denim aesthetic synth nesciunt you probably haven't
                         heard of them accusamus labore sustainable VHS.
+                        <p class="mt-3 mb-0">
+                            Status: <span class="badge badge-success">Won</span>
+                        </p>
                     </div>
                 </div>
             </div>

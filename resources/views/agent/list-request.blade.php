@@ -2,9 +2,6 @@
 @section('page-title', 'List Request | Unfinished Job')
 @section('page-id', 'listRequest')
 @section('page-name', 'Unfinished Job')
-@section('css')
-    <link href="{{ asset('plugin/powerange/dist/powerange.min.css') }}" rel="stylesheet">
-@endsection
 @section('header')
     <div class="row mb-5 justify-content-between">
         <div class="col-12">
@@ -171,7 +168,3 @@
         </div>
     </div>
 @endsection
-@push('script')
-    <script src="{{ asset('plugin/powerange/dist/powerange.min.js') }}"></script>
-@endpush
-

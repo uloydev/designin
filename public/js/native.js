@@ -93,10 +93,10 @@ $(document).ready(function () {
         $("#serviceEditPage #service-edit-form").attr('action', '/admin/manage/service/' + serviceId);
     }
 
-    if (window.location.href.indexOf('agent/service') > -1) {
+    if (window.location.pathname === '/agent/service') {
         $("#servicePage #form-add-service").attr('action', '/agent/service');
     }
-    else if (window.location.href.indexOf('admin/manage/service') > -1) {
+    else if (window.location.pathname === '/admin/manage/service') {
         $("#servicePage #form-add-service").attr('action', '/admin/manage/service');
     }
 
@@ -130,8 +130,12 @@ $(document).ready(function () {
     });
 
     const jobProgress = document.querySelector('.progress-job');
-    if (jobProgress) {
-        let init = new Powerange(jobProgress);
+    if (jobProgress != null) {
+        new Powerange(jobProgress, {
+            min: 0,
+            start: 0,
+            decimal: false
+        });
         jobProgress.onchange = function() {
             document.getElementById('progress-job-val').innerHTML = jobProgress.value;
         };
@@ -315,8 +319,8 @@ $(document).ready(function () {
         $(".modal__job-title").text(jobTitle);
     });
 
-    var faqCategoryActive = $("#faqPage .jq-tab-title.active").data('tab');
-    var faqActive = $(".question-answer__item[data-tab=" + faqCategoryActive +"]");
+    let faqCategoryActive = $("#faqPage .jq-tab-title.active").data('tab');
+    let faqActive = $(".question-answer__item[data-tab=" + faqCategoryActive +"]");
     faqActive.hide();
 
     const faqTotal = $("#faqPage .question-answer__item").length;
@@ -338,10 +342,10 @@ $(document).ready(function () {
         let getDate = new Date().getFullYear();
         $("#footer_date").text(getDate);
     }
-    let realYearNow = setInterval(function () {
+    setInterval(function () {
         realTime()
     }, 1000);
-    if (window.location.href.indexOf('admin') > -1) {
+    if (window.location.href.indexOf('admin') > -1 || window.location.href.indexOf('agent') > -1) {
         bsCustomFileInput.init();
     }
 
@@ -357,7 +361,7 @@ $(document).ready(function () {
     }
 
     if (window.location.pathname === '/') {
-        const headText = new Typed(".header__text span", {
+        new Typed(".header__text span", {
             strings: [" turning your hand", ' turn around your body'],
             startDelay: 100,
             typeSpeed: 80,

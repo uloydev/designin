@@ -79,10 +79,11 @@ class ServiceController extends Controller
         return redirect()->route('manage.service.index');
     }
 
-    public function destroy(Service $service)
+    public function destroy($id)
     {
+        $service = Service::findOrFail($id);
         Storage::delete($service->image);
         $service->delete();
-        return redirect()->route('manage.service.index');
+        return redirect()->back()->with('delete', 'Succefully deleted service');
     }
 }
