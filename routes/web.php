@@ -38,6 +38,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('service-category', 'ServiceCategoryController')->except(['create', 'show', 'edit']);
         Route::resource('contact-us', 'ContactController')->except(['create', 'store', 'show']);
         Route::resource('testimony', 'TestimonyController')->only(['index', 'update', 'destroy']);
+        Route::resource('promo', 'PromoController');
     });
 });
 

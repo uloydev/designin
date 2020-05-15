@@ -17,6 +17,9 @@ a {
 body {
     overflow-x: hidden;
 }
+.datepickers-container {
+    z-index: 9999;
+}
 
 :root {
     --almost-black: #2a2a2a;

@@ -76,7 +76,11 @@
                                                     <div class="service__detail">
                                                         {!! Str::limit($service->description, 250) !!}
                                                     </div>
-                                                    <a href="">{{ Auth::user()->name }}</a>
+                                                    @if (Auth::user()->role === 'admin')
+                                                        <p class="badge badge-default">
+                                                            Owner agent name : {{ $service->agent->name }}
+                                                        </p>
+                                                    @endif
                                                 </figcaption>
                                             </figure>
                                             <div class="service__action">
@@ -127,7 +131,11 @@
                                                 <div class="service__detail">
                                                     {!! Str::limit($service->description, 250) !!}
                                                 </div>
-                                                <a href="">{{ Auth::user()->name }}</a>
+                                                @if (Auth::user()->role === 'admin')
+                                                    <p class="badge badge-default">
+                                                        Owner agent name : {{ $service->agent->name }}
+                                                    </p>
+                                                @endif
                                             </figcaption>
                                         </figure>
                                         <div class="service__action">
