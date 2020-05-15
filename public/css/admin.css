@@ -134,6 +134,32 @@
     background-color: #efefef;
 }
 
+#bidHistoryPage #accordionHistoryJob h2 button {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0;
+}
+#bidHistoryPage .dropleft .dropdown-toggle::before {
+    content: none;
+}
+#bidHistoryPage .dropleft .dropdown-toggle {
+    color: #828282;
+    box-shadow: none;
+    margin-left: 0.5rem;
+}
+#bidHistoryPage .btn:not(:disabled):not(.disabled):active:focus,
+#bidHistoryPage .btn:not(:disabled):not(.disabled).active:focus {
+    box-shadow: none;
+}
+#bidHistoryPage .btn:not(:disabled):not(.disabled),
+#bidHistoryPage .btn:not(:disabled):not(.disabled) {
+    padding-left: 0;
+    padding-right: 0;
+}
+#bidHistoryPage .accordion .collapse {
+    padding-top: 10px;
+}
+
 footer {
     width: 100%;
     padding: 15px 0;

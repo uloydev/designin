@@ -53,7 +53,7 @@ class ServiceController extends Controller
             $service->image = $path;
         }
         $service->save();
-        return redirect()->route('agent.service.index')->with('success_update', 'Succesfully edit service detail');
+        return redirect()->route('agent.service.index')->with('success_update', 'Succesfully edit service');
     }
 
     public function destroy($id)
