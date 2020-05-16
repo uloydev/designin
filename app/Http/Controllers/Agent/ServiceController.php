@@ -22,7 +22,6 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $service = new Service;
-
         $service->title = $request->title;
         $service->description = $request->description;
         $service->image = $request->file('image')->store('public/files');

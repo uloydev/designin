@@ -12,6 +12,7 @@
                 <form action="{{-- routing on js --}}" method="post"
                 id="form-add-service" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="agent_id" value="{{ Auth::id() }}" readonly required>
                     <div class="form-group">
                         <label for="category-name" class="mb-3">Service Title</label>
                         <input type="text" name="title" class="form-control text-dark"

@@ -59,13 +59,13 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
 });
 
 Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group(function () {
-    Route::view('bid-history', 'agent.bid-history')->name('bid-history');
     Route::prefix('profile')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
         Route::put('edit', 'ProfileController@update')->name('profile.update');
         Route::put('edit/avatar', 'ProfileController@avatarUpdate')->name('profile.avatar.update');
     });
     Route::namespace('Agent')->group(function () {
+        Route::get('bid-history', 'OrderController@bidHistory')->name('bid-history');
         Route::redirect('/', 'dashboard');
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
         Route::get('testimony', 'TestimonyController@index')->name('testimony.index');

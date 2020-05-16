@@ -12,30 +12,24 @@
     <div class="row">
         <div class="col-12">
             <div class="accordion" id="accordionJobHistory">
+                @foreach ($orders as $order)
                 <div class="card">
                     <div class="card-header d-flex justify-between align-items-center job-history-title">
                         <h2 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
-                            data-target="#collapse{{ '1' }}" aria-expanded="true" aria-controls="collapse{{ '1' }}">
-                                <i class="fas fa-chevron-up rotate-180 mr-2"></i> Project Title 1
+                            data-target="#collapse{{ $order->id }}" aria-expanded="true" aria-controls="collapse{{ $order->id }}">
+                                <i class="fas fa-chevron-up rotate-180 mr-2"></i>{{$order->package->title}}
                             </button>
                         </h2>
                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                        data-target="#delete-history-job" data-id="1">
+                    data-target="#delete-history-job" data-id="{{$order->id}}">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
 
-                    <div id="collapse{{ '1' }}" class="collapse show" data-parent="#accordionJobHistory">
+                    <div id="collapse{{ $order->id }}" class="collapse show" data-parent="#accordionJobHistory">
                         <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson
-                            ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck
-                            quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                            on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-                            helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
-                            excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
-                            raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                            labore sustainable VHS.
+                            {{$order->request}}
                             <form action="{{--please using ajax--}}" class="mt-3 border-top pt-4">
                                 <div class="form-group">
                                     <label for="message-review" class="text-gray">Message to customer</label>
@@ -53,14 +47,15 @@
                         </div>
                         <div class="card-footer">
                             <p class="d-flex justify-between text-default">
-                                Start date: <time class="font-weight-600">23 Mar 2020</time>
+                            Start date: <time class="font-weight-600">{{$order->started_at}}</time>
                             </p>
                             <p class="d-flex justify-between text-default">
-                                End date: <time class="font-weight-600">23 Apr 2020</time>
+                            End date: <time class="font-weight-600">{{$order->deadline}}</time>
                             </p>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>
