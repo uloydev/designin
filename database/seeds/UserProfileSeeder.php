@@ -18,7 +18,7 @@ class UserProfileSeeder extends Seeder
                 'address'=>'jonggol',
                 'bank'=>'bni',
                 'account_number'=>'12345667899',
-                'avatar' => 'public/files/people.webp',
+                'avatar' => 'public/temporary/people.webp',
                 'user_id'=>1
             ],
             [
@@ -26,7 +26,7 @@ class UserProfileSeeder extends Seeder
                 'address'=>'jonggol',
                 'bank'=>'bni',
                 'account_number'=>'12345667899',
-                'avatar' => 'public/files/people.webp',
+                'avatar' => 'public/temporary/people.webp',
                 'user_id'=>2
             ],
             [
@@ -34,7 +34,7 @@ class UserProfileSeeder extends Seeder
                 'address'=>'jonggol',
                 'bank'=>'bni',
                 'account_number'=>'12345667899',
-                'avatar' => 'public/files/people.webp',
+                'avatar' => 'public/temporary/people.webp',
                 'user_id'=>3
             ],
             [
@@ -42,7 +42,7 @@ class UserProfileSeeder extends Seeder
                 'address'=>'jonggol',
                 'bank'=>'bni',
                 'account_number'=>'12345667899',
-                'avatar' => 'public/files/people.webp',
+                'avatar' => 'public/temporary/people.webp',
                 'user_id'=>4
             ],
         ];

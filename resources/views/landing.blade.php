@@ -188,8 +188,8 @@
                         <div class="px-2">
                             <div class="card testimony-card">
                                 <div class="card__header testimony-card__header">
-                                    <img src="{{ asset('img/people.webp') }}" alt="desainin testimony"
-                                         class="card__img card__img--circle testimony__img">
+                                    <img src="{{ Storage::url($testimony->user->profile->avatar) }}"
+                                    alt="desainin testimony" class="card__img card__img--circle testimony__img">
                                     <p class="testimony__name">{{ $testimony->user->name }}</p>
                                     <p class="card__text">{{ $testimony->created_at->format('d M Y') }}</p>
                                 </div>

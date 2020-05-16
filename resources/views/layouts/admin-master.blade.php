@@ -69,6 +69,12 @@ The above copyright notice and this permission notice shall be included in all c
                                         <span class="nav-link-text">Promo</span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('manage.subscription.index') }}">
+                                        <i class="far fa-newspaper text-success"></i>
+                                        <span class="nav-link-text">Subscription</span>
+                                    </a>
+                                </li>
                             @else
                                 <li class="nav-item">
                                     <a class="nav-link" href="#navbar-components" data-toggle="collapse"

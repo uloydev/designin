@@ -6,7 +6,7 @@
         @include('partials.nav')
         <div class="container">
             <div class="row justify-content-between">
-                <img src="{{ asset('img/service.png') }}" class="service-header__img">
+                <img src="{{ asset('img/service.png') }}" class="service-header__img" alt="Desainin Service Page">
                 <div class="col service-header__caption">
                     <h1 class="service-header__heading">Our Services</h1>
                     <h2 class="text-gray mt-3">Top service that will serve you as lovely it be</h2>
@@ -27,7 +27,7 @@
                                 <img src="{{ Storage::url($service->image) }}" class="card__img service__img-item"
                                      alt="Desainin Service Category">
                                 <div class="card__header">
-                                    <h3 class="service__title">{{ Str::limit($service->title, 35) }}</h3>
+                                    <h3 class="service__title">{{ Str::limit($service->title, 30) }}</h3>
                                     <div class="d-flex align-items-center">
                                         <img src="{{ Storage::url($service->agent->profile->avatar) }}"
                                              alt="Service agent avatar" height="20">

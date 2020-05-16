@@ -11,8 +11,9 @@
               <div class="col">
                   <form action="" class="search-service" method="get">
                       @csrf
-                      <input type="search" class="search-service__input" name="search_agent_job"
-                             placeholder="Type anything and hit enter..." required>
+                      <label for="search" class="d-none">Search article</label>
+                      <input class="search-service__input" id="search" name="search_agent_job" required type="search"
+                      placeholder="Type anything and hit enter...">
                       <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
                   </form>
               </div>
@@ -45,7 +46,7 @@
       <section class="col-12 col-md-8">
           @foreach ($blogs as $blog)
           <article>
-              <img src="{{ Storage::url($main->header_image) }}" class="article__img">
+              <img src="{{ Storage::url($blog->header_image) }}" class="article__img" alt="Article {{ $blog->title }} Image">
               <div class="article__detail">
                 <p class="article__title">
                   <a href="#">{{ Str::words($blog->title, 5) }}</a>

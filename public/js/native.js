@@ -29,11 +29,13 @@ $(document).ready(function () {
                 overlayNavShowed.classList.remove('overlay--active');
             }
 
-            overlayNavShowed.addEventListener('click', function () {
-                overlayNavShowed.classList.remove('overlay--active');
-                document.querySelector('body').style.removeProperty('overflow');
-                document.querySelector('#primaryNav').classList.remove('nav--showed');
-            });
+            if (overlayNavShowed) {
+                overlayNavShowed.addEventListener('click', function () {
+                    overlayNavShowed.classList.remove('overlay--active');
+                    document.querySelector('body').style.removeProperty('overflow');
+                    document.querySelector('#primaryNav').classList.remove('nav--showed');
+                });
+            }
         });
     }
 
@@ -372,7 +374,21 @@ $(document).ready(function () {
         $("#editPromo form").attr('action', window.location.origin + '/admin/manage/promo/' + promoId);
     });
 
+    $(".dropdown-item[data-target='#editSubscription'], .dropdown-item[data-target='#deleteSubscription']").click(function () {
+        let subscriptionId = Number($(this).data('id'));
+        let subscriptionDesc = $.trim($(this).data('desc'));
+        let subscriptionName = $(this).parents(".subscription__item").find('.card-title').text();
+
+        $("#editSubscription .modal-subscription-title, #deleteSubscription .modal-subscription-title").text(subscriptionName);
+        $("#editSubscription form, #deleteSubscription form")
+            .attr('action', window.location.origin + '/admin/manage/subscription/' + subscriptionId);
+        $("#editSubscription input[name='title']").val(subscriptionName);
+        $("#editSubscription textarea[name='desc']").val(subscriptionDesc);
+        $("#editSubscription textarea[name='desc']").summernote('code', subscriptionDesc);
+    });
+
     //plugin & general
+    $("img").prop('draggable', false);
     $(".alert").delay(750).fadeOut('slow');
 
     $("#editPromo input[name='promo_end']").datepicker({
@@ -524,8 +540,8 @@ $(document).ready(function () {
         slidesToShow: 1,
         slidesToScroll: 1,
         mobileFirst: true,
-        nextArrow: '<a href="javascript:void(0);" class="slick1-next"><i class="bx bxs-chevron-right"></i></a>',
-        prevArrow: '<a href="javascript:void(0);" class="slick1-prev"><i class="bx bxs-chevron-left"></i></a>',
+        nextArrow: '<a href="javascript:void(0);" class="slick-next"><i class="bx bxs-chevron-right"></i></a>',
+        prevArrow: '<a href="javascript:void(0);" class="slick-prev"><i class="bx bxs-chevron-left"></i></a>',
         responsive: [
             {
                 breakpoint: 768,
@@ -557,7 +573,7 @@ $(document).ready(function () {
     });
 
     $("#servicePage textarea[name='description'], #serviceEditPage textarea[name='service_description'], " +
-        "textarea[name='detail_job']").summernote({
+        "textarea[name='detail_job'], #editSubscription textarea[name='desc']").summernote({
         minHeight: 300
     });
 

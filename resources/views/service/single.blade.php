@@ -37,11 +37,12 @@
                 <div class="service-single__agent">
                     <h2 class="service-single__subheading">About the seller</h2>
                     <figure class="d-flex align-items-stretch">
-                        <img src="{{ asset('img/people.webp') }}" class="service-single__photo-agent"
+                        <img src="{{ Storage::url('temporary/people.webp') }}" class="service-single__photo-agent"
                              alt="Agent photo" height="100">
                         <figcaption class="service-single__agent-detail">
                             {{ $service->agent->name }}
-                            <button class="btn-modal service-single__contact-btn" data-target="#modal-service-send-message">
+                            <button class="btn-modal service-single__contact-btn"
+                            data-target="#modal-service-send-message">
                                 Contact me
                             </button>
                         </figcaption>
@@ -75,7 +76,8 @@
                         </form>
                     </div>
                     <article class="service-single__comment">
-                        <img src="{{ asset('img/people.webp') }}" alt="People comment image" height="20">
+                        <img src="{{ Storage::url('temporary/people.webp') }}" height="20"
+                        alt="People comment image">
                         <div class="service-single__comment-detail">
                             <p class="service-single__comment-title">People name</p>
                             <p class="service-single__comment-text">
@@ -85,7 +87,8 @@
                         </div>
                     </article>
                     <article class="service-single__comment">
-                        <img src="{{ asset('img/people.webp') }}" alt="People comment image" height="20">
+                        <img src="{{ Storage::url('temporary/people.webp') }}" height="20"
+                        alt="People comment image">
                         <div class="service-single__comment-detail">
                             <p class="service-single__comment-title">People name</p>
                             <p class="service-single__comment-text">
@@ -182,7 +185,7 @@
             <div class="modal__body row mx-0">
                 <div class="single-service__modal-message-info">
                     <figure class="text-center">
-                        <img src="{{ asset('img/people.webp')  }}" alt="Agent Photo" height="70">
+                        <img src="{{ Storage::url('temporary/people.webp')  }}" alt="Agent Photo" height="70">
                         <figcaption class="mt-1">{{ $service->agent->name }}</figcaption>
                     </figure>
                     <p>Please include: </p>

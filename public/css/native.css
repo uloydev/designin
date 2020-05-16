@@ -41,7 +41,7 @@ body:not(#blogCreatePage):not(#blogEditPage):not(#manageJobPage)
   font-size: 34px;
   z-index: 1;
 }
-:not(#blogCreatePage):not(#blogEditPage) .bxs-chevron-left {
+body:not(#blogCreatePage):not(#blogEditPage) .bxs-chevron-left {
   left: 15px;
 }
 :not(#blogCreatePage):not(#blogEditPage) .bxs-chevron-right {
@@ -341,6 +341,7 @@ nav .container {
 }
 
 .modal {
+    z-index: 2P;
     opacity: 0;
     visibility: hidden;
     top: 0;
@@ -475,6 +476,13 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 
 .nav--showed .container > ul > .nav__list::after {
   background-color: var(--primary-color);
+}
+
+#landingPage .nav--showed {
+    background-color: var(--almost-black);
+}
+#landingPage .nav--showed .nav__list--logo {
+    color: #efefef;
 }
 #landingPage .modal {
     background-color: rgba(0,0,0,0.71);
@@ -708,9 +716,10 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
   color: var(--secondary-color);
   position: absolute;
   top: 0;
+    overflow: hidden;
 }
 #landingPage .reason-slider .bxs-chevron-left {
-  left: auto;
+  left: auto !important;
   right: 40px;
 }
 #landingPage .subscription__slider .slick-arrow {
@@ -899,6 +908,10 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #servicesPage .category {
     margin-bottom: 40px;
     padding-top: 30px;
+}
+#servicesPage .category .slick-track {
+    margin-left: 0;
+    margin-right: 0;
 }
 #servicesPage .service {
     transition: all 150ms;
@@ -1405,6 +1418,9 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     padding: 10px 1rem;
 }
 
+#contactUsPage .nav__toggle, #faqPage .nav__toggle {
+    color: var(--almost-black);
+}
 #contactUsPage main {
     padding-top: 0;
 }

@@ -58,7 +58,7 @@ class ServiceSeeder extends Seeder
                         esset.</li>
                         <li>Illud mihi a te nimium festinanter dictum videtur, sapientis omnis esse semper beatos;</li>
                     </ul>',
-                'image' => 'files/stories.jpeg',
+                'image' => 'public/temporary/stories.jpeg',
         		'agent_id' => $faker->unique()->numberBetween(2, 3),
         		'service_category_id' => $faker->numberBetween(1, 6)
            	]);

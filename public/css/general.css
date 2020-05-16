@@ -20,6 +20,9 @@ body {
 .datepickers-container {
     z-index: 9999;
 }
+.before-none::before, .after-none::after, .before-after-none::before, .before-after-none::after {
+    content: none !important;
+}
 
 :root {
     --almost-black: #2a2a2a;

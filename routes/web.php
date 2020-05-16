@@ -39,6 +39,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('contact-us', 'ContactController')->except(['create', 'store', 'show']);
         Route::resource('testimony', 'TestimonyController')->only(['index', 'update', 'destroy']);
         Route::resource('promo', 'PromoController');
+        Route::resource('subscription', 'SubscriptionController');
     });
 });
 
