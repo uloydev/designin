@@ -1,6 +1,7 @@
 @extends('layouts.admin-master')
 @section('page-id', 'manageAgent')
 @section('page-title', 'Manage Agent')
+@section('page-name', 'Manage Agent')
 @section('content')
     <div class="card">
         <!-- Card header -->

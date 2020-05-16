@@ -130,4 +130,17 @@ class OrderController extends Controller
             'orders'=>$orders
         ]);
     }
+
+    public function incoming()
+    {
+        return view('service.incoming');
+    }
+
+    public function approval($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->approval = $request->approval;
+        $order->save();
+        return redirect()->back('approval', 'Succesfully' . $request->approval . 'Incoming Job');
+    }
 }

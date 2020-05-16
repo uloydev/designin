@@ -22,7 +22,8 @@
                   <div class="col-12">
                       <a href="{{ route('blog.show', $main->id) }}" class="article__link">
                           <article>
-                              <img src="{{ Storage::url($main->header_image) }}" alt="Desainin article image" class="article__cover">
+                              <img src="{{ Storage::url($main->header_image) }}" alt="Desainin article image"
+                              class="article__cover">
                               <div class="article__caption">
                                   <p class="article__title mb-3">
                                       {{ Str::words($main->title, 10) }}

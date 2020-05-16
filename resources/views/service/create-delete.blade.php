@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('manage.service.store') }}" method="post"
+                <form action="{{-- routing on js --}}" method="post"
                 id="form-add-service" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="agent_id" value="{{ Auth::id() }}" readonly required>
@@ -18,6 +18,19 @@
                         <input type="text" name="title" class="form-control text-dark"
                                id="category-name" placeholder="Insert Title Here">
                     </div>
+                    @if (Auth::user()->role === 'agent')
+                        <input type="hidden" name="agent_id" value="{{ Auth::id() }}" readonly>
+                    @else
+                        <div class="form-group">
+                            <label for="agent_id">Agent</label>
+                            <select class="custom-select" id="agent_id" name="agent_id" required>
+                                <option selected disabled>Choose agent</option>
+                                @foreach ($agents as $agent)
+                                    <option value="{{ $agent->id }}">{{ $agent->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <label for="categoryService">Service Category</label>
                         <select class="custom-select" id="categoryService" name="service_category_id" required>

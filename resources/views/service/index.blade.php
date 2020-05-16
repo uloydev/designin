@@ -1,13 +1,21 @@
 @extends('layouts.admin-master')
 @section('page-title', 'Manage Service')
 @section('page-id', 'service')
+@section('page-name', 'Service Management')
 @section('header')
     <header class="mb-5 d-flex align-items-center">
-        <h1 class="text-white mb-0 mr-auto">Service Management</h1>
-        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#create-service">
+        <button type="button" class="btn btn-success btn-sm mr-auto" data-toggle="modal"
+        data-target="#create-service">
             Create Service
         </button>
-        <a href="{{ route('manage.service-category.index') }}" class="btn btn-sm btn-default">Manage category</a>
+        @if (Auth::user()->role === 'admin')
+            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editServiceFee">
+                Edit service fee
+            </button>
+            <a href="{{ route('manage.service-category.index') }}" class="btn btn-sm btn-default">
+                Manage category
+            </a>
+        @endif
     </header>
 @endsection
 @section('content')
@@ -18,31 +26,29 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    @elseif (session('success_delete'))
+    @elseif (session('delete'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <span class="alert-text">{{ session('success_delete') }}</span>
+            <span class="alert-text">{{ session('delete') }}</span>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    @elseif (session('success_create'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <span class="alert-text">{{ session('success_create') }}</span>
+    @elseif (session('progress'))
+        <div class="col-12 alert alert-success alert-dismissible fade show" role="alert">
+            <span class="alert-text">{{ session('progress') }}</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @elseif (session('create'))
+        <div class="col-12 alert alert-success alert-dismissible fade show" role="alert">
+            <span class="alert-text">{{ session('create') }}</span>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
     @endif
     <div class="row">
-        @if (session('create'))
-            <div class="col-12 alert alert-success alert-dismissible fade show" role="alert">
-                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-                <span class="alert-text">{{ session('create') }}</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
         <div class="col-12 col-md-3 mb-3 mb-md-0">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 @foreach ($serviceCategories as $category)
@@ -77,6 +83,11 @@
                                                     <div class="service__detail">
                                                         {!! Str::limit($service->description, 250) !!}
                                                     </div>
+                                                    @if (Auth::user()->role === 'admin')
+                                                        <p class="badge badge-default">
+                                                            Owner agent name : {{ $service->agent->name }}
+                                                        </p>
+                                                    @endif
                                                 </figcaption>
                                             </figure>
                                             <div class="service__action">
@@ -86,8 +97,8 @@
                                                         Edit
                                                     </a>
                                                     <button type="button" class="btn btn-danger" id="from-agent"
-                                                            data-toggle="modal" data-target="#modal-delete-service"
-                                                            data-id="{{ $service->id }}" data-title="{{ $service->title }}">
+                                                    data-toggle="modal" data-target="#modal-delete-service"
+                                                    data-id="{{ $service->id }}" data-title="{{ $service->title }}">
                                                         Remove Service
                                                     </button>
                                                 @else
@@ -96,8 +107,8 @@
                                                         Edit
                                                     </a>
                                                     <button type="button" class="btn btn-danger"
-                                                            data-toggle="modal" data-target="#modal-delete-service"
-                                                            data-id="{{ $service->id }}" data-title="{{ $service->title }}">
+                                                    data-toggle="modal" data-target="#modal-delete-service"
+                                                    data-id="{{ $service->id }}" data-title="{{ $service->title }}">
                                                         Remove Service
                                                     </button>
                                                 @endif
@@ -124,7 +135,14 @@
                                                  alt="Desainin Service {{ $service->serviceCategory->name }}">
                                             <figcaption>
                                                 <p class="service__title">{{ $service->title }}</p>
-                                                <p class="service__detail">{{ $service->description }}</p>
+                                                <div class="service__detail">
+                                                    {!! Str::limit($service->description, 250) !!}
+                                                </div>
+                                                @if (Auth::user()->role === 'admin')
+                                                    <p class="badge badge-default">
+                                                        Owner agent name : {{ $service->agent->name }}
+                                                    </p>
+                                                @endif
                                             </figcaption>
                                         </figure>
                                         <div class="service__action">
@@ -134,8 +152,8 @@
                                                     Edit
                                                 </a>
                                                 <button type="button" class="btn btn-danger" id="from-agent"
-                                                        data-toggle="modal" data-target="#modal-delete-service"
-                                                        data-id="{{ $service->id }}" data-title="{{ $service->title }}">
+                                                data-toggle="modal" data-target="#modal-delete-service"
+                                                data-id="{{ $service->id }}" data-title="{{ $service->title }}">
                                                     Remove Service
                                                 </button>
                                             @else
@@ -144,8 +162,8 @@
                                                     Edit
                                                 </a>
                                                 <button type="button" class="btn btn-danger"
-                                                        data-toggle="modal" data-target="#modal-delete-service"
-                                                        data-id="{{ $service->id }}" data-title="{{ $service->title }}">
+                                                data-toggle="modal" data-target="#modal-delete-service"
+                                                data-id="{{ $service->id }}" data-title="{{ $service->title }}">
                                                     Remove Service
                                                 </button>
                                             @endif
@@ -165,4 +183,5 @@
         </div>
     </div>
     @include('service.create-delete')
+    @includeWhen(Auth::user()->role === 'admin', 'service.edit-fee')
 @endsection

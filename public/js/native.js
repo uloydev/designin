@@ -86,18 +86,20 @@ $(document).ready(function () {
     $("body[id^='blog'] main section nav").addClass('nav-pagination');
 
     let serviceId = $("#serviceEditPage #service-edit-form input[name='service_id']").val();
-    if (window.location.href.indexOf('agent/service/' + serviceId + '/edit') > -1) {
-        $("#serviceEditPage #service-edit-form").attr('action', '/agent/service/' + serviceId);
+    if (window.location.href.pathname === '/agent/service/' + serviceId + '/edit') {
+        $("#serviceEditPage #service-edit-form")
+            .attr('action', window.location.origin + '/agent/service/' + serviceId);
     }
-    else if (window.location.href.indexOf('admin/manage/service/' + serviceId + '/edit') > -1) {
-        $("#serviceEditPage #service-edit-form").attr('action', '/admin/manage/service/' + serviceId);
+    else if (window.location.href.pathname === '/admin/manage/service/' + serviceId + '/edit') {
+        $("#serviceEditPage #service-edit-form")
+            .attr('action', window.location.origin + '/admin/manage/service/' + serviceId);
     }
 
-    if (window.location.href.indexOf('agent/service') > -1) {
-        $("#servicePage #form-add-service").attr('action', '/agent/service');
+    if (window.location.pathname === '/agent/service') {
+        $("#servicePage #form-add-service").attr('action', window.location.origin + '/agent/service');
     }
-    else if (window.location.href.indexOf('admin/manage/service') > -1) {
-        $("#servicePage #form-add-service").attr('action', '/admin/manage/service');
+    else if (window.location.pathname === '/admin/manage/service') {
+        $("#servicePage #form-add-service").attr('action', window.location.origin + '/admin/manage/service');
     }
 
     if ($(window).width() >= 993) {
@@ -105,10 +107,16 @@ $(document).ready(function () {
     }
 
     //agent js
-    $(".btn[data-target='#modal-progress']").click(function () {
+    $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection']")
+        .click(function () {
         let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
+        let jobId = $(this).data('id');
+        const domain = window.location.origin;
 
-        $("#modal-progress .modal-job-title").text(jobTitle);
+        $("#modal-progress .modal-job-title, #modal-approval .modal-job-title, #modal-rejection .modal-job-title")
+            .text(jobTitle);
+        $("#modal-approval form, #modal-rejection form").attr('action', domain + '/list-request/approval/' + jobId)
+        $("#modal-progress form").attr('action', domain + '/service/progress/' + jobId);
     });
     const progressVals = document.querySelectorAll("#listRequestPage .progress-value");
     progressVals.forEach(function (progressVal) {
@@ -122,16 +130,20 @@ $(document).ready(function () {
     });
 
     $("#jobHistoryPage .btn[data-target='#delete-history-job']").click(function () {
-        let historyId = $(this).data('id');
+        let historyId = Number($(this).data('id'));
         let historyTitle = $.trim($(this).parents('.job-history-title').text());
 
-        $("#delete-history-job form").attr('action', '/agent/list-request/' + historyId);
+        $("#delete-history-job form").attr('action', window.location.origin + '/agent/list-request/' + historyId);
         $("#delete-history-job .modal-job-history-title").text(historyTitle);
     });
 
     const jobProgress = document.querySelector('.progress-job');
-    if (jobProgress) {
-        let init = new Powerange(jobProgress);
+    if (jobProgress != null) {
+        new Powerange(jobProgress, {
+            min: 0,
+            start: 0,
+            decimal: false
+        });
         jobProgress.onchange = function() {
             document.getElementById('progress-job-val').innerHTML = jobProgress.value;
         };
@@ -148,7 +160,7 @@ $(document).ready(function () {
                 modalArticleName.textContent = articleTitle;
             });
             const formDeleteArticle = document.querySelector('#delete-article form');
-            formDeleteArticle.action = '/admin/manage/blog/' + articleId;
+            formDeleteArticle.action = window.location.origin + '/admin/manage/blog/' + articleId;
         });
     });
 
@@ -162,17 +174,18 @@ $(document).ready(function () {
                 modalCategoryName.textContent = nameCategory;
             });
             const formDeleteCategory = document.querySelector('#delete-category-article form');
-            formDeleteCategory.setAttribute('action', '/admin/manage/blog-category/' + idCategory);
+            formDeleteCategory.action =  window.location.origin + '/admin/manage/blog-category/' + idCategory;
         });
     });
 
     $('.btn[data-target="#edit-category-article').click(function () {
-        let categoryId = $(this).data('category-id');
+        let categoryId = Number($(this).data('category-id'));
         let nameCategory = $(this).data('category-name');
 
         $('.modal-category-name').text(nameCategory);
         $("input[name='edit_category']").val(nameCategory);
-        $('#edit-category-article form').attr('action', '/admin/manage/blog-category/' + categoryId);
+        $('#edit-category-article form')
+            .attr('action', window.location.origin + '/admin/manage/blog-category/' + categoryId);
     });
 
     const createArticleImg = document.querySelector('#blogCreatePage input[type="file"]')
@@ -204,42 +217,45 @@ $(document).ready(function () {
     $("#servicePage .nav-pills .nav-link:first-child").addClass('active');
     $("#servicePage .tab-pane:first-child").addClass('active show');
     $("#servicePage .btn[data-target='#modal-delete-service']").click(function () {
-        let serviceId = $(this).data("id");
+        let serviceId = Number($(this).data("id"));
         let serviceTitle = $(this).data('title');
 
         $("#modal-delete-service .modal-service-title").text(serviceTitle);
         if ($(this).attr('id') === 'from-agent') {
-            $("#modal-delete-service form").attr("action", '/agent/service/' + serviceId);
+            $("#modal-delete-service form").attr("action", window.location.origin + '/agent/service/' + serviceId);
         }
         else {
-            $("#modal-delete-service form").attr("action", '/admin/manage/service/' + serviceId);
+            $("#modal-delete-service form")
+                .attr("action", window.location.origin + '/admin/manage/service/' + serviceId);
         }
     });
 
     $("#serviceCategoryPage .btn[data-target='#create-edit-category']").click(function () {
-        let categoryId = $(this).data('category-id');
+        let categoryId = Number($(this).data('category-id'));
         let categoryName = $(this).data('category-name');
 
         $(".modal#create-edit-category form input[name='service_category']").val(categoryName);
         if ($(this).attr('id') === 'edit-category') {
             $("#create-edit-category .modal-title").text('Edit category');
-            $("#create-edit-category form").attr('action', '/admin/manage/blog-category/' + categoryId);
+            $("#create-edit-category form")
+                .attr('action', window.location.origin + '/admin/manage/blog-category/' + categoryId);
             $("#create-edit-category input[name='image_url']").prop('required', false);
             $("#create-edit-category label[for='imgCategory']").text('Change icon');
         }
         else {
             $("#create-edit-category .modal-title").text('Add new category');
-            $("#create-edit-category form").attr('action', '/admin/manage/blog-category');
+            $("#create-edit-category form").attr('action', window.location.origin + '/admin/manage/blog-category');
             $("#create-edit-category form input[name='image_url']").prop('required', true);
             $("#create-edit-category label[for='imgCategory']").text('Pick icon');
         }
     });
     $("#serviceCategoryPage .btn[data-target='#delete-category']").click(function () {
-        let categoryId = $(this).data('category-id');
+        let categoryId = Number($(this).data('category-id'));
         let categoryName = $(this).parent().find('span').text();
 
         $("#serviceCategoryPage .service-category-title").text(categoryName);
-        $("#serviceCategoryPage #delete-category form").attr('action', '/admin/manage/blog-category/' + categoryId);
+        $("#serviceCategoryPage #delete-category form")
+            .attr('action', window.location.origin + '/admin/manage/blog-category/' + categoryId);
     });
 
     $("#manageAgentPage .btn[data-target='#modal-remove-agent'], " +
@@ -247,10 +263,11 @@ $(document).ready(function () {
             if ($(this).attr('id') === 'btn-create-agent') {
                 $("button[form='form-edit-agent']").text('Add new agent');
                 $("#manageAgentPage #modal-edit-agent form").find("input[name='_method']").prop('disabled', true);
-                $("#manageAgentPage #modal-edit-agent form").attr('action', '/admin/manage/agent/');
+                $("#manageAgentPage #modal-edit-agent form")
+                    .attr('action', window.location.origin + '/admin/manage/agent/');
             }
             else {
-                let agentId = $(this).data('id'),
+                let agentId = Number($(this).data('id')),
                     agentName = $(this).parents("tr").find("#agent__name").text(),
                     agentEmail = $(this).parents("tr").find("#agent__email").text(),
                     agentPhone = $(this).parents("tr").find("#agent__phone").text(),
@@ -270,7 +287,7 @@ $(document).ready(function () {
                 $("#manageAgentPage #form-edit-agent textarea[name='agent_address']").val(agentAddress);
                 $("#manageAgentPage .agent-name").text(agentName);
                 $("#manageAgentPage .modal[id*='agent'] form")
-                    .attr('action', '/admin/manage/agent/' + agentId);
+                    .attr('action', window.location.origin + '/admin/manage/agent/' + agentId);
             }
         });
 
@@ -315,8 +332,8 @@ $(document).ready(function () {
         $(".modal__job-title").text(jobTitle);
     });
 
-    var faqCategoryActive = $("#faqPage .jq-tab-title.active").data('tab');
-    var faqActive = $(".question-answer__item[data-tab=" + faqCategoryActive +"]");
+    let faqCategoryActive = $("#faqPage .jq-tab-title.active").data('tab');
+    let faqActive = $(".question-answer__item[data-tab=" + faqCategoryActive +"]");
     faqActive.hide();
 
     const faqTotal = $("#faqPage .question-answer__item").length;
@@ -333,15 +350,59 @@ $(document).ready(function () {
         if (e.which === 32) return false;
     });
 
+    $(".dropdown-item[data-target='#deletePromo']").click(function () {
+        let promoId = Number($(this).data('id'));
+        let promoName = $(this).parents('tr').find('.promo-name').text();
+
+        $("#deletePromo .modal-promo-title").text(promoName);
+        $("#deletePromo form").attr('action', window.location.origin + '/admin/manage/promo/' + promoId);
+    });
+    $(".dropdown-item[data-target='#editPromo']").click(function () {
+        let promoId = Number($(this).data('id'));
+        let promoName = $(this).parents('tr').find('.promo-name').text();
+        let promoStart = $(this).parents('tr').find('.promo-start').text();
+        let promoEnd = $(this).parents('tr').find('.promo-end').text();
+
+        $("#editPromo form input[name='promo_name']").val(promoName);
+        $("#editPromo form input[name='promo_start']").val(promoStart);
+        $("#editPromo form input[name='promo_start']").data('datepicker').selectDate(new Date(promoStart));
+        $("#editPromo form input[name='promo_end']").val(promoEnd);
+        $("#editPromo form input[name='promo_end']").data('datepicker').selectDate(new Date(promoEnd));
+
+        $("#editPromo form").attr('action', window.location.origin + '/admin/manage/promo/' + promoId);
+    });
+
     //plugin & general
+    $(".alert").delay(750).fadeOut('slow');
+
+    $("#editPromo input[name='promo_end']").datepicker({
+        minDate: new Date($("#editPromo input[name='promo_start']").val())
+    });
+    $("#editPromo #edit-promo-start").blur(function () {
+        $("#editPromo #edit-promo-end").datepicker({
+            minDate: new Date($("#editPromo #edit-promo-start").val())
+        });
+    });
+    $("#editPromo input[name='promo_start']").datepicker({
+        minDate: new Date()
+    });
+    $("#addPromo #add-promo-end, #addPromo #add-promo-start").datepicker({
+        minDate: new Date()
+    });
+    $("#addPromo #add-promo-start").blur(function () {
+        $("#add-promo-end").datepicker({
+            minDate: new Date($("#add-promo-start").val())
+        });
+    });
+
     function realTime() {
         let getDate = new Date().getFullYear();
         $("#footer_date").text(getDate);
     }
-    let realYearNow = setInterval(function () {
+    setInterval(function () {
         realTime()
-    }, 1000);
-    if (window.location.href.indexOf('admin') > -1) {
+    }, 1);
+    if (window.location.href.indexOf('admin') > -1 || window.location.href.indexOf('agent') > -1) {
         bsCustomFileInput.init();
     }
 
@@ -357,7 +418,7 @@ $(document).ready(function () {
     }
 
     if (window.location.pathname === '/') {
-        const headText = new Typed(".header__text span", {
+        new Typed(".header__text span", {
             strings: [" turning your hand", ' turn around your body'],
             startDelay: 100,
             typeSpeed: 80,
@@ -507,12 +568,10 @@ $(document).ready(function () {
         });
     }
 
-    if ($(".datepicker-here").length > 0) {
-        $(".datepicker-here").datepicker({
-            language: 'en',
-            dateFormat: 'dd M yyyy'
-        });
-    }
+    $(".datepicker-here").datepicker({
+        language: 'en',
+        dateFormat: 'yyyy-mm-dd'
+    });
 
     if ($(".review-rating").length > 0) {
         $(".review-rating").addRating({
@@ -525,4 +584,7 @@ $(document).ready(function () {
         $(this).removeAttr('style');
     });
 
+    $("#editPromo #edit-promo-start, #addPromo #add-promo-start").datepicker({
+        minDate: new Date()
+    });
 });

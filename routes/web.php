@@ -38,6 +38,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('service-category', 'ServiceCategoryController')->except(['create', 'show', 'edit']);
         Route::resource('contact-us', 'ContactController')->except(['create', 'store', 'show']);
         Route::resource('testimony', 'TestimonyController')->only(['index', 'update', 'destroy']);
+        Route::resource('promo', 'PromoController');
     });
 });
 
@@ -68,8 +69,11 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
         Route::get('testimony', 'TestimonyController@index')->name('testimony.index');
         Route::get('testimony/{service_id}', 'TestimonyController@show')->name('testimony.show');
+        Route::get('service/progress', 'ServiceController@progress')->name('service.progress');
         Route::resource('service', 'ServiceController');
         Route::get('list-request/history', 'OrderController@history')->name('list-request.history');
+        Route::get('list-request/incoming', 'OrderController@incoming')->name('list-request.incoming');
+        Route::put('list-request/approval/{id}', 'OrderController@approval')->name('list-request.approval');
         Route::resource('list-request', 'OrderController');
         Route::resource('portfolio', 'PortfolioController');
     });

@@ -1,4 +1,6 @@
 @extends('layouts.admin-master')
+@section('page-id', 'adminDashboard')
+@section('page-name', 'Dashboard')
 @section('page-title', 'Dashboard')
 @section('header')
     <!-- Card stats -->
@@ -241,10 +243,10 @@
                                             content = '';
 
                                         if (data.datasets.length > 1) {
-                                            content += '<span>$' + yLabel + 'k</span>';
+                                            content += '$' + yLabel + 'k';
                                         }
 
-                                        content += '<span>$' + yLabel + 'k</span>';
+                                        content += '$' + yLabel + 'k';
                                         return content;
                                     }
                                 }
@@ -255,7 +257,7 @@
                                 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
                             ],
                             datasets: [{
-                                label: 'Performance',
+                                label: 'Income',
                                 data: [
                                     @for($i = 0; $i < count($test); $i++)
                                     {{ $test[$i] }},

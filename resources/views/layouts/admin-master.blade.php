@@ -20,6 +20,8 @@ The above copyright notice and this permission notice shall be included in all c
         <link rel="stylesheet" href="{{ asset('plugin/slick/slick-theme.css') }}"/>
         <link rel="stylesheet" href="{{ asset('plugin/nice-select/css/nice-select.css') }}">
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.css" rel="stylesheet">
+        <link href="{{ asset('plugin/powerange/dist/powerange.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('plugin/air-datepicker/dist/css/datepicker.min.css') }}" rel="stylesheet">
         @yield('css')
         <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     </head>
@@ -59,6 +61,12 @@ The above copyright notice and this permission notice shall be included in all c
                                     <a class="nav-link" href="{{ route('manage.service.index') }}">
                                         <i class="ni ni-pin-3 text-primary"></i>
                                         <span class="nav-link-text">Services</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('manage.promo.index') }}">
+                                        <i class="fas fa-tags text-default"></i>
+                                        <span class="nav-link-text">Promo</span>
                                     </a>
                                 </li>
                             @else
@@ -206,6 +214,9 @@ The above copyright notice and this permission notice shall be included in all c
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
         <script src="{{ asset('plugin/nice-select/js/jquery.nice-select.js') }}"></script>
         <script src="{{ asset('plugin/jquery-star-rating-plugin/src/jquery.star.rating.min.js') }}"></script>
+        <script src="{{ asset('plugin/powerange/dist/powerange.min.js') }}"></script>
+        <script src="{{ asset('plugin/air-datepicker/dist/js/datepicker.min.js') }}"></script>
+        <script src="{{ asset('plugin/air-datepicker/dist/js/i18n/datepicker.en.js') }}"></script>
         @stack('script')
         <script src="{{ asset('js/native.js') }}" charset="utf-8"></script>
     </body>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Service;
 use App\ServiceCategory;
+use App\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -21,9 +22,14 @@ class ServiceController extends Controller
      */
     public function index()
     {
+        $agents = User::whereRole('agent')->get();
         $services = Service::all();
         $serviceCategories = ServiceCategory::all();
-        return view('service.index', ['services' => $services, 'serviceCategories' => $serviceCategories]);
+        return view('service.index', [
+            'services' => $services,
+            'serviceCategories' => $serviceCategories,
+            'agents' => $agents
+        ]);
     }
 
     /**
@@ -79,10 +85,11 @@ class ServiceController extends Controller
         return redirect()->route('manage.service.index');
     }
 
-    public function destroy(Service $service)
+    public function destroy($id)
     {
+        $service = Service::findOrFail($id);
         Storage::delete($service->image);
         $service->delete();
-        return redirect()->route('manage.service.index');
+        return redirect()->back()->with('delete', 'Succefully deleted service');
     }
 }
