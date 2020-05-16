@@ -147,17 +147,23 @@
     box-shadow: none;
     margin-left: 0.5rem;
 }
-#bidHistoryPage .btn:not(:disabled):not(.disabled):active:focus,
-#bidHistoryPage .btn:not(:disabled):not(.disabled).active:focus {
+#bidHistoryPage .btn:not(:disabled):not(.disabled):active:focus[data-target],
+#bidHistoryPage .btn:not(:disabled):not(.disabled).active:focus[data-target],
+#incomingJobPage .btn:not(:disabled):not(.disabled):active:focus[data-target*='collapse'],
+#incomingJobPage .btn:not(:disabled):not(.disabled).active:focus[data-target*='collapse'] {
     box-shadow: none;
 }
 #bidHistoryPage .btn:not(:disabled):not(.disabled),
-#bidHistoryPage .btn:not(:disabled):not(.disabled) {
+#bidHistoryPage .btn:not(:disabled):not(.disabled), #incomingJobPage .btn:not(:disabled)[data-target*='collapse'] {
     padding-left: 0;
     padding-right: 0;
 }
 #bidHistoryPage .accordion .collapse {
     padding-top: 10px;
+}
+
+#incomingJobPage .btn[data-target] i {
+    font-size: 1.2rem;
 }
 
 footer {

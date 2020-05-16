@@ -107,10 +107,16 @@ $(document).ready(function () {
     }
 
     //agent js
-    $(".btn[data-target='#modal-progress']").click(function () {
+    $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection']")
+        .click(function () {
         let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
+        let jobId = $(this).data('id');
+        const domain = window.location.origin;
 
-        $("#modal-progress .modal-job-title").text(jobTitle);
+        $("#modal-progress .modal-job-title, #modal-approval .modal-job-title, #modal-rejection .modal-job-title")
+            .text(jobTitle);
+        $("#modal-approval form, #modal-rejection form").attr('action', domain + '/list-request/approval/' + jobId)
+        $("#modal-progress form").attr('action', domain + '/service/progress/' + jobId);
     });
     const progressVals = document.querySelectorAll("#listRequestPage .progress-value");
     progressVals.forEach(function (progressVal) {
@@ -367,6 +373,8 @@ $(document).ready(function () {
     });
 
     //plugin & general
+    $(".alert").delay(750).fadeOut('slow');
+
     $("#editPromo input[name='promo_end']").datepicker({
         minDate: new Date($("#editPromo input[name='promo_start']").val())
     });
