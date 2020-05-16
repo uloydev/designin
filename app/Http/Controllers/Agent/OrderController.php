@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use App\Order;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -14,9 +16,23 @@ class OrderController extends Controller
      *
      * @return View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('agent.list-request');
+        if ($request->has('sort', 'sort_type')) {
+            $orders = Order::where('status', 'process')
+            ->orWhere('status', 'complaint')
+            ->where('agent_id', Auth::id())
+            ->join('package', 'package.id', '=', 'orders.package_id')
+            ->orderBy($request->sort, $request->sort_type)->paginate(10);
+        }else{
+            $orders = Order::where('status', 'process')
+            ->orWhere('status', 'complaint')
+            ->where('agent_id', Auth::id())
+            ->latest()->paginate(10);
+        }
+        return view('agent.list-request', [
+            'orders'=>$orders,
+        ]);
     }
 
     /**
@@ -82,11 +98,36 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Order::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Order History Deleted Successfully');
     }
 
-    public function history()
+    public function history(Request $request)
     {
-        return view('agent.request-history');
+        if ($request->has('sort', 'sort_type')) {
+            $orders = Order::where('agent_id', Auth::id())
+            ->where('status', 'finished')
+            ->join('package', 'package.id', '=', 'orders.package_id')
+            ->orderBy($request->sort, $request->sort_type)->paginate(10);
+        }else{
+            $orders = Order::where('agent_id', Auth::id())->where('status', 'finished')->latest()->paginate(10);
+        }
+        return view('agent.request-history', [
+            'orders'=>$orders
+        ]);
+    }
+
+    public function bidHistory(Request $request)
+    {
+        if ($request->has('sort', 'sort_type')) {
+            $orders = Order::where('agent_id', Auth::id())
+            ->join('package', 'package.id', '=', 'orders.package_id')
+            ->orderBy($request->sort, $request->sort_type)->paginate(10);;
+        }else{
+            $orders = Order::where('agent_id', Auth::id())->latest()->paginate(10);
+        }
+        return view('agent.bid-history', [
+            'orders'=>$orders
+        ]);
     }
 }

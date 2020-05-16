@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">My Service</h5>
-                                <span class="h2 font-weight-bold mb-0">8 Post</span>
+                                <span class="h2 font-weight-bold mb-0">{{$serviceCount}} Post</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -30,7 +30,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Unfinished Job</h5>
-                                <span class="h2 font-weight-bold mb-0">3 Project</span>
+                                <span class="h2 font-weight-bold mb-0">{{$unfinishedJobCount}} Project</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -49,7 +49,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Job Past 30 Days</h5>
-                                    <span class="h2 font-weight-bold mb-0">13 Project</span>
+                                    <span class="h2 font-weight-bold mb-0">{{$lastMonthJobCount}} Project</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-indigo text-white rounded-circle shadow">

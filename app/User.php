@@ -31,4 +31,14 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this->hasMany('App\ChatSession', $this->role.'_id')->where('blocked', 0);
         }
     }
+
+    public function userOrders()
+    {
+        return $this->hasMany('App\Order', 'user_id');
+    }
+
+    public function agentOrders()
+    {
+        return $this->hasMany('App\Order', 'agent_id');
+    }
 }

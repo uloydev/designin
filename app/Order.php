@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $table = 'orders';
-    protected $fillable = ['user_id', 'agent_id', 'service_id', 'status'];
+    protected $fillable = ['user_id', 'agent_id', 'package_id', 'started_at', 'status', 'progress', 'request', 'deadline'];
+    protected $casts = ['start_at'=> 'datetime', 'deadline'=>'datetime'];
+    // protected $with = ['package'];
 
     public function user()
     {
@@ -19,8 +21,8 @@ class Order extends Model
         return $this->belongsTo('App\User', 'agent_id');
     }
 
-    public function service()
+    public function package()
     {
-        return $this->belongsTo('App\Service');
+        return $this->belongsTo('App\Package');
     }
 }

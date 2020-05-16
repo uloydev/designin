@@ -19,19 +19,16 @@ class ServiceController extends Controller
         return view('service.index', ['serviceCategories' => $serviceCategories, 'services' => $services]);
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-        //
-    }
-
-    public function show($id)
-    {
-        //
+        $request->validate([
+            'title'=> 'required',
+            'service_category_id'=> 'required',
+            'description'=> 'required',
+            'image'=> 'mimes:jpeg,png,gif|max:2000'
+        ]);
+        Service::create($request->all());
+        return redirect()->back()->with('success_create', 'Service Created Successfully');
     }
 
     public function edit($id)

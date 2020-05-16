@@ -67,28 +67,28 @@
                 </div>
                 <div class="card-body">
                     <div class="accordion" id="accordion-request">
-                        {{-- foreach --}}
+                        @foreach ($orders as $order)
                         <article class="accordion__item">
                             {{-- headingOne change to heading{{ $var->id }} --}}
-                            <div id="headingOne" class="d-flex mb-2 align-items-center">
+                            <div id="heading{{$order->id}}" class="d-flex mb-2 align-items-center">
                                 <h2 class="mb-0 d-inline-block mr-auto job-agent-title">
                                     <button class="btn btn-link collapsed text-capitalize" type="button"
-                                            data-toggle="collapse" data-target="#collapseOne"
-                                            aria-expanded="false" aria-controls="collapseOne">
-                                        <i class="fas fa-chevron-up rotate-180 mr-2"></i> Job title one
+                                            data-toggle="collapse" data-target="#collapse{{$order->id}}"
+                                            aria-expanded="false" aria-controls="collapse{{$order->id}}">
+                                        <i class="fas fa-chevron-up rotate-180 mr-2"></i>{{$order->package->title}}
                                     </button>
                                 </h2>
                                 <button type="button" class="btn btn-outline-default btn-sm" data-toggle="modal"
-                                        data-target="#modal-progress" data-backdrop="static" data-id="1">
+                                        data-target="#modal-progress" data-backdrop="static" data-id="{{$order->id}}">
                                     Report progress
                                 </button>
                                 <a href="" class="btn btn-link text-danger">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>
-                            {{-- headingOne change to heading{{ $var->id }} --}}
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                                 data-parent="#accordion-request">
+                            {{-- heading{{$order->id}} change to heading{{ $var->id }} --}}
+                            <div id="collapse{{$order->id}}" class="collapse" aria-labelledby="heading{{$order->id}}"
+                                    data-parent="#accordion-request">
                                 <div class="card-body">
                                     Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
                                     terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
@@ -103,12 +103,12 @@
                                 <ul class="card-footer border-top-0 mb-0 pt-0">
                                     <li>
                                         Remaining offer slots for customers
-                                        <span class="mb-0 text-primary ml-auto">2</span>
+                                        <span class="mb-0 text-primary ml-auto">{{'2'}}</span>
                                     </li>
                                     <li>
                                         Progress
                                         <span class="mb-0 text-primary ml-auto mr-3 progress-value">
-                                            {{ '100' }}%
+                                            {{ $order->progress }}%
                                         </span>
                                         <span class="badge badge-pill badge-success progress-done">
                                             <i class="fas fa-check"></i>
@@ -117,7 +117,7 @@
                                 </ul>
                             </div>
                         </article>
-                        {{-- endforeach --}}
+                        @endforeach
                     </div>
                 </div>
 {{--                <div class="card-footer border-top-0">--}}
