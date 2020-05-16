@@ -24,8 +24,8 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('package_id');
             $table->enum('status', ['unpaid', 'waiting', 'process', 'complaint', 'finished']);
             $table->unsignedInteger('progress')->default(0);
-            $table->datetime('started_at')->nullable();
-            $table->datetime('deadline')->nullable();
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('deadline')->nullable();
             $table->text('request')->nullable();
             $table->timestamps();
         });

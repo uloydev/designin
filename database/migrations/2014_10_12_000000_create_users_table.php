@@ -21,6 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('role', ['admin', 'user', 'agent'])->default('user');
             $table->boolean('is_subscribe')->nullable();
+            $table->unsignedInteger('subscribe_to')->nullable();
+            $table->unsignedInteger('subscribe_token')->nullable();
+            $table->timestamp('subscribe_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

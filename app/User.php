@@ -11,9 +11,9 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'role', 'is_subscribe'];
+    protected $fillable = ['name', 'email', 'password', 'role', 'is_subscribe', 'subscribe_to', 'subscribe_at', 'subscribe_token'];
     protected $hidden = ['password', 'remember_token'];
-    protected $casts = ['email_verified_at' => 'datetime'];
+    protected $casts = ['email_verified_at' => 'datetime', 'subscribe_at'=>'datetime'];
 
     public function service()
     {
@@ -40,5 +40,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function agentOrders()
     {
         return $this->hasMany('App\Order', 'agent_id');
+    }
+
+    public function subscription()
+    {
+        return $this->belongsTo('App\Subscription');
     }
 }

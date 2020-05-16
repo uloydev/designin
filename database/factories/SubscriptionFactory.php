@@ -48,6 +48,7 @@ $factory->define(Subscription::class, function (Faker $faker) {
                     'grandmaster surge cuckoos riptide! Wiccan karnak sprite jackal blackbolt lockjaw mephisto batroc'.
                     'Taskmaster harrier antman empath spot lilith'.
                     '</p>',
-        'img' => 'temporary/subscription.jpg'
+        'img' => 'temporary/subscription.jpg',
+        'token' => 10
     ];
 });
