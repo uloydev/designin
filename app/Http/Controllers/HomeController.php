@@ -11,6 +11,7 @@ use App\Blog;
 use App\Faq;
 use App\ServiceCategory;
 use App\FaqCategory;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -67,6 +68,17 @@ class HomeController extends Controller
         $faqs = Faq::with('faqCategory')->get();
         $faqCategories = FaqCategory::with('faqs')->get();
         return view('faq.index', ['faqs' => $faqs, 'faqCategories' => $faqCategories]);
+    }
+
+    public function searchAgentJob(Request $request)
+    {
+        $agents = User::where('role' ,'agent')->where('name', 'like', '%'.$request->search_agent_job.'%')->take(4);
+        $services = Service::where('title', 'like', '%'.$request->search_agent_job.'%')
+        ->orWhere('description', 'like', '%'.$request->search_agent_job.'%')->take(4);
+        return view('search.agentjob', [
+            'agents'=>$agents,
+            'services'=>$services
+        ]);
     }
 
 }

@@ -14,6 +14,7 @@ Route::get('faq', 'HomeController@faq')->name('faq.index');
 Route::get('testimony', 'HomeController@testimonies')->name('testimony');
 Route::resource('blog', 'BlogController')->only(['index', 'show']);
 Route::get('search/blog', 'BlogController@search')->name('blog.search');
+Route::get('search/agentjob', 'HomeController@searchAgentJob')->name('agentjob.search');
 Route::get('blog/categories/{id}', 'BlogCategoryController@show')->name('blog-category.show');
 Route::name('message.')->prefix('message')->middleware('exceptAdmin')->group(function () {
     Route::get('/', 'MessageController@index')->name('index');
