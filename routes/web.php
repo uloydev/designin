@@ -40,12 +40,13 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('contact-us', 'ContactController')->except(['create', 'store', 'show']);
         Route::resource('testimony', 'TestimonyController')->only(['index', 'update', 'destroy']);
         Route::resource('promo', 'PromoController');
-        Route::resource('subscription', 'SubscriptionController');
-        Route::resource('reason', 'ReasonController')->except(['show']);        
+        Route::resource('subscription', 'SubscriptionController.php');
+        Route::resource('reason', 'ReasonController')->except(['show']);
     });
 });
 
 Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(function () {
+    Route::resource('subscription', 'SubscriptionController');
     Route::prefix('profile')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
         Route::get('edit', 'ProfileController@edit')->name('profile.edit');
@@ -57,6 +58,7 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
         Route::resource('order', 'OrderController');
         Route::resource('job', 'JobController');
         Route::resource('testimony', 'TestimonyController')->only(['index', 'create', 'store']);
+        Route::resource('transaction', 'TransactionController');
     });
 });
 

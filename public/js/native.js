@@ -107,22 +107,51 @@ $(document).ready(function () {
     if ($(window).width() >= 993) {
         $(".profile-main__orderBy").removeClass('wide');
     }
+    else {
+        let jobTitle = $("#manageJobPage .job-title");
+        if (jobTitle.text().length > 20) {
+            let trimmedJobTitle = jobTitle.text().substring(0, 20);
+            jobTitle.text(trimmedJobTitle + '...');
+        }
+    }
+
+    const transactionStatus = document.querySelectorAll('#myTransactionPage .profile-main-item__status');
+    transactionStatus.forEach(function (status) {
+        let statusValue = status.dataset.status;
+        switch (statusValue) {
+            case 'unpaid':
+                status.classList.add('bg-default');
+                break;
+            case 'waiting':
+                status.classList.add('bg-light');
+                break;
+            case 'process':
+                status.classList.add('bg-info');
+                break;
+            case 'complaint':
+                status.classList.add('bg-warning');
+                break;
+            case 'finished':
+                status.classList.add('bg-success');
+                break;
+        }
+    });
 
     //agent js
     $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection']")
         .click(function () {
-        let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
-        let jobId = $(this).data('id');
-        const domain = window.location.origin;
+            let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
+            let jobId = $(this).data('id');
+            const domain = window.location.origin;
 
-        $("#modal-progress .modal-job-title, #modal-approval .modal-job-title, #modal-rejection .modal-job-title")
-            .text(jobTitle);
-        $("#modal-approval form, #modal-rejection form").attr('action', domain + '/list-request/approval/' + jobId)
-        $("#modal-progress form").attr('action', domain + '/service/progress/' + jobId);
-    });
+            $("#modal-progress .modal-job-title, #modal-approval .modal-job-title, #modal-rejection .modal-job-title")
+                .text(jobTitle);
+            $("#modal-approval form, #modal-rejection form").attr('action', domain + '/list-request/approval/' + jobId)
+            $("#modal-progress form").attr('action', domain + '/service/progress/' + jobId);
+        });
     const progressVals = document.querySelectorAll("#listRequestPage .progress-value");
     progressVals.forEach(function (progressVal) {
-       let textProgress = progressVal.textContent;
+        let textProgress = progressVal.textContent;
         const progressDoneChecks = document.querySelectorAll('#listRequestPage .progress-done');
         progressDoneChecks.forEach(function () {
             if (textProgress.includes('100%')) {
@@ -262,36 +291,36 @@ $(document).ready(function () {
 
     $("#manageAgentPage .btn[data-target='#modal-remove-agent'], " +
         "#manageAgentPage .btn[data-target='#modal-edit-agent']").click(function () {
-            if ($(this).attr('id') === 'btn-create-agent') {
-                $("button[form='form-edit-agent']").text('Add new agent');
-                $("#manageAgentPage #modal-edit-agent form").find("input[name='_method']").prop('disabled', true);
-                $("#manageAgentPage #modal-edit-agent form")
-                    .attr('action', window.location.origin + '/admin/manage/agent/');
-            }
-            else {
-                let agentId = Number($(this).data('id')),
-                    agentName = $(this).parents("tr").find("#agent__name").text(),
-                    agentEmail = $(this).parents("tr").find("#agent__email").text(),
-                    agentPhone = $(this).parents("tr").find("#agent__phone").text(),
-                    agentBank = $(this).parents("tr").find("#agent__bankbank").text(),
-                    agentAccount = $(this).parents("tr").find("#agent__acc-number").text(),
-                    agentAddress = $(this).data('address');
+        if ($(this).attr('id') === 'btn-create-agent') {
+            $("button[form='form-edit-agent']").text('Add new agent');
+            $("#manageAgentPage #modal-edit-agent form").find("input[name='_method']").prop('disabled', true);
+            $("#manageAgentPage #modal-edit-agent form")
+                .attr('action', window.location.origin + '/admin/manage/agent/');
+        }
+        else {
+            let agentId = Number($(this).data('id')),
+                agentName = $(this).parents("tr").find("#agent__name").text(),
+                agentEmail = $(this).parents("tr").find("#agent__email").text(),
+                agentPhone = $(this).parents("tr").find("#agent__phone").text(),
+                agentBank = $(this).parents("tr").find("#agent__bankbank").text(),
+                agentAccount = $(this).parents("tr").find("#agent__acc-number").text(),
+                agentAddress = $(this).data('address');
 
-                if ($(this).hasClass('edit-agent')) {
-                    $("#manageAgentPage #form-edit-agent").find("input[name='_method']").prop('disabled', false);
-                }
-
-                $("#manageAgentPage #form-edit-agent input[name='agent_name']").val(agentName);
-                $("#manageAgentPage #form-edit-agent input[name='agent_email']").val(agentEmail);
-                $("#manageAgentPage #form-edit-agent input[name='agent_phone']").val(agentPhone);
-                $("#manageAgentPage #form-edit-agent input[name='agent_bank']").val(agentBank);
-                $("#manageAgentPage #form-edit-agent input[name='agent_account']").val(agentAccount);
-                $("#manageAgentPage #form-edit-agent textarea[name='agent_address']").val(agentAddress);
-                $("#manageAgentPage .agent-name").text(agentName);
-                $("#manageAgentPage .modal[id*='agent'] form")
-                    .attr('action', window.location.origin + '/admin/manage/agent/' + agentId);
+            if ($(this).hasClass('edit-agent')) {
+                $("#manageAgentPage #form-edit-agent").find("input[name='_method']").prop('disabled', false);
             }
-        });
+
+            $("#manageAgentPage #form-edit-agent input[name='agent_name']").val(agentName);
+            $("#manageAgentPage #form-edit-agent input[name='agent_email']").val(agentEmail);
+            $("#manageAgentPage #form-edit-agent input[name='agent_phone']").val(agentPhone);
+            $("#manageAgentPage #form-edit-agent input[name='agent_bank']").val(agentBank);
+            $("#manageAgentPage #form-edit-agent input[name='agent_account']").val(agentAccount);
+            $("#manageAgentPage #form-edit-agent textarea[name='agent_address']").val(agentAddress);
+            $("#manageAgentPage .agent-name").text(agentName);
+            $("#manageAgentPage .modal[id*='agent'] form")
+                .attr('action', window.location.origin + '/admin/manage/agent/' + agentId);
+        }
+    });
 
     $("#agentProfilePage .profile__input").change(function () {
         $(this).parent().submit();
@@ -374,12 +403,13 @@ $(document).ready(function () {
         $("#editPromo form").attr('action', window.location.origin + '/admin/manage/promo/' + promoId);
     });
 
-    $(".dropdown-item[data-target='#editSubscription'], .dropdown-item[data-target='#deleteSubscription']").click(function () {
+    $("[data-target='#editSubscription'], [data-target='#deleteSubscription']").click(function () {
         let subscriptionId = Number($(this).data('id'));
         let subscriptionDesc = $.trim($(this).data('desc'));
         let subscriptionName = $(this).parents(".subscription__item").find('.card-title').text();
 
-        $("#editSubscription .modal-subscription-title, #deleteSubscription .modal-subscription-title").text(subscriptionName);
+        $("#editSubscription .modal-subscription-title, #deleteSubscription .modal-subscription-title")
+            .text(subscriptionName);
         $("#editSubscription form, #deleteSubscription form")
             .attr('action', window.location.origin + '/admin/manage/subscription/' + subscriptionId);
         $("#editSubscription input[name='title']").val(subscriptionName);
@@ -534,7 +564,7 @@ $(document).ready(function () {
     });
 
     $(".profile-main__orderBy, #blogCategoryPage .category-header__filter, "+
-      ".service-single__filter-review, .nice-select").niceSelect();
+        ".service-single__filter-review, .nice-select").niceSelect();
     $("#servicesPage .category [id^='service-slider']").slick({
         infinite: false,
         slidesToShow: 1,
