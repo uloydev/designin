@@ -31,13 +31,6 @@ class HomeController extends Controller
         ]);
     }
 
-    // public function serviceSearch(Request $request)
-    // {
-    //     $query = $request->q;
-    //     $services = Service::where('title', 'like', '%'.$query.'%')->paginate(10);
-    //     return view('services', ['services'=>$services]);
-    // }
-
     public function services(Request $request)
     {
         if (isset($request->category)) {
@@ -63,10 +56,16 @@ class HomeController extends Controller
         return view('service.single', ['service' => $service, 'rating' => $rating]);
     }
 
-    public function faq()
+    public function faq(Request $request)
     {
-        $faqs = Faq::with('faqCategory')->get();
-        $faqCategories = FaqCategory::with('faqs')->get();
+        if($request->has('search_faq')){
+            $faqs = Faq::where('question','like','%'.$request->search_faq.'%')
+            ->orWhere('answer','like','%'.$request->search_faq.'%')->get();
+            $faqCategories = FaqCategory::all();
+        }else{
+            $faqs = Faq::all();
+            $faqCategories = FaqCategory::all();
+        }
         return view('faq.index', ['faqs' => $faqs, 'faqCategories' => $faqCategories]);
     }
 

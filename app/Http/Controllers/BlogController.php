@@ -8,9 +8,14 @@ use App\BlogCategory;
 
 class BlogController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $blogs = Blog::latest()->paginate(5);
+        if ($request->has('search_blog')) {
+            $blogs = Blog::where('title', 'like', $request->search_blog)
+            ->orWhere('contents', 'like', $request->search_blog)->paginate(5);
+        } else {
+            $blogs = Blog::latest()->paginate(5);
+        }
         $populars = Blog::orderBy('hits', 'DESC')->take(3)->get();
         $mainArticle = Blog::where('is_main', true)->orderBy('updated_at', 'DESC')->take(6)->get();
         $categories = BlogCategory::all();
