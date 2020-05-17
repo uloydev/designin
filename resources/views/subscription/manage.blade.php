@@ -31,6 +31,25 @@
     </header>
 @endsection
 @section('content')
+    @if (session('success_subscription'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success_subscription') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @elseif ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <div class="card">
         <div class="row">
             @forelse($subscriptions as $subscription)
@@ -46,7 +65,10 @@
                                 </button>
                                 <div class="dropdown-menu">
                                     <button type="button" class="dropdown-item text-warning" data-id="{{ $subscription->id }}"
-                                            data-target="#editSubscription" data-desc="{{ $subscription->desc }}" data-toggle="modal">
+                                    data-target="#editSubscription" data-desc="{{ $subscription->desc }}"
+                                    data-duration="{{ $subscription->duration }}" data-toggle="modal"
+                                    data-title="{{ $subscription->title }}" data-price="{{ $subscription->price }}"
+                                    data-token="{{ $subscription->token }}">
                                         edit
                                     </button>
                                     <button type="button" class="dropdown-item text-danger" data-toggle="modal"
@@ -58,7 +80,7 @@
                         </div>
                         <div class="card-body">
                             <div class="card-text subscription__detail">
-                                {!! Str::words($subscription->desc, 10) !!}
+                                {{ Str::limit(strip_tags($subscription->desc), 90) }}
                             </div>
                             <a href="{{ route('manage.subscription.show', $subscription->id) }}" class="text-primary">
                                 See item
@@ -68,8 +90,12 @@
                     </article>
                 </div>
             @empty
-                <div class="alert alert-light" role="alert">
-                    No subscription item
+                <div class="col-12">
+                    <div class="card mb-0">
+                        <div class="alert alert-light no-fadeout mb-0" role="alert">
+                            No subscription item
+                        </div>
+                    </div>
                 </div>
             @endforelse
         </div>

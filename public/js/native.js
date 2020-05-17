@@ -404,9 +404,12 @@ $(document).ready(function () {
     });
 
     $("[data-target='#editSubscription'], [data-target='#deleteSubscription']").click(function () {
-        let subscriptionId = Number($(this).data('id'));
-        let subscriptionDesc = $.trim($(this).data('desc'));
-        let subscriptionName = $(this).parents(".subscription__item").find('.card-title').text();
+        let subscriptionId = Number($(this).data('id')),
+            subscriptionDesc = $.trim($(this).data('desc')),
+            subscriptionName = $.trim($(this).data('title')),
+            subscriptionToken = Number($(this).data('token')),
+            subscriptionPrice = Number($(this).data('price'))
+            subscriptionDuration = Number($(this).data('duration'));
 
         $("#editSubscription .modal-subscription-title, #deleteSubscription .modal-subscription-title")
             .text(subscriptionName);
@@ -414,12 +417,15 @@ $(document).ready(function () {
             .attr('action', window.location.origin + '/admin/manage/subscription/' + subscriptionId);
         $("#editSubscription input[name='title']").val(subscriptionName);
         $("#editSubscription textarea[name='desc']").val(subscriptionDesc);
+        $("#editSubscription input[name='token']").val(subscriptionToken);
+        $("#editSubscription input[name='duration']").val(subscriptionDuration);
+        $("#editSubscription input[name='price']").val(subscriptionPrice);
         $("#editSubscription textarea[name='desc']").summernote('code', subscriptionDesc);
     });
 
     //plugin & general
     $("img").prop('draggable', false);
-    $(".alert").delay(750).fadeOut('slow');
+    $(".alert").not(".no-fadeout").delay(1000).fadeOut('slow');
 
     $("#editPromo input[name='promo_end']").datepicker({
         minDate: new Date($("#editPromo input[name='promo_start']").val())
@@ -604,6 +610,10 @@ $(document).ready(function () {
 
     $("#servicePage textarea[name='description'], #serviceEditPage textarea[name='service_description'], " +
         "textarea[name='detail_job'], #editSubscription textarea[name='desc']").summernote({
+        minHeight: 300
+    });
+    $("#addSubscription textarea[name='desc']").summernote({
+        placeholder: 'Everything include in this subscription',
         minHeight: 300
     });
 

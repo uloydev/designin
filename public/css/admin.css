@@ -166,6 +166,14 @@
     font-size: 1.2rem;
 }
 
+#subscriptionPage .subscription__item .card-img-top {
+    height: 200px;
+    max-width: 100%;
+    width: auto;
+    object-position: center;
+    object-fit: cover;
+}
+
 footer {
     width: 100%;
     padding: 15px 0;
@@ -198,7 +206,29 @@ footer {
         float: right;
     }
 
+    #subscriptionPage .subscription__item {
+        margin-bottom: 0;
+        margin-top: 2rem;
+    }
+    #subscriptionPage .card .col-md-4:nth-child(-n+3) .subscription__item {
+        margin-top: 0;
+    }
+    #subscriptionPage .card .col-md-4:not(:nth-child(3n)) .card-img-top {
+        border-top-right-radius: 0;
+    }
+
     footer {
         margin-top: 30px;
+    }
+}
+@media screen and (min-width: 1200px) {
+    #subscriptionPage .card .col-md-4:not(:nth-child(3n)) .card-img-top {
+        border-top-right-radius: calc(.375rem - 1px);
+    }
+    #subscriptionPage .card .col-xl-3:not(:nth-child(4n)) .card-img-top {
+        border-top-right-radius: 0;
+    }
+    #subscriptionPage .card .col-md-4:nth-child(-n+4) .subscription__item {
+        margin-top: 0;
     }
 }
