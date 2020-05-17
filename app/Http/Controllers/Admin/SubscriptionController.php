@@ -31,12 +31,16 @@ class SubscriptionController extends Controller
             'title'=> 'required',
             'desc'=>'required',
             'img'=>'mimes:jpeg,png,gif|max:2000',
+            'price'=>'required',
+            'duration'=>'required',
             'token'=>'required'
         ]);
         $sub = new Subscription();
         $sub->title = $request->title;
         $sub->desc = $request->desc;
         $sub->token = $request->token;
+        $sub->price = $request->price;
+        $sub->duration = $request->duration;
         $sub->image = $request->file('img')->store('public/files');
         $sub->save();
         return redirect()->back()->with('success','Subscription Created Successfully');
@@ -62,12 +66,16 @@ class SubscriptionController extends Controller
             'title'=> 'required',
             'desc'=>'required',
             'img'=>'mimes:jpeg,png,gif|max:2000',
+            'price'=>'required',
+            'duration'=>'required',
             'token'=>'required'
         ]);
         $sub = new Subscription();
         $sub->title = $request->title;
         $sub->desc = $request->desc;
         $sub->token = $request->token;
+        $sub->price = $request->price;
+        $sub->duration = $request->duration;
         $sub->image = $request->file('img')->store('public/files');
         $sub->save();
         return redirect()->back()->with('success','Subscription Created Successfully');
