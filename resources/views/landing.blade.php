@@ -99,83 +99,25 @@
         <div class="container">
           <h1 class="section__heading">Subscribe for more benefit to you</h1>
           <div class="subscription__slider row">
-            {{-- foreach --}}
+            @foreach ($subscriptions as $sub)
             <div class="px-3">
               <figure class="subscription__item">
-                <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img" alt="Desainin subscription">
+                <img src="{{ Storage::url($sub->img) }}" class="subscription__img" alt="{{$sub->title}}">
                 <figcaption class="subscription__caption">
-                  <p class="subscription__name">Social Media</p>
-                  <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
+                  <p class="subscription__name">{{$sub->title}}</p>
+                  <p class="subscription__price">Price: <var class="subscription__currency">Rp. {{$sub->price}}</var></p>
+                  <p class="subscription__duration">Duration: {{$sub->duration}} Day</p>
                 </figcaption>
                 <div class="subscription__detail">
-                  <p class="subscription__name">Social Media</p>
+                  <p class="subscription__name">{{$sub->title}}</p>
                   <p class="subscription__desc">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio
-                    facere doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste
-                    reiciendis ipsa esse officiis, voluptas quis velit. Ratione.
+                    {{$sub->description}}
                   </p>
                   <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
                 </div>
               </figure>
             </div>
-              <div class="px-3">
-                  <figure class="subscription__item">
-                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img"
-                           alt="Desainin subscription">
-                      <figcaption class="subscription__caption">
-                          <p class="subscription__name">Social Media</p>
-                          <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
-                      </figcaption>
-                      <div class="subscription__detail">
-                          <p class="subscription__name">Social Media</p>
-                          <p class="subscription__desc">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio
-                              facere doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste
-                              reiciendis ipsa esse officiis, voluptas quis velit. Ratione.
-                          </p>
-                          <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
-                      </div>
-                  </figure>
-              </div>
-              <div class="px-3">
-                  <figure class="subscription__item">
-                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img"
-                           alt="Desainin subscription">
-                      <figcaption class="subscription__caption">
-                          <p class="subscription__name">Social Media</p>
-                          <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
-                      </figcaption>
-                      <div class="subscription__detail">
-                          <p class="subscription__name">Social Media</p>
-                          <p class="subscription__desc">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio
-                              facere doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste
-                              reiciendis ipsa esse officiis, voluptas quis velit. Ratione.
-                          </p>
-                          <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
-                      </div>
-                  </figure>
-              </div>
-              <div class="px-3">
-                  <figure class="subscription__item">
-                      <img src="{{ asset('img/social-media.jpg') }}" class="subscription__img"
-                           alt="Desainin subscription">
-                      <figcaption class="subscription__caption">
-                          <p class="subscription__name">Social Media</p>
-                          <p class="subscription__price">Price: <var class="subscription__currency">20USD</var></p>
-                      </figcaption>
-                      <div class="subscription__detail">
-                          <p class="subscription__name">Social Media</p>
-                          <p class="subscription__desc">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque praesentium odio
-                              facere doloribus assumenda. Vel explicabo dolorem suscipit, fugiat fuga adipisci iste
-                              reiciendis ipsa esse officiis, voluptas quis velit. Ratione.
-                          </p>
-                          <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
-                      </div>
-                  </figure>
-              </div>
-            {{-- endforeach --}}
+            @endforeach
           </div>
         </div>
       </section>

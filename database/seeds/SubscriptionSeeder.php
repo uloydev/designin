@@ -12,7 +12,7 @@ class SubscriptionSeeder extends Seeder
      */
     public function run()
     {
-        factory(Subscription::class, 30)->create()->each(function ($subscription) {
+        factory(Subscription::class, 4)->create()->each(function ($subscription) {
             $subscription->make();
         });
     }

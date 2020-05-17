@@ -12,6 +12,7 @@ use App\Faq;
 use App\ServiceCategory;
 use App\FaqCategory;
 use App\User;
+use App\Subscription;
 
 class HomeController extends Controller
 {
@@ -22,12 +23,14 @@ class HomeController extends Controller
         $blogs = Blog::paginate(5);
         $clients = Client::all();
         $testimonies = Testimony::where('is_main', true)->get();
+        $subscriptions = Subscription::all();
         return view('landing')->with([
             'images' => $images,
             'serviceCategories' => $serviceCategories,
             'blogs' => $blogs,
             'testimonies' => $testimonies,
-            'clients' => $clients
+            'clients' => $clients,
+            'subscriptions'=>$subscriptions
         ]);
     }
 

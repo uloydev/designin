@@ -18,7 +18,9 @@ class CreateSubscriptionsTable extends Migration
             $table->string('title', 100);
             $table->longText('desc');
             $table->string('img');
+            $table->unsignedInteger('price');
             $table->unsignedInteger('token');
+            $table->unsignedInteger('duration');
             $table->timestamps();
         });
     }
