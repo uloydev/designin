@@ -26,8 +26,8 @@ class SubscriptionController extends Controller
         }
         $totalSubcription = Subscription::count();
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
-        return view('subscription.index', [
-            'subscriptions' => $subscriptions, 
+        return view('subscription.manage', [
+            'subscriptions' => $subscriptions,
             'totalSubcription' => $totalSubcription,
             'listBank' => $listBank
         ]);
@@ -61,9 +61,9 @@ class SubscriptionController extends Controller
 
     public function show($id)
     {
-        $sub = Subscription::findOrFail($id);
+        $subscription = Subscription::findOrFail($id);
         return view('subscription.single', [
-            'subscription'=> $sub
+            'subscription'=> $subscription
         ]);
     }
 

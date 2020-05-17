@@ -1,6 +1,10 @@
 <aside class="profile-aside">
     <figure class="profile-aside__box">
-        <img src="{{ asset('img/people.webp') }}" alt="Profile Picture" class="profile-aside__img">
+        @empty($profile)
+            <img src="{{ Storage::url('temporary/people.webp') }}" alt="Profile Picture" class="profile-aside__img">
+        @else
+            <img src="{{ Storage::url($profile->avatar) }}" alt="Profile Picture" class="profile-aside__img">
+        @endempty
         <figcaption class="profile-aside__detail">
             <a href="" class="profile-aside__name">Bariq Dharmawan</a>
             <button class="btn-modal btn-link d-block text-center col" data-target="#modal-edit-profile">

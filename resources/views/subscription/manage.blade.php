@@ -60,7 +60,7 @@
                             <div class="card-text subscription__detail">
                                 {!! Str::words($subscription->desc, 10) !!}
                             </div>
-                            <a href="{{ route('subscription.show', $subscription->id) }}" class="text-primary" target="_blank">
+                            <a href="{{ route('manage.subscription.show', $subscription->id) }}" class="text-primary">
                                 See item
                             </a>
                             <span class="badge badge-default float-md-right">{{ 'IDR ' . $subscription->price }}</span>
@@ -69,7 +69,7 @@
                 </div>
             @empty
                 <div class="alert alert-light" role="alert">
-                    No subcription item
+                    No subscription item
                 </div>
             @endforelse
         </div>

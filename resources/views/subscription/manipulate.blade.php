@@ -8,7 +8,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form role="form">
+                <form role="form" method="post" id="form-add-subscription">
+                    @csrf
                     <div class="form-group">
                         <label for="addTitle">Subscription Title</label>
                         <input type="text" name="title" id="addTitle" class="form-control"
@@ -27,7 +28,7 @@
             </div>
             <div class="modal-footer d-flex justify-between align-items-center">
                 <button type="button" class="btn btn-link text-gray" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Add new subscription</button>
+                <button type="submit" class="btn btn-primary" form="form-add-subscription">Add new subscription</button>
             </div>
         </div>
     </div>
@@ -43,7 +44,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form role="form">
+                <form role="form" method="post" id="form-update-subscription">
+                    @csrf @method('PUT')
                     <div class="form-group">
                         <label for="title">Subscription Title</label>
                         <input type="text" name="title" id="title" class="form-control"
@@ -62,7 +64,7 @@
             </div>
             <div class="modal-footer d-flex justify-between align-items-center">
                 <button type="button" class="btn btn-link text-gray" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Update subscription</button>
+                <button type="submit" class="btn btn-primary" form="form-update-subscription">Update subscription</button>
             </div>
         </div>
     </div>
@@ -79,13 +81,13 @@
             </div>
             <div class="modal-body text-center">
                 <p>Are you sure wanna delete this subscription?</p>
-                <form role="form" class="d-none" id="form-delete-subscription">
+                <form role="form" class="d-none" id="form-delete-subscription" method="post">
                     @csrf @method('DELETE')
                 </form>
             </div>
             <div class="modal-footer d-flex justify-between align-items-center">
                 <button type="button" class="btn btn-link text-gray" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" form="form-delete-subscription">Delete</button>
+                <button type="submit" class="btn btn-danger" form="form-delete-subscription">Delete</button>
             </div>
         </div>
     </div>

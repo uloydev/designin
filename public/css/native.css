@@ -91,6 +91,30 @@ nav {
 nav ul {
     margin-bottom: 0;
 }
+.bg-default {
+    background-color: #2f507a;
+    color: var(--almost-white);
+}
+.bg-light {
+    background-color: #f4f4f4;
+    color: var(--text-color);
+}
+.bg-danger {
+    background-color: crimson;
+    color: var(--almost-white);
+}
+.bg-warning {
+    background-color: var(--fourth-color);
+    color: var(--text-color);
+}
+.bg-success {
+    background-color: var(--primary-color);
+    color: var(--almost-white);
+}
+.bg-info {
+    background-color: var(--third-color);
+    color: var(--almost-white);
+}
 .nav--showed {
     position: fixed;
     padding-bottom: 15px;
@@ -1613,7 +1637,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     display: block;
     margin: 0 auto 20px;
 }
-#userOrderPage .profile-main__order-detail, .profile-main__job-detail {
+.profile-main__order-detail, .profile-main__job-detail {
     display: flex;
     overflow: hidden;
     flex-wrap: wrap;
@@ -1628,8 +1652,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     color: var(--primary-color-hover);
     font-weight: bold;
 }
-#userOrderPage .profile-main__order-detail * {
-    height: 20px;
+.profile-main__order-detail * {
     display: block;
 }
 
@@ -1658,6 +1681,21 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 .profile-aside__edit-btn:active {
     background-color: #169e56;
+}
+.profile-main__order-detail p * {
+    font-weight: bold;
+    font-style: normal;
+}
+.profile-main-item__link {
+    color: var(--third-color);
+}
+.profile-main__job-title {
+    font-weight: bold;
+}
+.profile-main-item__status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    text-transform: capitalize;
 }
 
 body[id^='blog'] nav {
@@ -2308,7 +2346,7 @@ footer .row {
         margin: 0;
     }
 
-    #userOrderPage .profile-main__order-detail {
+    .profile-main__order-detail {
         align-self: center;
         margin-left: 1.8rem;
         max-width: 500px;
@@ -2324,6 +2362,17 @@ footer .row {
     }
     #manageJobPage .profile-main__btn-edit-job {
         margin-right: 40px;
+    }
+
+    #myTransactionPage .profile-main__job-detail {
+        align-content: stretch;
+        max-height: none;
+    }
+    #myTransactionPage .profile-main__job-detail p {
+        height: 20px;
+    }
+    #myTransactionPage .profile-main__job-detail p * {
+        float: right;
     }
 
     .footer__socmed-item {

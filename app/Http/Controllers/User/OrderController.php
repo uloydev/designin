@@ -18,7 +18,7 @@ class OrderController extends Controller
     public function index()
     {
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
-        $profile = UserProfile::firstWhere('user_id', Auth::id());
+        $profile = UserProfile::where('user_id', Auth::id())->first();
         return  view('user.order', ['profile' => $profile, 'listBank' => $listBank]);
     }
 
