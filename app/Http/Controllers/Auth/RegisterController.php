@@ -32,7 +32,9 @@ class RegisterController extends Controller
      */
      protected function redirectTo()
      {
-         return Auth::user()->role . '/';
+         if (Auth::user()->role === 'user') {
+             return 'user/dashboard';
+         }
      }
 
     /**
@@ -54,9 +56,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name' => ['bail', 'required', 'string', 'max:255'],
+            'email' => ['bail', 'required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['bail', 'required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 

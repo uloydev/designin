@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Total subscription item</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ $totalSubcription }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ $totalSubscription }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
@@ -24,7 +24,7 @@
             </div>
             <div class="col-12 col-md-auto">
                 <button type="button" class="btn btn-secondary btn-block" data-target="#addSubscription"  data-toggle="modal">
-                    Add new subcription
+                    Add new subscription
                 </button>
             </div>
         </div>
@@ -100,7 +100,7 @@
             @endforelse
         </div>
     </div>
-    @if ($totalSubcription > 12)
+    @if ($totalSubscription > 12)
         {{ $subscriptions->links() }}
     @endif
     @include('subscription.manipulate')

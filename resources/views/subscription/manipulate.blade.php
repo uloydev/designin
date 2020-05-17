@@ -12,11 +12,6 @@
                 enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="addToken">Subscription Token</label>
-                        <input type="number" class="form-control" id="addToken" placeholder="Token" name="token"
-                        value="{{ old('token') }}" required>
-                    </div>
-                    <div class="form-group">
                         <label for="addTitle">Subscription Title</label>
                         <input type="text" name="title" id="addTitle" class="form-control" value="{{ old('title') }}"
                         placeholder="Ex: Discovery – Langganan" required>
@@ -67,10 +62,7 @@
             <div class="modal-body">
                 <form role="form" method="post" id="form-update-subscription" enctype="multipart/form-data">
                     @csrf @method('PUT')
-                    <div class="form-group">
-                        <label for="token">Subscription Token</label>
-                        <input type="number" class="form-control" id="token" placeholder="Token" name="token" required>
-                    </div>
+                    <input type="hidden" class="form-control" id="token" placeholder="Token" name="token" required readonly>
                     <div class="form-group">
                         <label for="title">What is the subscription title?</label>
                         <input type="text" name="title" id="title" class="form-control"

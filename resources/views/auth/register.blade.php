@@ -1,6 +1,15 @@
 @extends('layouts.auth-master')
 @section('title', 'Create new account')
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
   <div class="form-structor">
     <form class="signup" method="post" action="{{ route('register') }}">
       @csrf
@@ -8,25 +17,9 @@
         <a href="{{ route('register') }}"><span>or</span>Sign up</a>
       </h2>
       <div class="form-holder">
-        <input type="text" name="name" class="input @error('name') is-invalid @enderror" placeholder="Name" value="{{ old('name') }}">
-        @error('name')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-        <input type="email" name="email" class="input @error('email') is-invalid @enderror" placeholder="Email"
-        value="{{ old('email') }}" required>
-        @error('email')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-        <input type="password" name="password" class="input @error('password') is-invalid @enderror" placeholder="Password" />
-        @error('password')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror
+        <input type="text" name="name" class="input" placeholder="Name" value="{{ old('name') }}">
+        <input type="email" name="email" class="input" placeholder="Email" value="{{ old('email') }}" required>
+        <input type="password" name="password" class="input" placeholder="Password" minlength="8" />
         <input type="password" class="input" placeholder="Password Confirmation"
         name="password_confirmation" required autocomplete="new-password">
       </div>

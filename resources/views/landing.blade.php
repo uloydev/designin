@@ -113,7 +113,7 @@
                   <p class="subscription__desc">
                     {{$sub->description}}
                   </p>
-                  <a href="javascript:void(0);" class="subscription__btn">Subscribe Now</a>
+                  <a href="{{ route('user.subscription.show', $sub->id) }}" class="subscription__btn">Subscribe Now</a>
                 </div>
               </figure>
             </div>

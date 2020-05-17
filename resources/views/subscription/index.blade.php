@@ -31,7 +31,7 @@
                                     Price:
                                     <var class="profile-main-item__price">{{ 'IDR ' . $subscription->price }}</var>
                                 </p>
-                                <a href="" class="profile-main-item__link">See details</a>
+                                <a href="{{ route('service.show', $subscription->id)  }}" class="profile-main-item__link">See details</a>
                             </div>
                         </article>
                     @empty

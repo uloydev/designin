@@ -13,12 +13,10 @@ class SubscriptionController extends Controller
 
     public function index()
     {
-        $totalSubcription = Subscription::count();
         $subscriptions = Subscription::paginate(5);
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
         return view('subscription.index', [
             'subscriptions' => $subscriptions,
-            'totalSubcription' => $totalSubcription,
             'listBank' => $listBank
         ]);
     }
@@ -35,7 +33,8 @@ class SubscriptionController extends Controller
 
     public function show($id)
     {
-        //
+        $subscription = Subscription::findOrFail($id);
+        return view('subscription.show', ['subscription' => $subscription]);
     }
 
     public function edit($id)

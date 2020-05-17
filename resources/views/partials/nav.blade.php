@@ -38,10 +38,10 @@
                         <span class="nav__link">Order menu <i class='bx bxs-chevron-down dropdown-icon'></i></span>
                         <ul class="nav-dropdown-list">
                             <li class="nav__list">
-                                <a href="" class="nav__link">my transaction</a>
+                                <a href="{{ route('user.transaction.index') }}" class="nav__link">my transaction</a>
                             </li>
                             <li class="nav__list">
-                                <a href="" class="nav__link">my subscription</a>
+                                <a href="{{ route('user.subscription.index') }}" class="nav__link">my subscription</a>
                             </li>
                             <li class="nav__list">
                                 <a href="{{ route('user.job.index') }}" class="nav__link">my jobs</a>

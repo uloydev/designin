@@ -123,6 +123,7 @@ nav ul {
     top: 0;
 }
 nav .container {
+    max-width: none;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -1442,7 +1443,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     padding: 10px 1rem;
 }
 
-#contactUsPage .nav__toggle, #faqPage .nav__toggle {
+#contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle {
     color: var(--almost-black);
 }
 #contactUsPage main {
@@ -1993,6 +1994,66 @@ body[id*='blog'] .search-service__btn {
     padding-bottom: 20px;
 }
 
+#seeSubscriptionPage header {
+    background-color: var(--almost-white);
+    border-bottom: 1px solid #dcdcdc;
+}
+#seeSubscriptionPage .subscription-single__caption {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#seeSubscriptionPage .subscription__desc p, #seeSubscriptionPage .subscription__desc h1,
+#seeSubscriptionPage .subscription__desc ul, #seeSubscriptionPage .subscription__desc ol {
+    margin-bottom: 30px;
+}
+#seeSubscriptionPage .subscription__action {
+    display: flex;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #dedede;
+}
+#seeSubscriptionPage .subscription__action form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+#seeSubscriptionPage .subscription__action input {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    margin-left: 30px;
+    border: 1px solid #e2e2e2;
+    align-items: center;
+    transition: all 150ms;
+    justify-content: center;
+    text-align: center;
+    color: #525252;
+}
+#seeSubscriptionPage .subscription__action input:hover, #seeSubscriptionPage .subscription__action input:focus {
+    padding-left: 0;
+}
+#seeSubscriptionPage .subscription__btn {
+    width: 100%;
+    max-width: 450px;
+    margin: 25px auto 0;
+    background-color: var(--primary-color) !important;
+    color: #fff;
+    transition: all 200ms;
+    box-shadow: 3px 2px 4px 2px rgba(0, 0, 0, 0.14);
+}
+#seeSubscriptionPage .subscription__btn:hover {
+    background-color: var(--primary-color-hover);
+}
+#seeSubscriptionPage .subscription__btn:active {
+    background-color: #119a5b;
+    transform: translateY(2px);
+    box-shadow: 1px 2px 4px 2px rgba(0, 0, 0, 0.2);
+}
+
 footer {
     padding-top: calc(15px + 45px);
     background-color: var(--text-color);
@@ -2176,6 +2237,14 @@ footer .row {
 
     #singleServicePage .service-single__title {
         font-size: 30px;
+    }
+
+    #seeSubscriptionPage .subscription-single__caption {
+        justify-content: flex-end;
+        text-align: right;
+    }
+    #seeSubscriptionPage .subscription__btn {
+        margin-right: 0;
     }
 
     .footer__legal {

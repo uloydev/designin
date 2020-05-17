@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    You are logged in. <a href="{{ route('landing-page') }}">Let's order something!</a>
                 </div>
             </div>
         </div>

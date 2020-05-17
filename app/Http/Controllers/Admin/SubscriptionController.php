@@ -24,11 +24,11 @@ class SubscriptionController extends Controller
         }else{
             $subscriptions = Subscription::latest()->paginate(12);
         }
-        $totalSubcription = Subscription::count();
+        $totalSubscription = Subscription::count();
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
         return view('subscription.manage', [
             'subscriptions' => $subscriptions,
-            'totalSubcription' => $totalSubcription,
+            'totalSubscription' => $totalSubscription,
             'listBank' => $listBank
         ]);
     }
