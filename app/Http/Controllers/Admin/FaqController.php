@@ -42,14 +42,16 @@ class FaqController extends Controller
             'question'=>'required',
             'answer'=>'required'
         ]);
-        Faq::create($request->all());
         $faq = Faq::findOrFail($id);
-        return redirect()->back()->with(['success'=> 'Faq Updated Successfully', 'faq'=>$faq]);
+        $faq->question = $request->question;
+        $faq->answer = $request->answer;
+        $faq->save();
+        return redirect()->back()->with('success','Faq Updated Successfully');
     }
 
     public function destroy($id)
     {
-        Faq::where('id', $id)->delete();
-        return redirect()->route('manage.faq.index')->with('success', 'Faq Deleted Successfully');
+        Faq::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Faq Deleted Successfully');
     }
 }

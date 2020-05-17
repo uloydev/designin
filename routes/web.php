@@ -41,6 +41,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('testimony', 'TestimonyController')->only(['index', 'update', 'destroy']);
         Route::resource('promo', 'PromoController');
         Route::resource('subscription', 'SubscriptionController');
+        Route::resource('reason', 'ReasonController')->except(['show']);        
     });
 });
 

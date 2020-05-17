@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
           OrderSeeder::class,
           ChatSessionSeeder::class,
           MessageSeeder::class,
+          ReasonSeeder::class,
       ]);
     }
 }
