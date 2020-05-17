@@ -6,17 +6,30 @@ use App\Http\Controllers\Controller;
 use App\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class SubscriptionController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $subscriptions = Subscription::paginate(12);
+        if($request->has('sort')){
+            if ($request->sort == 'latest') {
+                $subscriptions = Subscription::latest()->paginate(12);
+            }else if($request->sort == 'oldest'){
+                $subscriptions = Subscription::oldest()->paginate(12);
+            }else {
+                return abort('404');
+            }
+        }else{
+            $subscriptions = Subscription::latest()->paginate(12);
+        }
         $totalSubcription = Subscription::count();
+        $listBank = json_decode(File::get('js/bank_indonesia.json'));
         return view('subscription.index', [
             'subscriptions' => $subscriptions, 
-            'totalSubcription' => $totalSubcription
+            'totalSubcription' => $totalSubcription,
+            'listBank' => $listBank
         ]);
     }
 

@@ -19,11 +19,15 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         if ($request->has('sort', 'sort_type')) {
-            $orders = Order::where('status', 'process')
-            ->orWhere('status', 'complaint')
-            ->where('agent_id', Auth::id())
-            ->join('package', 'package.id', '=', 'orders.package_id')
-            ->orderBy($request->sort, $request->sort_type)->paginate(10);
+            try {
+                $orders = Order::where('status', 'process')
+                ->orWhere('status', 'complaint')
+                ->where('agent_id', Auth::id())
+                ->join('package', 'package.id', '=', 'orders.package_id')
+                ->orderBy($request->sort, $request->sort_type)->paginate(10);
+            } catch (\Throwable $th) {
+                return abort('404');
+            }
         }else{
             $orders = Order::where('status', 'process')
             ->orWhere('status', 'complaint')
