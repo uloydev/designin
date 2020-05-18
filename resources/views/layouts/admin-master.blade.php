@@ -75,6 +75,12 @@ The above copyright notice and this permission notice shall be included in all c
                                         <span class="nav-link-text">Subscription</span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('manage.main-slider.index') }}">
+                                        <i class="fab fa-slideshare text-info"></i>
+                                        <span class="nav-link-text">Main slider</span>
+                                    </a>
+                                </li>
                             @else
                                 <li class="nav-item">
                                     <a class="nav-link" href="#navbar-components" data-toggle="collapse"
@@ -218,7 +224,7 @@ The above copyright notice and this permission notice shall be included in all c
         <script src="{{ asset('js/bs-custom-file-input.min.js') }}"></script>
         <script src="{{ asset('js/typed.min.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
-        <script src="{{ asset('plugin/nice-select/js/jquery.nice-select.js') }}"></script>
+        <script src="{{ asset('plugin/nice-select/js/jquery.nice-select.min.js') }}"></script>
         <script src="{{ asset('plugin/jquery-star-rating-plugin/src/jquery.star.rating.min.js') }}"></script>
         <script src="{{ asset('plugin/powerange/dist/powerange.min.js') }}"></script>
         <script src="{{ asset('plugin/air-datepicker/dist/js/datepicker.min.js') }}"></script>

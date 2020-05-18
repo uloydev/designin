@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\LandingHeaderSlider;
 use App\Testimony;
 use Illuminate\Http\Request;
 use App\Service;
@@ -19,21 +20,26 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $topService = Service::inRandomOrder()->limit(4)->get();
         $images = CarouselImage::all();
         $serviceCategories = ServiceCategory::all();
-        $blogs = Blog::paginate(5);
-        $clients = Client::all();
+        $blogs = Blog::where('is_main', true)->get();
+        $clients = Client::where('is_show', true)->get();
         $testimonies = Testimony::where('is_main', true)->get();
         $subscriptions = Subscription::all();
         $reasons = Reason::all();
+        $landingHeaders = LandingHeaderSlider::all();
+//        dd($landingHeaders);
         return view('landing')->with([
             'images' => $images,
             'serviceCategories' => $serviceCategories,
             'blogs' => $blogs,
             'testimonies' => $testimonies,
             'clients' => $clients,
-            'subscriptions'=>$subscriptions,
-            'reasons'=>$reasons
+            'subscriptions' => $subscriptions,
+            'reasons' => $reasons,
+            'topService' => $topService,
+            'landingHeaders' => $landingHeaders
         ]);
     }
 

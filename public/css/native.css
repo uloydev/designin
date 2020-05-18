@@ -366,7 +366,7 @@ nav .container {
 }
 
 .modal {
-    z-index: 2P;
+    z-index: 3;
     opacity: 0;
     visibility: hidden;
     top: 0;
@@ -486,11 +486,11 @@ body:not(#landingPage):not([id*='blog']) #primaryNav {
 .nav__list:not(.nav__list--logo)::after {
     background-color: var(--primary-color);
 }
-body:not(#landingPage):not([id*='blog']) .nav__list--logo .nav__link {
+body:not([id*='blog']) .nav__list--logo .nav__link {
     color: #5d5d5d;
     font-weight: bold;
 }
-body:not(#landingPage):not([id*='blog']) #primaryNav .container > ul > .nav__list {
+body:not([id*='blog']) #primaryNav .container > ul > .nav__list {
     color: #555555;
     text-shadow: none;
     font-weight: normal;
@@ -504,7 +504,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 
 #landingPage .nav--showed {
-    background-color: var(--almost-black);
+    /*background-color: var(--almost-black);*/
 }
 #landingPage .nav--showed .nav__list--logo {
     color: #efefef;
@@ -561,16 +561,41 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     width: 100%;
 }
 #landingPage header {
-    background-image: url('../img/cover.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: bottom;
+    height: 80vh;
+    width: 100%;
 }
 #landingPage header > .container {
-    justify-content: center;
-    padding-bottom: 60px;
-    display: flex;
-    flex-direction: column;
+    position: relative;
+    width: 100% !important;
+    height: calc(100% - 80px);
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    max-width: none !important;
+}
+#landingPage .landing__slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+#landingPage .landing__slider .slick-list, #landingPage .landing__slider .slick-track,
+#landingPage .landing__slider .slick-slide div, #landingPage .landing__slider .slick-slide a,
+#landingPage .landing__slider .slick-slide img {
+    height: 100%;
+}
+#landingPage .landing__slider img {
+    object-fit: cover;
+    object-position: center 20%;
+    width: 100%;
+}
+#landingPage .landing__slogan {
+    position: absolute;
+    top: 50%;
+    width: 90%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
 }
 #landingPage .header__text {
     color: #fff;
@@ -751,7 +776,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     position: absolute;
     color: var(--secondary-color);
     bottom: 0;
-    transform: translateY(150%);
+    transform: translateY(100%);
 }
 #landingPage .subscription__item {
     text-align: center;
@@ -905,6 +930,58 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #landingPage #client .bxs-chevron-right {
     right: 0;
+}
+#landingPage #interest {
+    width: 100%;
+}
+#landingPage #interest .interest-slider__item {
+    position: relative;
+    transition: all 150ms;
+}
+#landingPage #interest .interest-slider__overlay {
+    background-color: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 200ms;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+#landingPage #interest .interest-slider__item:hover .interest-slider__overlay {
+    opacity: 1;
+    visibility: visible;
+}
+#landingPage #interest .interest-slider__item img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+#landingPage #interest .interest-slider__title {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translateY(-50%);
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    left: 0;
+    color: #fff;
+    font-size: 1.5rem;
+}
+#landingPage #interest .interest-slider__link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
 }
 
 #servicesPage header {
@@ -1443,7 +1520,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     padding: 10px 1rem;
 }
 
-#contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle {
+#contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle, #landingPage .nav__toggle {
     color: var(--almost-black);
 }
 #contactUsPage main {
@@ -2161,6 +2238,11 @@ footer .row {
         top: 50%;
         transform: translateY(100%);
     }
+    #landingPage #interest .interest-slider__title {
+        width: 70%;
+        text-align: left;
+        left: 30px;
+    }
 
     #blogIndexPage main .article__title {
         font-size: 20px;
@@ -2287,6 +2369,7 @@ footer .row {
     #primaryNav .container > ul > .nav__list:not(.nav__list--logo):not(.nav__list--search) {
         margin-left: 20px;
     }
+
     .nav__list {
         height: 40px;
         font-size: 16px;
@@ -2336,12 +2419,24 @@ footer .row {
         padding-bottom: 4rem;
     }
 
-
+    #landingPage #primaryNav {
+        position: absolute;
+        top: 0;
+    }
+    #landingPage #primaryNav .container > ul > .nav__list, #landingPage .nav__list--logo .nav__link {
+        color: var(--almost-white);
+    }
     #landingPage .nav__list:not(.nav__list--logo)::after {
         background-color: var(--almost-white);
     }
     #landingPage header {
         height: 80vh;
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.25);
+    }
+    #landingPage header > .container {
+        position: static;
+        background-color: initial;
     }
     #landingPage .reason-slider .slick-arrow {
         top: auto;
@@ -2360,6 +2455,12 @@ footer .row {
     #landingPage .reason-trust__overlay--show .reason-trust__video {
         width: 80%;
         max-width: 800px;
+    }
+    #landingPage #interest .interest-slider__item img {
+        height: 280px;
+    }
+    #landingPage #interest .interest-slider__title {
+        width: 50%;
     }
 
     #contactUsPage .contact-us__heading {
@@ -2453,6 +2554,9 @@ footer .row {
 }
 
 @media screen and (min-width: 1200px) {
+    #landingPage header {
+        height: 90vh;
+    }
     nav ul > .container > .nav__list:not(.nav__list--logo) {
         font-size: 18px;
         margin-left: 40px;

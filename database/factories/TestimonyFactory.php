@@ -1,7 +1,10 @@
 <?php
 
+/** @var Factory $factory */
+
 use App\Testimony;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(Testimony::class, function (Faker $faker) {
     return [
@@ -10,5 +13,5 @@ $factory->define(Testimony::class, function (Faker $faker) {
         'user_id' => $faker->numberBetween(1, 2),
         'service_id' => 1,
         'is_main' => $faker->boolean($chanceOfGettingTrue = 50)
-    ];;
+    ];
 });

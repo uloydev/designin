@@ -11,26 +11,31 @@
     <header>
       @include('partials.nav')
       <div class="container">
-          <div class="row flex-column align-items-end mx-0">
+          <div class="landing__slider">
+              @foreach ($landingHeaders as $slider)
+                  <img src="{{ Storage::url($slider->img) }}" alt="Desainin landing page">
+              @endforeach
+          </div>
+          <div class="landing__slogan">
               <h1 class="header__text">
                   Find designer just like <br class="d-none d-md-block"> <span style="color: #94E5EB"></span>
               </h1>
-          </div>
-          <div class="row mx-0 flex-column flex-md-row align-items-center justify-content-end">
-              <a href="javascript:void(0)" class="header__btn header__btn--secondary btn-modal"
-                 data-target="#modal-search-service">
-                  <i class='bx bx-search-alt mr-2 bx-sm'></i> Find your designer
-              </a>
-              <a href="#services" class="header__btn">
-                  Order What You Want <i class='bx bxs-cart-add ml-2 bx-sm'></i>
-              </a>
+              <div class="row mx-0 flex-column flex-md-row align-items-center justify-content-end">
+                  <a href="javascript:void(0)" class="header__btn header__btn--secondary btn-modal"
+                     data-target="#modal-search-service">
+                      <i class='bx bx-search-alt mr-2 bx-sm'></i> Find your designer
+                  </a>
+                  <a href="#services" class="header__btn">
+                      Order What You Want <i class='bx bxs-cart-add ml-2 bx-sm'></i>
+                  </a>
+              </div>
           </div>
       </div>
     </header>
     <main>
       <section id="services">
         <div class="container">
-          <h1 class="section__heading">our service</h1>
+          <h1 class="section__heading">Top service</h1>
           <div class="row">
             @foreach ($serviceCategories as $category)
             <div class="px-3">
@@ -94,6 +99,35 @@
             </div>
           </div>
         </div>
+      </section>
+      <section id="interest">
+          <div class="container">
+              <div class="row justify-content-between">
+                  <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center justify-content-center mb-5 mb-md-0">
+                      <h1 class="section__heading text-center">Top story / service you may interest</h1>
+                  </div>
+                  <div class="col-12 col-md-6 col-md-8">
+                      <div class="interest-slider">
+                          @foreach($blogs as $blog)
+                              <div class="interest-slider__item">
+                                  <p class="interest-slider__title">{{ $blog->title }}</p>
+                                  <img src="{{ Storage::url($blog->cover) }}" height="350" alt="Cover">
+                                  <a href="{{ route('blog.show', $blog->id) }}" class="interest-slider__link">src only</a>
+                                  <div class="interest-slider__overlay"></div>
+                              </div>
+                          @endforeach
+                          @foreach($topService as $service)
+                              <div class="interest-slider__item">
+                                  <p class="interest-slider__title">{{ $service->title }}</p>
+                                  <img src="{{ Storage::url($service->image) }}" height="350" alt="Cover">
+                                  <a href="{{ route('service.show', $service->id) }}" class="interest-slider__link">src only</a>
+                                  <div class="interest-slider__overlay"></div>
+                              </div>
+                          @endforeach
+                      </div>
+                  </div>
+              </div>
+          </div>
       </section>
       <section id="subscription">
         <div class="container">
