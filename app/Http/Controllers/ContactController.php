@@ -12,7 +12,7 @@ class ContactController extends Controller
         return view('contact-us.send');
     }
 
-    public function contactUs(Request $request)
+    public function send(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -20,7 +20,6 @@ class ContactController extends Controller
             'message' => 'required'
         ]);
         ContactUs::create($request->all());
-        return redirect()->route('contact-us.send')
-                        ->with('success','Message Has Been Sent.');
+        return redirect()->back()->with('success','Message Has Been Sent.');
     }
 }

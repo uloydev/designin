@@ -29,6 +29,7 @@
                                         data-target="#modal-progress" data-backdrop="static" data-id="{{$order->id}}">
                                     Report progress
                                 </button>
+                                {{-- need to update delete form, use route('agent.list-request.destroy', $id)--}}
                                 <a href="" class="btn btn-link text-danger">
                                     <i class="fas fa-trash"></i>
                                 </a>
@@ -67,9 +68,9 @@
                         @endforeach
                     </div>
                 </div>
-{{--                <div class="card-footer border-top-0">--}}
-{{--                    {{ $vars->links()  }}--}}
-{{--                </div>--}}
+                <div class="card-footer border-top-0">
+                    {{ $orders->links()  }}
+                </div>
             </div>
         </div>
     </div>
@@ -92,7 +93,7 @@
                         @csrf @method('PUT')
                         <div class="form-row justify-between align-items-center">
                             <div class="col-9">
-                                <input type="text" class="progress-job">
+                                <input name='progress' type="text" class="progress-job">
                             </div>
                             <div class="col-auto text-right" id="progress-job-val">0</div>
                         </div>

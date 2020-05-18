@@ -21,26 +21,26 @@ class UserSeeder extends Seeder
                 'name'=>'Admin',
                 'email'=>'admin@test.com',
                 'role'=>'admin',
-                'password'=> Hash::make('123456'),
+                'password'=> Hash::make('password'),
             ],
             [
                 'name'=>'Agent',
                 'email'=>'agent@test.com',
                 'role'=>'agent',
                 'email_verified_at' => now(),
-                'password'=> Hash::make('123456'),
+                'password'=> Hash::make('password'),
             ],
             [
                 'name'=>'Agent2',
                 'email'=>'agent2@test.com',
                 'role'=>'agent',
-                'password'=> Hash::make('123456'),
+                'password'=> Hash::make('password'),
             ],
             [
                 'name'=>'User',
                 'email_verified_at' => Carbon::now(),
                 'email'=>'user@test.com',
-                'password'=> Hash::make('123456'),
+                'password'=> Hash::make('password'),
             ],
             [
                 'name'=>'User Subscript',
@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
                 'subscribe_to'=>$sub->id,
                 'subscribe_token'=>$sub->token,
                 'subscribe_at'=> Carbon::now(),
-                'password'=> Hash::make('123456'),
+                'password'=> Hash::make('password'),
             ],
         ];
         foreach ($user as $key => $value) {

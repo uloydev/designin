@@ -5,24 +5,26 @@
 use App\Order;
 use App\User;
 use App\Package;
+use App\Service;
 use Faker\Generator as Faker;
 use Illuminate\Support\Carbon;
 
 $factory->define(Order::class, function (Faker $faker) {
-    $users_id = User::where('role', 'user')->pluck('id')->all();
-    $agents_id = User::where('role', 'agent')->pluck('id')->all();
-    $packages_id = Package::pluck('id')->all();
+    $user_id =$faker->randomElement( User::where('role', 'user')->pluck('id')->all());
+    $agent_id = $faker->randomElement( User::where('role', 'agent')->pluck('id')->all());
+    $package_id = $faker->randomElement(Package::where('service_id', Service::where('agent_id', $agent_id)->pluck('id')->first())
+                        ->pluck('id')->all());
     $status = $faker->randomElement(['unpaid', 'waiting', 'process', 'complaint', 'finished']);
     $data = [
-        'user_id' => $faker->randomElement($users_id),
-        'package_id' => $faker->randomElement($packages_id),
-        'status' => $status
+        'user_id' => $user_id,
+        'package_id' => $package_id,
+        'status' => $status,
+        'agent_id' => $agent_id,
+        'request' => $faker->sentence($nbWords = 30, $variableNbWords = true)
     ];
     if ($status != 'unpaid' && $status != 'waiting') {
-        $data['agent_id'] = $faker->randomElement($agents_id);
         $data['started_at'] = Carbon::now();
         $data['deadline'] = Carbon::now()->addDays(3);
-        $data['request'] = $faker->sentence($nbWords = 30, $variableNbWords = true);
         $data['progress'] = $status == 'process' ? $faker->numberBetween(0,100) : 100;
     }
     return $data;

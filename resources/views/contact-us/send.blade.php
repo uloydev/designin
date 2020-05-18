@@ -12,7 +12,7 @@
       </section>
       <section class="contact-us__message col-12 col-lg-6">
         <h1 class="contact-us__heading">Have any idea? <br> We glad to hear that</h1>
-        <form class="contact-us__form" action="index.html" method="post">
+        <form class="contact-us__form" action="{{route('contact-us.store')}}" method="post">
           @csrf
           <input type="text" class="contact-us__input" name="name" placeholder="What's your name" autocomplete="name" required autofocus>
           <input type="email" class="contact-us__input" name="email" placeholder="What's your email" autocomplete="email" required>

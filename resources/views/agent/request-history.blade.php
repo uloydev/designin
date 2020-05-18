@@ -30,6 +30,7 @@
                     <div id="collapse{{ $order->id }}" class="collapse show" data-parent="#accordionJobHistory">
                         <div class="card-body">
                             {{$order->request}}
+                            {{-- route for send message review using ajax route('list-request.send-review') --}}
                             <form action="{{--please using ajax--}}" class="mt-3 border-top pt-4">
                                 <div class="form-group">
                                     <label for="message-review" class="text-gray">Message to customer</label>

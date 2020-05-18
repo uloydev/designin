@@ -22,7 +22,7 @@ Route::name('message.')->prefix('message')->middleware('exceptAdmin')->group(fun
     Route::get('fetch/{session_id}', 'MessageController@fetch')->name('fetch');
     Route::post('send/{session_id}', 'MessageController@send')->name('send');
 });
-Route::post('contact-us', 'ContactController@contactUs');
+Route::post('contact-us', 'ContactController@send')->name('contact-us.store');
 
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
@@ -75,11 +75,16 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
         Route::get('testimony', 'TestimonyController@index')->name('testimony.index');
         Route::get('testimony/{service_id}', 'TestimonyController@show')->name('testimony.show');
-        Route::get('service/progress', 'ServiceController@progress')->name('service.progress');
+        // Route::get('service/progress', 'ServiceController@progress')->name('service.progress');
         Route::resource('service', 'ServiceController');
         Route::get('list-request/history', 'OrderController@history')->name('list-request.history');
         Route::get('list-request/incoming', 'OrderController@incoming')->name('list-request.incoming');
         Route::put('list-request/approval/{id}', 'OrderController@approval')->name('list-request.approval');
+        Route::put('list-request/progress/{id}', 'OrderController@updateProgress')->name('list-request.progress');
+        Route::delete('list-request/delete/{id}', 'OrderController@destroy')->name('list-request.destroy');
+        Route::post('list-request/send-review/{id}', 'OrderController@sendReview')->name('list-request.send-review');
+        Route::post('list-request/send-result/{id}', 'OrderController@sendReview')->name('list-request.send-result');
+        Route::post('list-request/send-revision/{id}', 'OrderController@sendReview')->name('list-request.send-revision');
         Route::resource('list-request', 'OrderController');
         Route::resource('portfolio', 'PortfolioController');
     });
