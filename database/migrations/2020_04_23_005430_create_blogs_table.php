@@ -18,7 +18,7 @@ class CreateBlogsTable extends Migration
             $table->string('title');
             $table->string('header_image')->nullable();
             $table->longText('contents');
-            $table->string('cover');
+            $table->string('cover')->nullable();
             $table->integer('author_id');
             $table->integer('category_id');
             $table->boolean('is_main')->default(false);
