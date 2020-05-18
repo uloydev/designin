@@ -34,4 +34,9 @@ class Order extends Model
     {
         return $this->belongsTo('App\Package');
     }
+
+    public function results()
+    {
+        return $this->hasMany('App\ProjectResult');
+    }
 }
