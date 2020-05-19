@@ -71,30 +71,6 @@ $(document).ready(function () {
         cssEase: 'linear'
     });
 
-    // $("header").fullClip({
-    //     images: [
-    //         'https://unsplash.it/1600/1200/?random',
-    //         'https://unsplash.it/1601/1201/?random',
-    //         'https://unsplash.it/1602/1202/?random'
-    //     ],
-    //     transitionTime: 1000,
-    //     wait: 3000
-    // });
-
-    // function getRandomInt(max) {
-    //     return Math.floor(Math.random() * Math.floor(max));
-    // }
-    // function randomSlider() {
-    //     let landingSlider = ['url("img/cover.jpg")', 'url("img/landing-header2.jpg")', 'url("img/landing-header3.jpg")'];
-    //     let randomSlider =  getRandomInt(landingSlider.length);
-    //     $("#landingPage header").fadeTo('800', 1, function () {
-    //         $(this).css('background-image', landingSlider[randomSlider]);
-    //     });
-    // }
-    // setInterval(function () {
-    //     randomSlider();
-    // }, 2000);
-
     const btnReasonVideo = document.querySelector('#landingPage .reason-trust__btn');
     const reasonOverlay = document.querySelector('#landingPage .reason-trust__overlay');
     if (btnReasonVideo) {
@@ -180,7 +156,8 @@ $(document).ready(function () {
 
             $("#modal-progress .modal-job-title, #modal-approval .modal-job-title, #modal-rejection .modal-job-title")
                 .text(jobTitle);
-            $("#modal-approval form, #modal-rejection form").attr('action', domain + '/list-request/approval/' + jobId)
+            $("#modal-approval form, #modal-rejection form")
+                .attr('action', domain + '/list-request/approval/' + jobId)
             $("#modal-progress form").attr('action', domain + '/service/progress/' + jobId);
         });
     const progressVals = document.querySelectorAll("#listRequestPage .progress-value");
@@ -202,6 +179,14 @@ $(document).ready(function () {
         $("#delete-history-job .modal-job-history-title").text(historyTitle);
     });
 
+    $("[data-target='#modal-revision']").click(function () {
+        let revisionId = $(this).data('id');
+        let revisionTitle = $.trim($(this).data('title'));
+
+        $("#modal-revision form")
+            .attr('action', window.location.origin + '/agent/list-request/send-revision/' + revisionId);
+    });
+
     const jobProgress = document.querySelector('.progress-job');
     if (jobProgress != null) {
         new Powerange(jobProgress, {
@@ -214,10 +199,15 @@ $(document).ready(function () {
         };
     }
 
+    if ($("#incomingJobPage #accordion-request").find(".accordion__item").length === 0) {
+        $("#accordion-request").parents(".card-body").addClass("pb-0");
+    }
+
     //admin js
     $("[data-target='#updateSlider'], [data-target='#deleteSlider']").click(function () {
         let sliderId = $(this).data('id');
-        $("#manageMainSliderPage .modal form").attr('action', window.location.origin + '/manage/main-slider/' + sliderId);
+        $("#manageMainSliderPage .modal form")
+            .attr('action', window.location.origin + '/manage/main-slider/' + sliderId);
     });
 
     const btnArticles = document.querySelectorAll('.btn[data-target="#delete-article');

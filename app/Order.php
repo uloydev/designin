@@ -10,13 +10,14 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'agent_id',
-        'package_id', 
-        'started_at', 
-        'status', 
-        'progress', 
-        'request', 
-        'deadline', 
-        'is_reviewed'];
+        'package_id',
+        'started_at',
+        'status',
+        'progress',
+        'request',
+        'deadline',
+        'is_reviewed'
+    ];
     protected $casts = ['start_at'=> 'datetime', 'deadline'=>'datetime'];
     // protected $with = ['package'];
 

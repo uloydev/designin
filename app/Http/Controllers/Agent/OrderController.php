@@ -143,6 +143,12 @@ class OrderController extends Controller
         return view('service.incoming', ['orders' => $orders]);
     }
 
+    public function ongoing()
+    {
+        $ongoings = Order::where('status', 'process')->paginate(10);
+        return view('service.ongoing', ['ongoings' => $ongoings]);
+    }
+
     public function approval(Request $request, $id)
     {
         $order = Order::findOrFail($id);
@@ -175,7 +181,7 @@ class OrderController extends Controller
         $order->save();
         Mail::to($order->user->email)->send(new OrderReviewedNotification($order));
         return [
-            'status' => 'ok', 
+            'status' => 'ok',
             'sent_to' => $order->user->email
         ];
     }
@@ -197,7 +203,7 @@ class OrderController extends Controller
         Mail::to($order->user->email)->send(new OrderFinishedNotification($order));
         return redirect()->back()->with('success', 'Project Result Has Sent Successfully');
     }
-    
+
     public function sendRevision(Request $request, $id)
     {
         $request->validate([

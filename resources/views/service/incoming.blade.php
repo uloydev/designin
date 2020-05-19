@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-body">
                     <div class="accordion" id="accordion-request">
-                        @foreach ($orders as $order)
+                        @forelse ($orders as $order)
                         <article class="accordion__item">
                             <div id="heading{{$order->id}}" class="d-flex mb-2 align-items-center">
                                 <h2 class="mb-0 d-inline-block mr-auto job-agent-title">
@@ -52,7 +52,13 @@
                                 </div>
                             </div>
                         </article>
-                        @endforeach
+                        @empty
+                            <div class="alert alert-secondary mb-0 no-fadeout" role="alert">
+                                <span class="alert-text">
+                                    No incoming job request
+                                </span>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
                 <div class="card-footer border-top-0">

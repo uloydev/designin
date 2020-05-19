@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="row justify-content-between mb-4">
-        <div class="col-12 col-md-5" id="filter-job">
+        <div class="col-12 col-lg-6" id="filter-job">
             <div class="card">
                 <ul class="nav">
                     <li class="nav-item">
@@ -28,7 +28,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-center" href="{{ route('agent.list-request.index') }}">
-                            Unifinished Job
+                            Unfinished Job
                         </a>
                     </li>
                     <li class="nav-item">
@@ -36,15 +36,20 @@
                             Finished Job
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="{{ route('agent.list-request.ongoing') }}">
+                            Ongoing Job
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
-        <div class="col-12 col-md-4">
-            <div class="row mx-0 align-items-center">
-                <label for="filter-request" class="text-white col-12 col-md-4 mb-3 mb-md-0 text-center">
+        <div class="col-12 col-lg-4">
+            <div class="row mx-0 align-items-center justify-content-between justify-content-lg-end">
+                <label for="filter-request" class="text-white col-12 col-md-auto mb-3 mb-md-0 text-center">
                     Sort By
                 </label>
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-6 col-lg-7">
                     <form action="" method="get">
                         <select class="nice-select wide text-capitalize" id="filter-request">
                             <option value="1">Highest budget</option>
