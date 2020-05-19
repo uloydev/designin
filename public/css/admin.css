@@ -104,6 +104,9 @@
     padding-top: 1.5rem;
     margin-top: 1.5rem;
 }
+.accordion__item .job-history-title {
+
+}
 .accordion__item .card-footer li {
     margin-bottom: 20px;
     color: var(--gray);

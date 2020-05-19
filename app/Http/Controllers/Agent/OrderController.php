@@ -20,13 +20,10 @@ use App\Mail\OrderRevisionFinishedNotification;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return View
-     */
+
     public function index(Request $request)
     {
+        $totalOrderNotDone = Order::where('status', '<>', 'finished')->count();
         $orders = Order::join('package', 'package.id', '=', 'orders.package_id')
         ->where('agent_id', Auth::id())
         ->where('status', 'process')
@@ -45,20 +42,13 @@ class OrderController extends Controller
             } catch (\Throwable $th) {
                 return abort('404');
             }
-        }else{
+        }
+        else {
             $orders = $orders->orderBy('orders.created_at', 'desc')->paginate(10);
         }
-        return view('agent.list-request', [
-            'orders'=>$orders,
-        ]);
+        return view('agent.list-request', ['orders' => $orders, 'totalOrderNotDone' => $totalOrderNotDone]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function destroy($id)
     {
         Order::findOrFail($id)->delete();
@@ -67,9 +57,11 @@ class OrderController extends Controller
 
     public function history(Request $request)
     {
-        $orders = Order::join('package', 'package.id', '=', 'orders.package_id')
-        ->where('agent_id', Auth::id())
-        ->where('status', 'finished');
+        $totalOrderNotDone = Order::where('status', '<>', 'finished')->count();
+        $orders = Order::join('package', 'package.id', '=', 'orders.package_id')->where([
+           ['agent_id', Auth::id()],
+           ['status', 'finished']
+        ]);
         if ($request->has('search')) {
             $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
             ->orWhere('price', 'like', '%'.$request->search.'%');
@@ -87,9 +79,7 @@ class OrderController extends Controller
         }else{
             $orders = $orders->orderBy('orders.created_at', 'desc')->paginate(10);
         }
-        return view('agent.request-history', [
-            'orders'=>$orders
-        ]);
+        return view('agent.request-history', ['orders'=>$orders, 'totalOrderNotDone' => $totalOrderNotDone]);
     }
 
     public function bidHistory(Request $request)
@@ -143,10 +133,11 @@ class OrderController extends Controller
         return view('service.incoming', ['orders' => $orders]);
     }
 
-    public function ongoing()
+    public function complaint()
     {
-        $ongoings = Order::where('status', 'process')->paginate(10);
-        return view('service.ongoing', ['ongoings' => $ongoings]);
+        $totalComplaint = Order::where('status', 'complaint')->count();
+        $complaints = Order::where('status', 'complaint')->paginate(10);
+        return view('service.complaint', ['complaints' => $complaints, 'totalComplaint' => $totalComplaint]);
     }
 
     public function approval(Request $request, $id)

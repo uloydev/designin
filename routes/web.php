@@ -77,7 +77,7 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::get('testimony/{service_id}', 'TestimonyController@show')->name('testimony.show');
         // Route::get('service/progress', 'ServiceController@progress')->name('service.progress');
         Route::resource('service', 'ServiceController');
-        Route::get('list-request/ongoing', 'OrderController@ongoing')->name('list-request.ongoing');
+        Route::get('list-request/complaint', 'OrderController@complaint')->name('list-request.complaint');
         Route::get('list-request/history', 'OrderController@history')->name('list-request.history');
         Route::get('list-request/incoming', 'OrderController@incoming')->name('list-request.incoming');
         Route::put('list-request/approval/{id}', 'OrderController@approval')->name('list-request.approval');

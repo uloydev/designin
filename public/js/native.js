@@ -148,17 +148,18 @@ $(document).ready(function () {
     });
 
     //agent js
-    $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection']")
-        .click(function () {
+    // $(".pagination-nav .pagination").addClass('mb-0');
+    $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection'], " +
+        "[data-target='#modal-result']").click(function () {
             let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
             let jobId = $(this).data('id');
             const domain = window.location.origin;
 
-            $("#modal-progress .modal-job-title, #modal-approval .modal-job-title, #modal-rejection .modal-job-title")
-                .text(jobTitle);
+            $(".modal-job-title").text(jobTitle);
             $("#modal-approval form, #modal-rejection form")
                 .attr('action', domain + '/list-request/approval/' + jobId)
             $("#modal-progress form").attr('action', domain + '/service/progress/' + jobId);
+            $("#modal-result form").attr('action', domain + '/service/' + jobId);
         });
     const progressVals = document.querySelectorAll("#listRequestPage .progress-value");
     progressVals.forEach(function (progressVal) {
@@ -173,7 +174,7 @@ $(document).ready(function () {
 
     $("#jobHistoryPage .btn[data-target='#delete-history-job']").click(function () {
         let historyId = Number($(this).data('id'));
-        let historyTitle = $.trim($(this).parents('.job-history-title').text());
+        let historyTitle = $.trim($(this).prev().text());
 
         $("#delete-history-job form").attr('action', window.location.origin + '/agent/list-request/' + historyId);
         $("#delete-history-job .modal-job-history-title").text(historyTitle);
@@ -197,10 +198,6 @@ $(document).ready(function () {
         jobProgress.onchange = function() {
             document.getElementById('progress-job-val').innerHTML = jobProgress.value;
         };
-    }
-
-    if ($("#incomingJobPage #accordion-request").find(".accordion__item").length === 0) {
-        $("#accordion-request").parents(".card-body").addClass("pb-0");
     }
 
     //admin js

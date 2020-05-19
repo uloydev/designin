@@ -5,9 +5,12 @@
                 <div class="form-group mb-0">
                     <div class="input-group input-group-alternative input-group-merge">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <label class="input-group-text" for="search-job">
+                                <i class="fas fa-search"></i>
+                            </label>
                         </div>
-                        <input class="form-control" placeholder="Search by location, duration, budget" type="text">
+                        <input class="form-control" placeholder="Search by date or budget and click enter . . ."
+                        type="text" id="search-job" required>
                     </div>
                 </div>
                 <button type="button" class="close" data-action="search-close"
@@ -27,19 +30,37 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-center" href="{{ route('agent.list-request.index') }}">
-                            Unfinished Job
-                        </a>
+                        @if (Route::currentRouteName() === 'agent.list-request.index')
+                            <a class="nav-link text-center active" href="{{ route('agent.list-request.index') }}">
+                                Unfinished Job
+                            </a>
+                        @else
+                            <a class="nav-link text-center" href="{{ route('agent.list-request.index') }}">
+                                Unfinished Job
+                            </a>
+                        @endif
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-center" href="{{ route('agent.list-request.history') }}">
-                            Finished Job
-                        </a>
+                        @if (Route::currentRouteName() === 'agent.list-request.history')
+                            <a class="nav-link text-center active" href="{{ route('agent.list-request.history') }}">
+                                Finished Job
+                            </a>
+                        @else
+                            <a class="nav-link text-center" href="{{ route('agent.list-request.history') }}">
+                                Finished Job
+                            </a>
+                        @endif
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-center" href="{{ route('agent.list-request.ongoing') }}">
-                            Ongoing Job
-                        </a>
+                        @if (Route::currentRouteName() === 'agent.list-request.complaint')
+                            <a class="nav-link text-center active" href="{{ route('agent.list-request.complaint') }}">
+                                Complaining Job
+                            </a>
+                        @else
+                            <a class="nav-link text-center" href="{{ route('agent.list-request.complaint') }}">
+                                Complaining Job
+                            </a>
+                        @endif
                     </li>
                 </ul>
             </div>

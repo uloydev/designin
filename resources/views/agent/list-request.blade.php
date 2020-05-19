@@ -14,63 +14,60 @@
                 </div>
                 <div class="card-body">
                     <div class="accordion" id="accordion-request">
-                        @foreach ($orders as $order)
-                        <article class="accordion__item">
-                            {{-- headingOne change to heading{{ $var->id }} --}}
-                            <div id="heading{{$order->id}}" class="d-flex mb-2 align-items-center">
-                                <h2 class="mb-0 d-inline-block mr-auto job-agent-title">
-                                    <button class="btn btn-link collapsed text-capitalize" type="button"
-                                            data-toggle="collapse" data-target="#collapse{{$order->id}}"
-                                            aria-expanded="false" aria-controls="collapse{{$order->id}}">
-                                        <i class="fas fa-chevron-up rotate-180 mr-2"></i>{{$order->package->title}}
+                        @forelse ($orders as $order)
+                            <article class="accordion__item">
+                                <div id="heading{{$order->id}}" class="d-flex mb-2 align-items-center">
+                                    <h2 class="mb-0 d-inline-block mr-auto job-agent-title">
+                                        <button class="btn btn-link collapsed text-capitalize" type="button"
+                                        data-toggle="collapse" data-target="#collapse{{$order->id}}"
+                                        aria-expanded="false" aria-controls="collapse{{$order->id}}">
+                                            <i class="fas fa-chevron-up rotate-180 mr-2"></i>
+                                            {{ $order->package->title }}
+                                        </button>
+                                    </h2>
+                                    @if ($order->progress == '100')
+                                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                        data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
+                                            Send result
+                                        </button>
+                                    @endif
+                                    <button type="button" class="btn btn-outline-default btn-sm" data-toggle="modal"
+                                    data-target="#modal-progress" data-backdrop="static" data-id="{{$order->id}}">
+                                        Report progress
                                     </button>
-                                </h2>
-                                <button type="button" class="btn btn-outline-default btn-sm" data-toggle="modal"
-                                        data-target="#modal-progress" data-backdrop="static" data-id="{{$order->id}}">
-                                    Report progress
-                                </button>
-                                {{-- need to update delete form, use route('agent.list-request.destroy', $id)--}}
-                                <a href="" class="btn btn-link text-danger">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </div>
-                            {{-- heading{{$order->id}} change to heading{{ $var->id }} --}}
-                            <div id="collapse{{$order->id}}" class="collapse" aria-labelledby="heading{{$order->id}}"
-                                    data-parent="#accordion-request">
-                                <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-                                    terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
-                                    dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                                    Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin
-                                    coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                    craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                    Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard
-                                    of them accusamus labore sustainable VHS.
                                 </div>
-                                <ul class="card-footer border-top-0 mb-0 pt-0">
-                                    <li>
-                                        Remaining offer slots for customers
-                                        <span class="mb-0 text-primary ml-auto">{{'2'}}</span>
-                                    </li>
-                                    <li>
-                                        Progress
-                                        <span class="mb-0 text-primary ml-auto mr-3 progress-value">
-                                            {{ $order->progress }}%
-                                        </span>
-                                        <span class="badge badge-pill badge-success progress-done">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </article>
-                        @endforeach
+                                <div id="collapse{{$order->id}}" aria-labelledby="heading{{$order->id}}"
+                                data-parent="#accordion-request" class="collapse">
+                                    <div class="card-body">{!! $order->request !!}</div>
+                                    <ul class="card-footer border-top-0 mb-0 pt-0">
+                                        <li>
+                                            Remaining offer slots for customers
+                                            <span class="mb-0 text-primary ml-auto">{{'2'}}</span>
+                                        </li>
+                                        <li>
+                                            Progress
+                                            <span class="mb-0 text-primary ml-auto mr-3 progress-value">
+                                                {{ $order->progress . '%' }}
+                                            </span>
+                                                <span class="badge badge-pill badge-success progress-done">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </article>
+                        @empty
+                            <img src="{{ asset('img/empty-state.svg') }}" alt="No request"
+                            class="mx-auto d-block my-5">
+                            <h1 class="text-center display-4 text-muted">Good job! You have no ongoing job</h1>
+                        @endforelse
                     </div>
                 </div>
-                <div class="card-footer border-top-0">
-                    {{ $orders->links()  }}
-                </div>
+                @if ($totalOrderNotDone > 0)
+                    <div class="card-footer border-top-0">
+                        {{ $orders->links()  }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -113,6 +110,35 @@
                     <button type="button" class="btn btn-link text-gray" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-default" form="form-update-job-progress">
                         Update progress
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-result" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> Send result for job <span class="modal-job-title"></span> </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="form-send-job">
+                        @csrf @method('PUT')
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input invisible file-custom__input" id="sendResult"
+                            accept="image/*, .psd, .xd, .sketch, video/mp4, video/x-m4v, video/*, .zip, .rar, .7z">
+                            <label class="custom-file-label" for="sendResult">Result file</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-between">
+                    <button type="button" class="btn btn-link text-gray" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-default" form="form-send-job">
+                        Send result
                     </button>
                 </div>
             </div>

@@ -53,11 +53,9 @@
                             </div>
                         </article>
                         @empty
-                            <div class="alert alert-secondary mb-0 no-fadeout" role="alert">
-                                <span class="alert-text">
-                                    No incoming job request
-                                </span>
-                            </div>
+                            <img src="{{ asset('img/empty-state.svg') }}" alt="No request"
+                                 class="mx-auto d-block my-5">
+                            <h1 class="text-center display-4 text-muted">Just chill! You have no incoming job</h1>
                         @endforelse
                     </div>
                 </div>
