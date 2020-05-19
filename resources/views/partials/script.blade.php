@@ -7,5 +7,4 @@
 <script src="{{ asset('js/typed.min.js') }}"></script>
 <script src="{{ asset('plugin/air-datepicker/dist/js/datepicker.min.js') }}"></script>
 <script src="{{ asset('plugin/air-datepicker/dist/js/i18n/datepicker.en.js') }}"></script>
-<script src="{{ asset('plugin/slideshow-background/src/fullclip.js') }}"></script>
 <script src="{{ asset('js/native.js') }}"></script>

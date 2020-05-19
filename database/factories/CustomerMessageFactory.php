@@ -10,7 +10,7 @@ $factory->define(ContactUs::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->safeEmail,
-        'message' => $faker->paragraph($nbWords = 200, $variableNbWords = true),
+        'message' => $faker->paragraph($nbWords = 20, $variableNbWords = true),
         'is_answered' => $faker->boolean($chanceOfGettingTrue = 50)
     ];
 });

@@ -465,14 +465,27 @@ nav .container {
 }
 
 .alert {
+    position: fixed;
+    top: 100px;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 14px 3px rgba(0,0,0,0.32);
+    text-transform: capitalize;
     padding: 1rem 1.25rem;
     border-radius: .25rem;
     border: 1px solid transparent;
+    color: #fff;
+    text-align: center;
 }
 .alert--light {
     background-color: #F3F3F3;
     border-color: #E2E2E2;
     color: #818182;
+}
+.alert--success {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color-hover);
 }
 
 body:not(#landingPage):not([id*='blog']):not(#faqPage) main {

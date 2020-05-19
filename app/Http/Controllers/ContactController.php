@@ -20,6 +20,8 @@ class ContactController extends Controller
             'message' => 'required'
         ]);
         ContactUs::create($request->all());
-        return redirect()->back()->with('success','Message Has Been Sent.');
+        return redirect()->back()->with(
+            'success', 'Your message has been sent! Please wait maximum 24 hours on your email'
+        );
     }
 }

@@ -64,9 +64,6 @@ class ServiceController extends Controller
 
     public function progress($id)
     {
-        $service = Service::findOrFail($id);
-        $service->progress = $request->progress;
-        $service->save();
-        return redirect()->back()->with('progress', 'Succefully update progress');
+        //
     }
 }

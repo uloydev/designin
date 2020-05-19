@@ -38,6 +38,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('blog-category', 'BlogCategoryController')->only(['store', 'update', 'destroy']);
         Route::resource('service', 'ServiceController')->except(['create']);
         Route::resource('service-category', 'ServiceCategoryController')->except(['create', 'show', 'edit']);
+        Route::get('contact-us/search', 'ContactController@search')->name('contact-us.search');
         Route::resource('contact-us', 'ContactController')->except(['create', 'store', 'show']);
         Route::resource('testimony', 'TestimonyController')->only(['index', 'update', 'destroy']);
         Route::resource('promo', 'PromoController');
@@ -75,14 +76,12 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
         Route::get('testimony', 'TestimonyController@index')->name('testimony.index');
         Route::get('testimony/{service_id}', 'TestimonyController@show')->name('testimony.show');
-        // Route::get('service/progress', 'ServiceController@progress')->name('service.progress');
         Route::resource('service', 'ServiceController');
         Route::get('list-request/complaint', 'OrderController@complaint')->name('list-request.complaint');
         Route::get('list-request/history', 'OrderController@history')->name('list-request.history');
         Route::get('list-request/incoming', 'OrderController@incoming')->name('list-request.incoming');
         Route::put('list-request/approval/{id}', 'OrderController@approval')->name('list-request.approval');
         Route::put('list-request/progress/{id}', 'OrderController@updateProgress')->name('list-request.progress');
-        Route::delete('list-request/delete/{id}', 'OrderController@destroy')->name('list-request.destroy');
         Route::post('list-request/send-review/{id}', 'OrderController@sendReview')->name('list-request.send-review');
         Route::post('list-request/send-result/{id}', 'OrderController@sendReview')->name('list-request.send-result');
         Route::post('list-request/send-revision/{id}', 'OrderController@sendRevision')->name('list-request.send-revision');

@@ -50,7 +50,7 @@
                                             <div class="form-row align-items-center justify-between">
                                                 <div class="col">
                                                     <label class="text-gray" id="rating">Rating</label>
-                                                    <div class="review-rating"></div> fieldname: rating
+                                                    <div class="review-rating"></div> {{-- field name: rating --}}
                                                 </div>
                                                 <button type="submit" class="btn btn-default">Send Review</button>
                                             </div>

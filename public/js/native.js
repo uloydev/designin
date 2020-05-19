@@ -153,16 +153,16 @@ $(document).ready(function () {
         "[data-target='#modal-result']").click(function () {
             let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
             let jobId = $(this).data('id');
-            const domain = window.location.origin;
+            const routingListRequest = window.location.origin + '/agent/list-request';
 
             $(".modal-job-title").text(jobTitle);
             $("#modal-approval form, #modal-rejection form")
-                .attr('action', domain + '/list-request/approval/' + jobId)
-            $("#modal-progress form").attr('action', domain + '/service/progress/' + jobId);
-            $("#modal-result form").attr('action', domain + '/service/' + jobId);
+                .attr('action', routingListRequest + '/approval/' + jobId)
+            $("#modal-progress form").attr('action', routingListRequest + '/progress/' + jobId);
+            $("#modal-result form").attr('action', routingListRequest + '/send-result/' + jobId);
         });
-    const progressVals = document.querySelectorAll("#listRequestPage .progress-value");
-    progressVals.forEach(function (progressVal) {
+    const allProgress = document.querySelectorAll("#listRequestPage .progress-value");
+    allProgress.forEach(function (progressVal) {
         let textProgress = progressVal.textContent;
         const progressDoneChecks = document.querySelectorAll('#listRequestPage .progress-done');
         progressDoneChecks.forEach(function () {
@@ -176,16 +176,16 @@ $(document).ready(function () {
         let historyId = Number($(this).data('id'));
         let historyTitle = $.trim($(this).prev().text());
 
-        $("#delete-history-job form").attr('action', window.location.origin + '/agent/list-request/' + historyId);
+        $("#delete-history-job form")
+            .attr('action', window.location.origin + '/agent/list-request/delete/' + historyId);
         $("#delete-history-job .modal-job-history-title").text(historyTitle);
     });
 
     $("[data-target='#modal-revision']").click(function () {
         let revisionId = $(this).data('id');
-        let revisionTitle = $.trim($(this).data('title'));
+        const routingListRequest = window.location.origin + '/agent/list-request';
 
-        $("#modal-revision form")
-            .attr('action', window.location.origin + '/agent/list-request/send-revision/' + revisionId);
+        $("#modal-revision form").attr('action', routingListRequest + '/send-revision/' + revisionId);
     });
 
     const jobProgress = document.querySelector('.progress-job');

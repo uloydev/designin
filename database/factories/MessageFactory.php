@@ -1,11 +1,12 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/** @var Factory $factory */
 
 use App\Message;
 use App\User;
 use App\ChatSession;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(Message::class, function (Faker $faker) {
     $session = $faker->randomElement(ChatSession::all());

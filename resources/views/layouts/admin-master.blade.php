@@ -38,7 +38,7 @@ The above copyright notice and this permission notice shall be included in all c
                     <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link {{ \Request::is(Auth::user()->role . '/dashboard') ? 'active' : '' }}"
+                                <a class="nav-link {{ Request::is(Auth::user()->role . '/dashboard') ? 'active' : '' }}"
                                    href="{{ route(Auth::user()->role . '.' .'dashboard') }}">
                                     <i class="ni ni-tv-2 text-primary"></i>
                                     <span class="nav-link-text">Dashboard</span>
@@ -81,6 +81,12 @@ The above copyright notice and this permission notice shall be included in all c
                                         <span class="nav-link-text">Main slider</span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('manage.contact-us.index') }}">
+                                        <i class="fas fa-envelope text-gray"></i>
+                                        <span class="nav-link-text">Message From Customer</span>
+                                    </a>
+                                </li>
                             @else
                                 <li class="nav-item">
                                     <a class="nav-link" href="#navbar-components" data-toggle="collapse"
@@ -111,7 +117,7 @@ The above copyright notice and this permission notice shall be included in all c
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('agent.profile.index') }}"
-                                    class="nav-link {{ \Request::is('agent/profiled*') ? 'active' : '' }}">
+                                    class="nav-link {{ Request::is('agent/profile*') ? 'active' : '' }}">
                                         <i class="ni ni-single-02 text-yellow"></i>
                                         <span class="nav-link-text">Profile</span>
                                     </a>
