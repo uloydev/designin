@@ -206,15 +206,15 @@ class OrderController extends Controller
             'file'=> 'required|mimes:jpeg,png,pdf,zip,rar',
             'message'=>'required',
         ]);
-        $result = new ProjectResult();
-        $result->order_id = $id;
-        $result->file = $request->file('file')->store('public/files');
-        $result->message = $request->message;
-        $result->type = 'revision';
-        $result->agent_id = Auth::id();
-        $result->save();
+        $revision = new ProjectResult();
+        $revision->order_id = $id;
+        $revision->file = $request->file('file')->store('public/files');
+        $revision->message = $request->message;
+        $revision->type = 'revision';
+        $revision->agent_id = Auth::id();
+        $revision->save();
         $order = Order::findOrFail($id);
-        Mail::to($order->user->email)->send(new OrderRevisionFinishedNotification($order));
+        Mail::to($order->user->email)->send(new OrderRevisionFinishedNotification($order, $revision));
         return redirect()->back()->with('success', 'Project Revision Has Sent Successfully');
     }
 }

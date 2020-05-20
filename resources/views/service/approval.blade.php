@@ -68,10 +68,16 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" id="form-revision-job" enctype="multipart/form-data">
-                    @csrf @method('PUT')
+                <form method="post" action="{{-- routing on js --}}" id="form-revision-job" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="message">Your message to customer</label>
+                        <textarea name="message" id="message" rows="10" class="form-control"
+                        placeholder="Put message here"></textarea>
+                    </div>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input invisible file-custom__input" id="revision"
+                        name="file"
                         accept="image/*, .psd, .xd, .sketch, video/mp4, video/x-m4v, video/*, .zip, .rar, .7z">
                         <label class="custom-file-label" for="revision">Send Revision file</label>
                     </div>
