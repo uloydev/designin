@@ -6,19 +6,21 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Order;
 
 class NewOrderNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $order;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -28,6 +30,6 @@ class NewOrderNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return markdown('emails.order.new')->with('order', $this->order);
     }
 }
