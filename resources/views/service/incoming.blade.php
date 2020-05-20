@@ -6,14 +6,21 @@
     @include('partials.job-header')
 @endsection
 @section('content')
-    @if (session('approval'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <span class="alert-text text-capitalize">{{ session('approval') }}</span>
+    <div class="alert alert-success alert-dismissible no-fadeout d-none" role="alert" id="alert-approve">
+        <span class="alert-text text-capitalize">Successfully approve job</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @if (session('reject'))
+        <div class="alert alert-success alert-dismissible d-none" role="alert" id="alert-approve">
+            <span class="alert-text text-capitalize">{{ session('reject') }}</span>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
     @endif
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -23,12 +30,12 @@
                 <div class="card-body">
                     <div class="accordion" id="accordion-request">
                         @forelse ($orders as $order)
-                        <article class="accordion__item">
+                        <article class="accordion__item" data-id="{{ $order->id }}">
                             <div id="heading{{$order->id}}" class="d-flex mb-2 align-items-center">
                                 <h2 class="mb-0 d-inline-block mr-auto job-agent-title">
                                     <button class="btn btn-link collapsed text-capitalize" type="button"
-                                            data-toggle="collapse" data-target="#collapse{{$order->id}}"
-                                            aria-expanded="false" aria-controls="collapse{{$order->id}}">
+                                            data-toggle="collapse" data-target="#collapse{{ $loop->index + 1 }}"
+                                            aria-expanded="false" aria-controls="collapse{{ $loop->index + 1 }}">
                                         <i class="fas fa-chevron-up rotate-180 mr-2"></i>{{$order->package->title}}
                                     </button>
                                 </h2>
@@ -42,12 +49,13 @@
                                 </button>
 
                             </div>
-                            <div id="collapse{{$order->id}}" class="collapse" aria-labelledby="heading{{$order->id}}"
+                            <div id="collapse{{ $loop->index + 1 }}" class="collapse" aria-labelledby="heading{{$loop->index + 1}}"
                                 data-parent="#accordion-request">
                                 <div class="card-body">
                                     {{$order->request}}
                                 </div>
                                 <div class="card-footer">
+                                    <p>From : <span class="customer-email">{{ $order->user->email }}</span></p>
                                     <time>Ordered At : {{$order->created_at}}</time>
                                 </div>
                             </div>

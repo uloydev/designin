@@ -148,19 +148,55 @@ $(document).ready(function () {
     });
 
     //agent js
-    // $(".pagination-nav .pagination").addClass('mb-0');
     $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection'], " +
         "[data-target='#modal-result']").click(function () {
             let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
             let jobId = $(this).data('id');
+            let customerEmail = $(this).parents(".accordion__item").find(".customer-email").text();
+            let jobProgress = $(this).data('progress');
             const routingListRequest = window.location.origin + '/agent/list-request';
+            console.log(jobProgress);
+
+            $("button[form='form-approval-job']").click(function (e) {
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: routingListRequest + '/approval/' + jobId,
+                    method: 'put',
+                    data: {
+                        customer_email: $("input[name='customer_email']").val(),
+                        approval: $("input[name='approval']").val()
+                    },
+                    beforeSend: function() {
+                        $("#modal-approval .close").trigger('click');
+                        $("#modal-rejection .close").trigger('click');
+                        $("#loadingApprove").modal('show');
+                    },
+                    success: function(result){
+                        $("#loadingApprove").modal('hide');
+                        window.location.href = '/agent/list-request/incoming';
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            });
 
             $(".modal-job-title").text(jobTitle);
-            $("#modal-approval form, #modal-rejection form")
-                .attr('action', routingListRequest + '/approval/' + jobId)
+            $("input[name='customer_email']").val(customerEmail);
+            $("#modal-rejection form").attr('action', routingListRequest + '/approval/' + jobId);
+            $("#modal-progress .progress-job").slider({ value: jobProgress });
+            $("#modal-progress .progress-job").slider('refresh');
+            $("#modal-progress #progress-job-val").text(jobProgress);
+            $("#modal-progress .progress-bar").css('width', jobProgress + '%').text(jobProgress + '%');
             $("#modal-progress form").attr('action', routingListRequest + '/progress/' + jobId);
             $("#modal-result form").attr('action', routingListRequest + '/send-result/' + jobId);
         });
+
     const allProgress = document.querySelectorAll("#listRequestPage .progress-value");
     allProgress.forEach(function (progressVal) {
         let textProgress = progressVal.textContent;
@@ -187,18 +223,6 @@ $(document).ready(function () {
 
         $("#modal-revision form").attr('action', routingListRequest + '/send-revision/' + revisionId);
     });
-
-    const jobProgress = document.querySelector('.progress-job');
-    if (jobProgress != null) {
-        new Powerange(jobProgress, {
-            min: 0,
-            start: 0,
-            decimal: false
-        });
-        jobProgress.onchange = function() {
-            document.getElementById('progress-job-val').innerHTML = jobProgress.value;
-        };
-    }
 
     //admin js
     $("[data-target='#updateSlider'], [data-target='#deleteSlider']").click(function () {
@@ -356,10 +380,20 @@ $(document).ready(function () {
         let labelText = $(this).data('label');
         if ($.trim($(this).val()).length !== 0) {
             let nameCard =  $(this)[0].files[0].name;
-            $(this).next().text(nameCard);
+            if ($(this).attr('id') === 'message_file') {
+                $(this).siblings(".file-value").text(nameCard);
+            }
+            else {
+                $(this).next().text(nameCard);
+            }
         }
         else {
-            $(this).next().text(labelText);
+            if ($(this).attr('id') === 'message_file') {
+                $(this).siblings(".file-value").text("");
+            }
+            else {
+                $(this).next().text(labelText);
+            }
         }
     });
     $("#serviceEditPage #service-edit-form #serviceLogo").change(function () {
@@ -450,8 +484,18 @@ $(document).ready(function () {
     });
 
     //plugin & general
+    $(".progress-job").slider({
+        max: 100,
+        step: 1,
+        orientation: 'horizontal',
+        range: false,
+        tooltip: 'show'
+    }).on('change', function () {
+        let valueProgressJob = $(".progress-job").slider('getValue');
+        $("#progress-job-val").text(valueProgressJob);
+    });
     $("img").prop('draggable', false);
-    $(".alert").not(".no-fadeout").delay(1000).fadeOut('slow');
+    $(".alert").not(".no-fadeout").not('#alert-approve').delay(1000).fadeOut('slow');
 
     $("#editPromo input[name='promo_end']").datepicker({
         minDate: new Date($("#editPromo input[name='promo_start']").val())

@@ -25,6 +25,7 @@ class PromoController extends Controller
         $promo->promo_start = $request->promo_start;
         $promo->promo_end = $request->promo_end;
         $promo->save();
+
         return redirect()->back()->with('create', 'Succefully add new promo');
     }
 

@@ -7,29 +7,28 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Order;
+use Illuminate\Http\Request;
 
 class OrderReviewedNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
     private $data;
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct(Order $data)
+    public $message;
+
+    public function __construct(Order $data, Request $request)
     {
         $this->data = $data;
+        $this->message = $request->rating_review;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
-        return $this->view('emails.order.reviewed')->with('data', $this->data);
+        return $this->subject('Review from our agent')
+                    ->markdown('emails.review-history')
+                    ->with([
+                        'data' => $this->data,
+                        'message' => $this->message
+                    ]);
     }
 }

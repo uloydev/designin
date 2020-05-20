@@ -2,7 +2,14 @@
 @section('page-id', 'ongoingJob')
 @section('page-name', 'Ongoing Job')
 @section('page-title', 'Job Ongoing')
-@section('header') @include('partials.job-header') @endsection
+@section('header')
+    @include('partials.job-header')
+    @if (session('success'))
+        <div class="text-center mb-5 alert alert-default" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+@endsection
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -35,6 +42,7 @@
                                         {{ $order->request }}
                                     </div>
                                     <div class="card-footer border-top-0 py-0">
+                                        <p>Customer: <span>{{ $order->user->email }}</span></p>
                                         <time class="text-muted">
                                             Complained At : {{ $order->updated_at->format('d M Y') }}
                                         </time>

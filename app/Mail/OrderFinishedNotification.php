@@ -15,11 +15,7 @@ class OrderFinishedNotification extends Mailable
 
     private $order;
     private $result;
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
+
     public function __construct(Order $order, ProjectResult $result)
     {
         $this->order = $order;
@@ -33,7 +29,7 @@ class OrderFinishedNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.order.finished', [
+        return $this->subject('Result for your order')->markdown('emails.order-finished', [
             'order' => $this->order,
             'result' => $this->result,
         ]);

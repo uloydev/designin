@@ -15,25 +15,16 @@ class OrderRevisionFinishedNotification extends Mailable
 
     private $order;
     private $revision;
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
+
     public function __construct(Order $order, ProjectResult $revision)
     {
         $this->order = $order;
         $this->revision = $revision;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
-        return $this->view('emails.order.revision-finished', [
+        return $this->subject('Revision Result')->markdown('emails.send-revision')->with([
             'order' => $this->order,
             'revision' => $this->revision,
         ]);

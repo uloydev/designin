@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Order;
+use Illuminate\Http\Request;
 
 class OrderAcceptedNotification extends Mailable
 {
@@ -14,23 +15,17 @@ class OrderAcceptedNotification extends Mailable
 
 
     private $data;
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
+
     public function __construct(Order $data)
     {
         $this->data = $data;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
+
     public function build()
     {
-        return $this->view('emails.order.approval')->with('data', $this->data);
+        return $this->subject('Desainin ' . $this->data->package->title)
+                    ->markdown('emails.approval-order')
+                    ->with('data', $this->data);
     }
 }

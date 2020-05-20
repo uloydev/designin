@@ -13,11 +13,7 @@ class OrderRejectedNotification extends Mailable
     use Queueable, SerializesModels;
 
     private $data;
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
+
     public function __construct(Order $data)
     {
         $this->data = $data;
@@ -30,6 +26,8 @@ class OrderRejectedNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.order.approval')->with('data', $this->data);
+        return $this->subject('Desainin ' . $this->data->package->title)
+                    ->markdown('emails.approval-order')
+                    ->with('data', $this->data);
     }
 }

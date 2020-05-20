@@ -119,11 +119,11 @@
         </div>
     </div>
 @endsection
-@section('element')
+@push('element')
     <div class="overlay overlay--nav-showed"></div>
     <div class="modal single-service__modal" id="modal-service-send-message">
         <div class="modal__content">
-            <div class="modal__header">
+            <div class="modal__header pb-3">
                 Send message
                 <a href="javascript:void(0)" class="btn-close-modal"><i class='bx bx-x' ></i></a>
             </div>
@@ -150,10 +150,11 @@
                         <div class="d-flex align-items-center justify-content-between">
                             <label for="message_file" class="single-service__message-file"
                                    title="Attach a file">
-                                <input type="file" id="message_file" class="d-none">
+                                <input type="file" id="message_file" class="d-none file-custom__input"
+                                data-label="Insert attachment">
                                 <i class='bx bx-cloud-upload'></i>
-                                Insert attachment
-                                <span class="ml-2"></span>
+                                <b class="text-label">Insert attachment</b>
+                                <span class="ml-2 file-value"></span>
                             </label>
                             <button type="submit" class="btn service-single__message-btn">
                                 Send
@@ -164,4 +165,4 @@
             </div>
         </div>
     </div>
-@endsection
+@endpush

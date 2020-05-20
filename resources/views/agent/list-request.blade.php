@@ -6,6 +6,11 @@
     @include('partials.job-header')
 @endsection
 @section('content')
+    @if (session('success'))
+        <div class="alert alert-default" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -30,11 +35,13 @@
                                         data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
                                             Send result
                                         </button>
+                                    @else
+                                        <button type="button" class="btn btn-outline-default btn-sm" data-toggle="modal"
+                                                data-target="#modal-progress" data-backdrop="static" data-id="{{$order->id}}"
+                                                data-progress="{{ $order->progress }}">
+                                            Report progress
+                                        </button>
                                     @endif
-                                    <button type="button" class="btn btn-outline-default btn-sm" data-toggle="modal"
-                                    data-target="#modal-progress" data-backdrop="static" data-id="{{$order->id}}">
-                                        Report progress
-                                    </button>
                                 </div>
                                 <div id="collapse{{$order->id}}" aria-labelledby="heading{{$order->id}}"
                                 data-parent="#accordion-request" class="collapse">
@@ -86,22 +93,20 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" class="col px-4" method="post" id="form-update-job-progress">
+                    <form action="" class="pr-3" method="post" id="form-update-job-progress">
                         @csrf @method('PUT')
-                        <div class="form-row justify-between align-items-center">
+                        <div class="form-row mx-0 justify-content-between align-items-center">
                             <div class="col-9">
-                                <input name='progress' type="text" class="progress-job">
+                                <input name='progress' type="text" class="progress-job" data-slider-value="0">
                             </div>
-                            <div class="col-auto text-right" id="progress-job-val">0</div>
+                            <div id="progress-job-val">0</div>
                         </div>
                     </form>
                     <div class="row mx-0 align-items-center mt-2">
                         <p class="mb-0">Progress right now: </p>
                         <div class="col">
                             <div class="progress mt-3">
-                                <div class="progress-bar" role="progressbar" style="width: {{ '25' }}%">
-                                    {{ '25' }}%
-                                </div>
+                                <div class="progress-bar">{{-- value on js --}}</div>
                             </div>
                         </div>
                     </div>
@@ -126,11 +131,17 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" id="form-send-job">
-                        @csrf @method('PUT')
+                    <form method="post" action="{{-- routing on js --}}" id="form-send-job" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="result-message">Message to customer</label>
+                            <textarea name="message" id="result-message" placeholder="Message result"
+                            class="form-control" rows="10" required></textarea>
+                        </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input invisible file-custom__input" id="sendResult"
-                            accept="image/*, .psd, .xd, .sketch, video/mp4, video/x-m4v, video/*, .zip, .rar, .7z">
+                            <input type="file" class="custom-file-input invisible file-custom__input"
+                            id="sendResult" name="result_file"
+                            accept="image/*, .psd, .xd, .sketch, .mp4, .zip, .rar, .7z, .pdf">
                             <label class="custom-file-label" for="sendResult">Result file</label>
                         </div>
                     </form>

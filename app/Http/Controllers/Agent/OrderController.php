@@ -8,8 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\View\View;
 use App\Order;
 use App\ProjectResult;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderAcceptedNotification;
 use App\Mail\OrderRejectedNotification;
@@ -152,21 +152,25 @@ class OrderController extends Controller
             $order->started_at = Carbon::now();
             $order->save();
             Mail::to($order->user->email)->send(new OrderAcceptedNotification($order));
-        }else if($request->approval == 'reject'){
+            return response()->json(['success'=>'Successfully' . $request->approval . ' Job']);
+        }
+        else if($request->approval == 'reject') {
             $order->status = 'canceled';
             $order->save();
             Mail::to($order->user->email)->send(new OrderRejectedNotification($order));
-        }else{
+            return redirect()->back()->with('reject', 'Successfully reject job');
+        }
+        else {
             return abort('404');
         }
-        return redirect()->back('approval', 'Succesfully ' . $request->approval . ' Incoming Job');
     }
 
-    public function progressUpdate($id)
+    public function progressUpdate(Request $request, $id)
     {
         $order = Order::where('status', 'process')->findOrFail($id);
         $order->progress = $request->progress;
         $order->save();
+        return redirect()->back()->with('success', 'Successfully update progress');
     }
 
     public function sendReview(Request $request, $id)
@@ -174,28 +178,25 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->is_reviewed = true;
         $order->save();
-        Mail::to($order->user->email)->send(new OrderReviewedNotification($order));
-        return [
-            'status' => 'ok',
-            'sent_to' => $order->user->email
-        ];
+        Mail::to($order->user->email)->send(new OrderReviewedNotification($order, $request));
+        return redirect()->back()->with('success', 'Successfully send review to customer email');
     }
 
     public function sendResult(Request $request, $id)
     {
         $request->validate([
-            'file'=> 'required|mimes:jpeg,png,pdf,zip,rar',
+            'result_file'=> 'required|mimes:jpeg,png,psd,xd,sketch,mp4,zip,rar,7z,pdf',
             'message'=> 'required',
         ]);
-        $result = new ProjectResult();
+        $result = new ProjectResult;
         $result->order_id = $id;
-        $result->file = $request->file('file')->store('public/files');
+        $result->file = $request->file('result_file')->store('public/files');
         $result->message = $request->message;
         $result->type = 'result';
         $result->agent_id = Auth::id();
         $result->save();
         $order = Order::findOrFail($id);
-        Mail::to($order->user->email)->send(new OrderFinishedNotification($order));
+        Mail::to($order->user->email)->send(new OrderFinishedNotification($order, $result));
         return redirect()->back()->with('success', 'Project Result Has Sent Successfully');
     }
 
@@ -205,15 +206,15 @@ class OrderController extends Controller
             'file'=> 'required|mimes:jpeg,png,pdf,zip,rar',
             'message'=>'required',
         ]);
-        $result = new ProjectResult();
-        $result->order_id = $id;
-        $result->file = $request->file('file')->store('public/files');
-        $result->message = $request->message;
-        $result->type = 'revision';
-        $result->agent_id = Auth::id();
-        $result->save();
+        $revision = new ProjectResult();
+        $revision->order_id = $id;
+        $revision->file = $request->file('file')->store('public/files');
+        $revision->message = $request->message;
+        $revision->type = 'revision';
+        $revision->agent_id = Auth::id();
+        $revision->save();
         $order = Order::findOrFail($id);
-        Mail::to($order->user->email)->send(new OrderRevisionFinishedNotification($order));
+        Mail::to($order->user->email)->send(new OrderRevisionFinishedNotification($order, $revision));
         return redirect()->back()->with('success', 'Project Revision Has Sent Successfully');
     }
 }

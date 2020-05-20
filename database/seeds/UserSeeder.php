@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             [
                 'name'=>'User',
                 'email_verified_at' => Carbon::now(),
-                'email'=>'user@test.com',
+                'email'=>'sanchez77rodriguez@gmail.com',
                 'password'=> Hash::make('password'),
             ],
             [
