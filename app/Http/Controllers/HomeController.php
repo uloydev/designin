@@ -12,6 +12,7 @@ use App\Service;
 use App\CarouselImage;
 use App\Blog;
 use App\Faq;
+use Illuminate\Support\Facades\Auth;
 use App\ServiceCategory;
 use App\FaqCategory;
 use App\User;
@@ -74,7 +75,7 @@ class HomeController extends Controller
         $testimonies = $service->testimonies;
         $packages = $service->package;
         return view('service.single', [
-            'service' => $service, 
+            'service' => $service,
             'rating' => $rating,
             'testimonies' => $testimonies,
             'packages' => $packages
@@ -111,7 +112,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $package = Package::findOrFail($id);
         $order = new Order();
-        $order->agent_id = $request->agent_id;
+        $order->agent_id = intval($request->agent_id);
         $order->package_id = $package->id;
         $order->status = 'waiting';
         $order->request = $request->user_request;
@@ -127,8 +128,9 @@ class HomeController extends Controller
         $order->budget = $budget;
         $order->user_id = $user->id;
         $order->save();
+
         Mail::to(User::find($request->agent_id)->email)->send(new NewOrderNotification($order));
-        return redirect()->route('user.order.index')->with('success', 'Order placed Successfuly. you have to wait for agent to accept your order');
+        return redirect()->route('user.order.index')->with('success', 'Order placed Successfully. you have to wait for agent to accept your order');
     }
 
     public function checkPromoCode(Request $request)

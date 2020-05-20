@@ -13,11 +13,7 @@ class NewOrderNotification extends Mailable
     use Queueable, SerializesModels;
 
     private $order;
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
+
     public function __construct(Order $order)
     {
         $this->order = $order;
@@ -30,6 +26,6 @@ class NewOrderNotification extends Mailable
      */
     public function build()
     {
-        return markdown('emails.order.new')->with('order', $this->order);
+        return $this->subject('New order for you')->markdown('emails.new-order')->with('order', $this->order);
     }
 }

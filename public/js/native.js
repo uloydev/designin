@@ -484,16 +484,18 @@ $(document).ready(function () {
     });
 
     //plugin & general
-    $(".progress-job").slider({
-        max: 100,
-        step: 1,
-        orientation: 'horizontal',
-        range: false,
-        tooltip: 'show'
-    }).on('change', function () {
-        let valueProgressJob = $(".progress-job").slider('getValue');
-        $("#progress-job-val").text(valueProgressJob);
-    });
+    if ($(".progress-job").length) {
+        $(".progress-job").slider({
+            max: 100,
+            step: 1,
+            orientation: 'horizontal',
+            range: false,
+            tooltip: 'show'
+        }).on('change', function () {
+            let valueProgressJob = $(".progress-job").slider('getValue');
+            $("#progress-job-val").text(valueProgressJob);
+        });
+    }
     $("img").prop('draggable', false);
     $(".alert").not(".no-fadeout").not('#alert-approve').delay(1000).fadeOut('slow');
 
@@ -517,13 +519,9 @@ $(document).ready(function () {
         });
     });
 
-    function realTime() {
-        let getDate = new Date().getFullYear();
-        $("#footer_date").text(getDate);
-    }
-    setInterval(function () {
-        realTime()
-    }, 1);
+    let getDate = new Date().getFullYear();
+    $("#footer_date").text(getDate);
+
     if (window.location.href.indexOf('admin') > -1 || window.location.href.indexOf('agent') > -1) {
         bsCustomFileInput.init();
     }

@@ -62,11 +62,11 @@ class LoginController extends Controller
         'email' => 'required',
         'password' => 'required',
         ]);
-    
+
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             return redirect($this->redirectTo($request));
         }
-        return Redirect::to("login")->withSuccess('Oppes! You have entered invalid credentials');
+        return redirect()->route('login')->withSuccess('Oppes! You have entered invalid credentials');
     }
 }

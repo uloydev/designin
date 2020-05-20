@@ -90,7 +90,7 @@
             <aside class="single-package col-12 col-lg-4" id="service-package-tab">
                 <div class="jq-tab-menu">
                     @foreach ($packages as $package)
-                    <div class="jq-tab-title {{$loop->first ? 'active' : ''}}" data-tab="package-{{$package->id}}">{{$package->title}}</div>    
+                    <div class="jq-tab-title {{$loop->first ? 'active' : ''}}" data-tab="package-{{$package->id}}">{{$package->title}}</div>
                     @endforeach
                 </div>
                 <div class="jq-tab-content-wrapper">
@@ -104,9 +104,8 @@
                                 {{$package->description}}
                             </p>
                         </div>
-                        <form action="{{route('order.store', $package->id)}}" method="post">
+                        <form action="{{ route('order.store', $package->id )}}" method="post">
                             @csrf
-                            @method('post')
                             <input type="hidden" name="agent_id" value="{{$service->agent_id}}">
                             <button type="submit" class="single-package__btn">Continue (IDR {{$package->price}})</button>
                         </form>
