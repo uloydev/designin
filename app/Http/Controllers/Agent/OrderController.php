@@ -23,11 +23,12 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        $totalOrderNotDone = Order::where('status', '<>', 'finished')->count();
-        $orders = Order::join('package', 'package.id', '=', 'orders.package_id')
+        $totalOrderNotDone = Order::where('status', 'process')->orWhere('status', 'complaint')->count();
+        $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')
         ->where('agent_id', Auth::id())
         ->where('status', 'process')
-        ->orWhere('status', 'complaint');
+        ->orWhere('status', 'complaint')
+        ->select('orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status', 'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price');
         if ($request->has('search')) {
             $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
             ->orWhere('price', 'like', '%'.$request->search.'%');
@@ -58,10 +59,11 @@ class OrderController extends Controller
     public function history(Request $request)
     {
         $totalOrderNotDone = Order::where('status', '<>', 'finished')->count();
-        $orders = Order::join('package', 'package.id', '=', 'orders.package_id')->where([
-           ['agent_id', Auth::id()],
-           ['status', 'finished']
-        ]);
+        $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')->where([
+            ['agent_id', Auth::id()],
+            ['status', 'finished']
+        ])
+        ->select('orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status', 'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price');
         if ($request->has('search')) {
             $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
             ->orWhere('price', 'like', '%'.$request->search.'%');
@@ -84,8 +86,9 @@ class OrderController extends Controller
 
     public function bidHistory(Request $request)
     {
-        $orders = Order::join('package', 'package.id', '=', 'orders.package_id')
-        ->where('agent_id', Auth::id());
+        $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')
+        ->where('agent_id', Auth::id())
+        ->select('orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status', 'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price');
         if ($request->has('search')) {
             $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
             ->orWhere('price', 'like', '%'.$request->search.'%');
@@ -110,9 +113,10 @@ class OrderController extends Controller
 
     public function incoming(Request $request)
     {
-        $orders = Order::join('package', 'package.id', '=', 'orders.package_id')
+        $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')
         ->where('agent_id', Auth::id())
-        ->where('status', 'waiting');
+        ->where('status', 'waiting')
+        ->select('orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status', 'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price');
         if ($request->has('search')) {
             $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
             ->orWhere('price', 'like', '%'.$request->search.'%');
