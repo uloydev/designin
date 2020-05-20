@@ -23,16 +23,12 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-<<<<<<< HEAD
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
     protected function redirectTo(Request $request)
-=======
-    protected function redirectTo()
->>>>>>> 8b1108b33ec8e3e927a2542f92256a52577d6336
     {
         // dd($request);
         if ($request->has('redirect')) {
