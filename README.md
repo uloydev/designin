@@ -1,6 +1,5 @@
 # designin
-Re-repo of https://github.com/uloydev/designin after a lot of problem on that repo. Please run command bellow
-- git clone https://github.com/BariqDharmawan/desainin.git
+- git clone https://github.com/uloydev/designin.git
 - composer install
 - npm install
 - npm run dev
