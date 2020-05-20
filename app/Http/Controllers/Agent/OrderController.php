@@ -165,11 +165,12 @@ class OrderController extends Controller
         }
     }
 
-    public function progressUpdate($id)
+    public function progressUpdate(Request $request, $id)
     {
         $order = Order::where('status', 'process')->findOrFail($id);
         $order->progress = $request->progress;
         $order->save();
+        return redirect()->back()->with('success', 'Successfully update progress');
     }
 
     public function sendReview(Request $request, $id)

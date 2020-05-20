@@ -20,7 +20,7 @@ The above copyright notice and this permission notice shall be included in all c
         <link rel="stylesheet" href="{{ asset('plugin/slick/slick-theme.css') }}"/>
         <link rel="stylesheet" href="{{ asset('plugin/nice-select/css/nice-select.css') }}">
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.css" rel="stylesheet">
-        <link href="{{ asset('plugin/powerange/dist/powerange.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('plugin/bootstrap-range/dist/css/bootstrap-slider.min.css') }}">
         <link href="{{ asset('plugin/air-datepicker/dist/css/datepicker.min.css') }}" rel="stylesheet">
         @yield('css')
         <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
@@ -220,8 +220,7 @@ The above copyright notice and this permission notice shall be included in all c
         <script src="{{ asset('plugin/argon-dashboard/assets/vendor/js-cookie/js.cookie.js') }}"></script>
         <script src="{{ asset('plugin/argon-dashboard/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}">
         </script>
-        <script
-        src="{{ asset('plugin/argon-dashboard/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}">
+        <script src="{{ asset('plugin/argon-dashboard/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}">
         </script>
         <script src="{{ asset('plugin/argon-dashboard/assets/vendor/chart.js/dist/Chart.min.js') }}"></script>
         <script src="{{ asset('plugin/argon-dashboard/assets/vendor/chart.js/dist/Chart.extension.js') }}"></script>
@@ -232,7 +231,7 @@ The above copyright notice and this permission notice shall be included in all c
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
         <script src="{{ asset('plugin/nice-select/js/jquery.nice-select.min.js') }}"></script>
         <script src="{{ asset('plugin/jquery-star-rating-plugin/src/jquery.star.rating.min.js') }}"></script>
-        <script src="{{ asset('plugin/powerange/dist/powerange.min.js') }}"></script>
+        <script src="{{ asset('plugin/bootstrap-range/dist/bootstrap-slider.min.js') }}"></script>
         <script src="{{ asset('plugin/air-datepicker/dist/js/datepicker.min.js') }}"></script>
         <script src="{{ asset('plugin/air-datepicker/dist/js/i18n/datepicker.en.js') }}"></script>
         @stack('script')

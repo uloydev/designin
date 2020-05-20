@@ -82,11 +82,22 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::get('list-request/history', 'OrderController@history')->name('list-request.history');
         Route::get('list-request/incoming', 'OrderController@incoming')->name('list-request.incoming');
         Route::put('list-request/approval/{id}', 'OrderController@approval')->name('list-request.approval');
-        Route::put('list-request/progress/{id}', 'OrderController@updateProgress')->name('list-request.progress');
+        Route::put('list-request/progress/{id}', 'OrderController@progressUpdate')->name('list-request.progress');
         Route::post('list-request/send-review/{id}', 'OrderController@sendReview')->name('list-request.send-review');
         Route::post('list-request/send-result/{id}', 'OrderController@sendReview')->name('list-request.send-result');
         Route::post('list-request/send-revision/{id}', 'OrderController@sendRevision')->name('list-request.send-revision');
         Route::resource('list-request', 'OrderController');
         Route::resource('portfolio', 'PortfolioController');
+
+        //preview mailable
+        Route::get('accept', function () {
+            $invoice = Order::findOrFail(3);
+            if ($invoice->status == 'canceled' or $invoice->status == 'process') {
+                return new App\Mail\OrderAcceptedNotification($invoice);
+            }
+            else {
+                return "you don't need an email";
+            }
+        });
     });
 });

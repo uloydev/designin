@@ -1,5 +1,12 @@
 @import "./general.css";
 
+.slider-selection {
+    background-image: linear-gradient(to bottom,#28b4ba 0,#1393a0 100%);
+}
+.slider.slider-horizontal {
+    width: 100%;
+}
+
 .spinner {
     -webkit-animation: rotator 1.4s linear infinite;
     animation: rotator 1.4s linear infinite;

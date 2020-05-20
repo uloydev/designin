@@ -9,5 +9,5 @@
 @endif
 
 Thank you for your order, <br>
-{{ config('app.name') . ' Admin' }}
+{{ config('app.name') . ' ' . $data->agent->name }}
 @endcomponent
