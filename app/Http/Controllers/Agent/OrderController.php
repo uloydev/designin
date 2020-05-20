@@ -185,18 +185,18 @@ class OrderController extends Controller
     public function sendResult(Request $request, $id)
     {
         $request->validate([
-            'file'=> 'required|mimes:jpeg,png,pdf,zip,rar',
+            'result_file'=> 'required|mimes:jpeg,png,psd,xd,sketch,mp4,zip,rar,7z,pdf',
             'message'=> 'required',
         ]);
-        $result = new ProjectResult();
+        $result = new ProjectResult;
         $result->order_id = $id;
-        $result->file = $request->file('file')->store('public/files');
+        $result->file = $request->file('result_file')->store('public/files');
         $result->message = $request->message;
         $result->type = 'result';
         $result->agent_id = Auth::id();
         $result->save();
         $order = Order::findOrFail($id);
-        Mail::to($order->user->email)->send(new OrderFinishedNotification($order));
+        Mail::to($order->user->email)->send(new OrderFinishedNotification($order, $result));
         return redirect()->back()->with('success', 'Project Result Has Sent Successfully');
     }
 

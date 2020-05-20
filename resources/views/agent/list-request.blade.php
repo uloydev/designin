@@ -131,11 +131,17 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" id="form-send-job">
-                        @csrf @method('PUT')
+                    <form method="post" action="{{-- routing on js --}}" id="form-send-job" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="result-message">Message to customer</label>
+                            <textarea name="message" id="result-message" placeholder="Message result"
+                            class="form-control" rows="10" required></textarea>
+                        </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input invisible file-custom__input" id="sendResult"
-                            accept="image/*, .psd, .xd, .sketch, video/mp4, video/x-m4v, video/*, .zip, .rar, .7z">
+                            <input type="file" class="custom-file-input invisible file-custom__input"
+                            id="sendResult" name="result_file"
+                            accept="image/*, .psd, .xd, .sketch, .mp4, .zip, .rar, .7z, .pdf">
                             <label class="custom-file-label" for="sendResult">Result file</label>
                         </div>
                     </form>
