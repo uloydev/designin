@@ -88,16 +88,5 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::post('list-request/send-revision/{id}', 'OrderController@sendRevision')->name('list-request.send-revision');
         Route::resource('list-request', 'OrderController');
         Route::resource('portfolio', 'PortfolioController');
-
-        //preview mailable
-        Route::get('accept', function () {
-            $invoice = Order::findOrFail(3);
-            if ($invoice->status == 'canceled' or $invoice->status == 'process') {
-                return new App\Mail\OrderAcceptedNotification($invoice);
-            }
-            else {
-                return "you don't need an email";
-            }
-        });
     });
 });

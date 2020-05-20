@@ -26,7 +26,7 @@ class OrderRejectedNotification extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->package->title)
+        return $this->subject('Desainin ' . $this->data->package->title)
                     ->markdown('emails.approval-order')
                     ->with('data', $this->data);
     }

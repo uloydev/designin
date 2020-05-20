@@ -148,7 +148,6 @@ $(document).ready(function () {
     });
 
     //agent js
-    // $(".pagination-nav .pagination").addClass('mb-0');
     $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection'], " +
         "[data-target='#modal-result']").click(function () {
             let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
@@ -157,14 +156,45 @@ $(document).ready(function () {
             const routingListRequest = window.location.origin + '/agent/list-request';
             let yourOrderUrl = window.location.origin + '/user/order';
 
+            $("button[form='form-approval-job']").click(function (e) {
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: routingListRequest + '/approval/' + jobId,
+                    method: 'put',
+                    data: {
+                        customer_email: $("input[name='customer_email']").val(),
+                        url_desainin: $("input[name='url_desainin']").val(),
+                        approval: $("input[name='approval']").val()
+                    },
+                    beforeSend: function() {
+                        $("#modal-approval .close").trigger('click');
+                        $("#modal-rejection .close").trigger('click');
+                        $("#loadingApprove").modal('show');
+                    },
+                    success: function(result){
+                        $("#loadingApprove").modal('hide');
+                        window.location.href = '/agent/list-request/incoming';
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            });
+
             $(".modal-job-title").text(jobTitle);
             $("input[name='customer_email']").val(customerEmail);
             $("input[name='url_desainin']").val(yourOrderUrl);
-            $("#modal-approval form, #modal-rejection form").attr('action', routingListRequest + '/approval/' + jobId);
+            $("#modal-rejection form").attr('action', routingListRequest + '/approval/' + jobId);
 
             $("#modal-progress form").attr('action', routingListRequest + '/progress/' + jobId);
             $("#modal-result form").attr('action', routingListRequest + '/send-result/' + jobId);
         });
+
     const allProgress = document.querySelectorAll("#listRequestPage .progress-value");
     allProgress.forEach(function (progressVal) {
         let textProgress = progressVal.textContent;
@@ -455,7 +485,7 @@ $(document).ready(function () {
 
     //plugin & general
     $("img").prop('draggable', false);
-    $(".alert").not(".no-fadeout").delay(1000).fadeOut('slow');
+    $(".alert").not(".no-fadeout").not('#alert-approve').delay(1000).fadeOut('slow');
 
     $("#editPromo input[name='promo_end']").datepicker({
         minDate: new Date($("#editPromo input[name='promo_start']").val())

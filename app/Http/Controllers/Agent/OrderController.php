@@ -152,16 +152,17 @@ class OrderController extends Controller
             $order->started_at = Carbon::now();
             $order->save();
             Mail::to($order->user->email)->send(new OrderAcceptedNotification($order));
+            return response()->json(['success'=>'Successfully' . $request->approval . ' Job']);
         }
         else if($request->approval == 'reject') {
             $order->status = 'canceled';
             $order->save();
             Mail::to($order->user->email)->send(new OrderRejectedNotification($order));
+            return redirect()->back()->with('reject', 'Successfully reject job');
         }
         else {
             return abort('404');
         }
-        return redirect()->back()->with('approval', 'Successfully ' . $request->approval . ' Incoming Job');
     }
 
     public function progressUpdate($id)
