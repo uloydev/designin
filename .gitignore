@@ -12,3 +12,4 @@ _ide_helper.php
 /.idea
 *.idea
 */.idea
+!public/plugin
