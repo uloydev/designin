@@ -3,6 +3,11 @@
 @section('page-name', 'Message From Customer')
 @section('page-title', 'Message From Customer')
 @section('header')
+    @if (session('success'))
+        <div class="alert alert-default text-center" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
     <header>
         <div class="row mb-5 justify-content-between">
             <div class="col-12">
@@ -97,12 +102,18 @@
                                     <div class="card-body">
                                         {{ $message->message }}
                                         <form action="{{ route('manage.contact-us.update', $message->id) }}"
-                                              class="mt-3 border-top pt-4">
+                                              class="mt-3 border-top pt-4" method="post">
+                                            @csrf @method('PUT')
+                                            <div class="form-group">
+                                                <label for="subject">Subject for their email</label>
+                                                <input type="text" id="subject" class="form-control" name="subject"
+                                                placeholder="This will appear as subject in their email" required>
+                                            </div>
                                             <div class="form-group">
                                                 <label for="message-review" class="text-gray">
                                                     Reply to their email
                                                 </label>
-                                                <textarea name="rating_review" class="form-control" id="message-review"
+                                                <textarea name="answer" class="form-control" id="message-review"
                                                 placeholder="Oooh thanks for your advice, we will ..."
                                                 rows="10" required></textarea>
                                             </div>
@@ -140,11 +151,9 @@
                         @endforelse
                     </div>
                 </div>
-                @if (count($messages) > 10)
-                    <div class="card-footer border-top-0">
-                        {{ $messages->links() }}
-                    </div>
-                @endif
+                <div class="card-footer border-top-0">
+                    {{ $messages->links() }}
+                </div>
             </div>
         </div>
     </div>

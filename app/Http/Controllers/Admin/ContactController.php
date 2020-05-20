@@ -14,7 +14,7 @@ class ContactController extends Controller
 
     public function index()
     {
-        $messages = ContactUs::where('is_answered', '<>', true)->paginate(10);
+        $messages = ContactUs::where('is_answered', false)->latest()->paginate(10);
         $totalAnswered = ContactUs::where('is_answered', true)->count();
         return view('contact-us.read', ['messages' => $messages, 'totalAnswered' => $totalAnswered]);
     }
@@ -33,9 +33,10 @@ class ContactController extends Controller
         $message = ContactUs::findOrFail($id);
         $message->answer = $request->answer;
         $message->is_answered = true;
+        $message->subject_answer = $request->subject;
         $message->save();
-        Mail::to($message->email)->send(new ContctUsNotification($message));
-        return redirect()->back()->with('success', 'Message Updated Successfully');
+        Mail::to($message->email)->send(new ContactUsNotification($message));
+        return redirect()->back()->with('success', 'Successfully reply message from customer');
     }
 
     public function destroy($id)

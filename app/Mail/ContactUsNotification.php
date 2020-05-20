@@ -13,11 +13,7 @@ class ContactUsNotification extends Mailable
     use Queueable, SerializesModels;
 
     private $data;
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
+
     public function __construct(ContactUs $data)
     {
         $this->data = $data;
@@ -30,6 +26,8 @@ class ContactUsNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.contact-us')->with('data', $this->data);
+        return $this->subject($this->data->subject_answer)
+                    ->markdown('emails.reply-message')
+                    ->with('data', $this->data);
     }
 }
