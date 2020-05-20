@@ -3,7 +3,6 @@
 
 {!! $data->answer !!}
 
-
 Thank you for your reply,<br>
 {{ config('app.name') . ' Admin' }}
 @endcomponent

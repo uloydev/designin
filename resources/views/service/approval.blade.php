@@ -10,11 +10,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" class="d-none" method="post" id="form-approval-job">
+                <form action="{{--routing on js--}}" class="d-none" method="post" id="form-approval-job">
                     @csrf @method('PUT')
+                    <input type="hidden" name="customer_email" readonly required>
+                    <input type="hidden" name="url_desainin" required readonly>
                     <input type="hidden" name="approval" value="accept" required readonly>
                 </form>
-                <p>Are you sure wanna approve this project?</p>
+                <p class="text-center">Are you sure wanna approve this project?</p>
             </div>
             <div class="modal-footer d-flex justify-between">
                 <button type="button" class="btn btn-link text-gray" data-dismiss="modal">No</button>
@@ -38,11 +40,12 @@
             </div>
             <div class="modal-body">
                 {{-- route is route('agent.list-request.approval', $id) --}}
-                <form class="d-none" method="post" id="form-rejection-job">
+                <form class="d-none" action="{{--routing on js--}}" method="post" id="form-rejection-job">
                     @csrf @method('PUT')
+                    <input type="hidden" name="customer_email" readonly required>
                     <input type="hidden" name="approval" value="reject" readonly required>
                 </form>
-                <p>Are you sure wanna reject this project?</p>
+                <p class="text-center">Are you sure wanna reject this project?</p>
             </div>
             <div class="modal-footer d-flex justify-between">
                 <button type="button" class="btn btn-link text-gray" data-dismiss="modal">No</button>

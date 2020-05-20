@@ -153,11 +153,15 @@ $(document).ready(function () {
         "[data-target='#modal-result']").click(function () {
             let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
             let jobId = $(this).data('id');
+            let customerEmail = $(this).parents(".accordion__item").find(".customer-email").text();
             const routingListRequest = window.location.origin + '/agent/list-request';
+            let yourOrderUrl = window.location.origin + '/user/order';
 
             $(".modal-job-title").text(jobTitle);
-            $("#modal-approval form, #modal-rejection form")
-                .attr('action', routingListRequest + '/approval/' + jobId)
+            $("input[name='customer_email']").val(customerEmail);
+            $("input[name='url_desainin']").val(yourOrderUrl);
+            $("#modal-approval form, #modal-rejection form").attr('action', routingListRequest + '/approval/' + jobId);
+
             $("#modal-progress form").attr('action', routingListRequest + '/progress/' + jobId);
             $("#modal-result form").attr('action', routingListRequest + '/send-result/' + jobId);
         });

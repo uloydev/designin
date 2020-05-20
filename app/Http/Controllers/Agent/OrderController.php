@@ -8,8 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\View\View;
 use App\Order;
 use App\ProjectResult;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderAcceptedNotification;
 use App\Mail\OrderRejectedNotification;
@@ -148,14 +148,16 @@ class OrderController extends Controller
             $order->started_at = Carbon::now();
             $order->save();
             Mail::to($order->user->email)->send(new OrderAcceptedNotification($order));
-        }else if($request->approval == 'reject'){
+        }
+        else if($request->approval == 'reject') {
             $order->status = 'canceled';
             $order->save();
             Mail::to($order->user->email)->send(new OrderRejectedNotification($order));
-        }else{
+        }
+        else {
             return abort('404');
         }
-        return redirect()->back('approval', 'Succesfully ' . $request->approval . ' Incoming Job');
+        return redirect()->back()->with('approval', 'Successfully ' . $request->approval . ' Incoming Job');
     }
 
     public function progressUpdate($id)
