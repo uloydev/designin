@@ -5,6 +5,11 @@
 @section('css') <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> @endsection
 @section('header')
     @include('partials.job-header')
+    @if (session('success'))
+        <div class="mb-5 alert alert-default" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
 @endsection
 @section('content')
     <div class="row">
@@ -38,22 +43,17 @@
                                     <div class="card-body">
                                         {!! $order->request !!}
                                         <form action="{{ route('agent.list-request.send-review', $order->id) }}"
-                                              class="mt-3 border-top pt-4">
+                                              class="mt-3 border-top pt-4" method="post">
+                                             @csrf
                                             <div class="form-group">
                                                 <label for="message-review" class="text-gray">
-                                                    Message to customer
+                                                    Message to customer : <span>{{ $order->user->email }}</span>
                                                 </label>
                                                 <textarea name="rating_review" class="form-control" id="message-review"
                                                 placeholder="What do you think to your customer..."
                                                 rows="10" required></textarea>
                                             </div>
-                                            <div class="form-row align-items-center justify-between">
-                                                <div class="col">
-                                                    <label class="text-gray" id="rating">Rating</label>
-                                                    <div class="review-rating"></div> {{-- field name: rating --}}
-                                                </div>
-                                                <button type="submit" class="btn btn-default">Send Review</button>
-                                            </div>
+                                            <button type="submit" class="btn btn-default">Send Review</button>
                                         </form>
                                     </div>
                                     <div class="card-footer">

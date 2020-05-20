@@ -84,7 +84,7 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::put('list-request/approval/{id}', 'OrderController@approval')->name('list-request.approval');
         Route::put('list-request/progress/{id}', 'OrderController@progressUpdate')->name('list-request.progress');
         Route::post('list-request/send-review/{id}', 'OrderController@sendReview')->name('list-request.send-review');
-        Route::post('list-request/send-result/{id}', 'OrderController@sendReview')->name('list-request.send-result');
+        Route::post('list-request/send-result/{id}', 'OrderController@sendResult')->name('list-request.send-result');
         Route::post('list-request/send-revision/{id}', 'OrderController@sendRevision')->name('list-request.send-revision');
         Route::resource('list-request', 'OrderController');
         Route::resource('portfolio', 'PortfolioController');

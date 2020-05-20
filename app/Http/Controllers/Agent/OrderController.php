@@ -178,11 +178,8 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->is_reviewed = true;
         $order->save();
-        Mail::to($order->user->email)->send(new OrderReviewedNotification($order));
-        return [
-            'status' => 'ok',
-            'sent_to' => $order->user->email
-        ];
+        Mail::to($order->user->email)->send(new OrderReviewedNotification($order, $request));
+        return redirect()->back()->with('success', 'Successfully send review to customer email');
     }
 
     public function sendResult(Request $request, $id)
