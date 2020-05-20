@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 use App\Client;
 use App\LandingHeaderSlider;
 use App\Testimony;
-use Illuminate\Http\Request;
 use App\Service;
 use App\CarouselImage;
 use App\Blog;
@@ -15,6 +17,10 @@ use App\FaqCategory;
 use App\User;
 use App\Subscription;
 use App\Reason;
+use App\Package;
+use App\Order;
+use App\Promo;
+use App\Mail\NewOrderNotification;
 
 class HomeController extends Controller
 {
@@ -65,7 +71,14 @@ class HomeController extends Controller
         $service = Service::findOrFail($id);
         $rating = $service->testimonies->pluck('rating')->avg();
         $rating = $rating ? $rating : 0;
-        return view('service.single', ['service' => $service, 'rating' => $rating]);
+        $testimonies = $service->testimonies;
+        $packages = $service->package;
+        return view('service.single', [
+            'service' => $service, 
+            'rating' => $rating,
+            'testimonies' => $testimonies,
+            'packages' => $packages
+        ]);
     }
 
     public function faq(Request $request)
@@ -92,4 +105,44 @@ class HomeController extends Controller
         ]);
     }
 
+    public function makeOrder(Request $request, $id)
+    {
+        $this->middleware('auth');
+        $user = Auth::user();
+        $package = Package::findOrFail($id);
+        $order = new Order();
+        $order->agent_id = $request->agent_id;
+        $order->package_id = $package->id;
+        $order->status = 'waiting';
+        $order->request = $request->user_request;
+        $budget = $package->price;
+        if ($user->is_subscribe) {
+            $subscription = $user->subscription;
+            $budget -= $budget * $subscription->discount / 100;
+        }
+        if ($request->has('promo_code')) {
+            $promo = Promo::where('code' , $request->promo_code)->get();
+            $budget -= $budget * $promo->discount / 100;
+        }
+        $order->budget = $budget;
+        $order->user_id = $user->id;
+        $order->save();
+        Mail::to(User::find($request->agent_id)->email)->send(new NewOrderNotification($order));
+        return redirect()->route('user.order.index')->with('success', 'Order placed Successfuly. you have to wait for agent to accept your order');
+    }
+
+    public function checkPromoCode(Request $request)
+    {
+        $promo = Promo::where('code', $request->promo_code)->get();
+        if (empty($promo)) {
+            return ['status'=>'failed', 'message'=>'wrong promo code'];
+        }
+        if (empty(Promo::where('code', $request->promo_code)->where('ended_date' < Carbon::now())->get())) {
+            return ['status'=>'failed', 'message'=>'promo code expired'];
+        }
+        if ($promo->usage >= $promo->limit){
+            return ['status'=>'failed', 'message'=>'promo usage exceed'];
+        }
+        return ['status'=>'success', 'message'=>'promo code applied', 'discount' => $promo->discount];
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Auth;
 use Closure;
+use Illuminate\Support\Facades\URL;
 
 class Authenticate extends Middleware
 {
@@ -16,11 +17,13 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
-            return route('login');
+    if (! $request->expectsJson()) {
+        return route('login', [
+            'redirect'=>$request
+            ]);
         }
     }
-
+    
     public function handle($request, Closure $next)
     {
         if(Auth::check()){
@@ -31,6 +34,6 @@ class Authenticate extends Middleware
             }
             return redirect()->route(Auth::user()->role . '.dashboard');
         }
-        return redirect()->route('login');
+        return redirect('login?redirect='.URL::current());
     }
 }

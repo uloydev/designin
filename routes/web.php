@@ -4,11 +4,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify'=>true]);
+// Route::get('login', 'Auth\LoginController@loginlogin')->name('login');
 
 Route::get('/', 'HomeController@index')->name('landing-page');
 Route::get('services/search', 'HomeController@serviceSearch');
 Route::get('services', 'HomeController@services')->name('services');
 Route::get('service/show/{id}', 'HomeController@showService')->name('service.show');
+Route::post('service/show/{id}/contact', 'HomeController@showService')->name('service.contact');
+Route::get('service/show/{id}/order', 'HomeController@makeOrder')->name('order.store')->middleware('auth');
+Route::get('promo/check', 'HomeController@checkPromoCode')->name('promo.check');
 Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
 Route::get('testimony', 'HomeController@testimonies')->name('testimony');

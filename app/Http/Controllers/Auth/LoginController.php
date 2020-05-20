@@ -28,8 +28,12 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected function redirectTo()
+    protected function redirectTo(Request $request)
     {
+        // dd($request);
+        if ($request->has('redirect')) {
+            return $request->redirect;
+        }
         if (Auth::user()->role == 'user') {
             return 'user/order';
         }
@@ -46,5 +50,23 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function showLoginForm(Request $request){
+        return view('auth.login', ['data'=> $request->all()]);
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+        'email' => 'required',
+        'password' => 'required',
+        ]);
+    
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            return redirect($this->redirectTo($request));
+        }
+        return Redirect::to("login")->withSuccess('Oppes! You have entered invalid credentials');
     }
 }

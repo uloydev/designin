@@ -27,6 +27,9 @@
           <input type="email" name="email" class="input" placeholder="Email" autocomplete="email" required/>
           <input type="password" name="password" class="input" minlength="8" placeholder="Password"
           autocomplete="new-password" required/>
+          @isset($data['redirect'])
+          <input type="hidden" name="redirect" value="{{$data['redirect']}}">
+          @endisset
         </div>
         <button class="submit-btn" type="submit">Log in</button>
         @if (Route::has('password.request'))

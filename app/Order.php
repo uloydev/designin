@@ -16,7 +16,8 @@ class Order extends Model
         'progress',
         'request',
         'deadline',
-        'is_reviewed'
+        'is_reviewed',
+        'budget'
     ];
     protected $casts = ['start_at'=> 'datetime', 'deadline'=>'datetime'];
     // protected $with = ['package'];

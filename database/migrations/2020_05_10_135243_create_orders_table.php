@@ -32,6 +32,7 @@ class CreateOrdersTable extends Migration
             $table->timestamp('deadline')->nullable();
             $table->boolean('is_reviewed')->nullable();
             $table->text('request')->nullable();
+            $table->unsignedInteger('budget');
             $table->timestamps();
         });
     }

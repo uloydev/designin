@@ -75,100 +75,45 @@
                             </select>
                         </form>
                     </div>
+                    @foreach ($testimonies as $testimony)
                     <article class="service-single__comment">
-                        <img src="{{ Storage::url('temporary/people.webp') }}" height="20"
+                        <img src="{{ Storage::url($testimony->user->profile->avatar ?? 'temporary/people.webp') }}" height="20"
                         alt="People comment image">
                         <div class="service-single__comment-detail">
-                            <p class="service-single__comment-title">People name</p>
-                            <p class="service-single__comment-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Deserunt impedit quae recusandae rem. Optio, vero.
-                            </p>
+                            <p class="service-single__comment-title">{{$testimony->user->name}}</p>
+                            <p class="service-single__comment-text">{{$testimony->content}}</p>
                         </div>
                     </article>
-                    <article class="service-single__comment">
-                        <img src="{{ Storage::url('temporary/people.webp') }}" height="20"
-                        alt="People comment image">
-                        <div class="service-single__comment-detail">
-                            <p class="service-single__comment-title">People name</p>
-                            <p class="service-single__comment-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Deserunt impedit quae recusandae rem. Optio, vero.
-                            </p>
-                        </div>
-                    </article>
+                    @endforeach
                 </div>
             </section>
             <aside class="single-package col-12 col-lg-4" id="service-package-tab">
                 <div class="jq-tab-menu">
-                    <div class="jq-tab-title active" data-tab="basic">Basic</div>
-                    <div class="jq-tab-title" data-tab="standard">Standard</div>
-                    <div class="jq-tab-title" data-tab="premium">Premium</div>
+                    @foreach ($packages as $package)
+                    <div class="jq-tab-title {{$loop->first ? 'active' : ''}}" data-tab="package-{{$package->id}}">{{$package->title}}</div>    
+                    @endforeach
                 </div>
                 <div class="jq-tab-content-wrapper">
-                    <div class="jq-tab-content active" data-tab="basic">
+                    @foreach ($packages as $package)
+                    <div class="jq-tab-content {{$loop->first ? 'active' : ''}}" data-tab="package-{{$package->id}}">
                         <div class="single-package__top mb-4">
                             <p class="mb-3 d-flex justify-content-between align-items-center">
-                                Silver <var class="font-style-normal font-bold">IDR 300,000</var>
+                                {{$package->title}} <var class="font-style-normal font-bold">IDR {{$package->price}}</var>
                             </p>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Aperiam cumque ex impedit iusto libero sint?
+                                {{$package->description}}
                             </p>
                         </div>
-                        <ul class="single-service__bottom mb-4">
-                            <li class="font-bold">What will you get</li>
-                            {{--foreach--}}
-                            <li>1 Initial Concept Included</li>
-                            <li>Source File</li>
-                            <li>High Resolution</li>
-                            {{--end foreach--}}
-                        </ul>
-                        <a href="" class="single-package__btn">Continue (IDR 300,000)</a>
+                        <form action="{{route('order.store', $package->id)}}" method="post">
+                            @csrf
+                            @method('post')
+                            <input type="hidden" name="agent_id" value="{{$service->agent_id}}">
+                            <button type="submit" class="single-package__btn">Continue (IDR {{$package->price}})</button>
+                        </form>
+                        {{-- edit discounted price if subscribe --}}
                         <del class="d-block mt-3 text-center text-gray">IDR 600,000</del>
                     </div>
-                    <div class="jq-tab-content" data-tab="standard">
-                        <div class="single-package__top mb-4">
-                            <p class="mb-3 d-flex justify-content-between align-items-center">
-                                Premium <var class="font-style-normal font-bold">IDR 300,000</var>
-                            </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Aperiam cumque ex impedit iusto libero sint?
-                            </p>
-                        </div>
-                        <ul class="single-service__bottom mb-4">
-                            <li class="font-bold">What will you get</li>
-                            {{--foreach--}}
-                            <li>1 Initial Concept Included</li>
-                            <li>Source File</li>
-                            <li>High Resolution</li>
-                            {{--end foreach--}}
-                        </ul>
-                        <a href="" class="single-package__btn">Continue (IDR 300,000)</a>
-                        <del class="d-block mt-3 text-center text-gray">IDR 600,000</del>
-                    </div>
-                    <div class="jq-tab-content" data-tab="premium">
-                        <div class="single-package__top mb-4">
-                            <p class="mb-3 d-flex justify-content-between align-items-center">
-                                Gold <var class="font-style-normal font-bold">IDR 300,000</var>
-                            </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Aperiam cumque ex impedit iusto libero sint?
-                            </p>
-                        </div>
-                        <ul class="single-service__bottom mb-4">
-                            <li class="font-bold">What will you get</li>
-                            {{--foreach--}}
-                            <li>1 Initial Concept Included</li>
-                            <li>Source File</li>
-                            <li>High Resolution</li>
-                            {{--end foreach--}}
-                        </ul>
-                        <a href="" class="single-package__btn">Continue (IDR 300,000)</a>
-                        <del class="d-block mt-3 text-center text-gray">IDR 600,000</del>
-                    </div>
+                    @endforeach
                 </div>
             </aside>
         </div>
