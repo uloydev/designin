@@ -390,10 +390,20 @@ $(document).ready(function () {
         let labelText = $(this).data('label');
         if ($.trim($(this).val()).length !== 0) {
             let nameCard =  $(this)[0].files[0].name;
-            $(this).next().text(nameCard);
+            if ($(this).attr('id') === 'message_file') {
+                $(this).siblings(".file-value").text(nameCard);
+            }
+            else {
+                $(this).next().text(nameCard);
+            }
         }
         else {
-            $(this).next().text(labelText);
+            if ($(this).attr('id') === 'message_file') {
+                $(this).siblings(".file-value").text("");
+            }
+            else {
+                $(this).next().text(labelText);
+            }
         }
     });
     $("#serviceEditPage #service-edit-form #serviceLogo").change(function () {
