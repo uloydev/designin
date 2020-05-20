@@ -31,10 +31,17 @@
                                         </button>
                                     </h2>
                                     @if ($order->progress == '100')
-                                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-                                        data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
-                                            Send result
-                                        </button>
+                                        @if ($order->results->count() > 0)
+                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                            data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}" disabled>
+                                                wait for user to accept result
+                                            </button>
+                                        @else
+                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                            data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
+                                                Send result
+                                            </button>
+                                        @endif
                                     @else
                                         <button type="button" class="btn btn-outline-default btn-sm" data-toggle="modal"
                                                 data-target="#modal-progress" data-backdrop="static" data-id="{{$order->id}}"

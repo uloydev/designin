@@ -17,10 +17,8 @@ use App\Mail\OrderReviewedNotification;
 use App\Mail\OrderFinishedNotification;
 use App\Mail\OrderRevisionFinishedNotification;
 
-
 class OrderController extends Controller
 {
-
     public function index(Request $request)
     {
         $totalOrderNotDone = Order::where('status', 'process')->orWhere('status', 'complaint')->count();
