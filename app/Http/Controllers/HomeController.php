@@ -125,6 +125,7 @@ class HomeController extends Controller
         if ($request->has('promo_code')) {
             $promo = Promo::where('code' , $request->promo_code)->get();
             $budget -= $budget * $promo->discount / 100;
+            $order->promo_id = $promo->id;
         }
         $order->budget = $budget;
         $order->user_id = $user->id;

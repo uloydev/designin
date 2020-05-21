@@ -47,6 +47,21 @@
                         <input type="text" id="add-promo-end" class="form-control datepicker-here"
                                placeholder="Promo End date" name="promo_end" required>
                     </div>
+                    <div class="form-group">
+                        <label for="promo-code">Promo Code</label>
+                        <input id="promo-code" type="text" placeholder="Ex: puasbanget"
+                                class="form-control" name="promo_code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-discount">Promo discount (%)</label>
+                        <input id="promo-discount" type="text" placeholder="Ex: 10"
+                                class="form-control" name="promo_discount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-limit">Promo limit</label>
+                        <input id="promo-limit" type="text" placeholder="Ex: 100"
+                                class="form-control" name="promo_limit" required>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer justify-between">
@@ -65,22 +80,38 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" id="form-edit-promo">
+                {{-- set form input value using js --}}
+                <form action="{{-- route using js --}}" method="post" id="form-edit-promo">
                     @csrf @method('PUT')
                     <div class="form-group">
                         <label for="promo-name">Promo name</label>
                         <input id="promo-name" type="text" placeholder="Ex: Lebira (Lebaran Gembira)"
-                               class="form-control" name="promo_name" required>
+                                class="form-control" name="promo_name" required>
                     </div>
                     <div class="form-group">
-                        <label for="promo-start">Start date</label>
+                        <label for="edit-promo-start">Start date</label>
                         <input type="text" id="edit-promo-start" class="form-control datepicker-here"
-                               placeholder="Promo Start date" name="promo_start" required>
+                                placeholder="Promo Start date" name="promo_start" required>
                     </div>
                     <div class="form-group">
-                        <label for="promo-end">End date</label>
+                        <label for="edit-promo-end">End date</label>
                         <input type="text" id="edit-promo-end" class="form-control datepicker-here"
-                               placeholder="Promo End date" name="promo_end" required>
+                                placeholder="Promo End date" name="promo_end" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-code">Promo Code</label>
+                        <input id="promo-code" type="text" placeholder="Ex: puasbanget"
+                                class="form-control" name="promo_code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-discount">Promo discount (%)</label>
+                        <input id="promo-discount" type="text" placeholder="Ex: 10"
+                                class="form-control" name="promo_discount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-limit">Promo limit</label>
+                        <input id="promo-limit" type="text" placeholder="Ex: 100"
+                                class="form-control" name="promo_limit" required>
                     </div>
                 </form>
             </div>

@@ -33,6 +33,7 @@ class CreateOrdersTable extends Migration
             $table->boolean('is_reviewed')->nullable();
             $table->text('request')->nullable();
             $table->unsignedInteger('budget');
+            $table->unsignedInteger('promo_id')->nullable();
             $table->timestamps();
         });
     }
