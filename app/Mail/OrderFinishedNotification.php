@@ -32,6 +32,6 @@ class OrderFinishedNotification extends Mailable
         return $this->subject('Result for your order')->markdown('emails.order-finished', [
             'order' => $this->order,
             'result' => $this->result,
-        ]);
+        ])->attachFromStorage($this->result->file);
     }
 }

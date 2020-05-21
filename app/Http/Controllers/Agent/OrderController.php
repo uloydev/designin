@@ -183,7 +183,7 @@ class OrderController extends Controller
     public function sendResult(Request $request, $id)
     {
         $request->validate([
-            'result_file'=> 'required|mimes:jpeg,png,psd,xd,sketch,mp4,zip,rar,7z,pdf',
+            'result_file'=> 'required|max:5000|mimes:jpeg,png,psd,xd,sketch,mp4,zip,rar,7z,pdf',
             'message'=> 'required',
         ]);
         $result = new ProjectResult;
@@ -195,7 +195,8 @@ class OrderController extends Controller
         $result->save();
         $order = Order::findOrFail($id);
         Mail::to($order->user->email)->send(new OrderFinishedNotification($order, $result));
-        return redirect()->back()->with('success', 'Project Result Has Sent Successfully');
+        return redirect()->back()
+                        ->with('success', 'Project Result Has Sent Successfully. Please wait until customer accept this');
     }
 
     public function sendRevision(Request $request, $id)
