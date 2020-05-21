@@ -6,22 +6,12 @@
     @include('partials.job-header')
 @endsection
 @section('content')
-    @if (session('success'))
-        <div class="alert alert-default" role="alert">
-            {{ session('success') }}
-        </div>
-    @elseif ($errors->any())
-        <div class="alert alert-danger no-fadeout alert-dismissible fade show" role="alert">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+    <div class="alert alert-danger no-fadeout alert-dismissible fade show" id="alert-error" role="alert" style="display: none">
+        Something when wrong. Please <a href="{{ route('contact-us.index') }}">contact admin</a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -42,9 +32,9 @@
                                         </button>
                                     </h2>
                                     @if ($order->progress == '100')
-                                        @if ($order->results->count() != 0)
+                                        @if ($order->results->count() == 0)
                                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-                                                    data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
+                                            data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
                                                 Send result
                                             </button>
                                         @else
@@ -99,6 +89,18 @@
     </div>
 @endsection
 @section('element')
+    <div class="modal fade" id="loadingApprove" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="modal-progress" tabindex="-1" role="dialog" aria-labelledby="modalProgressTitle"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

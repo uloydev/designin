@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\View\View;
 use App\Order;
 use App\ProjectResult;
 use Carbon\Carbon;
@@ -182,21 +180,26 @@ class OrderController extends Controller
 
     public function sendResult(Request $request, $id)
     {
-        $request->validate([
-            'result_file'=> 'required|max:5000|mimes:jpeg,png,psd,xd,sketch,mp4,zip,rar,7z,pdf',
+        $validator = $request->validate([
+            'result_file'=> 'nullable|max:10000|mimes:jpeg,png,psd,xd,sketch,mp4,zip,rar,7z,pdf',
             'message'=> 'required',
         ]);
         $result = new ProjectResult;
         $result->order_id = $id;
-        $result->file = $request->file('result_file')->store('public/files');
+        if ($request->hasFile('result_file')) {
+            $result->file = $request->file('result_file')->store('public/files');
+        }
         $result->message = $request->message;
         $result->type = 'result';
         $result->agent_id = Auth::id();
-        $result->save();
-        $order = Order::findOrFail($id);
-        Mail::to($order->user->email)->send(new OrderFinishedNotification($order, $result));
-        return redirect()->back()
-                        ->with('success', 'Project Result Has Sent Successfully. Please wait until customer accept this');
+        try {
+            $result->save();
+            $order = Order::findOrFail($id);
+            Mail::to($order->user->email)->send(new OrderFinishedNotification($order, $result));
+            return response()->json(['success' => 'Successfully Upload Result. Please wait until customer accept this']);
+        } catch (\Throwable $throwable) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        }
     }
 
     public function sendRevision(Request $request, $id)

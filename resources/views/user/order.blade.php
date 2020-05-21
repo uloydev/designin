@@ -22,42 +22,33 @@
                     </select>
                 </form>
                 <div class="profile-main__content">
+                    @forelse($orders as $order)
                     <article class="profile-main-item">
-                        <img src="{{ asset('img/service-design.jpg') }}" class="profile-main__order-img"
-                             alt="order image">
+                        <img src="{{ Storage::url($order->package->image) }}" class="profile-main__order-img"
+                             alt="order image {{ $order->id }}" data-id="{{ $order->id }}">
                         <div class="profile-main__order-detail ml-xl-5">
-                            <p class="mb-3">Start on:</p>
-                            <p class="mb-3">Finish on:</p>
-                            <p class="mb-3">Progress</p>
-                            <time class="mb-3 profile-main__time text-right">14 April 2020</time>
-                            <time class="mb-3 profile-main__time text-right">14 May 2020</time>
-                            <progress max="100" value="80">80%</progress>
+                            <div class="mb-3">
+                                What you order
+                                <span class="profile-main__title">{{ $order->package->title }}</span>
+                            </div>
+                            <div class="mb-3">
+                                Start on:
+                                <time class="profile-main__time">{{ $order->started_at }}</time>
+                            </div>
+                            <div class="mb-3">
+                                Finish on:
+                                <time class="profile-main__time">{{ $order->deadline }}</time>
+                            </div>
+                            <div class="mb-3">
+                                Progress
+                                <progress max="100" value="{{ $order->progress }}">{{ $order->progress }}</progress>
+                            </div>
                         </div>
                     </article>
-                    <article class="profile-main-item">
-                        <img src="{{ asset('img/service-design.jpg') }}" class="profile-main__order-img"
-                             alt="order image">
-                        <div class="profile-main__order-detail ml-xl-5">
-                            <p class="mb-3">Start on:</p>
-                            <p class="mb-3">Finish on:</p>
-                            <p class="mb-3">Progress</p>
-                            <time class="mb-3 profile-main__time text-right">14 April 2020</time>
-                            <time class="mb-3 profile-main__time text-right">14 May 2020</time>
-                            <progress max="100" value="80">80%</progress>
-                        </div>
-                    </article>
-                    <article class="profile-main-item">
-                        <img src="{{ asset('img/service-design.jpg') }}" class="profile-main__order-img"
-                             alt="order image">
-                        <div class="profile-main__order-detail ml-xl-5">
-                            <p class="mb-3">Start on:</p>
-                            <p class="mb-3">Finish on:</p>
-                            <p class="mb-3">Progress</p>
-                            <time class="mb-3 profile-main__time text-right">14 April 2020</time>
-                            <time class="mb-3 profile-main__time text-right">14 May 2020</time>
-                            <progress max="100" value="80">80%</progress>
-                        </div>
-                    </article>
+                    @empty
+                        <img src="{{ asset('img/empty-state.svg') }}" alt="No request" class="mx-auto d-block my-5">
+                        <h1 class="text-center display-4 text-muted">You have no order</h1>
+                    @endforelse
                 </div>
             </section>
         </div>

@@ -155,7 +155,6 @@ $(document).ready(function () {
             let customerEmail = $(this).parents(".accordion__item").find(".customer-email").text();
             let jobProgress = $(this).data('progress');
             const routingListRequest = window.location.origin + '/agent/list-request';
-            console.log(jobProgress);
 
             $("button[form='form-approval-job']").click(function (e) {
                 e.preventDefault();
@@ -182,6 +181,48 @@ $(document).ready(function () {
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log(textStatus, errorThrown);
+                    }
+                });
+            });
+
+            $("#form-send-job").submit(function (e) {
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: routingListRequest + '/send-result/' + jobId,
+                    method: 'post',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data: new FormData($(this)[0]),
+                    beforeSend: function() {
+                        $("#modal-result .close").trigger('click');
+                        $("#loadingApprove").modal('show');
+                    },
+                    success: function(result){
+                        $("#loadingApprove").modal('hide');
+                        window.location.href = '/agent/list-request';
+                    },
+                    error: function(data) {
+                        console.log(data);
+                        $("#loadingApprove").modal('hide');
+                        $("#alert-error").show();
+
+                        // for(let errors in error.message){
+                        //     if (error.message.hasOwnProperty(k)){
+                        //         error.message[k].forEach(function(val){
+                        //             $("#alert-error").find('ul').append('<li>' + val + '</li>');
+                        //         });
+                        //     }
+                        // }
+                        // $("#alert-error").slideDown();
+                        // $.each(data.errors, function(key, value){
+                        //     $('#alert-error').show().append('<p>'+value+'</p>');
+                        // });
                     }
                 });
             });

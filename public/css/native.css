@@ -1598,6 +1598,9 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     margin-top: 10px;
     background-color: var(--almost-white);
 }
+#userOrderPage .profile-main-item progress {
+    margin-top: 5px;
+}
 .profile-aside {
     background-color: #fff;
     border: 1px solid #c7c7c7;
@@ -1737,7 +1740,14 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     align-content: space-between;
 }
 #userOrderPage .profile-main__order-detail {
-    max-height: calc(60px + 3rem);
+    /*max-height: calc(80px + 4rem);*/
+}
+#userOrderPage .profile-main__order-detail div {
+
+}
+.profile-main__title {
+    color: var(--third-color);
+    font-weight: bold;
 }
 .profile-main__time {
     color: var(--primary-color-hover);
@@ -1775,6 +1785,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 .profile-main__order-detail p * {
     font-weight: bold;
+    line-height: 24px;
     font-style: normal;
 }
 .profile-main-item__link {
