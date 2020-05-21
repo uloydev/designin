@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                 'password'=> Hash::make('password'),
             ],
             [
-                'name'=>'Agent',
+                'name'=>'Agent 1',
                 'email'=>'agent@test.com',
                 'role'=>'agent',
                 'email_verified_at' => now(),
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name'=>'Agent2',
-                'email'=>'agent2@test.com',
+                'email'=>'bariq.2nd.rodriguez@gmail.com',
                 'role'=>'agent',
                 'password'=> Hash::make('password'),
             ],

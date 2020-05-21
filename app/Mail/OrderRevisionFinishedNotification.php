@@ -27,6 +27,6 @@ class OrderRevisionFinishedNotification extends Mailable
         return $this->subject('Revision Result')->markdown('emails.send-revision')->with([
             'order' => $this->order,
             'revision' => $this->revision,
-        ]);
+        ])->attachFromStorage($this->revision->file);
     }
 }

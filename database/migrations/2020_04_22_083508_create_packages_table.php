@@ -17,7 +17,7 @@ class CreatePackagesTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('image')->nullable();
+            $table->string('image')->default('files/service-design.jpg');
             $table->integer('price');
             $table->unsignedInteger('duration');
             $table->integer('service_id');

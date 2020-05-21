@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Order;
 use Illuminate\Http\Request;
 use App\UserProfile;
 use Illuminate\Support\Facades\File;
@@ -19,7 +20,8 @@ class OrderController extends Controller
     {
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
         $profile = UserProfile::where('user_id', Auth::id())->first();
-        return  view('user.order', ['profile' => $profile, 'listBank' => $listBank]);
+        $orders = Order::where('user_id', Auth::id())->get();
+        return  view('user.order', ['profile' => $profile, 'listBank' => $listBank, 'orders' => $orders]);
     }
 
     public function create()
