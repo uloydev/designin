@@ -1,0 +1,68 @@
+@extends('layouts.admin-master')
+@section('page-id', 'ongoingJob')
+@section('page-name', 'Ongoing Job')
+@section('page-title', 'Job Ongoing')
+@section('header')
+    @include('partials.job-header')
+    @if (session('success'))
+        <div class="text-center mb-5 alert alert-default" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+@endsection
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Complaint Job</h3>
+                </div>
+                <div class="card-body">
+                    <div class="accordion" id="accordion-request">
+                        @forelse ($complaints as $order)
+                            <article class="accordion__item">
+                                <div id="heading{{ $order->id }}" class="d-flex mb-2 align-items-center">
+                                    <h2 class="mb-0 d-inline-block mr-auto job-agent-title">
+                                        <button class="btn btn-link collapsed text-capitalize" type="button"
+                                                data-toggle="collapse" data-target="#collapse{{ $order->id }}"
+                                                aria-expanded="false" aria-controls="collapse{{ $order->id }}">
+                                            <i class="fas fa-chevron-up rotate-180 mr-2"></i>
+                                            {{ Str::words($order->package->title, 5) }}
+                                        </button>
+                                    </h2>
+                                    <button type="button" class="btn btn-outline-default btn-sm mr-3"
+                                    data-toggle="modal" data-target="#modal-revision" data-backdrop="static"
+                                    data-id="{{ $order->id }}" data-title="{{ $order->title }}">
+                                        Send revision
+                                    </button>
+                                </div>
+                                <div id="collapse{{ $order->id }}" class="collapse"
+                                aria-labelledby="heading{{ $order->id }}" data-parent="#accordion-request">
+                                    <div class="card-body">
+                                        {{ $order->request }}
+                                    </div>
+                                    <div class="card-footer border-top-0 py-0">
+                                        <p>Customer: <span>{{ $order->user->email }}</span></p>
+                                        <time class="text-muted">
+                                            Complained At : {{ $order->updated_at->format('d M Y') }}
+                                        </time>
+                                    </div>
+                                </div>
+                            </article>
+                        @empty
+                            <img src="{{ asset('img/work-done.jpg') }}" alt="No complain job"
+                            class="mx-auto d-block" height="250">
+                            <h1 class="text-center display-4 text-muted">Good job! You have no ongoing job</h1>
+                        @endforelse
+                    </div>
+                </div>
+                @if ($totalComplaint > 10)
+                    <div class="card-footer border-top-0">
+                        {{ $complaints->links()  }}
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    @include('service.approval')
+@endsection

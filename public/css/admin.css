@@ -1,0 +1,350 @@
+@import "./general.css";
+
+.slider-selection {
+    background-image: linear-gradient(to bottom,#28b4ba 0,#1393a0 100%);
+}
+.slider.slider-horizontal {
+    width: 100%;
+}
+
+.spinner {
+    -webkit-animation: rotator 1.4s linear infinite;
+    animation: rotator 1.4s linear infinite;
+}
+
+@-webkit-keyframes rotator {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+}
+
+@keyframes rotator {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+}
+.path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+    animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+
+@-webkit-keyframes colors {
+    0% {
+        stroke: #4285F4;
+    }
+    25% {
+        stroke: #DE3E35;
+    }
+    50% {
+        stroke: #F7C223;
+    }
+    75% {
+        stroke: #1B9A59;
+    }
+    100% {
+        stroke: #4285F4;
+    }
+}
+
+@keyframes colors {
+    0% {
+        stroke: #4285F4;
+    }
+    25% {
+        stroke: #DE3E35;
+    }
+    50% {
+        stroke: #F7C223;
+    }
+    75% {
+        stroke: #1B9A59;
+    }
+    100% {
+        stroke: #4285F4;
+    }
+}
+@-webkit-keyframes dash {
+    0% {
+        stroke-dashoffset: 187;
+    }
+    50% {
+        stroke-dashoffset: 46.75;
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+    100% {
+        stroke-dashoffset: 187;
+        -webkit-transform: rotate(450deg);
+        transform: rotate(450deg);
+    }
+}
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 187;
+    }
+    50% {
+        stroke-dashoffset: 46.75;
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+    100% {
+        stroke-dashoffset: 187;
+        -webkit-transform: rotate(450deg);
+        transform: rotate(450deg);
+    }
+}
+
+
+.sidenav {
+    z-index: 1000;
+}
+.accordion .card-header:after {
+    display: none;
+}
+.progress {
+    height: 1.5rem;
+    border-radius: 1rem;
+}
+#navbar-search-main {
+    transform: none;
+}
+.nav-pills .nav-link:hover {
+    background-color: #E2E2E2;
+}
+.nav-pills .nav-link.active {
+    background-color: #4052af;
+}
+.carousel-control-prev, .carousel-control-next {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: auto;
+    bottom: auto;
+    border-radius: 50%;
+    padding: 6px;
+}
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    height: 10px;
+    width: 10px;
+}
+
+#servicePage #v-pills-tab {
+    height: 100%;
+}
+#servicePage #v-pills-tab .nav-link {
+    /*flex-grow: 1;*/
+    text-align: center;
+    padding: 20px 0;
+}
+#servicePage .service__title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+#servicePage .service__detail {
+    overflow: hidden;
+}
+#servicePage .service__detail * {
+    font-size: 1rem;
+    font-weight: normal;
+    color: var(--text-gray-dark);
+}
+#servicePage .service__content {
+    display: flex;
+    padding-bottom: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+#servicePage .service__content img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 7px;
+}
+#servicePage .service__action {
+    display: flex;
+    padding: 10px 0;
+    justify-content: space-between;
+}
+
+#serviceEditPage #service-edit-form .btn {
+    display: block;
+}
+
+#agentProfilePage .profile__form-edit .custom-file-input {
+    opacity: 0 !important;
+}
+#agentProfilePage .profile__label {
+    cursor: pointer;
+}
+#agentProfilePage .profile__label .fas {
+    position: absolute;
+    right: 0;
+    transform: translateX(200%) translateY(300%);
+    color: #50a090;
+}
+
+#listRequestPage .job-agent-title {
+    font-weight: bold;
+}
+.accordion .btn-link .fas {
+    transform: rotate(0);
+}
+.accordion .btn-link.collapsed .fas {
+    transform: rotate(-180deg);
+}
+.accordion__item + .accordion__item {
+    border-top: 1px solid #e1e1e1;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+}
+.accordion__item .job-history-title {
+
+}
+.accordion__item .card-footer li {
+    margin-bottom: 20px;
+    color: var(--gray);
+    display: flex;
+    font-weight: normal;
+    align-items: center;
+}
+#listRequestPage .accordion__item .progress-done {
+    display: none;
+}
+.sidenav .nav-link.active, #filter-job .nav-link.active {
+    font-weight: bolder;
+}
+#filter-job .nav {
+    padding: .3rem 1rem;
+}
+#filter-job .nav-item {
+    flex-grow: 1;
+}
+
+#listRequestPage #progress-job-val {
+    overflow: hidden;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    background-color: #efefef;
+}
+
+#bidHistoryPage #accordionHistoryJob h2 button {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0;
+}
+#bidHistoryPage .dropleft .dropdown-toggle::before {
+    content: none;
+}
+#bidHistoryPage .dropleft .dropdown-toggle {
+    color: #828282;
+    box-shadow: none;
+    margin-left: 0.5rem;
+}
+#bidHistoryPage .btn:not(:disabled):not(.disabled):active:focus[data-target],
+#bidHistoryPage .btn:not(:disabled):not(.disabled).active:focus[data-target],
+#incomingJobPage .btn:not(:disabled):not(.disabled):active:focus[data-target*='collapse'],
+#incomingJobPage .btn:not(:disabled):not(.disabled).active:focus[data-target*='collapse'] {
+    box-shadow: none;
+}
+#bidHistoryPage .btn:not(:disabled):not(.disabled),
+#bidHistoryPage .btn:not(:disabled):not(.disabled), #incomingJobPage .btn:not(:disabled)[data-target*='collapse'] {
+    padding-left: 0;
+    padding-right: 0;
+}
+#bidHistoryPage .accordion .collapse {
+    padding-top: 10px;
+}
+
+#incomingJobPage .btn[data-target] i {
+    font-size: 1.2rem;
+}
+
+#subscriptionPage .subscription__item .card-img-top {
+    height: 200px;
+    max-width: 100%;
+    width: auto;
+    object-position: center;
+    object-fit: cover;
+}
+
+#manageMainSliderPage .header .container-fluid {
+    /*padding-right: 0 !important;*/
+}
+
+footer {
+    width: 100%;
+    padding: 15px 0;
+}
+
+@media screen and (min-width: 768px) {
+    #servicePage .service__content {
+        flex-direction: row;
+        padding-bottom: 0;
+        margin: 10px 0 20px;
+    }
+    #servicePage .service__content figure {
+        flex-direction: row;
+    }
+    #servicePage .service__content img {
+        width: auto;
+        height: 300px;
+        margin-left: 0;
+        margin-right: 30px;
+        margin-bottom: 0;
+    }
+    #servicePage .carousel-item {
+        padding-top: 34px;
+    }
+
+    #serviceEditPage #service-edit-form .btn {
+        display: inline-block;
+    }
+    #serviceEditPage #service-edit-form button {
+        float: right;
+    }
+
+    #subscriptionPage .subscription__item {
+        margin-bottom: 0;
+        margin-top: 2rem;
+    }
+    #subscriptionPage .card .col-md-4:nth-child(-n+3) .subscription__item {
+        margin-top: 0;
+    }
+    #subscriptionPage .card .col-md-4:not(:nth-child(3n)) .card-img-top {
+        border-top-right-radius: 0;
+    }
+
+    footer {
+        margin-top: 30px;
+    }
+}
+@media screen and (min-width: 1200px) {
+    #subscriptionPage .card .col-md-4:not(:nth-child(3n)) .card-img-top {
+        border-top-right-radius: calc(.375rem - 1px);
+    }
+    #subscriptionPage .card .col-xl-3:not(:nth-child(4n)) .card-img-top {
+        border-top-right-radius: 0;
+    }
+    #subscriptionPage .card .col-md-4:nth-child(-n+4) .subscription__item {
+        margin-top: 0;
+    }
+}
