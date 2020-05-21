@@ -10,6 +10,17 @@
         <div class="alert alert-default" role="alert">
             {{ session('success') }}
         </div>
+    @elseif ($errors->any())
+        <div class="alert alert-danger no-fadeout alert-dismissible fade show" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     @endif
     <div class="row">
         <div class="col-12">
@@ -31,10 +42,14 @@
                                         </button>
                                     </h2>
                                     @if ($order->progress == '100')
-                                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-                                        data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
-                                            Send result
-                                        </button>
+                                        @if ($order->results->count() != 0)
+                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                                    data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
+                                                Send result
+                                            </button>
+                                        @else
+                                            <span class="text-gray">Already finished but customer not accept yet</span>
+                                        @endif
                                     @else
                                         <button type="button" class="btn btn-outline-default btn-sm" data-toggle="modal"
                                                 data-target="#modal-progress" data-backdrop="static" data-id="{{$order->id}}"
@@ -47,6 +62,10 @@
                                 data-parent="#accordion-request" class="collapse">
                                     <div class="card-body">{!! $order->request !!}</div>
                                     <ul class="card-footer border-top-0 mb-0 pt-0">
+                                        <li>
+                                            From customer:
+                                            <span class="text-primary ml-auto">{{ $order->user->email }}</span>
+                                        </li>
                                         <li>
                                             Remaining offer slots for customers
                                             <span class="mb-0 text-primary ml-auto">{{'2'}}</span>
