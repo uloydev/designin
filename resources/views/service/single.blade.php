@@ -141,7 +141,7 @@
                     </ul>
                 </div>
                 <div class="col">
-                    <form action="" method="post">
+                    <form action="{{ route('service.contact', $service->id) }}" method="post">
                         @csrf
                         <label for="send-message" class="d-block mb-3">Your message</label>
                         <textarea name="message_agent" id="send-message" cols="30" rows="10"
