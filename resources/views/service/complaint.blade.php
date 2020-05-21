@@ -33,7 +33,7 @@
                                     <button type="button" class="btn btn-outline-default btn-sm mr-3"
                                     data-toggle="modal" data-target="#modal-revision" data-backdrop="static"
                                     data-id="{{ $order->id }}" data-title="{{ $order->title }}">
-                                        Send revision
+                                        Send revision ({{3 - $order->results->where('type','revision')->count()}} left)
                                     </button>
                                 </div>
                                 <div id="collapse{{ $order->id }}" class="collapse"

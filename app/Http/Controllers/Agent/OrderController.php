@@ -17,7 +17,6 @@ use App\Mail\OrderRevisionFinishedNotification;
 
 class OrderController extends Controller
 {
-
     public function index(Request $request)
     {
         $totalOrderNotDone = Order::where('status', 'process')->orWhere('status', 'complaint')->count();
@@ -136,8 +135,8 @@ class OrderController extends Controller
 
     public function complaint()
     {
-        $totalComplaint = Order::where('status', 'complaint')->count();
-        $complaints = Order::where('status', 'complaint')->paginate(10);
+        $totalComplaint = Order::where('agent_id', Auth::id())->where('status', 'complaint')->count();
+        $complaints = Order::where('agent_id', Auth::id())->where('status', 'complaint')->paginate(10);
         return view('service.complaint', ['complaints' => $complaints, 'totalComplaint' => $totalComplaint]);
     }
 

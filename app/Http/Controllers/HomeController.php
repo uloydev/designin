@@ -22,6 +22,7 @@ use App\Package;
 use App\Order;
 use App\Promo;
 use App\Mail\NewOrderNotification;
+use App\Mail\ContactAgentNotification;
 
 class HomeController extends Controller
 {
@@ -146,5 +147,18 @@ class HomeController extends Controller
             return ['status'=>'failed', 'message'=>'promo usage exceed'];
         }
         return ['status'=>'success', 'message'=>'promo code applied', 'discount' => $promo->discount];
+    }
+
+    public function contactAgent($id, Request $request)
+    {
+        $this->middleware('auth');
+        $sevice = Service::findOrFail($id);
+        $request->validate([
+            'message_agent' => 'required',
+            'message_file' => 'mimes:jpeg,png,psd'
+        ]);
+        $agent = Auth::user();
+        Mail::to($agent->email)->send(new ContactAgent($request->all(), $agent, $service));
+        return redirect()->back()->withSuccess('Message to Agent has Sent Successfully');
     }
 }
