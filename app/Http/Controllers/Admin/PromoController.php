@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Promo;
 
 class PromoController extends Controller
 {
     public function index()
     {
-        return view('promo.manage');
+        $promos = Promo::paginate(10);
+        return view('promo.manage', ['promos'=>$promos]);
     }
 
     public function create()
@@ -24,6 +26,9 @@ class PromoController extends Controller
         $promo->promo_name = $request->promo_name;
         $promo->promo_start = $request->promo_start;
         $promo->promo_end = $request->promo_end;
+        $promo->code = $request->promo_code;
+        $promo->discount = $request->discount;
+        $promo->limit = $request->limit;
         $promo->save();
 
         return redirect()->back()->with('create', 'Succefully add new promo');
@@ -42,10 +47,12 @@ class PromoController extends Controller
     public function update(Request $request, $id)
     {
         $promo = Promo::findOrFail($id);
-
         $promo->promo_name = $request->promo_name;
         $promo->promo_start = $request->promo_start;
         $promo->promo_end = $request->promo_end;
+        $promo->code = $request->promo_code;
+        $promo->discount = $request->discount;
+        $promo->limit = $request->limit;
         $promo->save();
 
         return redirect()->back()->with('update', 'Succefully update promo');

@@ -17,7 +17,8 @@ class Order extends Model
         'request',
         'deadline',
         'is_reviewed',
-        'budget'
+        'budget',
+        'promo_id'
     ];
     protected $casts = ['start_at'=> 'datetime', 'deadline'=>'datetime'];
     // protected $with = ['package'];
@@ -40,5 +41,10 @@ class Order extends Model
     public function results()
     {
         return $this->hasMany('App\ProjectResult');
+    }
+
+    public function promo()
+    {
+        return $this->belongsTo('App\Promo');
     }
 }
