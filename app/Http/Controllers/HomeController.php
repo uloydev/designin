@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -28,10 +29,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $topService = Service::inRandomOrder()->limit(4)->get();
+        $topService = Service::where('is_popular', true)->limit(4)->get();
         $images = CarouselImage::all();
-        $serviceCategories = ServiceCategory::all();
-        $blogs = Blog::where('is_main', true)->get();
+        $promos = Blog::where('is_main', true)->whereHas('category', function (Builder $query){
+            $query->where('name', 'Promo');
+        })->get(); //get blog where is_main true and where category promo on model blogCategory
         $clients = Client::where('is_show', true)->get();
         $testimonies = Testimony::where('is_main', true)->get();
         $subscriptions = Subscription::all();
@@ -40,8 +42,7 @@ class HomeController extends Controller
 //        dd($landingHeaders);
         return view('landing')->with([
             'images' => $images,
-            'serviceCategories' => $serviceCategories,
-            'blogs' => $blogs,
+            'promos' => $promos,
             'testimonies' => $testimonies,
             'clients' => $clients,
             'subscriptions' => $subscriptions,
@@ -112,7 +113,10 @@ class HomeController extends Controller
         $this->middleware('auth');
         $user = Auth::user();
         $package = Package::findOrFail($id);
-        $order = new Order();
+        $order = new Order;
+        if ($request->hasFile('attachment')) {
+            $order->attachment = $request->file('attachment')->store('public/files');
+        }
         $order->agent_id = intval($request->agent_id);
         $order->package_id = $package->id;
         $order->status = 'waiting';
@@ -131,7 +135,9 @@ class HomeController extends Controller
         $order->save();
 
         Mail::to(User::find($request->agent_id)->email)->send(new NewOrderNotification($order));
-        return redirect()->route('user.order.index')->with('success', 'Order placed Successfully. you have to wait for agent to accept your order');
+        return redirect()->route('user.order.index')->with(
+            'success', 'Order placed Successfully. you have to wait for agent to accept your order'
+        );
     }
 
     public function checkPromoCode(Request $request)

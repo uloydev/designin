@@ -31,7 +31,8 @@ class CreateOrdersTable extends Migration
             $table->timestamp('started_at')->nullable();
             $table->timestamp('deadline')->nullable();
             $table->boolean('is_reviewed')->nullable();
-            $table->text('request')->nullable();
+            $table->longText('request')->nullable();
+            $table->string('attachment')->nullable();
             $table->unsignedInteger('budget');
             $table->timestamps();
         });

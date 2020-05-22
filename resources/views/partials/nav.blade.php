@@ -3,8 +3,9 @@
         <ul>
             <li class="nav__list nav__list--logo">
                 @if (\Request::is('blog*'))
-                    <a class="nav__link" href="{{ route('landing-page') }}">
+                    <a class="nav__link" href="{{ route('blog.index') }}">
                         <img alt="Desainin" src="{{ asset('img/logo.png') }}" height="30">
+                        <span class="ml-3" style="color: #9e9e9e">Official Blog</span>
                     </a>
                 @else
                     <a href="{{ route('landing-page') }}" class="nav__link">Desainin</a>

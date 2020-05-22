@@ -29,11 +29,12 @@ body {
     --text-color: #3e3e3e;
     --primary-color: #1dbf73;
     --secondary-color: #f9ac47;
-    --fourth-color: #e6cc73;
+    --fourth-color: #fee300;
     --third-color: #358cc4;
-    --almost-white: #f8f9fa;
+    --almost-white: #f5f5f5;
     --primary-color-hover: #16b86c;
     --gray: #919191;
+    --gray-medium: #717171;
     --text-gray-dark: #4a4a4a;
 }
 .text-warning {

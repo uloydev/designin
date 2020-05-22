@@ -35,17 +35,17 @@
     <main>
       <section id="services">
         <div class="container">
-          <h1 class="section__heading">Top service</h1>
+          <h1 class="section__heading">Popular service</h1>
           <div class="row">
-            @foreach ($serviceCategories as $category)
-            <div class="px-3">
-                <img src="{{ Storage::url($category->image_url) }}" class="services__icon" alt="Our service">
-                <p class="services__name">{{ $category->name }}</p>
-                <a href="{{ route('services') . '#' . Str::slug($category->name, '-') }}"
-                   class="services__btn btn-light">
-                    See all available service
-                </a>
-            </div>
+            @foreach ($topService as $service)
+                <div class="col-6 col-lg-3">
+                    <div class="service__item">
+                        <img src="{{ Storage::url($service->image) }}" class="services__icon" alt="Our service">
+                        <p class="services__name">{{ $service->title }}</p>
+                        <a href="{{ route('service.show', $service->id) }}" class="services__btn"></a>
+                        <div class="service__overlay"></div>
+                    </div>
+                </div>
             @endforeach
           </div>
         </div>
@@ -54,73 +54,85 @@
         <div class="container">
           <h1 class="section__heading">Why you should trust <strong>Desainin</strong></h1>
           <div class="row">
-            <div class="col-12 col-md-5 col-lg-6 reason-trust">
-              <a href="javascript:void(0);" class="reason-trust__btn"><i class='bx bx-play'></i></a>
-              <img src="{{ asset('img/how-we-work.png') }}" width="100%" alt="How desainin work">
-              <div class="reason-trust__overlay">
-                <div class="reason-trust__modal">
-                    <a href="" class="reason-trust__close-btn"><i class='bx bx-x' ></i></a>
-                    <iframe class="reason-trust__video embed-video"
-                            src="https://www.youtube.com/embed/xpQLFH5OCEY??enablejsapi=1&start=0" frameborder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
-                </div>
+              <div class="col-12 col-md-7 col-lg-6">
+                  <ul class="reason-list">
+                      <li class="reason-list__item">
+                          <p class="reason-list__item-title">
+                              <i class='bx bx-check-circle reason-list__item-icon'></i>
+                              Reason 1
+                          </p>
+                          <p class="reason-list__item-desc">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
+                              voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
+                          </p>
+                      </li>
+                      <li class="reason-list__item">
+                          <p class="reason-list__item-title">
+                              <i class='bx bx-check-circle reason-list__item-icon'></i>
+                              Reason 2
+                          </p>
+                          <p class="reason-list__item-desc">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
+                              voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
+                          </p>
+                      </li>
+                      <li class="reason-list__item">
+                          <p class="reason-list__item-title">
+                              <i class='bx bx-check-circle reason-list__item-icon'></i> Reason 3
+                          </p>
+                          <p class="reason-list__item-desc">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
+                              voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
+                          </p>
+                      </li>
+                  </ul>
               </div>
-            </div>
-            <div class="col-12 col-md-7 col-lg-6 reason-slider">
-              {{-- foreach --}}
-              <div class="reason-slider__item">
-                <p class="reason-slider__title">Reason 1</p>
-                <p class="reason-slider__desc">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore
-                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                    nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
-                </p>
+              <div class="col-12 col-md-5 col-lg-6 reason-trust">
+                  <a href="javascript:void(0);" class="reason-trust__btn"><i class='bx bx-play'></i></a>
+                  <img src="{{ asset('img/reason-trust.png') }}" width="100%" alt="How desainin work">
+                  <div class="reason-trust__overlay">
+                      <div class="reason-trust__modal">
+                          <a href="" class="reason-trust__close-btn"><i class='bx bx-x' ></i></a>
+                          <iframe class="reason-trust__video embed-video" frameborder="0"
+                                  src="https://www.youtube.com/embed/xpQLFH5OCEY??enablejsapi=1&start=0"
+                                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                  allowfullscreen></iframe>
+                      </div>
+                  </div>
               </div>
-              <div class="reason-slider__item">
-                <p class="reason-slider__title">Reason 2</p>
-                <p class="reason-slider__desc">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore
-                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                    nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
-                </p>
-              </div>
-              {{-- endforeach --}}
-            </div>
           </div>
         </div>
       </section>
+      <section id="how-we-work">
+          <div class="container">
+              <h1 class="section__heading">How we work</h1>
+              <div class="row">
+                  <div class="col-12 col-md-5 col-lg-6 position-relative pr-5">
+                      <img src="{{ asset('img/how-we-work.png') }}" width="100%" alt="How desainin work">
+                  </div>
+                  <div class="col-12 col-md-7 col-lg-6 d-flex align-items-center">
+                      <ul class="how-we-work__list">
+                          <li>Select the Subscription Package or single service that you want</li>
+                          <li>Describe what you want in our brief design Form</li>
+                          <li>Pay your design, and be chill!</li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </section>
       <section id="interest">
           <div class="container">
+              <h1 class="section__heading text-center">Our Promo</h1>
               <div class="row justify-content-between">
-                  <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center justify-content-center mb-5 mb-md-0">
-                      <h1 class="section__heading text-center">Top story / service you may interest</h1>
-                  </div>
-                  <div class="col-12 col-md-6 col-md-8">
+                  <div class="col-12">
                       <div class="interest-slider">
-                          @foreach($blogs as $blog)
+                          @foreach($promos as $promo)
                               <div class="interest-slider__item">
-                                  <p class="interest-slider__title">{{ $blog->title }}</p>
-                                  <img src="{{ Storage::url($blog->cover) }}" height="350" alt="Cover">
-                                  <a href="{{ route('blog.show', $blog->id) }}" class="interest-slider__link">src only</a>
-                                  <div class="interest-slider__overlay"></div>
-                              </div>
-                          @endforeach
-                          @foreach($topService as $service)
-                              <div class="interest-slider__item">
-                                  <p class="interest-slider__title">{{ $service->title }}</p>
-                                  <img src="{{ Storage::url($service->image) }}" height="350" alt="Cover">
-                                  <a href="{{ route('service.show', $service->id) }}" class="interest-slider__link">src only</a>
+                                  <p class="interest-slider__title">{{ $promo->title }}</p>
+                                  <img src="{{ Storage::url($promo->cover) }}" height="350" alt="Cover">
+                                  <a href="{{ route('blog.show', $promo->id) }}" class="interest-slider__link">
+                                      src only
+                                  </a>
                                   <div class="interest-slider__overlay"></div>
                               </div>
                           @endforeach
@@ -131,7 +143,7 @@
       </section>
       <section id="subscription">
         <div class="container">
-          <h1 class="section__heading">Subscribe for more benefit to you</h1>
+          <h1 class="section__heading">Subscribe for more <br class="d-md-none"> benefit to you</h1>
           <div class="subscription__slider row">
             @foreach ($subscriptions as $sub)
             <div class="px-3">
@@ -139,7 +151,9 @@
                 <img src="{{ Storage::url($sub->img) }}" class="subscription__img" alt="{{$sub->title}}">
                 <figcaption class="subscription__caption">
                   <p class="subscription__name">{{$sub->title}}</p>
-                  <p class="subscription__price">Price: <var class="subscription__currency">Rp. {{$sub->price}}</var></p>
+                  <p class="subscription__price">
+                      Price: <var class="subscription__currency">Rp. {{$sub->price}}</var>
+                  </p>
                   <p class="subscription__duration">Duration: {{$sub->duration}} Day</p>
                 </figcaption>
                 <div class="subscription__detail">
@@ -147,7 +161,9 @@
                   <p class="subscription__desc">
                     {{$sub->description}}
                   </p>
-                  <a href="{{ route('user.subscription.show', $sub->id) }}" class="subscription__btn">Subscribe Now</a>
+                  <a href="{{ route('user.subscription.show', $sub->id) }}" class="subscription__btn">
+                      Subscribe Now
+                  </a>
                 </div>
               </figure>
             </div>

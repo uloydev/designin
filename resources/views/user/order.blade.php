@@ -7,6 +7,11 @@
     </header>
 @endsection
 @section('content')
+    @if (session('success'))
+        <div class="alert alert--success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="container">
         <div class="row justify-content-between align-items-start">
             @include('user.profile')
@@ -33,22 +38,30 @@
                             </div>
                             <div class="mb-3">
                                 Start on:
-                                <time class="profile-main__time">{{ $order->started_at }}</time>
+                                <time class="profile-main__time">{{ $order->started_at ?? 'not start yet' }}</time>
                             </div>
                             <div class="mb-3">
                                 Finish on:
-                                <time class="profile-main__time">{{ $order->deadline }}</time>
+                                <time class="profile-main__time">{{ $order->deadline ?? '-' }}</time>
                             </div>
-                            <div class="mb-3">
-                                Progress
-                                <progress max="100" value="{{ $order->progress }}">{{ $order->progress }}</progress>
-                            </div>
+                            @if ($order->status == 'process')
+                                <div class="mb-3">
+                                    Progress
+                                    <progress max="100" value="{{ $order->progress }}">{{ $order->progress }}</progress>
+                                </div>
+                            @else
+                                <div class="mb-3">
+                                    Status
+                                    <p style="color: #bfa029">Not yet accepted by the agent</p>
+                                </div>
+                            @endif
                         </div>
                     </article>
                     @empty
                         <img src="{{ asset('img/empty-state.svg') }}" alt="No request" class="mx-auto d-block my-5">
                         <h1 class="text-center display-4 text-muted">You have no order</h1>
                     @endforelse
+                    {{ $orders->links() }}
                 </div>
             </section>
         </div>

@@ -15,9 +15,10 @@ class ServiceSeeder extends Seeder
     {
         for ($service = 1; $service <= 30; $service++) {
             $faker = Faker::create('id_ID');
+            $serviceImg = ['public/files/service-design2.jpg', 'public/temporary/service-vector.jpg'];
             DB::table('service')->insert([
-
-        		'title' => 'Desain ' . $faker->sentence($nbWords = 10, $variableNbWords = true),
+                'is_popular' => $service <= 4 ? 1 : 0,
+        		'title' => 'Design ' . $faker->sentence($nbWords = 3, $variableNbWords = true),
         		'description' => '<h1>Tollenda est atque extrahenda radicitus.</h1>
 
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat enim summo bono afferre incrementum
@@ -58,7 +59,7 @@ class ServiceSeeder extends Seeder
                         esset.</li>
                         <li>Illud mihi a te nimium festinanter dictum videtur, sapientis omnis esse semper beatos;</li>
                     </ul>',
-                'image' => 'public/temporary/stories.jpeg',
+                'image' => $serviceImg[$faker->numberBetween(0, 1)],
         		'agent_id' => $faker->unique()->numberBetween(2, 3),
         		'service_category_id' => $faker->numberBetween(1, 6)
            	]);

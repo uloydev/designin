@@ -30,7 +30,7 @@ The above copyright notice and this permission notice shall be included in all c
              id="sidenav-main">
             <div class="scrollbar-inner">
                 <div class="sidenav-header  align-items-center">
-                    <a class="navbar-brand" href="javascript:void(0)">
+                    <a class="navbar-brand" href="{{ route(Auth::user()->role . '.dashboard') }}">
                         <img src="{{ asset('img/logo.png') }}" class="navbar-brand-img" alt="Desainin Logo">
                     </a>
                 </div>

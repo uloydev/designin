@@ -20,7 +20,7 @@ class OrderController extends Controller
     {
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
         $profile = UserProfile::where('user_id', Auth::id())->first();
-        $orders = Order::where('user_id', Auth::id())->get();
+        $orders = Order::where('user_id', Auth::id())->latest()->paginate(10);
         return  view('user.order', ['profile' => $profile, 'listBank' => $listBank, 'orders' => $orders]);
     }
 

@@ -147,6 +147,14 @@ $(document).ready(function () {
         }
     });
 
+    $("[data-target='#modal-single-order']").click(function () {
+        let packageId = $(this).data('package-id');
+        let agentId = $(this).data('agent-id');
+
+        $("#modal-single-order input[name='agent_id']").val(agentId);
+        $("#modal-single-order form").attr('action', window.location.origin + '/service/show/' + packageId);
+    });
+
     //agent js
     $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection'], " +
         "[data-target='#modal-result']").click(function () {
@@ -538,7 +546,7 @@ $(document).ready(function () {
         });
     }
     $("img").prop('draggable', false);
-    $(".alert").not(".no-fadeout").not('#alert-approve').delay(1000).fadeOut('slow');
+    $(".alert").not(".no-fadeout").not('#alert-approve').delay(2000).fadeOut('slow');
 
     $("#editPromo input[name='promo_end']").datepicker({
         minDate: new Date($("#editPromo input[name='promo_start']").val())
@@ -560,8 +568,8 @@ $(document).ready(function () {
         });
     });
 
-    let getDate = new Date().getFullYear();
-    $("#footer_date").text(getDate);
+    const getDate = new Date().getFullYear();
+    $("#footer_date, #footer__time").text(getDate);
 
     if (window.location.href.indexOf('admin') > -1 || window.location.href.indexOf('agent') > -1) {
         bsCustomFileInput.init();
@@ -613,30 +621,7 @@ $(document).ready(function () {
         dots: true,
         arrows: false
     });
-    $("#services .row").slick({
-        infinite: false,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        mobileFirst: true,
-        prevArrow: "<a href='javascript:void(0);' class='bx bxs-chevron-left'></a>",
-        nextArrow: "<a href='javascript:void(0);' class='bx bxs-chevron-right'></a>",
-        responsive: [
-            {
-                breakpoint: 993,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3
-                }
-            },
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4
-                }
-            }
-        ]
-    });
+
     $("#reasons .reason-slider").slick({
         infinite: false,
         slidesToShow: 1,

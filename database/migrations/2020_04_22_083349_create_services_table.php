@@ -19,6 +19,7 @@ class CreateServicesTable extends Migration
             $table->longText('description');
             $table->string('image')->nullable();
             $table->integer('agent_id');
+            $table->boolean('is_popular')->default(false);
             $table->integer('service_category_id');
             $table->timestamps();
         });

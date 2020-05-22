@@ -18,7 +18,7 @@
                   </form>
               </div>
           </div>
-          <div class="row justify-content-center" id="main-article">
+          <div class="row" id="main-article">
               @foreach ($mainArticle as $main)
                   <div class="col-12">
                       <a href="{{ route('blog.show', $main->id) }}" class="article__link">
@@ -49,7 +49,7 @@
               <img src="{{ Storage::url($blog->header_image) }}" class="article__img" alt="Article {{ $blog->title }} Image">
               <div class="article__detail">
                 <p class="article__title">
-                  <a href="#">{{ Str::words($blog->title, 5) }}</a>
+                  <a href="{{ route('blog.show', $blog->id) }}">{{ Str::words($blog->title, 5) }}</a>
                 </p>
                 <p class="article__content">{{ Str::words($blog->contents, 20) }}</p>
                 <span class="article__category">{{ $blog->category->name }}</span>
