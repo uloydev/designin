@@ -110,18 +110,20 @@ class HomeController extends Controller
 
     public function makeOrder(Request $request, $id)
     {
+        dd($request);
         $this->middleware('auth');
         $user = Auth::user();
         $package = Package::findOrFail($id);
         $order = new Order;
-        if ($request->hasFile('attachment')) {
-            $order->attachment = $request->file('attachment')->store('public/files');
+        if ($request->hasFile('brief_file')) {
+            $order->attachment = $request->file('brief_file')->store('public/files');
         }
         $order->agent_id = intval($request->agent_id);
         $order->package_id = $package->id;
         $order->status = 'waiting';
-        $order->request = $request->user_request;
+        $order->request = $request->message_agent;
         $budget = $package->price;
+        // need to update discount
         if ($user->is_subscribe) {
             $subscription = $user->subscription;
             $budget -= $budget * $subscription->discount / 100;
