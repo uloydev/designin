@@ -147,12 +147,39 @@ $(document).ready(function () {
         }
     });
 
-    $("[data-target='#modal-single-order']").click(function () {
+    $("[data-target='#modal-single-extras']").click(function () {
         let packageId = $(this).data('package-id');
         let agentId = $(this).data('agent-id');
+        let orderTitle = $(this).parents(".row").find('.service-single__title').text();
+        let orderPrice = $(this).prev().find('.order-price').text();
+
+        $("#modal-single-extras .modal-order-title").text(orderTitle);
+        $("#modal-single-extras .modal-order-price").text(orderPrice);
+        $("#modal-single-extras input[name='modal_order_title']").val(orderTitle);
 
         $("#modal-single-order input[name='agent_id']").val(agentId);
         $("#modal-single-order form").attr('action', window.location.origin + '/service/show/' + packageId);
+
+        $("#form-extras-order input[type='checkbox']").change(function () {
+            let idExtra = $(this).attr('id');
+            let extraValue = $("#form-extras-order input#" + idExtra).val();
+            console.log(extraValue, idExtra);
+
+            if ($(this).is(':checked')) {
+                $("#modal-single-order input[data-extras='" + idExtra + "']").val(extraValue);
+            }
+            else {
+                $("#modal-single-order input[data-extras='" + idExtra + "']").val("").removeAttr("value");
+            }
+        });
+    });
+    $(".modal-extras__submit-btn").click(function (e) {
+        e.preventDefault();
+        $("#modal-single-extras").removeClass('show-modal');
+        $("#modal-single-order").addClass('show-modal');
+    });
+    $("#modal-single-order #show-modal-single-extras").click(function () {
+        $("[data-target='#modal-single-extras']").trigger("click");
     });
 
     //agent js

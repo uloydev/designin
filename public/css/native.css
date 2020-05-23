@@ -287,6 +287,57 @@ body[id^='blog'] .nav__list--logo {
     border: 1px solid #dddddd;
     border-radius: 5px;
 }
+.checkbox-custom {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 1.5rem;
+    padding-left: 1.5rem;
+}
+.checkbox-custom__input {
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    width: 1rem;
+    height: 1.25rem;
+    opacity: 0;
+}
+.checkbox-custom__input:checked + .custom-checkbox__icon {
+    opacity: 1;
+    visibility: visible;
+}
+.custom-checkbox__icon {
+    position: absolute;
+    left: 0;
+    display: flex;
+    line-height: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-weight: bold;
+    opacity: 0;
+    transition: all 150ms;
+    visibility: hidden;
+}
+.checkbox-custom__label {
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+}
+.checkbox-custom__label::before {
+    position: absolute;
+    top: .25rem;
+    left: -1.5rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    content: "";
+    background-color: #fff;
+    border: #adb5bd solid 1px;
+    border-radius: .25rem;
+    transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
 .float-right {
     float: right !important;
 }
@@ -492,6 +543,10 @@ body[id^='blog'] .nav__list--logo {
 .alert--success {
     background-color: var(--primary-color);
     border-color: var(--primary-color-hover);
+}
+
+.text-success {
+    color: var(--primary-color);
 }
 
 body:not(#landingPage):not([id*='blog']):not(#faqPage) main {
@@ -1285,6 +1340,53 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #singleServicePage .service-single__comment-text {
     line-height: 1.8rem;
 }
+#singleServicePage .modal-order-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+#singleServicePage #modal-single-extras #quantity {
+    width: 30px;
+    text-align: center;
+    height: 20px;
+}
+#singleServicePage #modal-single-extras .modal__body {
+    padding-bottom: 30px;
+}
+#singleServicePage #form-extras-order {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 30px;
+    flex-grow: 1;
+    border-top: 1px solid #c9c9c9;
+    margin-top: 30px;
+}
+#singleServicePage .modal-extras__submit-btn {
+    margin-top: auto;
+    background-color: var(--primary-color) !important;
+    color: #fff;
+    transition: all 150ms;
+}
+#singleServicePage .modal-extras__submit-btn:hover {
+    background-color: var(--primary-color-hover) !important;
+}
+#singleServicePage #modal-single-extras #quantity::-webkit-outer-spin-button,
+#singleServicePage #modal-single-extras #quantity::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+#singleServicePage #modal-single-extras .modal-order-title {
+    margin-bottom: 30px;
+}
+#singleServicePage #modal-single-extras .modal-order-price {
+    color: var(--primary-color);
+    font-style: normal;
+}
 #singleServicePage .single-service__modal-message-info {
     padding-right: 30px;
 }
@@ -1817,7 +1919,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     font-weight: bold;
 }
 .profile-main__time {
-    color: var(--primary-color-hover);
+    color: var(--text-color);
     font-weight: bold;
 }
 .profile-main__order-detail * {
@@ -2288,6 +2390,9 @@ footer .row {
     }
     .modal__content {
         max-width: 750px;
+    }
+    .modal--xl .modal__content {
+        max-width: 1150px;
     }
     #landingPage .header__text {
         font-size: 45px;

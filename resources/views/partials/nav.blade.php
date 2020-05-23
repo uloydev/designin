@@ -48,9 +48,9 @@
                             <li class="nav__list">
                                 <a href="{{ route('user.subscription.index') }}" class="nav__link">my subscription</a>
                             </li>
-                            <li class="nav__list">
-                                <a href="{{ route('user.job.index') }}" class="nav__link">my jobs</a>
-                            </li>
+{{--                            <li class="nav__list">--}}
+{{--                                <a href="{{ route('user.job.index') }}" class="nav__link">my jobs</a>--}}
+{{--                            </li>--}}
                             <li class="nav__list">
                                 <a href="{{ route('user.order.index') }}" class="nav__link">my order</a>
                             </li>

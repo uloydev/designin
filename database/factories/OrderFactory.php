@@ -14,7 +14,7 @@ $factory->define(Order::class, function (Faker $faker) {
     $user_id =$faker->randomElement( User::where('role', 'user')->pluck('id')->all());
     $agent_id = $faker->randomElement( User::where('role', 'agent')->pluck('id')->all());
     $package_id = $faker->randomElement(Package::where('service_id', Service::where('agent_id', $agent_id)->first()->id)->pluck('id')->all());
-    $status = $faker->randomElement(['unpaid', 'waiting', 'process', 'complaint', 'finished']);
+    $status = $faker->randomElement(['unpaid', 'process', 'complaint', 'finished']);
     $price = Package::find($package_id)->price;
     $data = [
         'user_id' => $user_id,
