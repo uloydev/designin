@@ -18,7 +18,8 @@ class Order extends Model
         'deadline',
         'is_reviewed',
         'budget',
-        'promo_id'
+        'promo_id',
+        'attachment'
     ];
     protected $casts = ['start_at'=> 'datetime', 'deadline'=>'datetime'];
     // protected $with = ['package'];

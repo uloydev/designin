@@ -15,13 +15,14 @@ $factory->define(Order::class, function (Faker $faker) {
     $agent_id = $faker->randomElement( User::where('role', 'agent')->pluck('id')->all());
     $package_id = $faker->randomElement(Package::where('service_id', Service::where('agent_id', $agent_id)->first()->id)->pluck('id')->all());
     $status = $faker->randomElement(['unpaid', 'waiting', 'process', 'complaint', 'finished']);
+    $price = Package::find($package_id)->price;
     $data = [
         'user_id' => $user_id,
         'package_id' => $package_id,
         'status' => $status,
         'agent_id' => $agent_id,
         'request' => $faker->paragraph($nbSentences = 20, $variableNbSentences = true),
-        'budget' => Package::find($package_id)->price,
+        'budget' => $price,
     ];
     if ($status != 'unpaid' and $status != 'waiting') {
         $data['started_at'] = Carbon::now();
