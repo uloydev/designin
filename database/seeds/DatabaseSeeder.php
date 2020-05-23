@@ -33,7 +33,8 @@ class DatabaseSeeder extends Seeder
           MessageSeeder::class,
           ReasonSeeder::class,
           LandingHeaderSeeder::class,
-          PromoSeeder::class
+          PromoSeeder::class,
+          PackageSeeder::class
       ]);
     }
 }

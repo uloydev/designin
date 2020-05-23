@@ -9,7 +9,7 @@
                 <img src="{{ asset('img/service.png') }}" class="service-header__img" alt="Desainin Service Page">
                 <div class="col service-header__caption">
                     <h1 class="service-header__heading">Our Services</h1>
-                    <h2 class="text-gray mt-3">Top service that will serve you as lovely it be</h2>
+                    <h2 class="text-gray mt-3 text-center">Top service that will serve you as lovely it be</h2>
                 </div>
             </div>
         </div>
