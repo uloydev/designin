@@ -31,7 +31,7 @@
                             <span class="custom-checkbox__icon"><i class='bx bx-check' ></i></span>
                         </div>
                         <div class="mt-3">
-                            <label for="promo-code" class="label-cu">Promo code (optional)</label>
+                            <label for="promo-code" class="mb-2 d-block">Promo code (optional)</label>
                             <input type="text" id="promo-code" class="input-custom" placeholder="Ex: LEBARIN">
                         </div>
                         {{-- endforeach --}}

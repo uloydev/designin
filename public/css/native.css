@@ -1104,9 +1104,6 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     z-index: 2;
 }
 
-#servicesPage .nav__toggle {
-    color: var(--text-color);
-}
 #servicesPage header {
     background-color: var(--almost-white);
     border-bottom: 1px solid #dbdbdb;
@@ -1218,6 +1215,11 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 
 #singleServicePage .service-single__top {
     margin-bottom: 50px;
+}
+#singleServicePage .service-single__img {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: cover;
 }
 #singleServicePage .service-single__title {
     font-size: 24px;
@@ -1702,7 +1704,8 @@ input[type=number] {
     padding: 10px 1rem;
 }
 
-#contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle, #landingPage .nav__toggle {
+#contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle,
+#servicesPage .nav__toggle, #singleServicePage .nav__toggle, #landingPage .nav__toggle {
     color: var(--almost-black);
 }
 #contactUsPage main {
