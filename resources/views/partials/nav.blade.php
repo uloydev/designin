@@ -13,10 +13,11 @@
                 <i class='bx bx-menu-alt-right nav__toggle'></i>
             </li>
             <li class="nav__list nav__list--search">
-                <form action="" class="search-service" method="get">
+                <form action="{{ route('service.search') }}" class="search-service" method="get">
                     @csrf
+                    <label class="d-none" for="search-service">Search Service</label>
                     <input type="search" class="search-service__input" name="search_agent_job"
-                           placeholder="Find design ..." required>
+                    placeholder="Find design ..." id="search-service" value="{{ $query ?? '' }}" required>
                     <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
                 </form>
             </li>

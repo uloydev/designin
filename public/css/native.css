@@ -1083,6 +1083,13 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     margin-left: 0;
     margin-right: 0;
 }
+#servicesPage .slick-track {
+    display: flex;
+}
+#servicesPage .slick-track .slick-slide {
+    height: auto;
+    display: inline-flex;
+}
 #servicesPage .service {
     transition: all 150ms;
     height: 100%;
@@ -1094,6 +1101,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #servicesPage .service .card__header {
     display: flex;
+    padding-top: 0;
     flex-direction: column-reverse;
 }
 #servicesPage .service__title {
