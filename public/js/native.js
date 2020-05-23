@@ -335,11 +335,11 @@ $(document).ready(function () {
             .attr('aria-expanded', "true");
     });
 
-    const profileNavRoute = window.location.href;
+    const profileNavRoute = location.protocol + '//' + location.host + location.pathname;
     const profileNavLinks = document.querySelectorAll('.profile-nav__link');
     profileNavLinks.forEach(function (profileNavLink) {
         let url = profileNavLink.href;
-        if(url === profileNavRoute) {
+        if(url === profileNavRoute ) {
             profileNavLink.classList.add('profile-nav__link--active');
         }
     });

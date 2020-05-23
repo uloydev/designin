@@ -16,11 +16,14 @@
                 <form action="" class="search-service" method="get">
                     @csrf
                     <input type="search" class="search-service__input" name="search_agent_job"
-                           placeholder="Find jobs or agent" required>
+                           placeholder="Find design ..." required>
                     <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
                 </form>
             </li>
             <li class="nav__list ml-lg-auto">
+                <a href="{{ route('services') }}" class="nav__link">All Service</a>
+            </li>
+            <li class="nav__list">
                 <a href="{{ route('contact-us.index') }}" class="nav__link">Contact us</a>
             </li>
             <li class="nav__list">

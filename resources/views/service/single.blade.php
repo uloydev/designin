@@ -11,7 +11,7 @@
                     <div class="d-flex align-items-center flex-wrap py-4">
                         <img src="{{ Storage::url($service->agent->profile->avatar) }}"
                              alt="Service Agent Avatar" height="25">
-                        <p class="ml-2">{{ $service->agent->name }}</p>
+                        <p class="ml-2">{{ $service->agent->email }}</p>
                         <div class="service-single__rating">
                             @if ($rating < 5)
                                 @for ($i = 0; $i < $rating; $i++)
@@ -43,7 +43,7 @@
                             </select>
                         </form>
                     </div>
-                    @foreach ($testimonies as $testimony)
+                    @forelse ($testimonies as $testimony)
                     <article class="service-single__comment">
                         <img src="{{ Storage::url($testimony->user->profile->avatar ?? 'temporary/people.webp') }}"
                         height="20"
@@ -53,7 +53,10 @@
                             <p class="service-single__comment-text">{{ $testimony->content }}</p>
                         </div>
                     </article>
-                    @endforeach
+                    @empty
+                        <img src="{{ asset('img/review.jpg') }}" alt="No review" height="150" class="mx-auto d-block">
+                        <h1 class="mt-4 text-center">There are no review about this service</h1>
+                    @endforelse
                 </div>
             </section>
             <aside class="single-package col-12 col-lg-4" id="service-package-tab">

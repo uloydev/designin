@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
           BlogSeeder::class,
           BlogCategorySeeder::class,
           TestimonySeeder::class,
+          PackageSeeder::class,
           OrderSeeder::class,
           ChatSessionSeeder::class,
           MessageSeeder::class,

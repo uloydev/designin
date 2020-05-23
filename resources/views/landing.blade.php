@@ -23,7 +23,7 @@
               <div class="row mx-0 flex-column flex-md-row align-items-center justify-content-end">
                   <a href="javascript:void(0)" class="header__btn header__btn--secondary btn-modal"
                      data-target="#modal-search-service">
-                      <i class='bx bx-search-alt mr-2 bx-sm'></i> Find your designer
+                      <i class='bx bx-search-alt mr-2 bx-sm'></i> Find what you want
                   </a>
                   <a href="#services" class="header__btn">
                       Order What You Want <i class='bx bxs-cart-add ml-2 bx-sm'></i>
@@ -36,6 +36,9 @@
       <section id="services">
         <div class="container">
           <h1 class="section__heading">Popular service</h1>
+            <a href="{{ route('services') }}" class="service__all-link">
+                See all service <i class='bx bxs-right-arrow-alt'></i>
+            </a>
           <div class="row">
             @foreach ($topService as $service)
                 <div class="col-6 col-lg-3">
@@ -50,6 +53,27 @@
           </div>
         </div>
       </section>
+        <section id="interest">
+            <div class="container">
+                <h1 class="section__heading text-center">Our Promo</h1>
+                <div class="row justify-content-between">
+                    <div class="col-12">
+                        <div class="interest-slider">
+                            @foreach($promos as $promo)
+                                <div class="interest-slider__item">
+                                    <p class="interest-slider__title">{{ $promo->title }}</p>
+                                    <img src="{{ Storage::url($promo->cover) }}" height="350" alt="Cover">
+                                    <a href="{{ route('blog.show', $promo->id) }}" class="interest-slider__link">
+                                        src only
+                                    </a>
+                                    <div class="interest-slider__overlay"></div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
       <section id="reasons">
         <div class="container">
           <h1 class="section__heading">Why you should trust <strong>Desainin</strong></h1>
@@ -116,27 +140,6 @@
                           <li>Describe what you want in our brief design Form</li>
                           <li>Pay your design, and be chill!</li>
                       </ul>
-                  </div>
-              </div>
-          </div>
-      </section>
-      <section id="interest">
-          <div class="container">
-              <h1 class="section__heading text-center">Our Promo</h1>
-              <div class="row justify-content-between">
-                  <div class="col-12">
-                      <div class="interest-slider">
-                          @foreach($promos as $promo)
-                              <div class="interest-slider__item">
-                                  <p class="interest-slider__title">{{ $promo->title }}</p>
-                                  <img src="{{ Storage::url($promo->cover) }}" height="350" alt="Cover">
-                                  <a href="{{ route('blog.show', $promo->id) }}" class="interest-slider__link">
-                                      src only
-                                  </a>
-                                  <div class="interest-slider__overlay"></div>
-                              </div>
-                          @endforeach
-                      </div>
                   </div>
               </div>
           </div>
@@ -230,7 +233,7 @@
                 <form action="" class="search-service" method="get">
                     @csrf
                     <input type="search" class="search-service__input" name="search_agent_job"
-                           placeholder="Find jobs or agent..." required>
+                    placeholder="Find design and click enter..." autocomplete="off" required>
                     <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
                 </form>
             </div>

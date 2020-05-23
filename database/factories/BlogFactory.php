@@ -14,7 +14,7 @@ $factory->define(Blog::class, function (Faker $faker) {
         'cover' => $cover[$faker->numberBetween(0, 1)],
         'contents' =>   $faker->sentence($nbWords = 200, $variableNbWords = true),
         'author_id' => 1,
-        'is_main' => $faker->boolean($chanceOfGettingTrue = 10),
+        'is_main' => $faker->boolean($chanceOfGettingTrue = 50),
         'category_id' => $faker->numberBetween(1, 2),
         'hits' => $faker->numberBetween($min = 1, $max = 200),
     ];

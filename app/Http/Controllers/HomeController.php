@@ -170,4 +170,9 @@ class HomeController extends Controller
         Mail::to($agent->email)->send(new ContactAgent($request->all(), $agent, $service));
         return redirect()->back()->withSuccess('Message to Agent has Sent Successfully');
     }
+
+    public function serviceSearch(Request $request)
+    {
+        $service = Service::where('title');
+    }
 }

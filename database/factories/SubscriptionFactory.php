@@ -7,8 +7,9 @@ use App\Subscription;
 use Faker\Generator as Faker;
 
 $factory->define(Subscription::class, function (Faker $faker) {
+    $subscribeName = ['Quick-Shot', 'Discovery', 'Startup'];
     return [
-        'title' => $faker->sentence,
+        'title' => $subscribeName[$faker->numberBetween(0, 2)],
         'desc' => '<p>Excalibur bluemarvel satana kang steverogers, husk cardiac? Crossbones ink toxin sunfire'.
                     'blastaar cypher blackbolt howlett blackcat chameleon ironpatriot! Celestials scrambler romulus'.
                     'hammer silversurfer dracula, changeling daredevil jimmywoo snowbird! Wildchild shaman, mordo.'.
@@ -50,8 +51,8 @@ $factory->define(Subscription::class, function (Faker $faker) {
                     '</p>',
         'img' => 'temporary/subscription.jpg',
         'token' => 10,
-        'price' => $faker->numberBetween(100000, 1000000),
-        'duration' => $faker->randomElement([30,60,90,360]),
+        'price' => $faker->randomElement([450000, 1050000, 3600000]),
+        'duration' => $faker->randomElement([7, 30]),
         'discount' => $faker->numberBetween(5, 10)
     ];
 });
