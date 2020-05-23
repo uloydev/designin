@@ -19,24 +19,34 @@
                         <i class="fas fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a href="{{ route('manage.subscription.edit', $subscription->id)}}"
-                        class="dropdown-item">
-                            edit
-                        </a>
-                        <form action="{{ route('manage.subscription.destroy', $subscription->id) }}"
-                        role="form" method="post">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-link p-0">delete</button>
-                        </form>
+                        <button type="button" class="dropdown-item text-warning"
+                        data-toggle="modal" data-id="{{ $subscription->id }}" data-duration="{{ $subscription->duration }}"
+                        data-target="#editSubscription" data-desc="{{ $subscription->desc }}"
+                        data-title="{{ $subscription->title }}" data-price="{{ $subscription->price }}"
+                        data-token="{{ $subscription->token }}">Edit</button>
+                        <button type="button" class="btn btn-link text-danger dropdown-item" data-toggle="modal"
+                        data-target="#deleteSubscription" data-id="{{ $subscription->id }}">
+                            Delete
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
-                    <h2 class="card-title">{{ $subscription->title }}</h2>
+                    <div class="d-flex align-items-center mb-3 justify-between">
+                        <h2 class="card-title mb-0">{{ $subscription->title }}</h2>
+                        <span class="text-success">
+                            Price: <var class="font-style-normal font-bold">{{ $subscription->price }}</var>
+                        </span>
+                    </div>
                     <div class="card-text">
                         {!! $subscription->desc !!}
                     </div>
                 </div>
+                <div class="card-footer">
+                    <p>Duration: {{ $subscription->duration . ' days' }}</p>
+                    <p>Credit: {{ $subscription->token . ' token' }}</p>
+                </div>
             </div>
         </div>
     </div>
+    @include('subscription.manipulate')
 @endsection

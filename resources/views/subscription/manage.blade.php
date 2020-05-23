@@ -72,14 +72,14 @@
                                         edit
                                     </button>
                                     <button type="button" class="dropdown-item text-danger" data-toggle="modal"
-                                            data-target="#deleteSubscription" data-id="{{ $subscription->id }}">
+                                     data-target="#deleteSubscription" data-id="{{ $subscription->id }}">
                                         delete
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="card-text subscription__detail">
+                            <div class="card-text mb-3">
                                 {{ Str::limit(strip_tags($subscription->desc), 90) }}
                             </div>
                             <a href="{{ route('manage.subscription.show', $subscription->id) }}" class="text-primary">

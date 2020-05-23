@@ -14,7 +14,7 @@
                         <input type="number" id="quantity" min="1" value="1" max="20"
                                form="form-extras-order" required>
                     </div>
-                    <p class="mt-2">Price <var class="modal-order-price"></var></p>
+                    <p class="mt-3">Price <var class="modal-order-price"></var></p>
                     {{-- ini form gk ada actionnya, cmn buat box. Form aslinya ada dibawah --}}
                     <form action="" method="post" id="form-extras-order">
                         @csrf
@@ -29,6 +29,10 @@
                             <label class="checkbox-custom__label" for="extras-2">Addition Revision +1</label>
                             <input type="checkbox" id="extras-2" class="checkbox-custom__input" value="true">
                             <span class="custom-checkbox__icon"><i class='bx bx-check' ></i></span>
+                        </div>
+                        <div class="mt-3">
+                            <label for="promo-code" class="label-cu">Promo code (optional)</label>
+                            <input type="text" id="promo-code" class="input-custom" placeholder="Ex: LEBARIN">
                         </div>
                         {{-- endforeach --}}
                         <button type="submit" class="modal-extras__submit-btn">Next</button>

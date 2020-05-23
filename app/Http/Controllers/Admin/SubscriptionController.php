@@ -106,6 +106,8 @@ class SubscriptionController extends Controller
             }
         }
         $sub->delete();
-        return redirect()->back()->with('success_subscription','Subscription Created Successfully');
+        return redirect()->route('manage.subscription.index')->with(
+            'success_subscription', 'Subscription Deleted Successfully'
+        );
     }
 }

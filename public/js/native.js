@@ -543,12 +543,13 @@ $(document).ready(function () {
         $("#editPromo form").attr('action', window.location.origin + '/admin/manage/promo/' + promoId);
     });
 
-    $("[data-target='#editSubscription'], [data-target='#deleteSubscription']").click(function () {
+    $("[data-target='#editSubscription'], [data-target='#deleteSubscription']")
+        .click(function () {
         let subscriptionId = Number($(this).data('id')),
             subscriptionDesc = $.trim($(this).data('desc')),
             subscriptionName = $.trim($(this).data('title')),
             subscriptionToken = Number($(this).data('token')),
-            subscriptionPrice = Number($(this).data('price'))
+            subscriptionPrice = Number($(this).data('price')),
             subscriptionDuration = Number($(this).data('duration'));
 
         $("#editSubscription .modal-subscription-title, #deleteSubscription .modal-subscription-title")
