@@ -113,34 +113,43 @@ class HomeController extends Controller
 
     public function makeOrder(Request $request, $id)
     {
-        dd($request);
         $this->middleware('auth');
         $user = Auth::user();
         $package = Package::findOrFail($id);
         $order = new Order;
-        if ($request->hasFile('brief_file')) {
-            $order->attachment = $request->file('brief_file')->store('public/files');
-        }
-        $order->agent_id = intval($request->agent_id);
-        $order->package_id = $package->id;
-        $order->status = 'waiting';
-        $order->request = $request->message_agent;
         $budget = $package->price;
-        // need to update discount
         if ($user->is_subscribe) {
             $subscription = $user->subscription;
-            $budget -= $budget * $subscription->discount / 100;
+            if ( $user->subscribe_at->addDays($subscription->duration) <= Carbon::now() 
+            and $user->subscribe_token >= $package->token_price ) {
+                $budget = $subscription->price / $subscription->token * $package->token_price;
+                $user->subscribe_token -= $package->token_price;
+            }else{
+                $user->is_subscribe = false;
+                $user->save();
+                return redirect()->back()->with('error', 'your subscription is expired');
+            }
         }
-        if ($request->has('promo_code')) {
+        elseif ($request->has('promo_code')) {
             $promo = Promo::where('code' , $request->promo_code)->get();
             $budget -= $budget * $promo->discount / 100;
             $order->promo_id = $promo->id;
         }
+        if ($request->hasFile('brief_file')) {
+            $order->attachment = $request->file('brief_file')->store('public/files');
+        }
+        if ($request->has('extras')) {
+            $order->extras = json_encode($request->extras);
+        }
+        $order->agent_id = intval($request->agent_id);
+        $order->package_id = $package->id;
+        $order->status = 'unpaid';
+        $order->request = $request->message_agent;
+        // need to update discount
         $order->budget = $budget;
         $order->user_id = $user->id;
         $order->save();
-
-        Mail::to(User::find($request->agent_id)->email)->send(new NewOrderNotification($order));
+        // Mail::to(User::find($request->agent_id)->email)->send(new NewOrderNotification($order));
         return redirect()->route('user.order.index')->with(
             'success', 'Order placed Successfully. you have to wait for agent to accept your order'
         );

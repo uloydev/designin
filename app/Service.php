@@ -31,4 +31,9 @@ class Service extends Model
     {
         return $this->hasMany('App\Testimony');
     }
+
+    public function extras()
+    {
+        return $this->hasMany('App\ServiceExtras');
+    }
 }
