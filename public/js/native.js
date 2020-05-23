@@ -159,19 +159,22 @@ $(document).ready(function () {
 
         $("#modal-single-order input[name='agent_id']").val(agentId);
         $("#modal-single-order form").attr('action', window.location.origin + '/service/show/' + packageId);
+    });
+    $("#form-extras-order input[type='checkbox']").change(function () {
+        let idExtra = $(this).attr('id');
+        let extraValue = $("#form-extras-order input#" + idExtra).val();
+        console.log(extraValue, idExtra);
 
-        $("#form-extras-order input[type='checkbox']").change(function () {
-            let idExtra = $(this).attr('id');
-            let extraValue = $("#form-extras-order input#" + idExtra).val();
-            console.log(extraValue, idExtra);
-
-            if ($(this).is(':checked')) {
-                $("#modal-single-order input[data-extras='" + idExtra + "']").val(extraValue);
-            }
-            else {
-                $("#modal-single-order input[data-extras='" + idExtra + "']").val("").removeAttr("value");
-            }
-        });
+        if ($(this).is(':checked')) {
+            $("#modal-single-order input[data-extras='" + idExtra + "']").val(extraValue);
+        }
+        else {
+            $("#modal-single-order input[data-extras='" + idExtra + "']").val("").removeAttr("value");
+        }
+    });
+    $("#form-extras-order #promo-code").change(function () {
+        let promoCode = $(this).val();
+        $("#modal-single-order input[name='promo_code']").val(promoCode);
     });
     $(".modal-extras__submit-btn").click(function (e) {
         e.preventDefault();

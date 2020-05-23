@@ -21,7 +21,7 @@
                                    {!! "<i class='bx bx-star' ></i>" !!}
                                 @endfor
                             @endif
-                            ( {{ $rating }} / 5 )
+                            ( {{ ceil($rating) }} / 5 )
                         </div>
                     </div>
                     <img src="{{ Storage::url($service->image) }}" alt="Service image" class="service-single__img">

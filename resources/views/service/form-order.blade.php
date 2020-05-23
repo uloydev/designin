@@ -71,6 +71,7 @@
                     @csrf
                     <input type="hidden" data-extras="extras-1" name="order_extras[]">
                     <input type="hidden" data-extras="extras-2" name="order_extras[]">
+                    <input type="hidden" name="promo_code">
                     <input type="hidden" name="agent_id" value="{{$service->agent_id}}">
                     <label for="send-message" class="d-block mb-3">Your message</label>
                     <textarea name="message_agent" id="send-message" rows="10"
