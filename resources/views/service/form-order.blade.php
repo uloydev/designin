@@ -23,12 +23,13 @@
                     @csrf
                     <input type="hidden" name="agent_id" value="{{$service->agent_id}}">
                     <label for="send-message" class="d-block mb-3">Your message</label>
-                    <textarea name="message_agent" id="send-message" rows="10" required></textarea>
+                    <textarea name="message_agent" id="send-message" rows="10"
+                    placeholder="Put your message here..." required></textarea>
                     <div class="d-flex align-items-center justify-content-between">
                         <label for="message_file" class="single-service__message-file"
                                title="Attach a file">
                             <input type="file" id="message_file" class="d-none file-custom__input"
-                                   data-label="Insert attachment" name="brief_file">
+                            data-label="Insert attachment" name="brief_file">
                             <i class='bx bx-cloud-upload'></i>
                             <b class="text-label">Insert attachment</b>
                             <span class="ml-2 file-value"></span>

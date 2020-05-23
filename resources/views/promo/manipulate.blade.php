@@ -70,7 +70,8 @@
             </div>
         </div>
     </div>
-</div><div class="modal fade" id="editPromo" tabindex="-1" role="dialog" aria-hidden="true">
+</div>
+<div class="modal fade" id="editPromo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -86,7 +87,7 @@
                     <div class="form-group">
                         <label for="promo-name">Promo name</label>
                         <input id="promo-name" type="text" placeholder="Ex: Lebira (Lebaran Gembira)"
-                                class="form-control" name="promo_name" required>
+                        class="form-control" name="promo_name" required>
                     </div>
                     <div class="form-group">
                         <label for="edit-promo-start">Start date</label>
@@ -107,11 +108,6 @@
                         <label for="promo-discount">Promo discount (%)</label>
                         <input id="promo-discount" type="text" placeholder="Ex: 10"
                                 class="form-control" name="promo_discount" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="promo-limit">Promo limit</label>
-                        <input id="promo-limit" type="text" placeholder="Ex: 100"
-                                class="form-control" name="promo_limit" required>
                     </div>
                 </form>
             </div>

@@ -502,12 +502,16 @@ $(document).ready(function () {
         let promoName = $(this).parents('tr').find('.promo-name').text();
         let promoStart = $(this).parents('tr').find('.promo-start').text();
         let promoEnd = $(this).parents('tr').find('.promo-end').text();
+        let promoCode = $(this).parents('tr').find('.promo-code').text();
+        let promoDisc = $(this).parents('tr').find('.promo-disc').text();
 
         $("#editPromo form input[name='promo_name']").val(promoName);
         $("#editPromo form input[name='promo_start']").val(promoStart);
         $("#editPromo form input[name='promo_start']").data('datepicker').selectDate(new Date(promoStart));
         $("#editPromo form input[name='promo_end']").val(promoEnd);
         $("#editPromo form input[name='promo_end']").data('datepicker').selectDate(new Date(promoEnd));
+        $("#editPromo form input[name='promo_code']").val(promoCode);
+        $("#editPromo form input[name='promo_discount']").val(promoDisc);
 
         $("#editPromo form").attr('action', window.location.origin + '/admin/manage/promo/' + promoId);
     });
