@@ -546,6 +546,9 @@ body[id^='blog'] .nav__list--logo {
 .text-success {
     color: var(--primary-color);
 }
+.text-danger {
+    color: #e60000;
+}
 
 body:not(#landingPage):not([id*='blog']):not(#faqPage) main {
     padding-top: 2rem;
@@ -1375,6 +1378,12 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #singleServicePage #form-extras-order .extra-checkbox {
     margin-right: 10%;
+}
+#singleServicePage #form-extras-order .promo-code-false {
+    color: #e60000;
+    display: block;
+    transition: all 150ms;
+    margin: 10px 0;
 }
 #singleServicePage .modal-extras__submit-btn {
     background-color: var(--primary-color) !important;

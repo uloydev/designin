@@ -1,4 +1,4 @@
-$(document).ready(function () {
+let ready = $(document).ready(function () {
     //user js
     const navToggle = document.querySelector('.nav__toggle');
     const primaryNav = document.querySelector('#primaryNav');
@@ -172,9 +172,27 @@ $(document).ready(function () {
             $("#modal-single-order input[data-extras='" + idExtra + "']").val("").removeAttr("value");
         }
     });
+    let allPromoCodeList = [];
+    let allPromoCode = document.querySelectorAll('#form-extras-order datalist option');
+    allPromoCode.forEach(function (promoCode) {
+        let promoCodeVal = promoCode.value;
+        allPromoCodeList.push(promoCodeVal);
+    });
     $("#form-extras-order #promo-code").change(function () {
-        let promoCode = $(this).val();
-        $("#modal-single-order input[name='promo_code']").val(promoCode);
+        if ($(this).val().length !== 0) {
+            let promoCode = $(this).val();
+            if (allPromoCodeList.includes(promoCode) === true) {
+                $("#modal-single-order input[name='promo_code']").val(promoCode);
+                $("#form-extras-order .promo-code-false").remove().removeClass('show');
+            }
+            else {
+                $("<span class='promo-code-false'>You input wrong promo code</span>")
+                    .insertAfter("#form-extras-order #promo-code").addClass('show');
+            }
+        }
+        else {
+            $("#form-extras-order .promo-code-false").remove();
+        }
     });
     $(".modal-extras__submit-btn").click(function (e) {
         e.preventDefault();
@@ -610,15 +628,19 @@ $(document).ready(function () {
         bsCustomFileInput.init();
     }
 
-    if ($(window).width() > 768 && $("#faqs").length === 1) {
-        $('#faqs').jqTabs({
-            direction: 'vertical'
-        });
+    if ($(window).width() > 768) {
+        if ($("#faqs").length === 1) {
+            $('#faqs').jqTabs({
+                direction: 'vertical'
+            });
+        }
     }
-    else if ($(window).width() < 768 && $("#faqs").length === 1) {
-        $('#faqs').jqTabs({
-            direction: 'horizontal'
-        });
+    else {
+        if ($("#faqs").length === 1) {
+            $('#faqs').jqTabs({
+                direction: 'horizontal'
+            });
+        }
     }
 
     if (window.location.pathname === '/') {

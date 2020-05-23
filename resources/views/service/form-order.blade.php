@@ -32,9 +32,17 @@
                             </div>
                             {{-- endforeach --}}
                         </div>
-                        <div class="my-3 my-md-0">
+                        <div class="my-3 my-md-0 position-relative">
                             <label for="promo-code" class="mb-2 d-block">Promo code (optional)</label>
                             <input type="text" id="promo-code" class="input-custom" placeholder="Ex: LEBARIN">
+                            <datalist id="promo_code">
+                                {{-- foreach --}}
+                                <option value="1011" class="d-none">
+                                <option value="1013" class="d-none">
+                                <option value="1015" class="d-none">
+                                <option value="lebarin" class="d-none">
+                                {{-- foreach --}}
+                            </datalist>
                         </div>
                         <button type="submit" class="modal-extras__submit-btn">Next</button>
                     </form>
