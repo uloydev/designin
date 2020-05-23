@@ -11,7 +11,8 @@ $factory->define(ServiceExtras::class, function (Faker $faker) {
         'name'=> $faker->sentence($nbWords=6),
         'service_id'=> $faker->randomElement(Service::pluck('id')->all()),
         'price'=> 100000,
+        'price_token'=> 10,
         'description'=> $faker->paragraph($nbSentences=4),
-        'benefit'=>json_encode(['duration'=>-2])
+        'benefit'=>'reduce order duration by 2 days'
     ];
 });

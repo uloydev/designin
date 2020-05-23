@@ -50,6 +50,8 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('promo', 'PromoController')->except(['create', 'show', 'edit']);
         Route::resource('subscription', 'SubscriptionController');
         Route::resource('reason', 'ReasonController')->except(['show']);
+        Route::resource('package', 'PackageController');
+        Route::resource('service-extras', 'ServiceExtrasController');
     });
 });
 

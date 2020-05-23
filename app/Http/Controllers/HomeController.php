@@ -175,22 +175,22 @@ class HomeController extends Controller
         return ['status'=>'success', 'message'=>'promo code applied', 'discount' => $promo->discount];
     }
 
-    public function contactAgent($id, Request $request)
-    {
-        $this->middleware('auth');
-        $sevice = Service::findOrFail($id);
-        $request->validate([
-            'message_agent' => 'required',
-            'message_file' => 'mimes:jpeg,png,psd'
-        ]);
-        $agent = Auth::user();
-        Mail::to($agent->email)->send(new ContactAgent($request->all(), $agent, $service));
-        return redirect()->back()->withSuccess('Message to Agent has Sent Successfully');
-    }
+    // public function contactAgent($id, Request $request)
+    // {
+    //     $this->middleware('auth');
+    //     $sevice = Service::findOrFail($id);
+    //     $request->validate([
+    //         'message_agent' => 'required',
+    //         'message_file' => 'mimes:jpeg,png,psd'
+    //     ]);
+    //     $agent = Auth::user();
+    //     Mail::to($agent->email)->send(new ContactAgent($request->all(), $agent, $service));
+    //     return redirect()->back()->withSuccess('Message to Agent has Sent Successfully');
+    // }
 
-    public function serviceSearch(Request $request)
-    {
-        $service = Service::where('title', 'LIKE', '%' . $request . '%')->paginate();
-        $service->appends(['search' => $q]);
-    }
+    // public function serviceSearch(Request $request)
+    // {
+    //     $service = Service::where('title', 'LIKE', '%' . $request . '%')->paginate();
+    //     $service->appends(['search' => $q]);
+    // }
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\ServiceExtras;
 
 class Order extends Model
 {
@@ -22,7 +23,8 @@ class Order extends Model
         'attachment',
         'quantity',
         'max_revision',
-        'duration'
+        'duration',
+        'extras'
     ];
     protected $casts = ['start_at' => 'datetime', 'deadline' => 'datetime'];
     // protected $with = ['package'];
@@ -50,5 +52,11 @@ class Order extends Model
     public function promo()
     {
         return $this->belongsTo('App\Promo');
+    }
+
+    public function extras()
+    {
+        $extras_id = json_decode($this->extras);
+        return ServiceExtras::where('id', 'in', $extras_id)->get();
     }
 }

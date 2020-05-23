@@ -18,6 +18,7 @@ class CreateServiceExtrasTable extends Migration
             $table->string('name');
             $table->unsignedInteger('service_id');
             $table->unsignedInteger('price');
+            $table->unsignedInteger('price_token');
             $table->text('description');
             $table->text('benefit');
             $table->timestamps();
