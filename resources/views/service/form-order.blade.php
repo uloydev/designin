@@ -1,40 +1,41 @@
 <div class="modal modal--xl modal-extras" id="modal-single-extras">
-    <div class="modal__content">
+    <div class="modal__content modal-extras__content">
         <div class="modal__header pb-3">
             Customize your order
             <a href="javascript:void(0)" class="btn-close-modal"><i class='bx bx-x'></i></a>
         </div>
         <div class="modal__body">
-            <figure class="row mx-0">
-                <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Service Image">
-                <figcaption class="col d-flex flex-column pl-5 align-items-start">
+            <figure class="row flex-column flex-md-row mx-0">
+                <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Service Image" class="modal-extras__img">
+                <figcaption class="col d-flex flex-column pl-md-5 align-items-start">
                     <p class="modal-order-title"></p>
                     <div class="d-flex align-items-center">
                         <label for="quantity" class="mr-2">Quantity</label>
-                        <input type="number" id="quantity" min="1" value="1" max="20"
-                               form="form-extras-order" required>
+                        <input type="number" id="quantity" min="1" value="1" max="20" form="form-extras-order" required>
                     </div>
                     <p class="mt-3">Price <var class="modal-order-price"></var></p>
                     {{-- ini form gk ada actionnya, cmn buat box. Form aslinya ada dibawah --}}
                     <form action="" method="post" id="form-extras-order">
                         @csrf
                         <input type="hidden" name="modal_order_title" required readonly>
-                        {{-- foreach --}}
-                        <div class="checkbox-custom">
-                            <label class="checkbox-custom__label" for="extras-1">Extra 2 Days</label>
-                            <input type="checkbox" id="extras-1" class="checkbox-custom__input" value="yes">
-                            <span class="custom-checkbox__icon"><i class='bx bx-check' ></i></span>
+                        <div class="extra-checkbox">
+                            {{-- foreach --}}
+                            <div class="checkbox-custom mb-3">
+                                <label class="checkbox-custom__label" for="extras-1">Extra 2 Days</label>
+                                <input type="checkbox" id="extras-1" class="checkbox-custom__input" value="yes">
+                                <span class="custom-checkbox__icon"><i class='bx bx-check' ></i></span>
+                            </div>
+                            <div class="checkbox-custom mb-3">
+                                <label class="checkbox-custom__label" for="extras-2">Addition Revision +1</label>
+                                <input type="checkbox" id="extras-2" class="checkbox-custom__input" value="true">
+                                <span class="custom-checkbox__icon"><i class='bx bx-check' ></i></span>
+                            </div>
+                            {{-- endforeach --}}
                         </div>
-                        <div class="checkbox-custom">
-                            <label class="checkbox-custom__label" for="extras-2">Addition Revision +1</label>
-                            <input type="checkbox" id="extras-2" class="checkbox-custom__input" value="true">
-                            <span class="custom-checkbox__icon"><i class='bx bx-check' ></i></span>
-                        </div>
-                        <div class="mt-3">
+                        <div class="my-3 my-md-0">
                             <label for="promo-code" class="mb-2 d-block">Promo code (optional)</label>
                             <input type="text" id="promo-code" class="input-custom" placeholder="Ex: LEBARIN">
                         </div>
-                        {{-- endforeach --}}
                         <button type="submit" class="modal-extras__submit-btn">Next</button>
                     </form>
                 </figcaption>
