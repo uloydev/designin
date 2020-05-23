@@ -96,7 +96,9 @@
                 </form>
             </div>
             <div class="modal__footer">
-                <button type="submit" class="btn-danger col mx-auto" form="form-delete-job">Delete this job</button>
+                <button type="submit" class="btn-danger col mx-auto" form="form-delete-job">
+                    Delete this job
+                </button>
             </div>
         </div>
     </div>
@@ -137,7 +139,8 @@
             <div class="modal__body">
                 <form action="" method="post">
                     @csrf
-                    <input class="input-custom mb-4" name="job_title" placeholder="Job title" type="text" required>
+                    <input class="input-custom mb-4" name="job_title"
+                    placeholder="Job title" type="text" required>
                     <input type="text" class="input-custom datepicker-here mb-3" name="job_start_time"
                            placeholder="Start date (ex: 13 Jan 2020)" required>
                     <input type="text" class="input-custom datepicker-here mb-3" name="job_end_time"

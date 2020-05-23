@@ -6,11 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateServicesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('service', function (Blueprint $table) {

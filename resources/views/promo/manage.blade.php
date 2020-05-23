@@ -39,7 +39,7 @@
                         <th scope="col" class="sort">Code</th>
                         <th scope="col" class="sort">Discount</th>
                         <th scope="col" class="sort">Limit</th>
-                        <th scope="col" class="sort">Usage</th>
+                        <th scope="col" class="sort" colspan="2">Usage</th>
                     </tr>
                     </thead>
                     <tbody class="list">
@@ -48,9 +48,9 @@
                                 <td class="promo-name">{{ $promo->name }}</td>
                                 <td class="promo-start">{{ $promo->started_at }}</td>
                                 <td class="promo-end">{{ $promo->ended_at }}</td>
-                                <td>{{ $promo->code }}</td>
-                                <td>{{ $promo->discount }}%</td>
-                                <td>{{ $promo->limit }}</td>
+                                <td class="promo-code">{{ $promo->code }}</td>
+                                <td class="promo-disc">{{ $promo->discount }}%</td>
+                                <td class="promo-limit">{{ $promo->limit }}</td>
                                 <td>{{ $promo->usage }}</td>
                                 <td class="text-right">
                                     <div class="dropdown">

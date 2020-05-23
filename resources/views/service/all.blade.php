@@ -22,20 +22,15 @@
                 <h1 class="mb-5 text-center text-md-left">{{ $category->name ?? '' }}</h1>
                 <div id="service-slider-{{ $category->id }}">
                     @foreach ($category->services as $service)
-                        <div class="px-3">
+                        <div class="px-3 full-height">
                             <div class="service card p-0">
                                 <img src="{{ Storage::url($service->image) }}" class="card__img service__img-item"
                                      alt="Desainin Service Category">
                                 <div class="card__header">
-                                    <h3 class="service__title">{{ Str::limit($service->title, 30) }}</h3>
-                                    <div class="d-flex align-items-center">
-                                        <img src="{{ Storage::url($service->agent->profile->avatar) }}"
-                                             alt="Service agent avatar" height="20">
-                                        <h4 class="ml-2 service__agent-name">{{ $service->agent->name }}</h4>
-                                    </div>
+                                    <h3 class="service__title">{{ Str::words($service->title, 5) }}</h3>
                                 </div>
                                 <div class="card__body service__content">
-                                    {!! Str::limit($service->description, 150) !!}
+                                    {!! Str::words($service->description, 12) !!}
                                 </div>
                                 <div class="service__action">
                                     <p class="service__rating">Rating : {{ $service->rating }}</p>

@@ -38,7 +38,9 @@
                             </div>
                             <div class="mb-3">
                                 Start on:
-                                <time class="profile-main__time">{{ $order->started_at ?? 'not start yet' }}</time>
+                                <time class="profile-main__time">
+                                    {{ $order->started_at ?? 'not start yet' }}
+                                </time>
                             </div>
                             <div class="mb-3">
                                 Finish on:
@@ -49,10 +51,10 @@
                                     Progress
                                     <progress max="100" value="{{ $order->progress }}">{{ $order->progress }}</progress>
                                 </div>
-                            @else
+                            @elseif ($order->status == 'finished')
                                 <div class="mb-3">
                                     Status
-                                    <p style="color: #bfa029">Not yet accepted by the agent</p>
+                                    <p class="text-success font-bold">{{ $order->status }}</p>
                                 </div>
                             @endif
                         </div>

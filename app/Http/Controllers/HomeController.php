@@ -99,12 +99,15 @@ class HomeController extends Controller
 
     public function searchAgentJob(Request $request)
     {
+        $query = $request->search_agent_job;
         $agents = User::where('role' ,'agent')->where('name', 'like', '%'.$request->search_agent_job.'%')->take(4);
-        $services = Service::where('title', 'like', '%'.$request->search_agent_job.'%')
-        ->orWhere('description', 'like', '%'.$request->search_agent_job.'%')->take(4);
-        return view('search.agentjob', [
-            'agents'=>$agents,
-            'services'=>$services
+        $categories = ServiceCategory::whereHas('services', function (Builder $query) use ($request) {
+            $query->where('title', 'LIKE', '%' . $request->search_agent_job . '%');
+        })->paginate(10);
+        return view('service.all', [
+            'agents' => $agents,
+            'categories' => $categories,
+            'query' => $query
         ]);
     }
 
@@ -182,6 +185,7 @@ class HomeController extends Controller
 
     public function serviceSearch(Request $request)
     {
-        $service = Service::where('title');
+        $service = Service::where('title', 'LIKE', '%' . $request . '%')->paginate();
+        $service->appends(['search' => $q]);
     }
 }

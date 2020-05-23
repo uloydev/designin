@@ -230,8 +230,7 @@
                 </a>
             </div>
             <div class="modal__body">
-                <form action="" class="search-service" method="get">
-                    @csrf
+                <form action="{{ route('service.search') }}" class="search-service" method="get">
                     <input type="search" class="search-service__input" name="search_agent_job"
                     placeholder="Find design and click enter..." autocomplete="off" required>
                     <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>

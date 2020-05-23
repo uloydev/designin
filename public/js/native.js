@@ -147,12 +147,39 @@ $(document).ready(function () {
         }
     });
 
-    $("[data-target='#modal-single-order']").click(function () {
+    $("[data-target='#modal-single-extras']").click(function () {
         let packageId = $(this).data('package-id');
         let agentId = $(this).data('agent-id');
+        let orderTitle = $(this).parents(".row").find('.service-single__title').text();
+        let orderPrice = $(this).prev().find('.order-price').text();
+
+        $("#modal-single-extras .modal-order-title").text(orderTitle);
+        $("#modal-single-extras .modal-order-price").text(orderPrice);
+        $("#modal-single-extras input[name='modal_order_title']").val(orderTitle);
 
         $("#modal-single-order input[name='agent_id']").val(agentId);
         $("#modal-single-order form").attr('action', window.location.origin + '/service/show/' + packageId);
+
+        $("#form-extras-order input[type='checkbox']").change(function () {
+            let idExtra = $(this).attr('id');
+            let extraValue = $("#form-extras-order input#" + idExtra).val();
+            console.log(extraValue, idExtra);
+
+            if ($(this).is(':checked')) {
+                $("#modal-single-order input[data-extras='" + idExtra + "']").val(extraValue);
+            }
+            else {
+                $("#modal-single-order input[data-extras='" + idExtra + "']").val("").removeAttr("value");
+            }
+        });
+    });
+    $(".modal-extras__submit-btn").click(function (e) {
+        e.preventDefault();
+        $("#modal-single-extras").removeClass('show-modal');
+        $("#modal-single-order").addClass('show-modal');
+    });
+    $("#modal-single-order #show-modal-single-extras").click(function () {
+        $("[data-target='#modal-single-extras']").trigger("click");
     });
 
     //agent js
@@ -502,12 +529,16 @@ $(document).ready(function () {
         let promoName = $(this).parents('tr').find('.promo-name').text();
         let promoStart = $(this).parents('tr').find('.promo-start').text();
         let promoEnd = $(this).parents('tr').find('.promo-end').text();
+        let promoCode = $(this).parents('tr').find('.promo-code').text();
+        let promoDisc = $(this).parents('tr').find('.promo-disc').text();
 
         $("#editPromo form input[name='promo_name']").val(promoName);
         $("#editPromo form input[name='promo_start']").val(promoStart);
         $("#editPromo form input[name='promo_start']").data('datepicker').selectDate(new Date(promoStart));
         $("#editPromo form input[name='promo_end']").val(promoEnd);
         $("#editPromo form input[name='promo_end']").data('datepicker').selectDate(new Date(promoEnd));
+        $("#editPromo form input[name='promo_code']").val(promoCode);
+        $("#editPromo form input[name='promo_discount']").val(promoDisc);
 
         $("#editPromo form").attr('action', window.location.origin + '/admin/manage/promo/' + promoId);
     });

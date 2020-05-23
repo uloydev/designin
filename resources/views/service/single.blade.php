@@ -46,15 +46,15 @@
                     @forelse ($testimonies as $testimony)
                     <article class="service-single__comment">
                         <img src="{{ Storage::url($testimony->user->profile->avatar ?? 'temporary/people.webp') }}"
-                        height="20"
-                        alt="People comment image">
+                            height="20" alt="People comment image">
                         <div class="service-single__comment-detail">
                             <p class="service-single__comment-title">{{ $testimony->user->name }}</p>
                             <p class="service-single__comment-text">{{ $testimony->content }}</p>
                         </div>
                     </article>
                     @empty
-                        <img src="{{ asset('img/review.jpg') }}" alt="No review" height="150" class="mx-auto d-block">
+                        <img src="{{ asset('img/review.jpg') }}" alt="No review"
+                        height="150" class="mx-auto d-block">
                         <h1 class="mt-4 text-center">There are no review about this service</h1>
                     @endforelse
                 </div>
@@ -75,12 +75,15 @@
                         <div class="single-package__top mb-4">
                             <p class="mb-3 d-flex justify-content-between align-items-center">
                                 {{ $package->title }}
-                                <var class="font-style-normal font-bold">IDR {{ $package->price }}</var>
+                                <var class="font-style-normal font-bold order-price">
+                                    IDR {{ $package->price }}
+                                </var>
                             </p>
                             <p>{{ $package->description }}</p>
                         </div>
-                        <button class="btn-modal single-package__btn" data-target="#modal-single-order"
-                        data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}">
+                        <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
+                        data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
+                        data-package-title="{{ $package->title }}">
                             Continue (IDR {{ $package->price }})
                         </button>
                         {{-- edit discounted price if subscribe --}}

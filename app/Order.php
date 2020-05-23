@@ -21,7 +21,7 @@ class Order extends Model
         'promo_id',
         'attachment'
     ];
-    protected $casts = ['start_at'=> 'datetime', 'deadline'=>'datetime'];
+    protected $casts = ['start_at' => 'datetime', 'deadline' => 'datetime'];
     // protected $with = ['package'];
 
     public function user()
