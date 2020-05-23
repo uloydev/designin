@@ -113,24 +113,29 @@ class HomeController extends Controller
 
     public function makeOrder(Request $request, $id)
     {
+        dd($request);
         $this->middleware('auth');
         $user = Auth::user();
         $package = Package::findOrFail($id);
         $order = new Order;
         $budget = $package->price;
-        if ($user->is_subscribe) {
-            $subscription = $user->subscription;
-            if ( $user->subscribe_at->addDays($subscription->duration) <= Carbon::now() 
-            and $user->subscribe_token >= $package->token_price ) {
-                $budget = $subscription->price / $subscription->token * $package->token_price;
-                $user->subscribe_token -= $package->token_price;
+        if ($request->payment == 'token') {
+            if ($user->is_subscribe) {
+                $subscription = $user->subscription;
+                if ( $user->subscribe_at->addDays($subscription->duration) <= Carbon::now() 
+                and $user->subscribe_token >= $package->token_price ) {
+                    $budget = $subscription->price / $subscription->token * $package->token_price;
+                    $user->subscribe_token -= $package->token_price;
+                }else{
+                    $user->is_subscribe = false;
+                    $user->save();
+                    return redirect()->back()->with('error', 'your subscription is expired');
+                }
             }else{
-                $user->is_subscribe = false;
-                $user->save();
-                return redirect()->back()->with('error', 'your subscription is expired');
+                return redirect()->back()->with('error', 'you have no subscription');
             }
         }
-        elseif ($request->has('promo_code')) {
+        if ($request->has('promo_code')) {
             $promo = Promo::where('code' , $request->promo_code)->get();
             $budget -= $budget * $promo->discount / 100;
             $order->promo_id = $promo->id;
@@ -145,9 +150,9 @@ class HomeController extends Controller
         $order->package_id = $package->id;
         $order->status = 'unpaid';
         $order->request = $request->message_agent;
-        // need to update discount
         $order->budget = $budget;
         $order->user_id = $user->id;
+        $order->quantity = $request->quantity;
         $order->save();
         // Mail::to(User::find($request->agent_id)->email)->send(new NewOrderNotification($order));
         return redirect()->route('user.order.index')->with(

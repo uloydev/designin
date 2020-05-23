@@ -19,7 +19,10 @@ class Order extends Model
         'is_reviewed',
         'budget',
         'promo_id',
-        'attachment'
+        'attachment',
+        'quantity',
+        'max_revision',
+        'duration'
     ];
     protected $casts = ['start_at' => 'datetime', 'deadline' => 'datetime'];
     // protected $with = ['package'];

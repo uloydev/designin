@@ -12,29 +12,25 @@
                     <div class="d-flex align-items-center">
                         <label for="quantity" class="mr-2">Quantity</label>
                         <input type="number" id="quantity" min="1" value="1" max="20"
-                               form="form-extras-order" required>
+                               form="form-extras-order" required name="quantity">
                     </div>
                     <p class="mt-3">Price <var class="modal-order-price"></var></p>
                     {{-- ini form gk ada actionnya, cmn buat box. Form aslinya ada dibawah --}}
                     <form action="" method="post" id="form-extras-order">
                         @csrf
                         <input type="hidden" name="modal_order_title" required readonly>
-                        {{-- foreach --}}
+                        @foreach ($service->extras as $extra)
                         <div class="checkbox-custom">
-                            <label class="checkbox-custom__label" for="extras-1">Extra 2 Days</label>
-                            <input type="checkbox" id="extras-1" class="checkbox-custom__input" value="yes">
+                            <label class="checkbox-custom__label" for="extras-{{$extra->id}}">{{$extra->name}}</label>
+                            <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input" value="{{$extra->id}}" name="extras[] checked">
                             <span class="custom-checkbox__icon"><i class='bx bx-check' ></i></span>
                         </div>
-                        <div class="checkbox-custom">
-                            <label class="checkbox-custom__label" for="extras-2">Addition Revision +1</label>
-                            <input type="checkbox" id="extras-2" class="checkbox-custom__input" value="true">
-                            <span class="custom-checkbox__icon"><i class='bx bx-check' ></i></span>
-                        </div>
+                        @endforeach
+                        {{-- check if promo code exist before checkout using ajax--}}
                         <div class="mt-3">
                             <label for="promo-code" class="label-cu">Promo code (optional)</label>
-                            <input type="text" id="promo-code" class="input-custom" placeholder="Ex: LEBARIN">
+                            <input type="text" id="promo-code" class="input-custom" name="promo_code" placeholder="Ex: LEBARIN">
                         </div>
-                        {{-- endforeach --}}
                         <button type="submit" class="modal-extras__submit-btn">Next</button>
                     </form>
                 </figcaption>

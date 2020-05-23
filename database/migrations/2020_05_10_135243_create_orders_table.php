@@ -36,6 +36,9 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('budget');
             $table->unsignedInteger('promo_id')->nullable();
             $table->text('extras')->nullable();
+            $table->unsignedInteger('quantity');
+            $table->unsignedInteger('max_revision')->default(3);
+            $table->unsignedInteger('duration')->nullable();
             $table->timestamps();
         });
     }

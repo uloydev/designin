@@ -87,7 +87,7 @@
                             Continue (IDR {{ $package->price }})
                         </button>
                         {{-- edit discounted price if subscribe --}}
-                        <del class="d-block mt-3 text-center text-gray">IDR 600,000</del>
+                        {{-- <del class="d-block mt-3 text-center text-gray">IDR 600,000</del> --}}
                     </div>
                     @endforeach
                 </div>

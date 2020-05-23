@@ -24,6 +24,8 @@ $factory->define(Order::class, function (Faker $faker) {
         'agent_id' => $agent_id,
         'request' => $faker->paragraph($nbSentences = 20, $variableNbSentences = true),
         'budget' => $price,
+        'quantity' => $faker->numberBetween(1,4),
+        'max_revision' => $faker->numberBetween(1,3),
     ];
     if ($status != 'unpaid' and $status != 'waiting') {
         $data['started_at'] = Carbon::now();
