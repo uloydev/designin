@@ -35,6 +35,7 @@ class CreateOrdersTable extends Migration
             $table->string('attachment')->nullable();
             $table->unsignedInteger('budget');
             $table->unsignedInteger('promo_id')->nullable();
+            $table->text('extras')->nullable();
             $table->timestamps();
         });
     }

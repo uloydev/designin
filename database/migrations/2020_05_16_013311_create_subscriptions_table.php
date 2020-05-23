@@ -21,7 +21,6 @@ class CreateSubscriptionsTable extends Migration
             $table->unsignedInteger('price');
             $table->unsignedInteger('token');
             $table->unsignedInteger('duration');
-            $table->unsignedInteger('discount');
             $table->timestamps();
         });
     }

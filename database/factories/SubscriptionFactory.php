@@ -53,6 +53,5 @@ $factory->define(Subscription::class, function (Faker $faker) {
         'token' => 10,
         'price' => $faker->randomElement([450000, 1050000, 3600000]),
         'duration' => $faker->randomElement([7, 30]),
-        'discount' => $faker->numberBetween(5, 10)
     ];
 });
