@@ -9,6 +9,7 @@
                 <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Service Image" class="modal-extras__img">
                 <figcaption class="col d-flex flex-column pl-md-5 align-items-start">
                     <p class="modal-order-title"></p>
+                    {{-- quatity need to pass to $request --}}
                     <div class="d-flex align-items-center">
                         <label for="quantity" class="mr-2">Quantity</label>
                         <input type="number" id="quantity" min="1" value="1" max="20"
@@ -22,7 +23,9 @@
                         @foreach ($service->extras as $extra)
                         <div class="checkbox-custom">
                             <label class="checkbox-custom__label" for="extras-{{$extra->id}}">{{$extra->name}}</label>
-                            <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input" value="{{$extra->id}}" name="extras[] checked">
+                            {{-- extras checkbox need is not clickable --}}
+                            {{-- need to fix (extras should be only passed if they checked ) --}}
+                            <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input" value="{{$extra->id}}" name="extras">
                             <span class="custom-checkbox__icon"><i class='bx bx-check' ></i></span>
                         </div>
                         @endforeach
@@ -64,8 +67,9 @@
             <div class="col">
                 <form action="{{-- url on js = '/service/show/$id' --}}" method="post">
                     @csrf
-                    <input type="hidden" data-extras="extras-1" name="order_extras[]">
-                    <input type="hidden" data-extras="extras-2" name="order_extras[]">
+                    @foreach ($service->extras as $extra)
+                    <input type="hidden" data-extras="extras-{{$extra->id}}" name="extras[]">
+                    @endforeach
                     <input type="hidden" name="promo_code">
                     <input type="hidden" name="agent_id" value="{{$service->agent_id}}">
                     <label for="send-message" class="d-block mb-3">Your message</label>

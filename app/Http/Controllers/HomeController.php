@@ -113,7 +113,7 @@ class HomeController extends Controller
 
     public function makeOrder(Request $request, $id)
     {
-        dd($request);
+        // dd($request);
         $this->middleware('auth');
         $user = Auth::user();
         $package = Package::findOrFail($id);
@@ -135,7 +135,7 @@ class HomeController extends Controller
                 return redirect()->back()->with('error', 'you have no subscription');
             }
         }
-        if ($request->has('promo_code')) {
+        if (!empty($request->promo_code)) {
             $promo = Promo::where('code' , $request->promo_code)->get();
             $budget -= $budget * $promo->discount / 100;
             $order->promo_id = $promo->id;
