@@ -1,13 +1,13 @@
 <div class="modal modal--xl modal-extras" id="modal-single-extras">
-    <div class="modal__content">
+    <div class="modal__content modal-extras__content">
         <div class="modal__header pb-3">
             Customize your order
             <a href="javascript:void(0)" class="btn-close-modal"><i class='bx bx-x'></i></a>
         </div>
         <div class="modal__body">
-            <figure class="row mx-0">
-                <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Service Image">
-                <figcaption class="col d-flex flex-column pl-5 align-items-start">
+            <figure class="row flex-column flex-md-row mx-0">
+                <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Service Image" class="modal-extras__img">
+                <figcaption class="col d-flex flex-column pl-md-5 align-items-start">
                     <p class="modal-order-title"></p>
                     <div class="d-flex align-items-center">
                         <label for="quantity" class="mr-2">Quantity</label>
@@ -66,6 +66,7 @@
                     @csrf
                     <input type="hidden" data-extras="extras-1" name="order_extras[]">
                     <input type="hidden" data-extras="extras-2" name="order_extras[]">
+                    <input type="hidden" name="promo_code">
                     <input type="hidden" name="agent_id" value="{{$service->agent_id}}">
                     <label for="send-message" class="d-block mb-3">Your message</label>
                     <textarea name="message_agent" id="send-message" rows="10"

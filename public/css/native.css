@@ -309,8 +309,6 @@ body[id^='blog'] .nav__list--logo {
 .custom-checkbox__icon {
     position: absolute;
     left: 0;
-    display: flex;
-    line-height: 1rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--primary-color);
@@ -326,7 +324,7 @@ body[id^='blog'] .nav__list--logo {
 }
 .checkbox-custom__label::before {
     position: absolute;
-    top: .25rem;
+    top: 0;
     left: -1.5rem;
     display: block;
     width: 1rem;
@@ -430,7 +428,7 @@ body[id^='blog'] .nav__list--logo {
     left: 0;
     background-color: rgba(29,26,13,0.28);
     position: fixed;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
@@ -547,6 +545,9 @@ body[id^='blog'] .nav__list--logo {
 
 .text-success {
     color: var(--primary-color);
+}
+.text-danger {
+    color: #e60000;
 }
 
 body:not(#landingPage):not([id*='blog']):not(#faqPage) main {
@@ -1104,9 +1105,6 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     z-index: 2;
 }
 
-#servicesPage .nav__toggle {
-    color: var(--text-color);
-}
 #servicesPage header {
     background-color: var(--almost-white);
     border-bottom: 1px solid #dbdbdb;
@@ -1218,6 +1216,11 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 
 #singleServicePage .service-single__top {
     margin-bottom: 50px;
+}
+#singleServicePage .service-single__img {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: cover;
 }
 #singleServicePage .service-single__title {
     font-size: 24px;
@@ -1349,11 +1352,22 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     text-align: center;
     height: 20px;
 }
+#singleServicePage .modal-extras__content {
+    overflow: auto;
+}
 #singleServicePage #modal-single-extras .modal__body {
     padding-bottom: 30px;
 }
+#singleServicePage .modal-extras__img {
+    max-height: 250px;
+    display: block;
+    max-width: 100%;
+    object-fit: cover;
+    margin: 0 auto 30px;
+}
 #singleServicePage #form-extras-order {
     display: flex;
+    position: relative;
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
@@ -1362,11 +1376,18 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     border-top: 1px solid #c9c9c9;
     margin-top: 30px;
 }
+#singleServicePage #form-extras-order .extra-checkbox {
+    margin-right: 10%;
+}
+#singleServicePage #form-extras-order .promo-code-false {
+    color: #e60000;
+    display: block;
+    transition: all 150ms;
+    margin: 10px 0;
+}
 #singleServicePage .modal-extras__submit-btn {
-    margin-top: auto;
     background-color: var(--primary-color) !important;
     color: #fff;
-    transition: all 150ms;
 }
 #singleServicePage .modal-extras__submit-btn:hover {
     background-color: var(--primary-color-hover) !important;
@@ -1702,7 +1723,8 @@ input[type=number] {
     padding: 10px 1rem;
 }
 
-#contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle, #landingPage .nav__toggle {
+#contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle,
+#servicesPage .nav__toggle, #singleServicePage .nav__toggle, #landingPage .nav__toggle {
     color: var(--almost-black);
 }
 #contactUsPage main {
@@ -2533,6 +2555,11 @@ footer .row {
 
     #singleServicePage .service-single__title {
         font-size: 30px;
+    }
+    #singleServicePage .modal-extras__submit-btn {
+        position: absolute;
+        right: 0;
+        bottom: 0;
     }
 
     #seeSubscriptionPage .subscription-single__caption {
