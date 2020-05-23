@@ -43,7 +43,7 @@
                 </div>
                 <div class="card-footer">
                     <p>Duration: {{ $subscription->duration . ' days' }}</p>
-                    <p>Token: {{ $subscription->token }}</p>
+                    <p>Credit: {{ $subscription->token . ' token' }}</p>
                 </div>
             </div>
         </div>

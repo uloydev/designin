@@ -62,7 +62,6 @@
             <div class="modal-body">
                 <form role="form" method="post" id="form-update-subscription" enctype="multipart/form-data">
                     @csrf @method('PUT')
-                    <input type="hidden" class="form-control" id="token" placeholder="Token" name="token" required readonly>
                     <div class="form-group">
                         <label for="title">What is the subscription title?</label>
                         <input type="text" name="title" id="title" class="form-control"
@@ -73,10 +72,14 @@
                         <input type="number" name="price" id="price" class="form-control" placeholder="Ex: 300000" required>
                     </div>
                     <div class="form-group">
+                        <label for="token">Credit Token</label>
+                        <input type="number" name="token" id="token" class="form-control" placeholder="Ex: 10" required>
+                    </div>
+                    <div class="form-group">
                         <label for="duration">For how long?</label>
                         <div class="input-group">
-                            <input type="number" name="duration" id="duration" aria-label="subscription duration" class="form-control"
-                            placeholder="Ex: 30 days" aria-describedby="addon-duration" required>
+                            <input type="number" name="duration" id="duration" aria-label="subscription duration"
+                            class="form-control" placeholder="Ex: 30 days" aria-describedby="addon-duration" required>
                             <div class="input-group-append">
                                 <span class="input-group-text" id="addon-duration">days</span>
                             </div>
