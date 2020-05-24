@@ -302,20 +302,25 @@ body[id^='blog'] .nav__list--logo {
     height: 1.25rem;
     opacity: 0;
 }
-.checkbox-custom__input:checked + .custom-checkbox__icon {
+.checkbox-custom__icon {
+    position: absolute;
+    left: -1.5rem;
+    font-size: 1rem;
+    color: var(--primary-color);
+    transition: all 150ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    opacity: 0;
+    visibility: hidden;
+}
+.checkbox-custom__input:checked + .checkbox-custom__label .checkbox-custom__icon {
     opacity: 1;
     visibility: visible;
 }
-.custom-checkbox__icon {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--primary-color);
+.checkbox-custom__icon i {
     font-weight: bold;
-    opacity: 0;
-    transition: all 150ms;
-    visibility: hidden;
 }
 .checkbox-custom__label {
     position: relative;
@@ -2560,6 +2565,9 @@ footer .row {
         position: absolute;
         right: 0;
         bottom: 0;
+    }
+    #singleServicePage #form-extras-order .promo-code-false {
+        margin-bottom: 0;
     }
 
     #seeSubscriptionPage .subscription-single__caption {

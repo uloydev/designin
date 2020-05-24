@@ -160,44 +160,50 @@ let ready = $(document).ready(function () {
         $("#modal-single-order input[name='agent_id']").val(agentId);
         $("#modal-single-order form").attr('action', window.location.origin + '/service/show/' + packageId);
     });
+
+    let extraService = [];
     $("#form-extras-order input[type='checkbox']").change(function () {
         let idExtra = $(this).attr('id');
         let extraValue = $("#form-extras-order input#" + idExtra).val();
-        console.log(extraValue, idExtra);
-
-        if ($(this).is(':checked')) {
-            $("#modal-single-order input[data-extras='" + idExtra + "']").val(extraValue);
+        if (!extraService.includes(extraValue) === true) {
+            extraService.push(extraValue);
         }
         else {
-            $("#modal-single-order input[data-extras='" + idExtra + "']").val("").removeAttr("value");
+            extraService.splice(extraService.indexOf(extraValue), 1);
         }
+        $("#modal-single-order #data-extras").val(JSON.stringify(extraService));
     });
+
     let allPromoCodeList = [];
-    let allPromoCode = document.querySelectorAll('#form-extras-order datalist option');
+    let allPromoCode = document.querySelectorAll('#singleServicePage #list-promo option');
     allPromoCode.forEach(function (promoCode) {
         let promoCodeVal = promoCode.value;
         allPromoCodeList.push(promoCodeVal);
     });
-    $("#form-extras-order #promo-code").change(function () {
+    $("#form-extras-order #promo-code").focusout(function () {
         if ($(this).val().length !== 0) {
             let promoCode = $(this).val();
             if (allPromoCodeList.includes(promoCode) === true) {
                 $("#modal-single-order input[name='promo_code']").val(promoCode);
-                $("#form-extras-order .promo-code-false").remove().removeClass('show');
+                $("#form-extras-order .promo-code-false").remove();
             }
             else {
-                $("<span class='promo-code-false'>You input wrong promo code</span>")
-                    .insertAfter("#form-extras-order #promo-code").addClass('show');
+                $("#modal-single-order input[name='promo_code']").val("").removeAttr('value');
+                if ($(".promo-code-false").length === 0) {
+                    $("<span class='promo-code-false'>You input wrong promo code</span>")
+                        .insertAfter("#form-extras-order #promo-code");
+                }
             }
         }
         else {
             $("#form-extras-order .promo-code-false").remove();
         }
     });
-    $(".modal-extras__submit-btn").click(function (e) {
-        e.preventDefault();
-        $("#modal-single-extras").removeClass('show-modal');
-        $("#modal-single-order").addClass('show-modal');
+    $(".modal-extras__submit-btn").click(function () {
+        if ($("#form-extras-order .promo-code-false").length === 0) {
+            $("#modal-single-extras").removeClass('show-modal');
+            $("#modal-single-order").addClass('show-modal');
+        }
     });
     $("#modal-single-order #show-modal-single-extras").click(function () {
         $("[data-target='#modal-single-extras']").trigger("click");

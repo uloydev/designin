@@ -76,11 +76,13 @@ class HomeController extends Controller
         $rating = $rating ? $rating : 0;
         $testimonies = $service->testimonies;
         $packages = $service->package;
+        $promos = Promo::whereDate('ended_at', '>', Carbon::now()->format('Y-m-d h:m:s'))->get();
         return view('service.single', [
             'service' => $service,
             'rating' => $rating,
             'testimonies' => $testimonies,
-            'packages' => $packages
+            'packages' => $packages,
+            'promos' => $promos
         ]);
     }
 
@@ -113,7 +115,7 @@ class HomeController extends Controller
 
     public function makeOrder(Request $request, $id)
     {
-        // dd($request);
+        dd($request);
         $this->middleware('auth');
         $user = Auth::user();
         $package = Package::findOrFail($id);
@@ -122,7 +124,7 @@ class HomeController extends Controller
         if ($request->payment == 'token') {
             if ($user->is_subscribe) {
                 $subscription = $user->subscription;
-                if ( $user->subscribe_at->addDays($subscription->duration) <= Carbon::now() 
+                if ( $user->subscribe_at->addDays($subscription->duration) <= Carbon::now()
                 and $user->subscribe_token >= $package->token_price ) {
                     $budget = $subscription->price / $subscription->token * $package->token_price;
                     $user->subscribe_token -= $package->token_price;
@@ -156,7 +158,7 @@ class HomeController extends Controller
         $order->save();
         // Mail::to(User::find($request->agent_id)->email)->send(new NewOrderNotification($order));
         return redirect()->route('user.order.index')->with(
-            'success', 'Order placed Successfully. you have to wait for agent to accept your order'
+            'success', 'Order placed Successfully'
         );
     }
 

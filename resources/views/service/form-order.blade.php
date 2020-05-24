@@ -17,25 +17,26 @@
                     </div>
                     <p class="mt-3">Price <var class="modal-order-price"></var></p>
                     {{-- ini form gk ada actionnya, cmn buat box. Form aslinya ada dibawah --}}
-                    <form action="" method="post" id="form-extras-order">
-                        @csrf
+                    <div id="form-extras-order">
                         <input type="hidden" name="modal_order_title" required readonly>
                         @foreach ($service->extras as $extra)
                         <div class="checkbox-custom">
-                            <label class="checkbox-custom__label" for="extras-{{$extra->id}}">{{$extra->name}}</label>
-                            {{-- extras checkbox need is not clickable --}}
                             {{-- need to fix (extras should be only passed if they checked ) --}}
-                            <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input" value="{{$extra->id}}" name="extras">
-                            <span class="custom-checkbox__icon"><i class='bx bx-check' ></i></span>
+                            <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input"
+                            value="{{$extra->id}}" name="extras">
+                            <label class="checkbox-custom__label" for="extras-{{$extra->id}}">
+                                <span class="checkbox-custom__icon"><i class='bx bx-check' ></i></span>
+                                {{ $extra->name }}
+                            </label>
                         </div>
                         @endforeach
                         {{-- check if promo code exist before checkout using ajax--}}
-                        <div class="mt-3">
-                            <label for="promo-code" class="label-cu">Promo code (optional)</label>
+                        <div class="my-3 mb-md-0">
+                            <label for="promo-code" class="mb-2 d-block">Promo code (optional)</label>
                             <input type="text" id="promo-code" class="input-custom" name="promo_code" placeholder="Ex: LEBARIN">
                         </div>
                         <button type="submit" class="modal-extras__submit-btn">Next</button>
-                    </form>
+                    </div>
                 </figcaption>
             </figure>
         </div>
@@ -67,9 +68,7 @@
             <div class="col">
                 <form action="{{-- url on js = '/service/show/$id' --}}" method="post">
                     @csrf
-                    @foreach ($service->extras as $extra)
-                    <input type="hidden" data-extras="extras-{{$extra->id}}" name="extras[]">
-                    @endforeach
+                    <input type="hidden" id="data-extras" name="extras[]">
                     <input type="hidden" name="promo_code">
                     <input type="hidden" name="agent_id" value="{{$service->agent_id}}">
                     <label for="send-message" class="d-block mb-3">Your message</label>

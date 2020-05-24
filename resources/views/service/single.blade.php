@@ -97,5 +97,10 @@
 @endsection
 @push('element')
     <div class="overlay overlay--nav-showed"></div>
+    <datalist id="list-promo">
+        @foreach($promos as $promo)
+            <option value="{{ $promo->code }}">{{ $promo->code }}</option>
+        @endforeach
+    </datalist>
     @include('service.form-order')
 @endpush
