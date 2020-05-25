@@ -11,9 +11,11 @@ use App\Order;
 class ServiceExtrasController extends Controller
 {
 
-    public function index()
+    public function index($id)
     {
-        //
+        $service = Service::findOrFail($id);
+        $allExtra = ServiceExtras::where('service_id', $id)->paginate(10);
+        return view('service.extras', ['allExtra' => $allExtra, 'service' => $service]);
     }
 
     public function create()

@@ -151,12 +151,23 @@ let ready = $(document).ready(function () {
         let packageId = $(this).data('package-id');
         let agentId = $(this).data('agent-id');
         let orderTitle = $(this).parents(".row").find('.service-single__title').text();
-        let orderPrice = $(this).prev().find('.order-price').text();
+        let orderPriceLength = $(this).siblings(".single-package__top").find('.order-price').text().length;
+        let orderPrice = Number($(this).siblings(".single-package__top").find('.order-price').text()
+                         .substring(3, orderPriceLength));
+
+        if (typeof $(this).attr('data-token') !== typeof undefined && $(this).attr('data-token') !== false) {
+            let tokenPrice = $(this).data('token');
+            $("#modal-single-order input[name='token_price']").val(tokenPrice);
+        }
+        else {
+            $("#modal-single-order input[name='token_price']").val("").removeAttr('value');
+        }
 
         $("#modal-single-extras .modal-order-title").text(orderTitle);
         $("#modal-single-extras .modal-order-price").text(orderPrice);
-        $("#modal-single-extras input[name='modal_order_title']").val(orderTitle);
 
+
+        $("#modal-single-extras input[name='modal_order_title']").val(orderTitle);
         $("#modal-single-order input[name='agent_id']").val(agentId);
         $("#modal-single-order form").attr('action', window.location.origin + '/service/show/' + packageId);
     });
@@ -273,18 +284,6 @@ let ready = $(document).ready(function () {
                         console.log(data);
                         $("#loadingApprove").modal('hide');
                         $("#alert-error").show();
-
-                        // for(let errors in error.message){
-                        //     if (error.message.hasOwnProperty(k)){
-                        //         error.message[k].forEach(function(val){
-                        //             $("#alert-error").find('ul').append('<li>' + val + '</li>');
-                        //         });
-                        //     }
-                        // }
-                        // $("#alert-error").slideDown();
-                        // $.each(data.errors, function(key, value){
-                        //     $('#alert-error').show().append('<p>'+value+'</p>');
-                        // });
                     }
                 });
             });
@@ -377,7 +376,8 @@ let ready = $(document).ready(function () {
         createArticleImg.required = true;
     }
 
-    const thisRoute = window.location.href;
+    const thisRoute = window.location.protocol + '//' + window.location.host + window.location.pathname;
+    console.log(thisRoute)
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(function (navLink) {
         let url = navLink.href;
@@ -389,7 +389,7 @@ let ready = $(document).ready(function () {
             .attr('aria-expanded', "true");
     });
 
-    const profileNavRoute = location.protocol + '//' + location.host + location.pathname;
+    const profileNavRoute = window.location.protocol + '//' + window.location.host + window.location.pathname;
     const profileNavLinks = document.querySelectorAll('.profile-nav__link');
     profileNavLinks.forEach(function (profileNavLink) {
         let url = profileNavLink.href;
@@ -400,8 +400,8 @@ let ready = $(document).ready(function () {
 
     $("#servicePage .nav-pills .nav-link:first-child").addClass('active');
     $("#servicePage .tab-pane:first-child").addClass('active show');
-    $("#servicePage .btn[data-target='#modal-delete-service'], #showExtraPage [data-target='#modal-manipulate-extra']")
-        .click(function () {
+    $("#servicePage .btn[data-target='#modal-delete-service'], #showExtraPage [data-target='#modal-manipulate-extra'], " +
+        "#showExtraPage [data-target='#modal-delete-extra']").click(function () {
             let serviceId = Number($(this).data("id"));
             let serviceTitle = $(this).data('title');
 
@@ -417,6 +417,7 @@ let ready = $(document).ready(function () {
             if ($(this).attr('id') === 'btn-add-extra') {
                 $("#modal-manipulate-extra .modal-manipulate-title").text("Add new extra");
                 $("#form-manipulate-extra input, #form-manipulate-extra textarea").val("");
+                $("#form-manipulate-extra").attr('action', window.location.origin + '/admin/manage/service-extras');
             }
             else if ($(this).attr('id') === 'btn-edit-extra') {
                 let extraName = $(this).siblings(".extra-item__name").text().trim();
@@ -429,6 +430,11 @@ let ready = $(document).ready(function () {
                 $("#modal-manipulate-extra input[name='token_extra']").val(extraToken);
                 $("#modal-manipulate-extra textarea[name='benefit_extra']").val(extraDesc);
                 $("#modal-manipulate-extra .modal-manipulate-title").text("Edit extra");
+                $("#form-manipulate-extra").attr('action', window.location.origin + '/admin/manage/service-extras/' + serviceId);
+            }
+
+            if ($(this).attr('data-target') === '#modal-delete-extra') {
+                $("#form-delete-extra").attr('action', window.location.origin + '/admin/manage/service-extras/' + serviceId);
             }
     });
 

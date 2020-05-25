@@ -15,20 +15,35 @@
                         <input type="number" id="quantity" min="1" value="1" max="20"
                                form="form-extras-order" required name="quantity">
                     </div>
-                    <p class="mt-3">Price <var class="modal-order-price"></var></p>
+                    <p class="mt-3">
+                        Price
+                        <var class="modal-order-price"></var>
+                    </p>
                     {{-- ini form gk ada actionnya, cmn buat box. Form aslinya ada dibawah --}}
                     <div id="form-extras-order">
                         <input type="hidden" name="modal_order_title" required readonly>
                         @foreach ($service->extras as $extra)
-                        <div class="checkbox-custom">
-                            {{-- need to fix (extras should be only passed if they checked ) --}}
-                            <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input"
-                            value="{{$extra->id}}" name="extras">
-                            <label class="checkbox-custom__label" for="extras-{{$extra->id}}">
-                                <span class="checkbox-custom__icon"><i class='bx bx-check' ></i></span>
-                                {{ $extra->name }}
-                            </label>
-                        </div>
+                            <div class="checkbox-custom">
+                                {{-- need to fix (extras should be only passed if they checked ) --}}
+                                <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input"
+                                value="{{$extra->id}}" name="extras">
+                                <label class="checkbox-custom__label" for="extras-{{$extra->id}}">
+                                    <span class="checkbox-custom__icon"><i class='bx bx-check' ></i></span>
+                                    {{ $extra->name }}
+                                </label>
+                                <span class="ml-2 text-success">
+                                    Price
+                                    <var id="price-money">{{ '( ' . $extra->price . ' / ' }}</var>
+                                    <var id="price-token" data-token-tomoney="">{{ $extra->price_token . ' token )' }}</var>
+                                </span>
+{{--                                <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input"--}}
+{{--                                       value="{{$extra->id}}" name="extras">--}}
+{{--                                <label class="checkbox-custom__label" for="extras-{{$extra->id}}">--}}
+{{--                                    <span class="checkbox-custom__icon"><i class='bx bx-check' ></i></span>--}}
+{{--                                    {{ $extra->name }}--}}
+{{--                                </label>--}}
+{{--                                <span class="modal-price-token" data-token-price=""></span>--}}
+                            </div>
                         @endforeach
                         {{-- check if promo code exist before checkout using ajax--}}
                         <div class="my-3 mb-md-0">
@@ -70,6 +85,7 @@
                     @csrf
                     <input type="hidden" id="data-extras" name="extras[]">
                     <input type="hidden" name="promo_code">
+                    <input type="hidden" name="payment" value="">
                     <input type="hidden" name="agent_id" value="{{$service->agent_id}}">
                     <label for="send-message" class="d-block mb-3">Your message</label>
                     <textarea name="message_agent" id="send-message" rows="10"

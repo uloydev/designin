@@ -63,23 +63,46 @@
             </div>
         </div>
         <div class="col-12 col-md-9 card mb-0">
-            <div class="tab-content card-body" id="v-pills-tabContent">
+            <div class="tab-content card-body" id="service-manage">
                 @foreach ($serviceCategories as $category)
-                    <div class="tab-pane fade"
-                    id="v-pills-{{ Str::slug($category->name, '-') }}"
-                    role="tabpanel"
-                    aria-labelledby="v-pills-{{ Str::slug($category->name, '-') }}-tab">
+                    <div class="tab-pane fade" id="v-pills-{{ Str::slug($category->name, '-') }}"
+                    role="tabpanel" aria-labelledby="v-pills-{{ Str::slug($category->name, '-') }}-tab">
                         <div class="carousel slide" id="carouselService{{ Str::slug($category->name, '-') }}"
                              data-ride="carousel" data-interval="0" data-wrap="false">
                             <div class="carousel-inner">
                                 @if (count($services->where('service_category_id', $category->id)) > 1)
-                                    @foreach ($services->where('service_category_id', $category->id) as $service)
+                                    @forelse ($services->where('service_category_id', $category->id) as $service)
                                         <article class="carousel-item {{ $loop->first ? 'active' : '' }}">
                                             <figure class="service__content">
                                                 <img src="{{ Storage::url($service->image) }}"
                                                      alt="Desainin Service {{ $service->serviceCategory->name }}">
                                                 <figcaption>
-                                                    <p class="service__title">{{ $service->title }}</p>
+                                                    <div class="service__desc">
+                                                        <p class="service__title">{{ $service->title }}</p>
+                                                        @if (Auth::user()->role === 'admin')
+                                                            <div class="btn-group dropleft">
+                                                                <button type="button" aria-haspopup="true"
+                                                                class="btn btn-link dropdown-toggle"
+                                                                data-toggle="dropdown" aria-expanded="false">
+                                                                    <i class="fas fa-ellipsis-v"></i>
+                                                                </button>
+                                                                <div class="dropdown-menu">
+                                                                    <div class="dropdown-item">
+                                                                            <a class="btn btn-link btn-sm text-gray-dark"
+                                                                               href="{{ route('manage.service-extras.index', $service->id) }}">
+                                                                                See extras
+                                                                            </a>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <a class="btn btn-link btn-sm mr-auto text-gray-dark"
+                                                                           href="{{ route('manage.package.index', $service->id) }}">
+                                                                            Manage package
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    </div>
                                                     <div class="service__detail">
                                                         {!! Str::limit($service->description, 250) !!}
                                                     </div>
@@ -96,10 +119,6 @@
                                                        class="btn btn-success">
                                                         Edit
                                                     </a>
-                                                    <a href="{{ route('agent.service.extras', $service->id) }}"
-                                                       class="btn btn-outline-info mr-auto">
-                                                        See extras
-                                                    </a>
                                                     <button type="button" class="btn btn-danger" id="from-agent"
                                                     data-toggle="modal" data-target="#modal-delete-service"
                                                     data-id="{{ $service->id }}" data-title="{{ $service->title }}">
@@ -110,10 +129,6 @@
                                                     class="btn btn-success">
                                                         Edit
                                                     </a>
-                                                    <a href="{{ route('agent.service.extras', $service->id) }}"
-                                                    class="btn btn-outline-info mr-auto">
-                                                        See extras
-                                                    </a>
                                                     <button type="button" class="btn btn-danger"
                                                     data-toggle="modal" data-target="#modal-delete-service"
                                                     data-id="{{ $service->id }}" data-title="{{ $service->title }}">
@@ -122,7 +137,11 @@
                                                 @endif
                                             </div>
                                         </article>
-                                    @endforeach
+                                    @empty
+                                        <article class="carousel-item active">
+                                            <img src="{{ asset('img/our-service.jpg') }}" alt="">
+                                        </article>
+                                    @endforelse
                                     <a class="carousel-control-prev"
                                        href="#carouselService{{ Str::slug($category->name, '-') }}"
                                        role="button" data-slide="prev">
@@ -136,13 +155,38 @@
                                         <span class="sr-only">Next</span>
                                     </a>
                                 @elseif (count($services->where('service_category_id', $category->id)) === 1)
-                                    @foreach ($services->where('service_category_id', $category->id) as $service)
+                                    @forelse ($services->where('service_category_id', $category->id) as $service)
                                     <article>
                                         <figure class="service__content">
                                             <img src="{{ Storage::url($service->image) }}"
                                                  alt="Desainin Service {{ $service->serviceCategory->name }}">
                                             <figcaption>
-                                                <p class="service__title">{{ $service->title }}</p>
+                                                <div class="service__desc">
+                                                    <p class="service__title">{{ $service->title }}</p>
+                                                    @if (Auth::user()->role === 'admin')
+                                                        <div class="btn-group dropleft">
+                                                            <button type="button" aria-haspopup="true"
+                                                                    class="btn btn-link dropdown-toggle"
+                                                                    data-toggle="dropdown" aria-expanded="false">
+                                                                <i class="fas fa-ellipsis-v"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <div class="dropdown-item">
+                                                                    <a class="btn btn-link btn-sm text-gray-dark"
+                                                                       href="{{ route('manage.service-extras.index', $service->id) }}">
+                                                                        See extras
+                                                                    </a>
+                                                                </div>
+                                                                <div class="dropdown-item">
+                                                                    <a class="btn btn-link btn-sm mr-auto text-gray-dark"
+                                                                       href="{{ route('manage.package.index', $service->id) }}">
+                                                                        Manage package
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                                 <div class="service__detail">
                                                     {!! Str::limit($service->description, 250) !!}
                                                 </div>
@@ -159,23 +203,14 @@
                                                    class="btn btn-success">
                                                     Edit
                                                 </a>
-                                                <a href="{{ route('agent.service.extras', $service->id) }}"
-                                                   class="btn btn-outline-info mr-auto">
-                                                    See extras
-                                                </a>
                                                 <button type="button" class="btn btn-danger" id="from-agent"
                                                 data-toggle="modal" data-target="#modal-delete-service"
                                                 data-id="{{ $service->id }}" data-title="{{ $service->title }}">
                                                     Remove Service
                                                 </button>
                                             @else
-                                                <a href="{{ route('manage.service.edit', $service->id) }}"
-                                                   class="btn btn-success">
+                                                <a class="btn btn-success" href="{{ route('manage.service.edit', $service->id) }}">
                                                     Edit
-                                                </a>
-                                                <a href="{{ route('agent.service.extras', $service->id) }}"
-                                                   class="btn btn-outline-info mr-auto">
-                                                    See extras
                                                 </a>
                                                 <button type="button" class="btn btn-danger"
                                                 data-toggle="modal" data-target="#modal-delete-service"
@@ -185,11 +220,16 @@
                                             @endif
                                         </div>
                                     </article>
-                                    @endforeach
+                                    @empty
+                                        <article class="service__not-found">
+                                            <img src="{{ asset('img/our-service.jpg') }}" alt="">
+                                        </article>
+                                    @endforelse
                                 @else
-                                    <div class="alert alert-secondary" role="alert">
-                                        No record found
-                                    </div>
+                                    <article class="service__not-found">
+                                        <img src="{{ asset('img/our-service.jpg') }}" alt="No service found" height="200">
+                                        <h2 class="h3">No service found in this category</h2>
+                                    </article>
                                 @endif
                             </div>
                         </div>

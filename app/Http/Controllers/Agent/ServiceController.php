@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
 use App\Service;
+use App\Package;
 use App\ServiceCategory;
 use App\ServiceExtras;
 use Illuminate\Http\Request;
@@ -73,6 +74,13 @@ class ServiceController extends Controller
         $service = Service::findOrFail($id);
         $allExtra = ServiceExtras::where('service_id', $id)->paginate(10);
         return view('service.extras', ['allExtra' => $allExtra, 'service' => $service]);
+    }
+
+    public function managePackage($id)
+    {
+        $service = Service::findOrFail($id);
+        $allPackage = Package::where('service_id', $id)->paginate(10);
+        return view('service.package', ['allPackage' => $allPackage, 'service' => $service]);
     }
 
 }

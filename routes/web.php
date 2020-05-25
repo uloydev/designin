@@ -50,8 +50,10 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('promo', 'PromoController')->except(['create', 'show', 'edit']);
         Route::resource('subscription', 'SubscriptionController');
         Route::resource('reason', 'ReasonController')->except(['show']);
-        Route::resource('package', 'PackageController');
-        Route::resource('service-extras', 'ServiceExtrasController');
+        Route::get('package/{id}', 'PackageController@index')->name('package.index');
+        Route::resource('package', 'PackageController')->except(['index']);
+        Route::get('service-extras/{id}', 'ServiceExtrasController@index')->name('service-extras.index');
+        Route::resource('service-extras', 'ServiceExtrasController')->except(['index']);
     });
 });
 
@@ -86,6 +88,7 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::get('testimony/{service_id}', 'TestimonyController@show')->name('testimony.show');
         Route::get('service/see-extras/{id}', 'ServiceController@seeExtras')->name('service.extras');
         Route::resource('service', 'ServiceController');
+        Route::get('service/manage-package/{id}', 'ServiceController@managePackage')->name('service.package');
         Route::get('list-request/complaint', 'OrderController@complaint')->name('list-request.complaint');
         Route::get('list-request/history', 'OrderController@history')->name('list-request.history');
         Route::get('list-request/incoming', 'OrderController@incoming')->name('list-request.incoming');

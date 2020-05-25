@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Carbon;
+@endphp
 @extends('layouts.customer-master')
 @section('page-title') {{ $service->title }} @endsection
 @section('header') @include('partials.nav') @endsection
@@ -73,21 +76,44 @@
                     <div class="jq-tab-content {{ $loop->first ? 'active' : '' }}"
                     data-tab="package-{{ $package->id }}">
                         <div class="single-package__top mb-4">
-                            <p class="mb-3 d-flex justify-content-between align-items-center">
+                            <p class="mb-3 d-flex justify-content-between align-items-center text-capitalize">
                                 {{ $package->title }}
-                                <var class="font-style-normal font-bold order-price">
-                                    IDR {{ $package->price }}
-                                </var>
+                                <var class="font-style-normal font-bold order-price">IDR {{ $package->price }}</var>
                             </p>
                             <p>{{ $package->description }}</p>
                         </div>
-                        <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
+                        <button class="btn-modal single-package__btn" id="btn-pay-cash" data-target="#modal-single-extras"
                         data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
-                        data-package-title="{{ $package->title }}">
-                            Continue (IDR {{ $package->price }})
+                        data-package-title="{{ $package->title }}" {{ Auth::check() ? 'disabled' : '' }}>
+                            Continue with cash (IDR {{ $package->price }})
                         </button>
+                        @if (Auth::user()->is_subscribe === true and
+                        Auth::user()->subscribe_at->addDays(Auth::user()->subscription->duration) <= Carbon::now() and
+                        Auth::user()->subscribe_token >= $package->token_price)
+                            <button type="button" class="btn-modal single-package__btn single-package__btn-token mt-3"
+                                    data-target="#modal-single-extras" data-package-id="{{ $package->id }}"
+                                    data-agent-id="{{ $service->agent_id }}" data-package-title="{{ $package->title }}"
+                                    data-token="{{ $package->token_price }}">
+                                Continue with token ({{ $package->token_price }} token)
+                            </button>
+                        @else
+                            <button class="btn-modal single-package__btn single-package__btn-token mt-3"
+                                    data-target="#modal-single-extras" data-package-id="{{ $package->id }}"
+                                    data-agent-id="{{ $service->agent_id }}" data-package-title="{{ $package->title }}"
+                                    data-token="{{ $package->token_price }}" id="btn-pay-token" disabled>
+                                Continue with token ({{ $package->token_price }} token)
+                            </button>
+                            @auth
+                                <span class="text-gray text-center d-block mt-3">
+                                    Please subscribe and have an enough token, also your token should not expired
+                                </span>
+                            @else
+                                <span class="text-gray text-center d-block mt-3">
+                                    Please login first
+                                </span>
+                            @endauth
+                        @endif
                         {{-- edit discounted price if subscribe --}}
-                        {{-- <del class="d-block mt-3 text-center text-gray">IDR 600,000</del> --}}
                     </div>
                     @endforeach
                 </div>
