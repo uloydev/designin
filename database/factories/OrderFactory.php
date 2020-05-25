@@ -11,19 +11,16 @@ use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Carbon;
 
 $factory->define(Order::class, function (Faker $faker) {
-    $user_id =$faker->randomElement( User::where('role', 'user')->pluck('id')->all());
-    $agent_id = $faker->randomElement( User::where('role', 'agent')->pluck('id')->all());
-    $packages = Package::where('service_id', Service::where('agent_id', $agent_id)->first()->id);
-    $package_id = $faker->randomElement($packages->pluck('id')->all());
+    $agent_id = User::inRandomOrder()->firstWhere('role', 'agent')->id;
+    $package = Package::inRandomOrder()->firstWhere('service_id', Service::inRandomOrder()->firstWhere('agent_id', $agent_id)->id);
     $status = $faker->randomElement(['unpaid', 'waiting', 'process', 'complaint', 'finished']);
-    $price = $packages->inRandomOrder()->first()->price;
     $data = [
-        'user_id' => $user_id,
-        'package_id' => $package_id,
+        'user_id' => User::inRandomOrder()->firstWhere('role', 'user')->id,
+        'package_id' => $package->id,
         'status' => $status,
         'agent_id' => $agent_id,
         'request' => $faker->paragraph($nbSentences = 20, $variableNbSentences = true),
-        'budget' => $price,
+        'budget' => $package->price,
         'quantity' => $faker->numberBetween(1,4),
         'max_revision' => $faker->numberBetween(1,3),
     ];

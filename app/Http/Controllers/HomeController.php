@@ -162,6 +162,12 @@ class HomeController extends Controller
         );
     }
 
+    public function redirectOrderPage($id)
+    {
+        $service_id = Package::findOrFail($id)->service->id;
+        return redirect()->route('service.show', $service_id);
+    }
+
     public function checkPromoCode(Request $request)
     {
         $promo = Promo::where('code', $request->promo_code)->get();
