@@ -96,6 +96,10 @@
                                                        class="btn btn-success">
                                                         Edit
                                                     </a>
+                                                    <a href="{{ route('agent.service.extras', $service->id) }}"
+                                                       class="btn btn-outline-info mr-auto">
+                                                        See extras
+                                                    </a>
                                                     <button type="button" class="btn btn-danger" id="from-agent"
                                                     data-toggle="modal" data-target="#modal-delete-service"
                                                     data-id="{{ $service->id }}" data-title="{{ $service->title }}">
@@ -103,8 +107,12 @@
                                                     </button>
                                                 @else
                                                     <a href="{{ route('manage.service.edit', $service->id) }}"
-                                                       class="btn btn-success">
+                                                    class="btn btn-success">
                                                         Edit
+                                                    </a>
+                                                    <a href="{{ route('agent.service.extras', $service->id) }}"
+                                                    class="btn btn-outline-info mr-auto">
+                                                        See extras
                                                     </a>
                                                     <button type="button" class="btn btn-danger"
                                                     data-toggle="modal" data-target="#modal-delete-service"

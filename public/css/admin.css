@@ -179,11 +179,25 @@
 #servicePage .service__action {
     display: flex;
     padding: 10px 0;
-    justify-content: space-between;
+}
+#servicePage .modal-service-title {
+    /*display: ;*/
 }
 
 #serviceEditPage #service-edit-form .btn {
     display: block;
+}
+
+#showExtraPage .extra-item__price {
+    color: var(--primary-color);
+    margin: 0 auto 0 1rem;
+    font-style: normal;
+}
+#showExtraPage .extra-item__price::before {
+    content: '(Rp. ';
+}
+#showExtraPage .extra-item__price::after {
+    content: ')';
 }
 
 #agentProfilePage .profile__form-edit .custom-file-input {

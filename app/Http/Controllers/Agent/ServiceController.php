@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Agent;
 use App\Http\Controllers\Controller;
 use App\Service;
 use App\ServiceCategory;
+use App\ServiceExtras;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -51,7 +52,7 @@ class ServiceController extends Controller
             $service->image = $path;
         }
         $service->save();
-        return redirect()->route('agent.service.index')->with('success_update', 'Succesfully edit service');
+        return redirect()->route('agent.service.index')->with('success_update', 'Successfully edit service');
     }
 
     public function destroy($id)
@@ -66,4 +67,12 @@ class ServiceController extends Controller
     {
         //
     }
+
+    public function seeExtras($id)
+    {
+        $service = Service::findOrFail($id);
+        $allExtra = ServiceExtras::where('service_id', $id)->paginate(10);
+        return view('service.extras', ['allExtra' => $allExtra, 'service' => $service]);
+    }
+
 }

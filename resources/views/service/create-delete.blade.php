@@ -78,7 +78,7 @@
 
             <div class="modal-body text-center">
                 <p>Are you sure wanna delete service with title
-                    <strong class="modal-service-title"></strong>? <br>
+                    <strong class="modal-service-title"></strong>?
                     <span class="text-danger"><strong>You couldn't be undo this!</strong></span>
                 </p>
                 <form method="post" id="form-delete-service">

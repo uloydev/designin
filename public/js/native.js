@@ -400,18 +400,36 @@ let ready = $(document).ready(function () {
 
     $("#servicePage .nav-pills .nav-link:first-child").addClass('active');
     $("#servicePage .tab-pane:first-child").addClass('active show');
-    $("#servicePage .btn[data-target='#modal-delete-service']").click(function () {
-        let serviceId = Number($(this).data("id"));
-        let serviceTitle = $(this).data('title');
+    $("#servicePage .btn[data-target='#modal-delete-service'], #showExtraPage [data-target='#modal-manipulate-extra']")
+        .click(function () {
+            let serviceId = Number($(this).data("id"));
+            let serviceTitle = $(this).data('title');
 
-        $("#modal-delete-service .modal-service-title").text(serviceTitle);
-        if ($(this).attr('id') === 'from-agent') {
-            $("#modal-delete-service form").attr("action", window.location.origin + '/agent/service/' + serviceId);
-        }
-        else {
-            $("#modal-delete-service form")
-                .attr("action", window.location.origin + '/admin/manage/service/' + serviceId);
-        }
+            $("#servicePage .modal-service-title").text(serviceTitle);
+            if ($(this).attr('id') === 'from-agent') {
+                $("#modal-delete-service form").attr("action", window.location.origin + '/agent/service/' + serviceId);
+            }
+            else {
+                $("#modal-delete-service form")
+                    .attr("action", window.location.origin + '/admin/manage/service/' + serviceId);
+            }
+
+            if ($(this).attr('id') === 'btn-add-extra') {
+                $("#modal-manipulate-extra .modal-manipulate-title").text("Add new extra");
+                $("#form-manipulate-extra input, #form-manipulate-extra textarea").val("");
+            }
+            else if ($(this).attr('id') === 'btn-edit-extra') {
+                let extraName = $(this).siblings(".extra-item__name").text().trim();
+                let extraPrice = Number($(this).siblings(".extra-item__price").text());
+                let extraDesc = $(this).data("desc").trim();
+                let extraToken = Number($(this).data('token'));
+
+                $("#modal-manipulate-extra input[name='name_extra']").val(extraName);
+                $("#modal-manipulate-extra input[name='price_extra']").val(extraPrice);
+                $("#modal-manipulate-extra input[name='token_extra']").val(extraToken);
+                $("#modal-manipulate-extra textarea[name='benefit_extra']").val(extraDesc);
+                $("#modal-manipulate-extra .modal-manipulate-title").text("Edit extra");
+            }
     });
 
     $("#serviceCategoryPage .btn[data-target='#create-edit-category']").click(function () {

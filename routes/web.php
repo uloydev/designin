@@ -84,6 +84,7 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
         Route::get('testimony', 'TestimonyController@index')->name('testimony.index');
         Route::get('testimony/{service_id}', 'TestimonyController@show')->name('testimony.show');
+        Route::get('service/see-extras/{id}', 'ServiceController@seeExtras')->name('service.extras');
         Route::resource('service', 'ServiceController');
         Route::get('list-request/complaint', 'OrderController@complaint')->name('list-request.complaint');
         Route::get('list-request/history', 'OrderController@history')->name('list-request.history');
