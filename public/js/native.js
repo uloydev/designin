@@ -158,7 +158,7 @@ let ready = $(document).ready(function () {
         $("#modal-single-extras input[name='modal_order_title']").val(orderTitle);
 
         $("#modal-single-order input[name='agent_id']").val(agentId);
-        $("#modal-single-order form").attr('action', window.location.origin + '/service/show/' + packageId);
+        $("#modal-single-order form").attr('action', window.location.origin + '/order/package/' + packageId);
     });
 
     let extraService = [];
