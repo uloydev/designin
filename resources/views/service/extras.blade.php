@@ -13,6 +13,12 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-header">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                    data-target="#modal-manipulate-extra" id="btn-add-extra">
+                        Add new extra
+                    </button>
+                </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         @forelse($allExtra as $extra)
@@ -39,13 +45,7 @@
                         @endforelse
                     </ul>
                 </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    {{ $allExtra->links() }}
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                    data-target="#modal-manipulate-extra" id="btn-add-extra">
-                        Add new extra
-                    </button>
-                </div>
+                {{ $allExtra->links() }}
             </div>
         </div>
     </div>
