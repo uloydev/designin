@@ -2,6 +2,45 @@
 @section('page-title') {{ $service->title }} @endsection
 @section('header') @include('partials.nav') @endsection
 @section('page-id', 'singleService')
+@section('script')
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script>
+        function payment(){
+            var data = $('#modal-single-order form').serialize();
+            console.log(data);
+            data += '&_token={{ csrf_token() }}';
+            snap.show();
+            $.ajax({
+                type: "POST",
+                url: $("#modal-single-order form").attr('action') + '/payment',
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                    console.log(response.status);
+                    console.log(response.token);
+                    if (response.status == 'success') {
+                        snap.pay(response.token, {
+                            onSuccess:function(result){
+                                console.log('success');
+                                // continue to send order to route('order.store')
+                            },
+                            onError:function(result){
+                                console.log('error');
+                                // error handler
+                            }
+                        });
+                    }else{
+                        alert('something went wrong with your order');
+                        snap.hide();
+                    }
+                },
+                fail: function(){
+                    snap.hide();
+                }
+            });
+        }
+    </script>
+@endsection
 @section('content')
     <div class="container">
         <div class="row mx-0 justify-content-between">
@@ -81,11 +120,15 @@
                             </p>
                             <p>{{ $package->description }}</p>
                         </div>
-                        <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
-                        data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
-                        data-package-title="{{ $package->title }}">
-                            Continue (IDR {{ $package->price }})
-                        </button>
+                        @if (Auth::check())
+                            <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
+                            data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
+                            data-package-title="{{ $package->title }}">
+                                Continue (IDR {{ $package->price }})
+                            </button>
+                        @else 
+                            <a class="btn-modal single-package__btn" href="{{route('login').'?redirect='.URL::current()}}">Continue (IDR {{ $package->price }}</a>
+                        @endif
                         {{-- edit discounted price if subscribe --}}
                         {{-- <del class="d-block mt-3 text-center text-gray">IDR 600,000</del> --}}
                     </div>

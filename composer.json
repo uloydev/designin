@@ -16,8 +16,9 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "pusher/pusher-php-server": "^4.1",
-        "mtolhuys/laravel-schematics": "^0.10.3"
+        "marprinhm/midtrans": "^1.0",
+        "mtolhuys/laravel-schematics": "^0.10.3",
+        "pusher/pusher-php-server": "^4.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.7",
