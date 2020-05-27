@@ -5,7 +5,7 @@
     @include('partials.nav')
 @endsection
 @section('content')
-    <div class="container">
+    <div class="container">s
         <div class="row justify-content-between align-items-start">
             @include('user.profile')
             <section class="profile-main">
@@ -21,141 +21,35 @@
                 </form>
                 <div class="profile-main__content">
                     {{-- foreach --}}
+                    @foreach ($orders as $order)
                     <article class="profile-main-item">
                         <div class="col profile-main-item__detail">
                             <div class="profile-main__job-detail">
                                 <p class="mb-3">
                                     Project name:&nbsp;
-                                    <span class="profile-main__job-title">Design landing page</span>
+                                    <span class="profile-main__job-title">{{ $order->package->service->title.'-'.$order->package->title }}</span>
                                 </p>
                                 <p class="mb-3">
                                     Start on:
                                     <time class="mb-3 profile-main__time text-right">
-                                        14 April 2020
+                                        {{ $order->start_at ?? '-' }}
                                     </time>
                                 </p>
                                 <p class="mb-3">
                                     Finish on:
                                     <time class="mb-3 profile-main__time text-right">
-                                        14 May 2020
+                                        {{ $order->deadline ?? '-' }}
                                     </time>
                                 </p>
                                 <p class="mb-3">Status:
                                     <span data-status="unpaid" class="profile-main-item__status">
-                                        Unpaid
+                                        {{ $order->status }}
                                     </span>
                                 </p>
                             </div>
                         </div>
                     </article>
-                    <article class="profile-main-item">
-                        <div class="col profile-main-item__detail">
-                            <div class="profile-main__job-detail">
-                                <p class="mb-3">
-                                    Project name:&nbsp;
-                                    <span class="profile-main__job-title">Design landing page</span>
-                                </p>
-                                <p class="mb-3">
-                                    Start on:
-                                    <time class="mb-3 profile-main__time text-right">
-                                        14 April 2020
-                                    </time>
-                                </p>
-                                <p class="mb-3">
-                                    Finish on:
-                                    <time class="mb-3 profile-main__time text-right">
-                                        14 May 2020
-                                    </time>
-                                </p>
-                                <p class="mb-3">Status:
-                                    <span data-status="waiting" class="profile-main-item__status">
-                                        waiting
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="profile-main-item">
-                        <div class="col profile-main-item__detail">
-                            <div class="profile-main__job-detail">
-                                <p class="mb-3">
-                                    Project name:&nbsp;
-                                    <span class="profile-main__job-title">Design landing page</span>
-                                </p>
-                                <p class="mb-3">
-                                    Start on:
-                                    <time class="mb-3 profile-main__time text-right">
-                                        14 April 2020
-                                    </time>
-                                </p>
-                                <p class="mb-3">
-                                    Finish on:
-                                    <time class="mb-3 profile-main__time text-right">
-                                        14 May 2020
-                                    </time>
-                                </p>
-                                <p class="mb-3">Status:
-                                    <span data-status="process" class="profile-main-item__status">
-                                        process
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="profile-main-item">
-                        <div class="col profile-main-item__detail">
-                            <div class="profile-main__job-detail">
-                                <p class="mb-3">
-                                    Project name:&nbsp;
-                                    <span class="profile-main__job-title">Design landing page</span>
-                                </p>
-                                <p class="mb-3">
-                                    Start on:
-                                    <time class="mb-3 profile-main__time text-right">
-                                        14 April 2020
-                                    </time>
-                                </p>
-                                <p class="mb-3">
-                                    Finish on:
-                                    <time class="mb-3 profile-main__time text-right">
-                                        14 May 2020
-                                    </time>
-                                </p>
-                                <p class="mb-3">Status:
-                                    <span data-status="complaint" class="profile-main-item__status">
-                                        complaint
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="profile-main-item">
-                        <div class="col profile-main-item__detail">
-                            <div class="profile-main__job-detail">
-                                <p class="mb-3">
-                                    Project name:&nbsp;
-                                    <span class="profile-main__job-title">Design landing page</span>
-                                </p>
-                                <p class="mb-3">
-                                    Start on:
-                                    <time class="mb-3 profile-main__time text-right">
-                                        14 April 2020
-                                    </time>
-                                </p>
-                                <p class="mb-3">
-                                    Finish on:
-                                    <time class="mb-3 profile-main__time text-right">
-                                        14 May 2020
-                                    </time>
-                                </p>
-                                <p class="mb-3">Status:
-                                    <span data-status="finished" class="profile-main-item__status">
-                                        finished
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </article>
+                    @endforeach
                     {{-- endforeach --}}
                 </div>
             </section>
