@@ -54,9 +54,13 @@ class Order extends Model
         return $this->belongsTo('App\Promo');
     }
 
-    public function extras()
-    {
-        $extras_id = json_decode($this->extras);
-        return ServiceExtras::where('id', 'in', $extras_id)->get();
-    }
+    // public function extras()
+    // {
+    //     if (!empty(self::extras)) {
+    //         $extras_id = json_decode(self::extras);
+    //         return ServiceExtras::where('id', 'in', $extras_id)->get();
+    //     }else {
+    //         return NULL;
+    //     }
+    // }
 }

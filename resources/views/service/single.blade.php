@@ -1,6 +1,3 @@
-@php
-    use Illuminate\Support\Carbon;
-@endphp
 @extends('layouts.customer-master')
 @section('page-title') {{ $service->title }} @endsection
 @section('header') @include('partials.nav') @endsection
@@ -76,27 +73,21 @@
                     <div class="jq-tab-content {{ $loop->first ? 'active' : '' }}"
                     data-tab="package-{{ $package->id }}">
                         <div class="single-package__top mb-4">
-                            <p class="mb-3 d-flex justify-content-between align-items-center text-capitalize">
+                            <p class="mb-3 d-flex justify-content-between align-items-center">
                                 {{ $package->title }}
-                                <var class="font-style-normal font-bold order-price">IDR {{ $package->price }}</var>
+                                <var class="font-style-normal font-bold order-price">
+                                    IDR {{ $package->price }}
+                                </var>
                             </p>
                             <p>{{ $package->description }}</p>
                         </div>
-                        <button class="btn-modal single-package__btn" id="btn-pay-cash" data-target="#modal-single-extras"
+                        <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
                         data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
-                        data-package-title="{{ $package->title }}" {{ Auth::check() === false ? 'disabled' : '' }}>
+                        data-package-title="{{ $package->title }}">
                             Continue (IDR {{ $package->price }})
                         </button>
-                        @auth
-                        <p class="mt-3 text-gray text-center">
-                            Token you have: {{ Auth::user()->subscribe_token . ' token' }}
-                            <span class="text-small d-block mt-2">(1 token = IDR {{ '10000' }})</span>
-                        </p>
-                        @endauth
-                        @guest
-                            <p class="text-gray mt-3 text-center">Please login first</p>
-                        @endguest
                         {{-- edit discounted price if subscribe --}}
+                        {{-- <del class="d-block mt-3 text-center text-gray">IDR 600,000</del> --}}
                     </div>
                     @endforeach
                 </div>
