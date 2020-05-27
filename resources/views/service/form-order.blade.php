@@ -97,7 +97,7 @@
             <div class="col">
                 <form action="{{-- url on js = '/service/show/$id' --}}" method="post" id="form-last">
                     @csrf
-                    <input type="hidden" id="data-extras" name="all_extras[]">
+                    <input type="hidden" id="data-extras" name="extras">
                     <input type="hidden" name="promo_code">
                     <input type="hidden" name="token_usage">
                     <input type="hidden" name="payment" value="">

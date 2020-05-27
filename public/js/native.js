@@ -144,10 +144,13 @@ let ready = $(document).ready(function () {
     });
 
     let userSavingCash = $("#modal-single-extras #user-token").data('saving');
+    // let userSavingCash = 2220000;
     let originalPrice = $("#singleServicePage .order-price").text().replace(/IDR /, '');
     let currentPrice = originalPrice;
     let totalExtras = 0;
-    let grand_total = Number(currentPrice) + Number(totalExtras) - Number(userSavingCash);
+    let grand_total;
+    let token_usage;
+    grandTotal();
     $("#modal-single-extras .modal-order-price").text(originalPrice);
 
     $("[data-target='#modal-single-extras']").click(function () {
@@ -198,7 +201,16 @@ let ready = $(document).ready(function () {
             }
         }
         document.querySelector("#total_extras").value = "IDR " + totalExtras.toFixed(2);
-        grand_total = Number(originalPrice) + Number(totalExtras) - Number(userSavingCash);
+        grand_total = Number(originalPrice) + Number(totalExtras);
+        if (Number(userSavingCash)>0) {
+            token_usage = Math.ceil(grand_total / 10000);
+            console.log(token_usage);
+            if (token_usage < Number(userSavingCash) / 10000) {
+                grand_total = 0;
+            }else{
+                grand_total -= Number(userSavingCash);
+            }
+        }
         $("#modal-single-extras #grand-total").text(grand_total);
     }
     $("#modal-single-extras input[name='extras']").click(function () {
