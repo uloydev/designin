@@ -16,6 +16,7 @@ Route::get('service/show/{id}', 'HomeController@showService')->name('service.sho
 Route::post('order/package/{id}', 'HomeController@makeOrder')->name('order.store')->middleware('auth');
 Route::post('order/package/{id}/payment', 'PaymentController@OrderPayment')->name('order.payment');
 Route::get('order/package/{id}', 'HomeController@redirectOrderPage');
+Route::post('payment/notification', 'PaymentController@notification');
 Route::get('promo/check', 'HomeController@checkPromoCode')->name('promo.check');
 Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
 Route::get('faq', 'HomeController@faq')->name('faq.index');

@@ -5,37 +5,40 @@
 @section('script')
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
     <script>
+        // call this function if not using token payment
         function payment(){
             var data = $('#modal-single-order form').serialize();
             console.log(data);
-            data += '&_token={{ csrf_token() }}';
-            snap.show();
+            data += '&user_id={{Auth::id() ?? ''}}';
             $.ajax({
                 type: "POST",
                 url: $("#modal-single-order form").attr('action') + '/payment',
-                data: data,
+                data: {
+                    _token:'{{csrf_token()}}',
+                    user_id:'{{Auth::id()}}',
+                    extras:'[2,4]',
+                    agent_id:'2',
+                    message_agent:'wkwkwkw',
+                    quantity:'4'
+                },
+                beforeSend: function(){
+                    console.log(data);
+                },
                 success: function (response) {
                     console.log(response);
                     console.log(response.status);
                     console.log(response.token);
                     if (response.status == 'success') {
-                        snap.pay(response.token, {
-                            onSuccess:function(result){
-                                console.log('success');
-                                // continue to send order to route('order.store')
-                            },
-                            onError:function(result){
-                                console.log('error');
-                                // error handler
-                            }
-                        });
+                        snap.pay(response.token);
+                        // redirect to user/order after payment
                     }else{
                         alert('something went wrong with your order');
-                        snap.hide();
+                        // snap.hide();
                     }
                 },
-                fail: function(){
-                    snap.hide();
+                error: function(response){
+                    console.log(response);
+                    // snap.hide();
                 }
             });
         }
