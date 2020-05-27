@@ -79,10 +79,6 @@ let ready = $(document).ready(function () {
         });
     }
 
-    const btnCloseReasonVideo = document.querySelector('.reason-trust__close-btn');
-    if (btnCloseReasonVideo) {
-
-    }
     $(".reason-trust__close-btn").click(function(e) {
         e.preventDefault();
         const videoPromo = $(".reason-trust__video").clone();
