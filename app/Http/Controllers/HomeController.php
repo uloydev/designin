@@ -121,22 +121,22 @@ class HomeController extends Controller
         $package = Package::findOrFail($id);
         $order = new Order;
         $budget = $package->price;
-        if ($request->payment == 'token') {
-            if ($user->is_subscribe) {
-                $subscription = $user->subscription;
-                if ( $user->subscribe_at->addDays($subscription->duration) <= Carbon::now()
-                and $user->subscribe_token >= $package->token_price ) {
-                    $budget = $subscription->price / $subscription->token * $package->token_price;
-                    $user->subscribe_token -= $package->token_price;
-                }else{
-                    $user->is_subscribe = false;
-                    $user->save();
-                    return redirect()->back()->with('error', 'your subscription is expired');
-                }
-            }else{
-                return redirect()->back()->with('error', 'you have no subscription');
-            }
-        }
+        // if ($request->payment == 'token') {
+        //     if ($user->is_subscribe) {
+        //         $subscription = $user->subscription;
+        //         if ( $user->subscribe_at->addDays($subscription->duration) <= Carbon::now()
+        //         and $user->subscribe_token >= $package->token_price ) {
+        //             $budget = $subscription->price / $subscription->token * $package->token_price;
+        //             $user->subscribe_token -= $package->token_price;
+        //         }else{
+        //             $user->is_subscribe = false;
+        //             $user->save();
+        //             return redirect()->back()->with('error', 'your subscription is expired');
+        //         }
+        //     }else{
+        //         return redirect()->back()->with('error', 'you have no subscription');
+        //     }
+        // }
         if (!empty($request->promo_code)) {
             $promo = Promo::where('code' , $request->promo_code)->get();
             $budget -= $budget * $promo->discount / 100;
