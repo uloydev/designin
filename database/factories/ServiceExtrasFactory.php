@@ -11,8 +11,8 @@ $factory->define(ServiceExtras::class, function (Faker $faker) {
     return [
         'name'=> $faker->sentence($nbWords = 6),
         'service_id'=> $faker->randomElement(Service::pluck('id')->all()),
-        'price'=> 100000,
-        'price_token'=> 10,
+        'price'=> $faker->numberBetween($min = 10000, $max = 50000),
+        'price_token'=> $faker->numberBetween($min = 10, $max = 50),
         'description'=> $faker->paragraph($nbSentences = 4)
     ];
 });

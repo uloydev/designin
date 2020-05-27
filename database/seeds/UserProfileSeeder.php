@@ -44,7 +44,7 @@ class UserProfileSeeder extends Seeder
                 'account_number'=>'12345667899',
                 'avatar' => 'public/temporary/people.webp',
                 'user_id'=>4
-            ],
+            ]
         ];
         foreach ($profiles as $key => $value) {
             UserProfile::create($value);

@@ -14,24 +14,27 @@
     </figure>
     <div class="profile-aside__contact">
         <p class="profile-aside__text">
-            Email: <a href="mailto:email@gmail.com" class="profile-aside__link">email@gmail.com</a>
+            Email: <a href="mailto:email@gmail.com" class="profile-aside__link">{{ Auth::user()->email }}</a>
         </p>
         <p class="profile-aside__text">
-            Phone number: <a href="tel:+6287776196047" class="profile-aside__link">087776196047</a>
+            Phone number:
+            <a href="tel:+{{ $profile->handphone ?? '-' }}" class="profile-aside__link">
+                {{ $profile->handphone ?? '-' }}
+            </a>
         </p>
         <p class="profile-aside__text">
-            Address live: <span>DKI Jakarta</span>
+            Address live: <span>{{ Auth::user()->profile->address ?? '-' }}</span>
         </p>
     </div>
     <div class="profile-aside__box-info">
         <p class="profile-aside__text">
-            Finished order: <span class="profile-aside__info">10 order</span>
+            Finished order: <span class="profile-aside__info">{{ count($orders->where('status', 'finished')) }}</span>
         </p>
         <p class="profile-aside__text">
-            Current order: <span class="profile-aside__info">10 order</span>
+            Current order: <span class="profile-aside__info">{{ count($orders->where('status', 'process')) }}</span>
         </p>
         <p class="profile-aside__text">
-            Join on: <time>Mei 27 2019</time>
+            Join on: <time>{{ Auth::user()->created_at->format('d M Y') }}</time>
         </p>
     </div>
 </aside>

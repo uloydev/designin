@@ -147,24 +147,22 @@ let ready = $(document).ready(function () {
         }
     });
 
+    let userSavingCash = $("#modal-single-extras #user-token").data('saving');
+    let originalPrice = $("#singleServicePage .order-price").text().replace(/IDR /, '');
+    let currentPrice = originalPrice;
+    let totalExtras = 0;
+    let grand_total = Number(currentPrice) + Number(totalExtras) - Number(userSavingCash);
+    $("#modal-single-extras .modal-order-price").text(originalPrice);
+
     $("[data-target='#modal-single-extras']").click(function () {
+        console.log(`original price = ${originalPrice}`, `current price = ${currentPrice}`);
+        console.log(`user saving cash = ${userSavingCash}`);
+
         let packageId = $(this).data('package-id');
         let agentId = $(this).data('agent-id');
         let orderTitle = $(this).parents(".row").find('.service-single__title').text();
-        let orderPriceLength = $(this).siblings(".single-package__top").find('.order-price').text().length;
-        let orderPrice = Number($(this).siblings(".single-package__top").find('.order-price').text()
-                         .substring(3, orderPriceLength));
-
-        if (typeof $(this).attr('data-token') !== typeof undefined && $(this).attr('data-token') !== false) {
-            let tokenPrice = $(this).data('token');
-            $("#modal-single-order input[name='token_price']").val(tokenPrice);
-        }
-        else {
-            $("#modal-single-order input[name='token_price']").val("").removeAttr('value');
-        }
 
         $("#modal-single-extras .modal-order-title").text(orderTitle);
-        $("#modal-single-extras .modal-order-price").text(orderPrice);
         $("#modal-single-extras input[name='modal_order_title']").val(orderTitle);
         $("#modal-single-order input[name='agent_id']").val(agentId);
         $("#modal-single-order form").attr('action', window.location.origin + '/order/package/' + packageId);
@@ -174,14 +172,51 @@ let ready = $(document).ready(function () {
     $("#form-extras-order input[type='checkbox']").change(function () {
         let idExtra = $(this).attr('id');
         let extraValue = $("#form-extras-order input#" + idExtra).val();
+
         if (!extraService.includes(extraValue) === true) {
             extraService.push(extraValue);
         }
         else {
             extraService.splice(extraService.indexOf(extraValue), 1);
         }
+
         $("#modal-single-order #data-extras").val(JSON.stringify(extraService));
     });
+
+    $("#modal-single-extras .btn-close-modal").click(function () {
+        $(".modal-order-price").text($(".order-price").text().replace(/IDR /g, ''));
+        $("#modal-single-extras input[name='extras']").prop('checked', false);
+        window.location.replace(window.location.href);
+    });
+
+    $("#modal-single-extras .modal-order-price").attr('data-original-price', originalPrice);
+    $("#modal-single-extras #grand-total").text(grand_total);
+
+    // $("#singleServicePage .single-package__btn").click(function () {
+    //     console.log(`original price = ${originalPrice}`, `current price = ${currentPrice}`);
+    //     console.log(`user saving cash = ${userSavingCash}`);
+    // });
+
+    function grandTotal() {
+        totalExtras = 0;
+        let input = document.getElementsByName("extras");
+        for (let i = 0; i < input.length; i++) {
+            if (input[i].checked) {
+                totalExtras += Number(input[i].dataset.priceCash);
+            }
+        }
+        document.querySelector("#total_extras").value = "IDR " + totalExtras.toFixed(2);
+        grand_total = Number(originalPrice) + Number(totalExtras) - Number(userSavingCash);
+        $("#modal-single-extras #grand-total").text(grand_total);
+        console.log(`grand total [original price ( ${(Number(originalPrice))} ) +
+        extras price ( ${Number(totalExtras)} ) - user saving ( ${Number(userSavingCash)} )] = ${grand_total}`);
+    }
+    $("#modal-single-extras input[name='extras']").click(function () {
+        grandTotal();
+    });
+
+    console.log(`grand total [original price ( ${(Number(originalPrice))} ) + extras price ( ${Number(totalExtras)} ) -
+                user saving ( ${Number(userSavingCash)} )] = ${grand_total}`);
 
     let allPromoCodeList = [];
     let allPromoCode = document.querySelectorAll('#singleServicePage #list-promo option');
@@ -208,12 +243,16 @@ let ready = $(document).ready(function () {
             $("#form-extras-order .promo-code-false").remove();
         }
     });
+
     $(".modal-extras__submit-btn").click(function () {
+        let grandPrice = $(".modal-order-price").text();
+        $("#modal-single-order input[name='payment']").val(grand_total);
         if ($("#form-extras-order .promo-code-false").length === 0) {
             $("#modal-single-extras").removeClass('show-modal');
             $("#modal-single-order").addClass('show-modal');
         }
     });
+
     $("#modal-single-order #show-modal-single-extras").click(function () {
         $("[data-target='#modal-single-extras']").trigger("click");
     });
@@ -279,7 +318,6 @@ let ready = $(document).ready(function () {
                         window.location.href = '/agent/list-request';
                     },
                     error: function(data) {
-                        console.log(data);
                         $("#loadingApprove").modal('hide');
                         $("#alert-error").show();
                     }
@@ -375,7 +413,6 @@ let ready = $(document).ready(function () {
     }
 
     const thisRoute = window.location.protocol + '//' + window.location.host + window.location.pathname;
-    console.log(thisRoute)
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(function (navLink) {
         let url = navLink.href;
@@ -521,6 +558,16 @@ let ready = $(document).ready(function () {
             }
         }
     });
+
+    $("#singleServicePage .file-custom__input").change(function () {
+        if ($.trim($(this).val()).length !== 0) {
+            $(this).siblings('.file-value').html("<i class='bx bx-check-circle' ></i> file selected");
+        }
+        else {
+            $(this).siblings('.file-value').html('');
+        }
+    });
+
     $("#serviceEditPage #service-edit-form #serviceLogo").change(function () {
         if ($(this).val().length !== 0) {
             let nameCard =  $(this)[0].files[0].name;
@@ -687,7 +734,6 @@ let ready = $(document).ready(function () {
     fileImage.change(function(){
         if (this.files && this.files[0] && this.files.length !== 0) {
             let reader = new FileReader();
-            console.log($(this).val());
             reader.onload = function (e) {
                 $('#cover-preview').attr('src', e.target.result);
             }

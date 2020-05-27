@@ -84,35 +84,18 @@
                         </div>
                         <button class="btn-modal single-package__btn" id="btn-pay-cash" data-target="#modal-single-extras"
                         data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
-                        data-package-title="{{ $package->title }}" {{ Auth::check() ? 'disabled' : '' }}>
-                            Continue with cash (IDR {{ $package->price }})
+                        data-package-title="{{ $package->title }}" {{ Auth::check() === false ? 'disabled' : '' }}>
+                            Continue (IDR {{ $package->price }})
                         </button>
-                        @if (Auth::user()->is_subscribe === true and
-                        Auth::user()->subscribe_at->addDays(Auth::user()->subscription->duration) <= Carbon::now() and
-                        Auth::user()->subscribe_token >= $package->token_price)
-                            <button type="button" class="btn-modal single-package__btn single-package__btn-token mt-3"
-                                    data-target="#modal-single-extras" data-package-id="{{ $package->id }}"
-                                    data-agent-id="{{ $service->agent_id }}" data-package-title="{{ $package->title }}"
-                                    data-token="{{ $package->token_price }}">
-                                Continue with token ({{ $package->token_price }} token)
-                            </button>
-                        @else
-                            <button class="btn-modal single-package__btn single-package__btn-token mt-3"
-                                    data-target="#modal-single-extras" data-package-id="{{ $package->id }}"
-                                    data-agent-id="{{ $service->agent_id }}" data-package-title="{{ $package->title }}"
-                                    data-token="{{ $package->token_price }}" id="btn-pay-token" disabled>
-                                Continue with token ({{ $package->token_price }} token)
-                            </button>
-                            @auth
-                                <span class="text-gray text-center d-block mt-3">
-                                    Please subscribe and have an enough token, also your token should not expired
-                                </span>
-                            @else
-                                <span class="text-gray text-center d-block mt-3">
-                                    Please login first
-                                </span>
-                            @endauth
-                        @endif
+                        @auth
+                        <p class="mt-3 text-gray text-center">
+                            Token you have: {{ Auth::user()->subscribe_token . ' token' }}
+                            <span class="text-small d-block mt-2">(1 token = IDR {{ '10000' }})</span>
+                        </p>
+                        @endauth
+                        @guest
+                            <p class="text-gray mt-3 text-center">Please login first</p>
+                        @endguest
                         {{-- edit discounted price if subscribe --}}
                     </div>
                     @endforeach

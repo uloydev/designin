@@ -49,6 +49,7 @@ class UserSeeder extends Seeder
                 'subscribe_to'=>$sub->id,
                 'subscribe_token'=>$sub->token,
                 'subscribe_at'=> Carbon::now(),
+                'email_verified_at' => Carbon::now(),
                 'password'=> Hash::make('password'),
             ],
         ];

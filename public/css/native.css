@@ -37,6 +37,12 @@ body:not(#blogCreatePage):not(#blogEditPage):not(#manageJobPage)
     cursor: pointer;
     background-color: var(--almost-white);
 }
+
+body:not(#blogCreatePage):not(#blogEditPage):not(#manageJobPage)
+[class*='btn']:not(.search-service__btn):not(.btn-link):not([class*='profile-main__btn']):disabled {
+    opacity: 0.8;
+}
+
 :not(#blogCreatePage):not(#blogEditPage) .btn-light:hover {
     background-color: #e2e6ea !important;
 }
@@ -294,6 +300,9 @@ body[id^='blog'] .nav__list--logo {
     min-height: 1.5rem;
     padding-left: 1.5rem;
 }
+.checkbox-custom + .checkbox-custom {
+    margin-top: 1rem;
+}
 .checkbox-custom__input {
     position: absolute;
     left: 0;
@@ -341,11 +350,20 @@ body[id^='blog'] .nav__list--logo {
     border-radius: .25rem;
     transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+.checkbox-custom__input:disabled + .checkbox-custom__label::before {
+    background-color: #e9ecef;
+}
+.checkbox-custom__input:disabled + .checkbox-custom__label {
+    color: #7b7b7b;
+}
 .float-right {
     float: right !important;
 }
 .float-left {
     float: left !important;
+}
+.text-small {
+    font-size: 0.8rem;
 }
 .btn-danger {
     background-color: #ff5a4f;
@@ -1363,6 +1381,13 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #singleServicePage #modal-single-extras .modal__body {
     padding-bottom: 30px;
 }
+#modal-single-extras #grand-total-text {
+    color: #535353;
+    font-weight: bold;
+}
+#modal-single-extras #grand-total {
+    color: var(--primary-color);
+}
 #singleServicePage .modal-extras__img {
     max-height: 250px;
     display: block;
@@ -1383,6 +1408,9 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #singleServicePage #form-extras-order .extra-checkbox {
     margin-right: 10%;
+}
+#singleServicePage #form-extras-order .form-extras-order__money {
+    font-style: normal;
 }
 #singleServicePage #form-extras-order .promo-code-false {
     color: #e60000;
@@ -1449,8 +1477,10 @@ input[type=number] {
 #singleServicePage .single-service__modal label:hover {
     color: #545454;
 }
-#singleServicePage .single-service__modal label span {
+#singleServicePage .single-service__modal .file-value {
     color: #b6b6b6;
+    display: flex;
+    align-items: center;
 }
 #singleServicePage .single-service__modal textarea {
     border: 1px solid #dcdcdc;
@@ -1550,6 +1580,7 @@ input[type=number] {
     color: #fff;
     display: flex;
     width: 100%;
+    margin-top: 1rem;
     background-color: var(--primary-color) !important;
 }
 #singleServicePage .single-package__btn:hover {

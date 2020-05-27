@@ -50,7 +50,7 @@ $factory->define(Subscription::class, function (Faker $faker) {
                     'Taskmaster harrier antman empath spot lilith'.
                     '</p>',
         'img' => 'temporary/subscription.jpg',
-        'token' => 10,
+        'token' => $faker->numberBetween($min = 20, $max = 40),
         'price' => $faker->randomElement([450000, 1050000, 3600000]),
         'duration' => $faker->randomElement([7, 30]),
     ];
