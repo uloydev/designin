@@ -248,6 +248,25 @@ let ready = $(document).ready(function () {
         $("[data-target='#modal-single-extras']").trigger("click");
     });
 
+    // $("#singleServicePage .checkbox-custom .checkbox-custom__input").change(function () {
+    //     let $divCheckbox = $(this).parent();
+    //     $divCheckbox.click(function () {
+    //         let $inputCheckbox = $divCheckbox.find(".checkbox-custom__input");
+    //         console.log($inputCheckbox);
+    //         if ($inputCheckbox.is(":checked")) {
+    //             $(this).prop("checked", true);
+    //         }
+    //         else {
+    //             $(this).prop("checked", false);
+    //         }
+    //
+    //         // e.preventDefault();
+    //         // e.stopPropagation();
+    //         // $(this).find(".checkbox-custom__input").click();
+    //     });
+    // });
+
+
     //agent js
     $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection'], " +
         "[data-target='#modal-result']").click(function () {

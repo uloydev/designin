@@ -298,7 +298,7 @@ body[id^='blog'] .nav__list--logo {
     display: flex;
     align-items: center;
     min-height: 1.5rem;
-    padding-left: 1.5rem;
+    text-indent: 1.5rem;
 }
 .checkbox-custom + .checkbox-custom {
     margin-top: 1rem;
@@ -342,7 +342,7 @@ body[id^='blog'] .nav__list--logo {
 .checkbox-custom__label::before {
     position: absolute;
     top: 0;
-    left: -1.5rem;
+    left: 0;
     display: block;
     width: 1rem;
     height: 1rem;
