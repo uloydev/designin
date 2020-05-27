@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Subscription;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -17,10 +19,12 @@ class TransactionController extends Controller
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
         $subscriptions = Subscription::paginate(12);
         $totalSubcription = Subscription::count();
+        $orders = Order::where('user_id', Auth::id())->latest()->paginate(10);
         return view('user.manage-transaction', [
             'subscriptions' => $subscriptions,
             'totalSubcription' => $totalSubcription,
-            'listBank' => $listBank
+            'listBank' => $listBank,
+            'orders' => $orders
         ]);
 
     }

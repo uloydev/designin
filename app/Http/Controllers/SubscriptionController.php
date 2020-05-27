@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Order;
 use App\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 
 class SubscriptionController extends Controller
 {
@@ -15,9 +17,11 @@ class SubscriptionController extends Controller
     {
         $subscriptions = Subscription::paginate(5);
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
+        $orders = Order::where('user_id', Auth::id())->latest()->paginate(10);
         return view('subscription.index', [
             'subscriptions' => $subscriptions,
-            'listBank' => $listBank
+            'listBank' => $listBank,
+            'orders' => $orders
         ]);
     }
 
