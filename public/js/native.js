@@ -1,4 +1,4 @@
-let ready = $(document).ready(function () {
+
     //user js
     const navToggle = document.querySelector('.nav__toggle');
     const primaryNav = document.querySelector('#primaryNav');
@@ -152,7 +152,9 @@ let ready = $(document).ready(function () {
     let grand_total;
     let token_usage;
     let promo_discount = 0;
-    grandTotal();
+    if (window.location.href.indexOf('service/show') > -1) {
+        grandTotal();
+    }
     $("#modal-single-extras .modal-order-price").text(originalPrice);
 
     $("[data-target='#modal-single-extras']").click(function () {
@@ -198,8 +200,10 @@ let ready = $(document).ready(function () {
                 totalExtras += Number(input[i].dataset.priceCash);
             }
         }
-        document.querySelector("#total_extras").value = "IDR " + totalExtras.toFixed(2);
-        if (promo_discount != 0) {
+        if (document.querySelector('#total_extras')) { //if element #total_extras exist
+            document.querySelector("#total_extras").value = "IDR " + totalExtras.toFixed(2);
+        }
+        if (promo_discount !== 0) {
             let price = Number($("#singleServicePage .order-price").text().replace(/IDR /, ''));
             originalPrice =  Math.ceil(price - price * promo_discount / 100);
         }else{
@@ -274,84 +278,95 @@ let ready = $(document).ready(function () {
         $("[data-target='#modal-single-extras']").trigger("click");
     });
 
+    $("#modal-single-order form").submit(function (e) {
+        e.preventDefault();
+        if ($("#modal-single-order input[name='payment']").val().length !== 0) {
+            console.log($("#modal-single-order textarea[name='message_agent']").val());
+            console.log("value = " + $("#modal-single-order input[name='payment']").val());
+            payment();
+        }
+        else {
+            document.querySelector('#modal-single-order form').submit();
+        }
+    });
 
     //agent js
     $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection'], " +
         "[data-target='#modal-result']").click(function () {
-            let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
-            let jobId = $(this).data('id');
-            let customerEmail = $(this).parents(".accordion__item").find(".customer-email").text();
-            let jobProgress = $(this).data('progress');
-            const routingListRequest = window.location.origin + '/agent/list-request';
+        let jobTitle = $.trim($(this).parents(".accordion__item").find(".job-agent-title").text());
+        let jobId = $(this).data('id');
+        let customerEmail = $(this).parents(".accordion__item").find(".customer-email").text();
+        let jobProgress = $(this).data('progress');
+        const routingListRequest = window.location.origin + '/agent/list-request';
 
-            $("button[form='form-approval-job']").click(function (e) {
-                e.preventDefault();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: routingListRequest + '/approval/' + jobId,
-                    method: 'put',
-                    data: {
-                        customer_email: $("input[name='customer_email']").val(),
-                        approval: $("input[name='approval']").val()
-                    },
-                    beforeSend: function() {
-                        $("#modal-approval .close").trigger('click');
-                        $("#modal-rejection .close").trigger('click');
-                        $("#loadingApprove").modal('show');
-                    },
-                    success: function(result){
-                        $("#loadingApprove").modal('hide');
-                        window.location.href = '/agent/list-request/incoming';
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus, errorThrown);
-                    }
-                });
+        $("button[form='form-approval-job']").click(function (e) {
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
-
-            $("#form-send-job").submit(function (e) {
-                e.preventDefault();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: routingListRequest + '/send-result/' + jobId,
-                    method: 'post',
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    data: new FormData($(this)[0]),
-                    beforeSend: function() {
-                        $("#modal-result .close").trigger('click');
-                        $("#loadingApprove").modal('show');
-                    },
-                    success: function(result){
-                        $("#loadingApprove").modal('hide');
-                        window.location.href = '/agent/list-request';
-                    },
-                    error: function(data) {
-                        $("#loadingApprove").modal('hide');
-                        $("#alert-error").show();
-                    }
-                });
+            $.ajax({
+                url: routingListRequest + '/approval/' + jobId,
+                method: 'put',
+                data: {
+                    customer_email: $("input[name='customer_email']").val(),
+                    approval: $("input[name='approval']").val()
+                },
+                beforeSend: function() {
+                    $("#modal-approval .close").trigger('click');
+                    $("#modal-rejection .close").trigger('click');
+                    $("#loadingApprove").modal('show');
+                },
+                success: function(result){
+                    $("#loadingApprove").modal('hide');
+                    window.location.href = '/agent/list-request/incoming';
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
             });
-
-            $(".modal-job-title").text(jobTitle);
-            $("input[name='customer_email']").val(customerEmail);
-            $("#modal-rejection form").attr('action', routingListRequest + '/approval/' + jobId);
-            $("#modal-progress .progress-job").slider({ value: jobProgress });
-            $("#modal-progress .progress-job").slider('refresh');
-            $("#modal-progress #progress-job-val").text(jobProgress);
-            $("#modal-progress .progress-bar").css('width', jobProgress + '%').text(jobProgress + '%');
-            $("#modal-progress form").attr('action', routingListRequest + '/progress/' + jobId);
-            $("#modal-result form").attr('action', routingListRequest + '/send-result/' + jobId);
         });
+
+        $("#form-send-job").submit(function (e) {
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: routingListRequest + '/send-result/' + jobId,
+                method: 'post',
+                processData: false,
+                contentType: false,
+                cache: false,
+                data: new FormData($(this)[0]),
+                beforeSend: function() {
+                    $("#modal-result .close").trigger('click');
+                    $("#loadingApprove").modal('show');
+                },
+                success: function(result){
+                    $("#loadingApprove").modal('hide');
+                    window.location.href = '/agent/list-request';
+                },
+                error: function(data) {
+                    $("#loadingApprove").modal('hide');
+                    $("#alert-error").show();
+                }
+            });
+        });
+
+        $(".modal-job-title").text(jobTitle);
+        $("input[name='customer_email']").val(customerEmail);
+        $("#modal-rejection form").attr('action', routingListRequest + '/approval/' + jobId);
+        $("#modal-progress .progress-job").slider({ value: jobProgress });
+        $("#modal-progress .progress-job").slider('refresh');
+        $("#modal-progress #progress-job-val").text(jobProgress);
+        $("#modal-progress .progress-bar").css('width', jobProgress + '%').text(jobProgress + '%');
+        $("#modal-progress form").attr('action', routingListRequest + '/progress/' + jobId);
+        $("#modal-result form").attr('action', routingListRequest + '/send-result/' + jobId);
+    });
 
     const allProgress = document.querySelectorAll("#listRequestPage .progress-value");
     allProgress.forEach(function (progressVal) {
@@ -455,40 +470,40 @@ let ready = $(document).ready(function () {
     $("#servicePage .tab-pane:first-child").addClass('active show');
     $("#servicePage .btn[data-target='#modal-delete-service'], #showExtraPage [data-target='#modal-manipulate-extra'], " +
         "#showExtraPage [data-target='#modal-delete-extra']").click(function () {
-            let serviceId = Number($(this).data("id"));
-            let serviceTitle = $(this).data('title');
+        let serviceId = Number($(this).data("id"));
+        let serviceTitle = $(this).data('title');
 
-            $("#servicePage .modal-service-title").text(serviceTitle);
-            if ($(this).attr('id') === 'from-agent') {
-                $("#modal-delete-service form").attr("action", window.location.origin + '/agent/service/' + serviceId);
-            }
-            else {
-                $("#modal-delete-service form")
-                    .attr("action", window.location.origin + '/admin/manage/service/' + serviceId);
-            }
+        $("#servicePage .modal-service-title").text(serviceTitle);
+        if ($(this).attr('id') === 'from-agent') {
+            $("#modal-delete-service form").attr("action", window.location.origin + '/agent/service/' + serviceId);
+        }
+        else {
+            $("#modal-delete-service form")
+                .attr("action", window.location.origin + '/admin/manage/service/' + serviceId);
+        }
 
-            if ($(this).attr('id') === 'btn-add-extra') {
-                $("#modal-manipulate-extra .modal-manipulate-title").text("Add new extra");
-                $("#form-manipulate-extra input, #form-manipulate-extra textarea").val("");
-                $("#form-manipulate-extra").attr('action', window.location.origin + '/admin/manage/service-extras');
-            }
-            else if ($(this).attr('id') === 'btn-edit-extra') {
-                let extraName = $(this).siblings(".extra-item__name").text().trim();
-                let extraPrice = Number($(this).siblings(".extra-item__price").text());
-                let extraDesc = $(this).data("desc").trim();
-                let extraToken = Number($(this).data('token'));
+        if ($(this).attr('id') === 'btn-add-extra') {
+            $("#modal-manipulate-extra .modal-manipulate-title").text("Add new extra");
+            $("#form-manipulate-extra input, #form-manipulate-extra textarea").val("");
+            $("#form-manipulate-extra").attr('action', window.location.origin + '/admin/manage/service-extras');
+        }
+        else if ($(this).attr('id') === 'btn-edit-extra') {
+            let extraName = $(this).siblings(".extra-item__name").text().trim();
+            let extraPrice = Number($(this).siblings(".extra-item__price").text());
+            let extraDesc = $(this).data("desc").trim();
+            let extraToken = Number($(this).data('token'));
 
-                $("#modal-manipulate-extra input[name='name_extra']").val(extraName);
-                $("#modal-manipulate-extra input[name='price_extra']").val(extraPrice);
-                $("#modal-manipulate-extra input[name='token_extra']").val(extraToken);
-                $("#modal-manipulate-extra textarea[name='benefit_extra']").val(extraDesc);
-                $("#modal-manipulate-extra .modal-manipulate-title").text("Edit extra");
-                $("#form-manipulate-extra").attr('action', window.location.origin + '/admin/manage/service-extras/' + serviceId);
-            }
+            $("#modal-manipulate-extra input[name='name_extra']").val(extraName);
+            $("#modal-manipulate-extra input[name='price_extra']").val(extraPrice);
+            $("#modal-manipulate-extra input[name='token_extra']").val(extraToken);
+            $("#modal-manipulate-extra textarea[name='benefit_extra']").val(extraDesc);
+            $("#modal-manipulate-extra .modal-manipulate-title").text("Edit extra");
+            $("#form-manipulate-extra").attr('action', window.location.origin + '/admin/manage/service-extras/' + serviceId);
+        }
 
-            if ($(this).attr('data-target') === '#modal-delete-extra') {
-                $("#form-delete-extra").attr('action', window.location.origin + '/admin/manage/service-extras/' + serviceId);
-            }
+        if ($(this).attr('data-target') === '#modal-delete-extra') {
+            $("#form-delete-extra").attr('action', window.location.origin + '/admin/manage/service-extras/' + serviceId);
+        }
     });
 
     $("#serviceCategoryPage .btn[data-target='#create-edit-category']").click(function () {
@@ -659,24 +674,24 @@ let ready = $(document).ready(function () {
 
     $("[data-target='#editSubscription'], [data-target='#deleteSubscription']")
         .click(function () {
-        let subscriptionId = Number($(this).data('id')),
-            subscriptionDesc = $.trim($(this).data('desc')),
-            subscriptionName = $.trim($(this).data('title')),
-            subscriptionToken = Number($(this).data('token')),
-            subscriptionPrice = Number($(this).data('price')),
-            subscriptionDuration = Number($(this).data('duration'));
+            let subscriptionId = Number($(this).data('id')),
+                subscriptionDesc = $.trim($(this).data('desc')),
+                subscriptionName = $.trim($(this).data('title')),
+                subscriptionToken = Number($(this).data('token')),
+                subscriptionPrice = Number($(this).data('price')),
+                subscriptionDuration = Number($(this).data('duration'));
 
-        $("#editSubscription .modal-subscription-title, #deleteSubscription .modal-subscription-title")
-            .text(subscriptionName);
-        $("#editSubscription form, #deleteSubscription form")
-            .attr('action', window.location.origin + '/admin/manage/subscription/' + subscriptionId);
-        $("#editSubscription input[name='title']").val(subscriptionName);
-        $("#editSubscription textarea[name='desc']").val(subscriptionDesc);
-        $("#editSubscription input[name='token']").val(subscriptionToken);
-        $("#editSubscription input[name='duration']").val(subscriptionDuration);
-        $("#editSubscription input[name='price']").val(subscriptionPrice);
-        $("#editSubscription textarea[name='desc']").summernote('code', subscriptionDesc);
-    });
+            $("#editSubscription .modal-subscription-title, #deleteSubscription .modal-subscription-title")
+                .text(subscriptionName);
+            $("#editSubscription form, #deleteSubscription form")
+                .attr('action', window.location.origin + '/admin/manage/subscription/' + subscriptionId);
+            $("#editSubscription input[name='title']").val(subscriptionName);
+            $("#editSubscription textarea[name='desc']").val(subscriptionDesc);
+            $("#editSubscription input[name='token']").val(subscriptionToken);
+            $("#editSubscription input[name='duration']").val(subscriptionDuration);
+            $("#editSubscription input[name='price']").val(subscriptionPrice);
+            $("#editSubscription textarea[name='desc']").summernote('code', subscriptionDesc);
+        });
 
     //plugin & general
     if ($(".progress-job").length) {
@@ -903,4 +918,4 @@ let ready = $(document).ready(function () {
     $("#editPromo #edit-promo-start, #addPromo #add-promo-start").datepicker({
         minDate: new Date()
     });
-});
+

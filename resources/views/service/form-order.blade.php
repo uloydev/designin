@@ -12,8 +12,7 @@
                     {{-- quatity need to pass to $request --}}
                     <div class="d-flex align-items-center">
                         <label for="quantity" class="mr-2">Quantity</label>
-                        <input type="number" id="quantity" min="1" value="1" max="20"
-                               form="form-extras-order" required name="quantity">
+                        <input type="number" id="quantity" min="1" value="1" max="20" form="form-last" required name="quantity">
                     </div>
                     <p class="my-3">
                         Price: IDR <var class="modal-order-price" data-original-price=""></var>

@@ -16,10 +16,10 @@
                 data: {
                     _token:'{{csrf_token()}}',
                     user_id:'{{Auth::id()}}',
-                    extras:'[2,4]',
-                    agent_id:'2',
-                    message_agent:'wkwkwkw',
-                    quantity:'4'
+                    extras:JSON.stringify(extraService),
+                    agent_id: $("input[name='agent_id']").val(),
+                    message_agent: $("#modal-single-order textarea[name='message_agent']").val(),
+                    quantity: $("#modal-single-extras #quantity").val()
                 },
                 beforeSend: function(){
                     console.log(data);
@@ -41,6 +41,7 @@
                     // snap.hide();
                 }
             });
+
         }
     </script>
 @endsection
@@ -60,7 +61,7 @@
                                     {!! "<i class='bx bxs-star' ></i>" !!}
                                 @endfor
                                 @for ($i = 0; $i < 5 - $rating; $i++)
-                                   {!! "<i class='bx bx-star' ></i>" !!}
+                                    {!! "<i class='bx bx-star' ></i>" !!}
                                 @endfor
                             @endif
                             ( {{ ceil($rating) }} / 5 )
@@ -79,24 +80,24 @@
                             @csrf
                             <label for="review-filer" class="d-none">Review filter</label>
                             <select id="review-filer" name="review_filter"
-                            class="service-single__filter-review wide">
+                                    class="service-single__filter-review wide">
                                 <option value="">Recent</option>
                                 <option value="">Rating</option>
                             </select>
                         </form>
                     </div>
                     @forelse ($testimonies as $testimony)
-                    <article class="service-single__comment">
-                        <img src="{{ Storage::url($testimony->user->profile->avatar ?? 'temporary/people.webp') }}"
-                            height="20" alt="People comment image">
-                        <div class="service-single__comment-detail">
-                            <p class="service-single__comment-title">{{ $testimony->user->name }}</p>
-                            <p class="service-single__comment-text">{{ $testimony->content }}</p>
-                        </div>
-                    </article>
+                        <article class="service-single__comment">
+                            <img src="{{ Storage::url($testimony->user->profile->avatar ?? 'temporary/people.webp') }}"
+                                 height="20" alt="People comment image">
+                            <div class="service-single__comment-detail">
+                                <p class="service-single__comment-title">{{ $testimony->user->name }}</p>
+                                <p class="service-single__comment-text">{{ $testimony->content }}</p>
+                            </div>
+                        </article>
                     @empty
                         <img src="{{ asset('img/review.jpg') }}" alt="No review"
-                        height="150" class="mx-auto d-block">
+                             height="150" class="mx-auto d-block">
                         <h1 class="mt-4 text-center">There are no review about this service</h1>
                     @endforelse
                 </div>
@@ -104,44 +105,44 @@
             <aside class="single-package col-12 col-lg-4" id="service-package-tab">
                 <div class="jq-tab-menu">
                     @foreach ($packages as $package)
-                    <div class="jq-tab-title {{$loop->first ? 'active' : ''}}"
-                    data-tab="package-{{$package->id}}">
-                        {{ $package->title }}
-                    </div>
+                        <div class="jq-tab-title {{$loop->first ? 'active' : ''}}"
+                             data-tab="package-{{$package->id}}">
+                            {{ $package->title }}
+                        </div>
                     @endforeach
                 </div>
                 <div class="jq-tab-content-wrapper">
                     @foreach ($packages as $package)
-                    <div class="jq-tab-content {{ $loop->first ? 'active' : '' }}"
-                    data-tab="package-{{ $package->id }}">
-                        <div class="single-package__top mb-4">
-                            <p class="mb-3 d-flex justify-content-between align-items-center">
-                                {{ $package->title }}
-                                <var class="font-style-normal font-bold order-price">
-                                    IDR {{ $package->price }}
-                                </var>
-                            </p>
-                            <p>{{ $package->description }}</p>
+                        <div class="jq-tab-content {{ $loop->first ? 'active' : '' }}"
+                             data-tab="package-{{ $package->id }}">
+                            <div class="single-package__top mb-4">
+                                <p class="mb-3 d-flex justify-content-between align-items-center">
+                                    {{ $package->title }}
+                                    <var class="font-style-normal font-bold order-price">
+                                        IDR {{ $package->price }}
+                                    </var>
+                                </p>
+                                <p>{{ $package->description }}</p>
+                            </div>
+                            @auth
+                                <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
+                                        data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
+                                        data-package-title="{{ $package->title }}" {{ Auth::check() == false ? 'disabled' : ''  }}>
+                                    Continue (IDR {{ $package->price }})
+                                </button>
+                                <p class="mt-3 text-gray text-center">
+                                    Token you have: {{ Auth::user()->subscribe_token . ' token' ?? 0 . ' token' }}
+                                    <span class="text-small d-block mt-2">(1 token = IDR {{ '10000' }})</span>
+                                </p>
+                            @endauth
+                            @guest
+                                <a class="btn-modal single-package__btn" href="{{route('login').'?redirect='.URL::current()}}">
+                                    Continue (IDR {{ $package->price }}
+                                </a>
+                            @endguest
+                            {{-- edit discounted price if subscribe --}}
+                            {{-- <del class="d-block mt-3 text-center text-gray">IDR 600,000</del> --}}
                         </div>
-                        @auth
-                            <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
-                                    data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
-                                    data-package-title="{{ $package->title }}" {{ Auth::check() == false ? 'disabled' : ''  }}>
-                                Continue (IDR {{ $package->price }})
-                            </button>
-                            <p class="mt-3 text-gray text-center">
-                                Token you have: {{ Auth::user()->subscribe_token . ' token' ?? 0 . ' token' }}
-                                <span class="text-small d-block mt-2">(1 token = IDR {{ '10000' }})</span>
-                            </p>
-                        @endauth
-                        @guest
-                            <a class="btn-modal single-package__btn" href="{{route('login').'?redirect='.URL::current()}}">
-                                Continue (IDR {{ $package->price }}
-                            </a>
-                        @endguest
-                        {{-- edit discounted price if subscribe --}}
-                        {{-- <del class="d-block mt-3 text-center text-gray">IDR 600,000</del> --}}
-                    </div>
                     @endforeach
                 </div>
             </aside>
