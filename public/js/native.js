@@ -156,7 +156,8 @@ let ready = $(document).ready(function () {
 
     $("[data-target='#modal-single-extras']").click(function () {
         // console.log(`original price = ${originalPrice}`, `current price = ${currentPrice}`);
-        // console.log(`user saving cash = ${userSavingCash}`);
+        console.log(`user saving cash = ${userSavingCash}`);
+        console.log("grand total = " + grand_total);
 
         let packageId = $(this).data('package-id');
         let agentId = $(this).data('agent-id');

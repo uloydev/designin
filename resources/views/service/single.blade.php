@@ -123,11 +123,22 @@
                             </p>
                             <p>{{ $package->description }}</p>
                         </div>
-                        <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
-                        data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
-                        data-package-title="{{ $package->title }}">
-                            Continue (IDR {{ $package->price }})
-                        </button>
+                        @auth
+                            <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
+                                    data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
+                                    data-package-title="{{ $package->title }}" {{ Auth::check() == false ? 'disabled' : ''  }}>
+                                Continue (IDR {{ $package->price }})
+                            </button>
+                            <p class="mt-3 text-gray text-center">
+                                Token you have: {{ Auth::user()->subscribe_token . ' token' }}
+                                <span class="text-small d-block mt-2">(1 token = IDR {{ '10000' }})</span>
+                            </p>
+                        @endauth
+                        @guest
+                            <a class="btn-modal single-package__btn" href="{{route('login').'?redirect='.URL::current()}}">
+                                Continue (IDR {{ $package->price }}
+                            </a>
+                        @endguest
                         {{-- edit discounted price if subscribe --}}
                         {{-- <del class="d-block mt-3 text-center text-gray">IDR 600,000</del> --}}
                     </div>
