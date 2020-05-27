@@ -151,6 +151,7 @@ let ready = $(document).ready(function () {
     let totalExtras = 0;
     let grand_total;
     let token_usage;
+    let promo_discount = 0;
     grandTotal();
     $("#modal-single-extras .modal-order-price").text(originalPrice);
 
@@ -198,6 +199,12 @@ let ready = $(document).ready(function () {
             }
         }
         document.querySelector("#total_extras").value = "IDR " + totalExtras.toFixed(2);
+        if (promo_discount != 0) {
+            let price = Number($("#singleServicePage .order-price").text().replace(/IDR /, ''));
+            originalPrice =  Math.ceil(price - price * promo_discount / 100);
+        }else{
+            originalPrice = $("#singleServicePage .order-price").text().replace(/IDR /, '');
+        }
         grand_total = Number(originalPrice) + Number(totalExtras);
         if (Number(userSavingCash)>0) {
             token_usage = Math.ceil(grand_total / tokenWithDraw);
@@ -217,9 +224,11 @@ let ready = $(document).ready(function () {
     });
 
     let allPromoCodeList = [];
+    let allPromoDiscount = [];
     let allPromoCode = document.querySelectorAll('#singleServicePage #list-promo option');
     allPromoCode.forEach(function (codePromo) {
         let promoCodeVal = codePromo.value;
+        allPromoDiscount.push(codePromo.dataset.codeDiscount);
         allPromoCodeList.push(promoCodeVal);
     });
     // $('#singleServicePage #list-promo').remove();
@@ -228,19 +237,26 @@ let ready = $(document).ready(function () {
             let promoCode = $(this).val();
             if (allPromoCodeList.includes(promoCode) === true) {
                 $("#modal-single-order input[name='promo_code']").val(promoCode);
+                promo_discount = allPromoDiscount[allPromoCodeList.indexOf(promoCode)];
                 $(".promo-code-false").remove();
+                grandTotal();
             }
             else {
                 $("#modal-single-order input[name='promo_code']").val("").removeAttr('value');
                 if ($(".promo-code-false").length === 0) {
                     $("<span class='promo-code-false'>You input wrong promo code</span>").insertAfter("#promo-code");
                 }
+                promo_discount = 0;
+                grandTotal();
             }
         }
         else {
             $(".promo-code-false").remove();
             $("#modal-single-order input[name='promo_code']").val("").removeAttr('value');
+            promo_discount = 0;
+            grandTotal();
         }
+        console.log(promo_discount);
     });
 
     $(".modal-extras__submit-btn").click(function () {
