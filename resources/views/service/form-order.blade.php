@@ -23,7 +23,7 @@
                         <p class="mb-3">
                             Your saving:
                             <var class="font-style-normal" id="user-token" data-saving="{{ 10000 * Auth::user()->subscribe_token ?? 0 }}"
-                                 data-token="{{ Auth::user()->subscribe_token ?? 0 }}" data-token-to-cash="10000">
+                                 data-token="{{ Auth::user()->subscribe_token ?? 0 }}" data-token-withdraw="10000">
                                 {{ Auth::user()->subscribe_token ?? '0' }}
                             </var> token
                             @if (Auth::user()->subscribe_token > 0)
@@ -63,7 +63,7 @@
                     @endif
                     <div class="my-4 mb-md-0">
                         <label for="promo-code" class="mb-2 d-block">Promo code (optional)</label>
-                        <input type="text" id="promo-code" class="input-custom" name="promo_code" placeholder="Ex: LEBARIN">
+                        <input type="text" id="promo-code" class="input-custom" placeholder="Ex: LEBARIN">
                     </div>
                     <button type="submit" class="modal-extras__submit-btn">Next</button>
                 </figcaption>

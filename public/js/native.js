@@ -144,6 +144,7 @@ let ready = $(document).ready(function () {
     });
 
     let userSavingCash = $("#modal-single-extras #user-token").data('saving');
+    let tokenWithDraw = $("#modal-single-extras #user-token").data('token-withdraw');
     // let userSavingCash = 2220000;
     let originalPrice = $("#singleServicePage .order-price").text().replace(/IDR /, '');
     let currentPrice = originalPrice;
@@ -154,10 +155,6 @@ let ready = $(document).ready(function () {
     $("#modal-single-extras .modal-order-price").text(originalPrice);
 
     $("[data-target='#modal-single-extras']").click(function () {
-        // console.log(`original price = ${originalPrice}`, `current price = ${currentPrice}`);
-        console.log(`user saving cash = ${userSavingCash}`);
-        console.log("grand total = " + grand_total);
-
         let packageId = $(this).data('package-id');
         let agentId = $(this).data('agent-id');
         let orderTitle = $(this).parents(".row").find('.service-single__title').text();
@@ -203,15 +200,17 @@ let ready = $(document).ready(function () {
         document.querySelector("#total_extras").value = "IDR " + totalExtras.toFixed(2);
         grand_total = Number(originalPrice) + Number(totalExtras);
         if (Number(userSavingCash)>0) {
-            token_usage = Math.ceil(grand_total / 10000);
-            console.log(token_usage);
-            if (token_usage < Number(userSavingCash) / 10000) {
+            token_usage = Math.ceil(grand_total / tokenWithDraw);
+            if (token_usage <= Number(userSavingCash) / tokenWithDraw) {
                 grand_total = 0;
             }else{
                 grand_total -= Number(userSavingCash);
             }
         }
         $("#modal-single-extras #grand-total").text(grand_total);
+        if (Number(token_usage) > 0) {
+            $("#modal-single-order input[name='token_usage']").val(token_usage);
+        }
     }
     $("#modal-single-extras input[name='extras']").click(function () {
         grandTotal();
@@ -223,11 +222,10 @@ let ready = $(document).ready(function () {
         let promoCodeVal = codePromo.value;
         allPromoCodeList.push(promoCodeVal);
     });
-    $('#singleServicePage #list-promo').remove();
+    // $('#singleServicePage #list-promo').remove();
     $("#promo-code").focusout(function () {
         if ($(this).val().length !== 0) {
             let promoCode = $(this).val();
-            console.log("promo code = " + promoCode);
             if (allPromoCodeList.includes(promoCode) === true) {
                 $("#modal-single-order input[name='promo_code']").val(promoCode);
                 $(".promo-code-false").remove();
@@ -259,24 +257,6 @@ let ready = $(document).ready(function () {
     $("#modal-single-order #show-modal-single-extras").click(function () {
         $("[data-target='#modal-single-extras']").trigger("click");
     });
-
-    // $("#singleServicePage .checkbox-custom .checkbox-custom__input").change(function () {
-    //     let $divCheckbox = $(this).parent();
-    //     $divCheckbox.click(function () {
-    //         let $inputCheckbox = $divCheckbox.find(".checkbox-custom__input");
-    //         console.log($inputCheckbox);
-    //         if ($inputCheckbox.is(":checked")) {
-    //             $(this).prop("checked", true);
-    //         }
-    //         else {
-    //             $(this).prop("checked", false);
-    //         }
-    //
-    //         // e.preventDefault();
-    //         // e.stopPropagation();
-    //         // $(this).find(".checkbox-custom__input").click();
-    //     });
-    // });
 
 
     //agent js

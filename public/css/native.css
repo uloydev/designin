@@ -41,6 +41,7 @@ body:not(#blogCreatePage):not(#blogEditPage):not(#manageJobPage)
 body:not(#blogCreatePage):not(#blogEditPage):not(#manageJobPage)
 [class*='btn']:not(.search-service__btn):not(.btn-link):not([class*='profile-main__btn']):disabled {
     opacity: 0.8;
+    cursor: not-allowed;
 }
 
 :not(#blogCreatePage):not(#blogEditPage) .btn-light:hover {
