@@ -130,7 +130,7 @@
                                 Continue (IDR {{ $package->price }})
                             </button>
                             <p class="mt-3 text-gray text-center">
-                                Token you have: {{ Auth::user()->subscribe_token . ' token' }}
+                                Token you have: {{ Auth::user()->subscribe_token . ' token' ?? 0 . ' token' }}
                                 <span class="text-small d-block mt-2">(1 token = IDR {{ '10000' }})</span>
                             </p>
                         @endauth
