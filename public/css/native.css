@@ -1412,7 +1412,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #singleServicePage #form-extras-order .form-extras-order__money {
     font-style: normal;
 }
-#singleServicePage #form-extras-order .promo-code-false {
+#singleServicePage .promo-code-false {
     color: #e60000;
     display: block;
     transition: all 150ms;
@@ -2608,7 +2608,7 @@ footer .row {
         right: 0;
         bottom: 0;
     }
-    #singleServicePage #form-extras-order .promo-code-false {
+    #singleServicePage .promo-code-false {
         margin-bottom: 0;
     }
 

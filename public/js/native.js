@@ -193,11 +193,6 @@ let ready = $(document).ready(function () {
     $("#modal-single-extras .modal-order-price").attr('data-original-price', originalPrice);
     $("#modal-single-extras #grand-total").text(grand_total);
 
-    // $("#singleServicePage .single-package__btn").click(function () {
-    //     console.log(`original price = ${originalPrice}`, `current price = ${currentPrice}`);
-    //     console.log(`user saving cash = ${userSavingCash}`);
-    // });
-
     function grandTotal() {
         totalExtras = 0;
         let input = document.getElementsByName("extras");
@@ -209,46 +204,42 @@ let ready = $(document).ready(function () {
         document.querySelector("#total_extras").value = "IDR " + totalExtras.toFixed(2);
         grand_total = Number(originalPrice) + Number(totalExtras) - Number(userSavingCash);
         $("#modal-single-extras #grand-total").text(grand_total);
-        // console.log(`grand total [original price ( ${(Number(originalPrice))} ) +
-        // extras price ( ${Number(totalExtras)} ) - user saving ( ${Number(userSavingCash)} )] = ${grand_total}`);
     }
     $("#modal-single-extras input[name='extras']").click(function () {
         grandTotal();
     });
 
-    // console.log(`grand total [original price ( ${(Number(originalPrice))} ) + extras price ( ${Number(totalExtras)} ) -
-    //             user saving ( ${Number(userSavingCash)} )] = ${grand_total}`);
-
     let allPromoCodeList = [];
     let allPromoCode = document.querySelectorAll('#singleServicePage #list-promo option');
-    allPromoCode.forEach(function (promoCode) {
-        let promoCodeVal = promoCode.value;
+    allPromoCode.forEach(function (codePromo) {
+        let promoCodeVal = codePromo.value;
         allPromoCodeList.push(promoCodeVal);
     });
-    $("#form-extras-order #promo-code").focusout(function () {
+    $('#singleServicePage #list-promo').remove();
+    $("#promo-code").focusout(function () {
         if ($(this).val().length !== 0) {
             let promoCode = $(this).val();
+            console.log("promo code = " + promoCode);
             if (allPromoCodeList.includes(promoCode) === true) {
                 $("#modal-single-order input[name='promo_code']").val(promoCode);
-                $("#form-extras-order .promo-code-false").remove();
+                $(".promo-code-false").remove();
             }
             else {
                 $("#modal-single-order input[name='promo_code']").val("").removeAttr('value');
                 if ($(".promo-code-false").length === 0) {
-                    $("<span class='promo-code-false'>You input wrong promo code</span>")
-                        .insertAfter("#form-extras-order #promo-code");
+                    $("<span class='promo-code-false'>You input wrong promo code</span>").insertAfter("#promo-code");
                 }
             }
         }
         else {
-            $("#form-extras-order .promo-code-false").remove();
+            $(".promo-code-false").remove();
+            $("#modal-single-order input[name='promo_code']").val("").removeAttr('value');
         }
     });
 
     $(".modal-extras__submit-btn").click(function () {
-        let grandPrice = $(".modal-order-price").text();
         $("#modal-single-order input[name='payment']").val(grand_total);
-        if ($("#form-extras-order .promo-code-false").length === 0) {
+        if ($(".promo-code-false").length === 0) {
             $("#modal-single-extras").removeClass('show-modal');
             $("#modal-single-order").addClass('show-modal');
         }

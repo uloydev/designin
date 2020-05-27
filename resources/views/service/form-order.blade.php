@@ -50,8 +50,8 @@
                             @endforeach
                         </div>
                     @endif
-                    <div class="my-4 mb-md-0 d-lg-flex">
-                        <label for="promo-code" class="mb-3 mb-lg-0 mr-lg-2 d-block">Promo code (optional)</label>
+                    <div class="my-4 mb-md-0">
+                        <label for="promo-code" class="mb-2 d-block">Promo code (optional)</label>
                         <input type="text" id="promo-code" class="input-custom" name="promo_code" placeholder="Ex: LEBARIN">
                     </div>
                     <button type="submit" class="modal-extras__submit-btn">Next</button>
@@ -84,7 +84,7 @@
                 </ul>
             </div>
             <div class="col">
-                <form action="{{-- url on js = '/service/show/$id' --}}" method="post">
+                <form action="{{-- url on js = '/service/show/$id' --}}" method="post" id="form-last">
                     @csrf
                     <input type="hidden" id="data-extras" name="all_extras[]">
                     <input type="hidden" name="promo_code">
