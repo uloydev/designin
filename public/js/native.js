@@ -155,8 +155,8 @@ let ready = $(document).ready(function () {
     $("#modal-single-extras .modal-order-price").text(originalPrice);
 
     $("[data-target='#modal-single-extras']").click(function () {
-        console.log(`original price = ${originalPrice}`, `current price = ${currentPrice}`);
-        console.log(`user saving cash = ${userSavingCash}`);
+        // console.log(`original price = ${originalPrice}`, `current price = ${currentPrice}`);
+        // console.log(`user saving cash = ${userSavingCash}`);
 
         let packageId = $(this).data('package-id');
         let agentId = $(this).data('agent-id');
@@ -208,15 +208,15 @@ let ready = $(document).ready(function () {
         document.querySelector("#total_extras").value = "IDR " + totalExtras.toFixed(2);
         grand_total = Number(originalPrice) + Number(totalExtras) - Number(userSavingCash);
         $("#modal-single-extras #grand-total").text(grand_total);
-        console.log(`grand total [original price ( ${(Number(originalPrice))} ) +
-        extras price ( ${Number(totalExtras)} ) - user saving ( ${Number(userSavingCash)} )] = ${grand_total}`);
+        // console.log(`grand total [original price ( ${(Number(originalPrice))} ) +
+        // extras price ( ${Number(totalExtras)} ) - user saving ( ${Number(userSavingCash)} )] = ${grand_total}`);
     }
     $("#modal-single-extras input[name='extras']").click(function () {
         grandTotal();
     });
 
-    console.log(`grand total [original price ( ${(Number(originalPrice))} ) + extras price ( ${Number(totalExtras)} ) -
-                user saving ( ${Number(userSavingCash)} )] = ${grand_total}`);
+    // console.log(`grand total [original price ( ${(Number(originalPrice))} ) + extras price ( ${Number(totalExtras)} ) -
+    //             user saving ( ${Number(userSavingCash)} )] = ${grand_total}`);
 
     let allPromoCodeList = [];
     let allPromoCode = document.querySelectorAll('#singleServicePage #list-promo option');
@@ -250,6 +250,9 @@ let ready = $(document).ready(function () {
         if ($("#form-extras-order .promo-code-false").length === 0) {
             $("#modal-single-extras").removeClass('show-modal');
             $("#modal-single-order").addClass('show-modal');
+        }
+        if ($("#modal-single-order #data-extras").val().length === 0 || $("#modal-single-order #data-extras").val() === '[]') {
+            $("#modal-single-order #data-extras").val("").removeAttr("value");
         }
     });
 
