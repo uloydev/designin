@@ -107,11 +107,11 @@ The above copyright notice and this permission notice shall be included in all c
                                                     <span class="sidenav-normal"> My Job </span>
                                                 </a>
                                             </li>
-                                            <li class="nav-item">
-                                                <a href="{{ route('agent.bid-history') }}" class="nav-link">
-                                                    <span class="sidenav-normal"> Bid History </span>
-                                                </a>
-                                            </li>
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a href="{{ route('agent.bid-history') }}" class="nav-link">--}}
+{{--                                                    <span class="sidenav-normal"> Bid History </span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
                                         </ul>
                                     </div>
                                 </li>
