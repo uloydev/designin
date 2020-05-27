@@ -19,15 +19,24 @@
                         Price: IDR <var class="modal-order-price" data-original-price=""></var>
                     </p>
 
-                    <p class="mb-3">
-                        Your saving:
-                        <var class="font-style-normal" id="user-token" data-saving="{{ 10000 * Auth::user()->subscribe_token ?? '0' }}">
-                            {{ Auth::user()->subscribe_token ?? '0' }}
-                        </var> token
-                        @if (Auth::user()->subscribe_token > 0)
-                            <span style="font-size: 0.8rem">(1 token = IDR {{ '10.000' }})</span>
-                        @endif
-                    </p>
+                    @auth
+                        <p class="mb-3">
+                            Your saving:
+                            <var class="font-style-normal" id="user-token" data-saving="{{ 10000 * Auth::user()->subscribe_token ?? 0 }}">
+                                {{ Auth::user()->subscribe_token ?? '0' }}
+                            </var> token
+                            @if (Auth::user()->subscribe_token > 0)
+                                <span style="font-size: 0.8rem">(1 token = IDR {{ '10.000' }})</span>
+                            @endif
+                        </p>
+                    @else
+                        <p class="mb-3">
+                            Your saving:
+                            <var class="font-style-normal" id="user-token" data-saving="{{ 10000 * 0 }}">
+                                {{ '0' }}
+                            </var> token
+                        </p>
+                    @endauth
                     <p class="mb-3" id="grand-total-text">Grand total: IDR <output id="grand-total" name="grand_total"></output></p>
                     <input type="hidden" name="modal_order_title">
                     @if (count($service->extras) > 0)
