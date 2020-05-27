@@ -589,7 +589,7 @@ body:not([id*='blog']) .nav__list--logo .nav__link {
     color: #5d5d5d;
     font-weight: bold;
 }
-body:not([id*='blog']) #primaryNav .container > ul > .nav__list {
+body:not([id*='blog']) #primaryNav .container > ul .nav__list {
     color: #555555;
     text-shadow: none;
     font-weight: normal;
