@@ -27,7 +27,9 @@
                             <div class="profile-main__job-detail">
                                 <p class="mb-3">
                                     Project name:&nbsp;
-                                    <span class="profile-main__job-title">{{ $order->package->service->title.'-'.$order->package->title }}</span>
+                                    <span class="profile-main__job-title">
+                                        {{ $order->package->service->title . ' - ' . $order->package->title }}
+                                    </span>
                                 </p>
                                 <p class="mb-3">
                                     Start on:
