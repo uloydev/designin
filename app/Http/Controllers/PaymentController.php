@@ -28,25 +28,27 @@ class PaymentController extends Controller
          * quantity
          * ]
          */
+        // security level very low need to be fixed later
         $user = User::findOrFail($request->user_id);
         $package = Package::findOrFail($id);
         $order = new Order;
         $quantity = intval($request->quantity);
-        $budget = $package->price * $quantity;
-        if (!empty($request->promo_code)) {
-            $promo = Promo::where('code' , $request->promo_code)->get();
-            $budget -= $budget * $promo->discount / 100;
-            $order->promo_id = $promo->id;
-        }
-        if ($request->hasFile('brief_file')) {
-            $order->attachment = $request->file('brief_file')->store('public/files');
-        }
-        if ($request->has('extras')) {
-            $order->extras = $request->extras;
-            foreach(json_decode($order->extras) as $extras_id){
-                $budget += ServiceExtras::findOrFail($extras_id)->price;
-            }
-        }
+        $budget = $request->grand_total;
+        // $budget = $package->price * $quantity;
+        // if (!empty($request->promo_code)) {
+        //     $promo = Promo::where('code' , $request->promo_code)->get();
+        //     $budget -= $budget * $promo->discount / 100;
+        //     $order->promo_id = $promo->id;
+        // }
+        // if ($request->hasFile('brief_file')) {
+        //     $order->attachment = $request->file('brief_file')->store('public/files');
+        // }
+        // if ($request->has('extras')) {
+        //     $order->extras = $request->extras;
+        //     foreach(json_decode($order->extras) as $extras_id){
+        //         $budget += ServiceExtras::findOrFail($extras_id)->price;
+        //     }
+        // }
         $order->agent_id = intval($request->agent_id);
         $order->package_id = $package->id;
         $order->status = 'unpaid';
@@ -54,6 +56,7 @@ class PaymentController extends Controller
         $order->budget = $budget;
         $order->user_id = $user->id;
         $order->quantity = $quantity;
+        $order->extras = $request->extras;
         $order->save();
         // var_dump($order);die;
         // midtrans
@@ -91,6 +94,26 @@ class PaymentController extends Controller
             }
         }
 
+        if ($request->token_usage > 0){
+            $token_data = [
+                'id' => 'token',
+                'quantity' => 1,
+                'name' => 'subscription token',
+                'price' => -($request->token_usage * 10000)
+            ];
+            array_push($item_details, $token_data);
+        }
+
+        if ($request->promo_discount > 0) {
+            $promo_data = [
+                'id' => 'discount',
+                'quantity' => 1,
+                'name' => 'promo discount',
+                'price' => -($request->promo_discount)
+            ];
+            array_push($item_details, $promo_data);
+        }
+
         // Send this options if you use 3Ds in credit card request
         $credit_card_option = [
             'secure' => true,
@@ -103,7 +126,6 @@ class PaymentController extends Controller
             'customer_details' => $customer_details,
             'credit_card' => $credit_card_option,
         ];
-        // var_dump($transaction_data);die;
         try {
             $token = Midtrans::getSnapToken($transaction_data);
             $data = ['token' => $token, 'status'=>'success'];

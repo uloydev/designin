@@ -174,7 +174,7 @@
         let idExtra = $(this).attr('id');
         let extraValue = $("#form-extras-order input#" + idExtra).val();
 
-        if (!extraService.includes(extraValue) === true) {
+        if (!extraService.includes(extraValue) === true && $(this).prop('checked')) {
             extraService.push(extraValue);
         }
         else {
