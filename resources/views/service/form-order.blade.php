@@ -107,7 +107,7 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <label for="message_file" class="single-service__message-file"
                                title="Attach a file">
-                            <input type="file" id="message_file" class="d-none file-custom__input"
+                            <input type="file" id="message_file" class="file-custom__input"
                             data-label="Insert attachment" name="brief_file">
                             <i class='bx bx-cloud-upload'></i>
                             <b class="text-label">Insert attachment</b>

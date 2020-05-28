@@ -297,6 +297,9 @@ body[id^='blog'] .nav--showed .nav__list {
     border: 1px solid #dddddd;
     border-radius: 5px;
 }
+.input-custom--rounding {
+    border-radius: 1rem;
+}
 .checkbox-custom {
     position: relative;
     display: flex;
@@ -387,6 +390,16 @@ body[id^='blog'] .nav--showed .nav__list {
 .btn-danger:hover {
     background-color: #e6483e;
 }
+.btn-blue {
+    color: #fff;
+    background-color: var(--third-color) !important;
+}
+.btn-blue:hover {
+    background-color: #2b7caf !important;
+}
+.btn-blue:active {
+    background-color: #226a97 !important;
+}
 .btn-danger:active {
     background-color: #d43c33;
 }
@@ -423,6 +436,7 @@ body[id^='blog'] .nav--showed .nav__list {
     opacity: 0;
     overflow: hidden;
     height: 0;
+    padding: 0;
     width: 0;
     z-index: -1;
     position: absolute;
@@ -1846,6 +1860,20 @@ input[type=number] {
 #userOrderPage .profile-main-item progress {
     margin-top: 5px;
 }
+#userOrderPage .profile-main__btn-chat {
+    background-color: var(--third-color) !important;
+    color: #fff;
+    padding: 10px 1rem;
+    border-radius: 6px;
+    text-align: center;
+}
+#userOrderPage .profile-main__btn-chat:hover {
+    background-color: #2b7aad !important;
+}
+#userOrderPage .profile-main__btn-chat:active {
+    background-color: #236e9e !important;
+}
+
 .profile-aside {
     background-color: #fff;
     border: 1px solid #c7c7c7;
@@ -1982,13 +2010,10 @@ input[type=number] {
     flex-wrap: wrap;
     flex-grow: 1;
     flex-direction: column;
-    align-content: space-between;
-}
-#userOrderPage .profile-main__order-detail {
-    /*max-height: calc(80px + 4rem);*/
+    /*align-content: space-between;*/
 }
 #userOrderPage .profile-main__order-detail div {
-
+    width: 100%;
 }
 .profile-main__title {
     color: var(--third-color);
@@ -2400,6 +2425,108 @@ body[id*='blog'] .search-service__btn {
     box-shadow: 1px 2px 4px 2px rgba(0, 0, 0, 0.2);
 }
 
+#userChatPage main .container {
+    max-width: none;
+}
+#userChatPage .order-chat {
+    padding: 2rem 0;
+    width: 100%;
+}
+#userChatPage .order-detail {
+    padding: 0 1rem 1rem;
+    border-bottom: 1px solid #dbdbdb;
+    background-color: #fff;
+    display: flex;
+    top: 0;
+    flex-direction: column;
+    align-items: center;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    transition: box-shadow 200ms;
+}
+#userChatPage .order-detail__info {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+#userChatPage .order-detail__back-btn {
+    background-color: var(--third-color) !important;
+    color: #fff;
+}
+#userChatPage .order-detail__back-btn:hover {
+    background-color: #2e84bb !important;
+    color: #fff;
+}
+#userChatPage .order-detail__back-btn:active {
+    background-color: #2675a7 !important;
+}
+#userChatPage .order-detail.scrolled {
+    padding-top: 1rem;
+    position: fixed;
+    box-shadow: 0 2px 6px 3px rgba(74, 74, 74, 0.2);
+}
+#userChatPage .order-detail__img {
+    transition: all 150ms;
+    height: 200px;
+}
+#userChatPage .order-detail__img--hide {
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+}
+#userChatPage .order-chat__avatar {
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
+#userChatPage .order-chat__myself, #userChatPage .order-chat__agent {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+#userChatPage .order-chat__agent {
+    justify-content: flex-start;
+}
+#userChatPage .order-chat__myself {
+    flex-direction: row-reverse;
+}
+#userChatPage .order-chat__box {
+    color: var(--text-color);
+    padding: 10px 1rem;
+    background-color: var(--almost-white);
+    border-radius: 1rem;
+}
+#userChatPage .order-chat__agent .order-chat__box {
+    border-top-left-radius: 0;
+    margin-left: 1rem;
+}
+#userChatPage .order-chat__myself .order-chat__box {
+    border-top-right-radius: 0;
+    margin-right: 1rem;
+}
+#userChatPage .order-chat__send-box {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    padding: 1rem 0.6rem;
+    background-color: var(--almost-white);
+    border-top: 1px solid #cecece;
+    justify-content: space-between;
+}
+#userChatPage .order-chat__send-btn {
+    margin-left: 1rem;
+    border-radius: 1.5rem !important;
+    padding: 0 1.5rem !important;
+    background-color: var(--secondary-color) !important;
+    color: #fff;
+}
+
 footer {
     border-top: 1px solid #c2c2c2;
     padding: 30px 0;
@@ -2627,6 +2754,39 @@ footer .row {
         margin-right: 0;
     }
 
+    #userChatPage .order-chat__wrapper {
+        display: flex;
+    }
+    #userChatPage .order-chat__wrapper:nth-child(even) {
+        justify-content: flex-end;
+    }
+    #userChatPage .order-chat__myself, #userChatPage .order-chat__agent {
+        width: 70%;
+        max-width: 400px;
+        margin-bottom: 0;
+    }
+
+    #userChatPage .order-detail {
+        flex-direction: row;
+    }
+    #userChatPage .order-detail__info {
+        width: 50%;
+        margin-bottom: 1.5rem;
+    }
+    #userChatPage .order-detail.scrolled {
+        height: 100px;
+    }
+    #userChatPage .order-detail.scrolled .order-detail__info {
+        width: 100%;
+        flex-direction: row;
+    }
+    #userChatPage .order-detail__capt {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
     footer {
         padding: 3.75rem 0;
     }
@@ -2727,7 +2887,7 @@ footer .row {
         border-right: 1px solid var(--almost-white);
     }
 
-    body:not(#landingPage):not([id*='blog']):not(#faqPage) main {
+    body:not(#landingPage):not([id*='blog']):not(#faqPage):not(#userChatPage) main {
         padding-top: 4rem;
         padding-bottom: 4rem;
     }
@@ -2880,6 +3040,34 @@ footer .row {
     }
     #myTransactionPage .profile-main__job-detail p * {
         float: right;
+    }
+
+    #userChatPage main {
+        padding: 1rem 0;
+    }
+    #userChatPage .order-detail {
+        width: 30%;
+        align-items: flex-start;
+        flex-direction: column;
+        border-bottom: none;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    #userChatPage .order-chat {
+        width: 70%;
+    }
+    #userChatPage .order-chat__top {
+        height: 60vh;
+        overflow-y: scroll;
+        padding-left: 5rem;
+        border-left: 1px solid #e0e0e0;
+     }
+    #userChatPage .order-chat__send-box {
+        position: static;
+        padding-left: 2rem;
+        border-left: 1px solid #e0e0e0;
+        background-color: #fff;
+        border-top: none;
     }
 
     .footer__socmed-item {

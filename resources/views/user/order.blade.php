@@ -34,7 +34,7 @@
                         <div class="profile-main__order-detail ml-xl-5">
                             <div class="mb-3">
                                 What you order
-                                <span class="profile-main__title">{{ $order->package->title }}</span>
+                                <span class="profile-main__title">{{ $order->package->service->title }}</span>
                             </div>
                             <div class="mb-3">
                                 Start on:
@@ -51,12 +51,23 @@
                                     Progress
                                     <progress max="100" value="{{ $order->progress }}">{{ $order->progress }}</progress>
                                 </div>
-                            @elseif ($order->status == 'finished')
+                            @elseif ($order->status != 'process')
                                 <div class="mb-3">
                                     Status
-                                    <p class="text-success font-bold">{{ $order->status }}</p>
+                                    @if ($order->status == 'complaint' or $order->status == 'canceled')
+                                        <p class="text-danger font-bold">{{ $order->status }}</p>
+                                    @elseif($order->status == 'unpaid')
+                                        <p class="text-warning font-bold">{{ $order->status }}</p>
+                                    @elseif ($order->waiting == 'waiting')
+                                        <p class="text-gray font-bold">{{ $order->status }}</p>
+                                    @else
+                                        <p class="text-success font-bold">{{ $order->status }}</p>
+                                    @endif
                                 </div>
                             @endif
+                            <div class="mb-3">
+                                <a href="{{ route('user.order.show', $order->id) }}" class="btn profile-main__btn-chat">Chat agent</a>
+                            </div>
                         </div>
                     </article>
                     @empty

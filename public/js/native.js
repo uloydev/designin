@@ -290,6 +290,24 @@
         }
     });
 
+    if (window.location.href.indexOf('user/order') > -1) {
+        $("footer").hide();
+        $(window).scroll(function () {
+            if ($(this).width() <= 993) {
+                if ($(document).scrollTop() >= $("nav").outerHeight(true)) {
+                    $("#userChatPage .order-detail").addClass('scrolled');
+                    $("#userChatPage .order-detail__img").addClass('order-detail__img--hide');
+                    $("#userChatPage .order-detail__back-btn").addClass('d-none');
+                }
+                else {
+                    $("#userChatPage .order-detail").removeClass('scrolled');
+                    $("#userChatPage .order-detail__img").removeClass('order-detail__img--hide');
+                    $("#userChatPage .order-detail__back-btn").removeClass('d-none');
+                }
+            }
+        });
+    }
+
     //agent js
     $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection'], " +
         "[data-target='#modal-result']").click(function () {
@@ -573,7 +591,8 @@
 
     $("#agentProfilePage .profile__form-edit .profile__file, .file-custom__input").change(function () {
         let labelText = $(this).data('label');
-        if ($.trim($(this).val()).length !== 0) {
+        let fileValue = $(this).val();
+        if (fileValue.trim().length !== 0) {
             let nameCard =  $(this)[0].files[0].name;
             if ($(this).attr('id') === 'message_file') {
                 $(this).siblings(".file-value").text(nameCard);
