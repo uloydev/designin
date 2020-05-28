@@ -7,22 +7,21 @@
     <script>
         // call this function if not using token payment
         function payment(){
-            let data = $('#modal-single-order form').serialize();
-            console.log(data);
-            data += '&user_id={{Auth::id() ?? ''}}';
-            $.ajax({
-                type: "POST",
-                url: $("#modal-single-order form").attr('action') + '/payment',
-                data: {
+            let ajaxData = {
                     _token:'{{csrf_token()}}',
                     user_id:'{{Auth::id()}}',
                     extras:JSON.stringify(extraService),
                     agent_id: $("input[name='agent_id']").val(),
                     message_agent: $("#modal-single-order textarea[name='message_agent']").val(),
+                    token_usage: token_usage,
                     quantity: $("#modal-single-extras #quantity").val()
-                },
+            };
+            $.ajax({
+                type: "POST",
+                url: $("#modal-single-order form").attr('action') + '/payment',
+                data: ajaxData,
                 beforeSend: function(){
-                    console.log(data);
+                    console.log(ajaxData);
                 },
                 success: function (response) {
                     console.log(response);
@@ -38,6 +37,7 @@
                 },
                 error: function(response){
                     console.log(response);
+                    alert('failed to get payment token');
                     // snap.hide();
                 }
             });
