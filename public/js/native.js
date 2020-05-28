@@ -144,6 +144,7 @@
     });
 
     let userSavingCash = $("#modal-single-extras #user-token").data('saving');
+    let userSavingToken = Number($("#modal-single-extras #user-token").data('token'));
     let tokenWithDraw = $("#modal-single-extras #user-token").data('token-withdraw');
     // let userSavingCash = 2220000;
     let originalPrice = $("#singleServicePage .order-price").text().replace(/IDR /, '');
@@ -212,7 +213,10 @@
         grand_total = Number(originalPrice) + Number(totalExtras);
         if (Number(userSavingCash)>0) {
             token_usage = Math.ceil(grand_total / tokenWithDraw);
-            if (token_usage <= Number(userSavingCash) / tokenWithDraw) {
+            if (token_usage > userSavingToken) {
+                token_usage = userSavingToken;
+            }
+            if (Math.ceil(grand_total / tokenWithDraw) <= userSavingToken) {
                 grand_total = 0;
             }else{
                 grand_total -= Number(userSavingCash);
