@@ -12,4 +12,9 @@ class ServiceExtras extends Model
     {
         return $this->belongsTo('App\Service');
     }
+
+    public function template()
+    {
+        return $this->belongsTo('App\ServiceExtrasTemplate', 'template_id');
+    }
 }

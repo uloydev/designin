@@ -147,17 +147,21 @@
     let userSavingToken = Number($("#modal-single-extras #user-token").data('token'));
     let tokenWithDraw = $("#modal-single-extras #user-token").data('token-withdraw');
     // let userSavingCash = 2220000;
-    let originalPrice = $("#singleServicePage .order-price").text().replace(/IDR /, '');
+    let originalPrice = $(".order-price").text().replace(/IDR /g, '');
     let currentPrice = originalPrice;
     let totalExtras = 0;
     let grand_total;
     let token_usage;
     let promo_discount = 0;
+    let orderQuantity = Number($("#modal-single-extras input[name='quantity']").val());
     if (window.location.href.indexOf('service/show') > -1) {
         grandTotal();
     }
     $("#modal-single-extras .modal-order-price").text(originalPrice);
-
+    $("#modal-single-extras input[name='quantity']").change(function (){
+        orderQuantity = Number($("#modal-single-extras input[name='quantity']").val());
+        grandTotal();
+    });
     $("[data-target='#modal-single-extras']").click(function () {
         let packageId = $(this).data('package-id');
         let agentId = $(this).data('agent-id');
@@ -204,13 +208,13 @@
         if (document.querySelector('#total_extras')) { //if element #total_extras exist
             document.querySelector("#total_extras").value = "IDR " + totalExtras.toFixed(2);
         }
+        let price = Number($("#singleServicePage .order-price").text().replace(/IDR /, '')) * orderQuantity;
         if (promo_discount !== 0) {
-            let price = Number($("#singleServicePage .order-price").text().replace(/IDR /, ''));
-            originalPrice =  Math.ceil(price - price * promo_discount / 100);
+            newPrice =  Math.ceil(price - price * promo_discount / 100);
         }else{
-            originalPrice = $("#singleServicePage .order-price").text().replace(/IDR /, '');
+            newPrice = price;
         }
-        grand_total = Number(originalPrice) + Number(totalExtras);
+        grand_total = Number(newPrice) + Number(totalExtras);
         if (Number(userSavingCash)>0) {
             token_usage = Math.ceil(grand_total / tokenWithDraw);
             if (token_usage > userSavingToken) {
@@ -284,7 +288,7 @@
 
     $("#modal-single-order form").submit(function (e) {
         e.preventDefault();
-        if ($("#modal-single-order input[name='payment']").val().length !== 0) {
+        if (Number($("#modal-single-order input[name='payment']").val()) !== 0) {
             console.log($("#modal-single-order textarea[name='message_agent']").val());
             console.log("value = " + $("#modal-single-order input[name='payment']").val());
             payment();

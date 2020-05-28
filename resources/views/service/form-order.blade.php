@@ -43,9 +43,24 @@
                         <p>Total extras: <output id="total_extras" name="total_extras">IDR 0</output></p>
                         <div id="form-extras-order">
                             <p class="text-gray mb-3">Add Extras: </p>
+                            {{-- extras from admin template --}}
+                            @foreach ($service->extras_template as $extra)
+                                <div class="checkbox-custom flex-column align-items-start align-items-lg-center flex-lg-row">
+                                    <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input"
+                                           data-price-cash="{{ $extra->price }}" data-price-token="{{ $extra->price_token }}"
+                                           value="{{$extra->id}}" name="extras">
+                                    <label class="checkbox-custom__label" for="extras-{{$extra->id}}">
+                                        <span class="checkbox-custom__icon"><i class='bx bx-check' ></i></span>
+                                        {{ $extra->name }}
+                                    </label>
+                                    <span class="ml-lg-2 text-success mt-2 mt-lg-0">
+                                        Price (IDR <var class="form-extras-order__money extra-price-cash">{{ $extra->price }}</var>)
+                                    </span>
+                                </div>
+                            @endforeach
+                            {{-- extras from agent --}}
                             @foreach ($service->extras as $extra)
                                 <div class="checkbox-custom flex-column align-items-start align-items-lg-center flex-lg-row">
-                                    {{-- need to fix (extras should be only passed if they checked ) --}}
                                     <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input"
                                            data-price-cash="{{ $extra->price }}" data-price-token="{{ $extra->price_token }}"
                                            value="{{$extra->id}}" name="extras">

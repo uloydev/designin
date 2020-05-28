@@ -24,6 +24,7 @@ use App\Order;
 use App\Promo;
 use App\Mail\NewOrderNotification;
 use App\Mail\ContactAgentNotification;
+use App\ServiceExtras;
 
 class HomeController extends Controller
 {
@@ -115,12 +116,6 @@ class HomeController extends Controller
 
     public function makeOrder(Request $request, $id)
     {
-        dd($request);
-        $this->middleware('auth');
-        $user = Auth::user();
-        $package = Package::findOrFail($id);
-        $order = new Order;
-        $budget = $package->price;
         // if ($request->payment == 'token') {
         //     if ($user->is_subscribe) {
         //         $subscription = $user->subscription;
@@ -137,26 +132,41 @@ class HomeController extends Controller
         //         return redirect()->back()->with('error', 'you have no subscription');
         //     }
         // }
-        if (!empty($request->promo_code)) {
-            $promo = Promo::where('code' , $request->promo_code)->get();
-            $budget -= $budget * $promo->discount / 100;
-            $order->promo_id = $promo->id;
+        // dd($request);
+        $user = Auth::user();
+        $package = Package::findOrFail($id);
+        $order = new Order;
+        $quantity = intval($request->quantity);
+        $budget = $request->payment;
+        $order->agent_id = intval($request->agent_id);
+        $order->package_id = $package->id;
+        $order->status = 'process';
+        $order->started_at = Carbon::now();
+        $order->request = $request->message_agent;
+        $order->budget = $budget;
+        $order->user_id = $user->id;
+        $order->quantity = $quantity;
+        foreach(json_decode($order->extras) as $extras_id) {
+            $extras = ServiceExtras::findOrFail($extras_id);
+            if ($extras->is_template) {
+                if ($extras->template->effect == 'duration-1') {
+                    $order->deadline = Carbon::now()->addDays($package->duration - 1);
+                }
+            }
         }
+        // if (!empty($request->promo_code)) {
+        //     $promo = Promo::where('code' , $request->promo_code)->get();
+        //     $budget -= $budget * $promo->discount / 100;
+        //     $order->promo_id = $promo->id;
+        // }
         if ($request->hasFile('brief_file')) {
             $order->attachment = $request->file('brief_file')->store('public/files');
         }
         if ($request->has('extras')) {
-            $order->extras = json_encode($request->extras);
+            $order->extras = $request->extras;
         }
-        $order->agent_id = intval($request->agent_id);
-        $order->package_id = $package->id;
-        $order->status = 'unpaid';
-        $order->request = $request->message_agent;
-        $order->budget = $budget;
-        $order->user_id = $user->id;
-        $order->quantity = $request->quantity;
         $order->save();
-        // Mail::to(User::find($request->agent_id)->email)->send(new NewOrderNotification($order));
+        Mail::to($order->agent->email)->send(new NewOrderNotification($order));
         return redirect()->route('user.order.index')->with(
             'success', 'Order placed Successfully'
         );
