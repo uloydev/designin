@@ -14,7 +14,9 @@
                     agent_id: $("input[name='agent_id']").val(),
                     message_agent: $("#modal-single-order textarea[name='message_agent']").val(),
                     token_usage: token_usage,
-                    quantity: $("#modal-single-extras #quantity").val()
+                    quantity: $("#modal-single-extras #quantity").val(),
+                    grand_total: grand_total,
+                    promo_discount: Number($("#singleServicePage .order-price").text().replace(/IDR /, '')) * promo_discount /100,
             };
             $.ajax({
                 type: "POST",
