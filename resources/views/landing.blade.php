@@ -8,7 +8,7 @@
     <title>Desainin | No-fuss graphic design service solutions</title>
   </head>
   <body id="landingPage">
-    <header>
+  <header>
       @include('partials.nav')
       <div class="container">
           <div class="landing__slider">
@@ -31,101 +31,101 @@
               </div>
           </div>
       </div>
-    </header>
-    <main>
+  </header>
+  <main>
       <section id="services">
-        <div class="container">
-          <h1 class="section__heading">Popular service</h1>
-            <a href="{{ route('services') }}" class="service__all-link">
-                See all service <i class='bx bxs-right-arrow-alt'></i>
-            </a>
-          <div class="row">
-            @foreach ($topService as $service)
-                <div class="col-6 col-lg-3">
-                    <div class="service__item">
-                        <img src="{{ Storage::url($service->image) }}" class="services__icon" alt="Our service">
-                        <p class="services__name">{{ $service->title }}</p>
-                        <a href="{{ route('service.show', $service->id) }}" class="services__btn"></a>
-                        <div class="service__overlay"></div>
-                    </div>
-                </div>
-            @endforeach
-          </div>
-        </div>
-      </section>
-        <section id="interest">
-            <div class="container">
-                <h1 class="section__heading text-center">Our Promo</h1>
-                <div class="row justify-content-between">
-                    <div class="col-12">
-                        <div class="interest-slider">
-                            @foreach($promos as $promo)
-                                <div class="interest-slider__item">
-                                    <p class="interest-slider__title">{{ $promo->title }}</p>
-                                    <img src="{{ Storage::url($promo->cover) }}" height="350" alt="Cover">
-                                    <a href="{{ route('blog.show', $promo->id) }}" class="interest-slider__link">
-                                        src only
-                                    </a>
-                                    <div class="interest-slider__overlay"></div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-      <section id="reasons">
-        <div class="container">
-          <h1 class="section__heading">Why you should trust <strong>Desainin</strong></h1>
-          <div class="row">
-              <div class="col-12 col-md-7 col-lg-6">
-                  <ul class="reason-list">
-                      <li class="reason-list__item">
-                          <p class="reason-list__item-title">
-                              <i class='bx bx-check-circle reason-list__item-icon'></i>
-                              Reason 1
-                          </p>
-                          <p class="reason-list__item-desc">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
-                              voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
-                          </p>
-                      </li>
-                      <li class="reason-list__item">
-                          <p class="reason-list__item-title">
-                              <i class='bx bx-check-circle reason-list__item-icon'></i>
-                              Reason 2
-                          </p>
-                          <p class="reason-list__item-desc">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
-                              voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
-                          </p>
-                      </li>
-                      <li class="reason-list__item">
-                          <p class="reason-list__item-title">
-                              <i class='bx bx-check-circle reason-list__item-icon'></i> Reason 3
-                          </p>
-                          <p class="reason-list__item-desc">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
-                              voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
-                          </p>
-                      </li>
-                  </ul>
+          <div class="container">
+              <h1 class="section__heading">Popular service</h1>
+              <a href="{{ route('services') }}" class="service__all-link">
+                  See all service <i class='bx bxs-right-arrow-alt'></i>
+              </a>
+              <div class="row">
+                  @foreach ($topService as $service)
+                      <div class="col-6 col-lg-3">
+                          <div class="service__item">
+                              <img src="{{ Storage::url($service->image) }}" class="services__icon" alt="Our service">
+                              <p class="services__name">{{ $service->title }}</p>
+                              <a href="{{ route('service.show', $service->id) }}" class="services__btn"></a>
+                              <div class="service__overlay"></div>
+                          </div>
+                      </div>
+                  @endforeach
               </div>
-              <div class="col-12 col-md-5 col-lg-6 reason-trust">
-                  <a href="javascript:void(0);" class="reason-trust__btn"><i class='bx bx-play'></i></a>
-                  <img src="{{ asset('img/reason-trust.png') }}" width="100%" alt="How desainin work">
-                  <div class="reason-trust__overlay">
-                      <div class="reason-trust__modal">
-                          <a href="" class="reason-trust__close-btn"><i class='bx bx-x' ></i></a>
-                          <iframe class="reason-trust__video embed-video" frameborder="0"
-                                  src="https://www.youtube.com/embed/xpQLFH5OCEY??enablejsapi=1&start=0"
-                                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                  allowfullscreen></iframe>
+          </div>
+      </section>
+      <section id="interest">
+          <div class="container">
+              <h1 class="section__heading text-center">Our Promo</h1>
+              <div class="row justify-content-between">
+                  <div class="col-12">
+                      <div class="interest-slider">
+                          @foreach($promos as $promo)
+                              <div class="interest-slider__item">
+                                  <p class="interest-slider__title">{{ $promo->title }}</p>
+                                  <img src="{{ Storage::url($promo->cover) }}" height="350" alt="Cover">
+                                  <a href="{{ route('blog.show', $promo->id) }}" class="interest-slider__link">
+                                      src only
+                                  </a>
+                                  <div class="interest-slider__overlay"></div>
+                              </div>
+                          @endforeach
                       </div>
                   </div>
               </div>
           </div>
-        </div>
+      </section>
+      <section id="reasons">
+          <div class="container">
+              <h1 class="section__heading">Why you should trust <strong>Desainin</strong></h1>
+              <div class="row">
+                  <div class="col-12 col-md-7 col-lg-6">
+                      <ul class="reason-list">
+                          <li class="reason-list__item">
+                              <p class="reason-list__item-title">
+                                  <i class='bx bx-check-circle reason-list__item-icon'></i>
+                                  Reason 1
+                              </p>
+                              <p class="reason-list__item-desc">
+                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
+                                  voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
+                              </p>
+                          </li>
+                          <li class="reason-list__item">
+                              <p class="reason-list__item-title">
+                                  <i class='bx bx-check-circle reason-list__item-icon'></i>
+                                  Reason 2
+                              </p>
+                              <p class="reason-list__item-desc">
+                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
+                                  voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
+                              </p>
+                          </li>
+                          <li class="reason-list__item">
+                              <p class="reason-list__item-title">
+                                  <i class='bx bx-check-circle reason-list__item-icon'></i> Reason 3
+                              </p>
+                              <p class="reason-list__item-desc">
+                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
+                                  voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
+                              </p>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="col-12 col-md-5 col-lg-6 reason-trust">
+                      <a href="javascript:void(0);" class="reason-trust__btn"><i class='bx bx-play'></i></a>
+                      <img src="{{ asset('img/reason-trust.png') }}" width="100%" alt="How desainin work">
+                      <div class="reason-trust__overlay">
+                          <div class="reason-trust__modal">
+                              <a href="" class="reason-trust__close-btn"><i class='bx bx-x' ></i></a>
+                              <iframe class="reason-trust__video embed-video" frameborder="0"
+                                      src="https://www.youtube.com/embed/xpQLFH5OCEY??enablejsapi=1&start=0"
+                                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                      allowfullscreen></iframe>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </section>
       <section id="how-we-work">
           <div class="container">
@@ -145,80 +145,74 @@
           </div>
       </section>
       <section id="subscription">
-        <div class="container">
-          <h1 class="section__heading">Subscribe for more <br class="d-md-none"> benefit to you</h1>
-          <div class="subscription__slider row">
-            @foreach ($subscriptions as $sub)
-            <div class="px-3">
-              <figure class="subscription__item">
-                <img src="{{ Storage::url($sub->img) }}" class="subscription__img" alt="{{$sub->title}}">
-                <figcaption class="subscription__caption">
-                  <p class="subscription__name">{{$sub->title}}</p>
-                  <p class="subscription__price">
-                      Price: <var class="subscription__currency">Rp. {{$sub->price}}</var>
-                  </p>
-                  <p class="subscription__duration">Duration: {{$sub->duration}} Day</p>
-                </figcaption>
-                <div class="subscription__detail">
-                  <p class="subscription__name">{{$sub->title}}</p>
-                  <p class="subscription__desc">
-                    {{$sub->description}}
-                  </p>
-                  <a href="{{ route('user.subscription.show', $sub->id) }}" class="subscription__btn">
-                      Subscribe Now
-                  </a>
-                </div>
-              </figure>
-            </div>
-            @endforeach
-          </div>
-        </div>
-      </section>
-      <section id="testimonies">
-        <div class="container">
-            <h1 class="section__heading text-center">Testimony</h1>
-            @if (count($testimonies) > 0)
-                <div class="row testimonies-slider">
-                    @foreach ($testimonies as $testimony)
-                        <div class="px-2">
-                            <div class="card testimony-card">
-                                <div class="card__header testimony-card__header">
-                                    <img src="{{ Storage::url($testimony->user->profile->avatar) }}"
-                                    alt="desainin testimony" class="card__img card__img--circle testimony__img">
-                                    <p class="testimony__name">{{ $testimony->user->name }}</p>
-                                    <p class="card__text">{{ $testimony->created_at->format('d M Y') }}</p>
-                                </div>
-                                <div class="card__body testimony-card__detail" style="text-align: center">
-                                    {{ $testimony->content }}
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="row">
-                    <div class="col-12" id="no-testimony">No testimony</div>
-                </div>
-            @endif
-        </div>
-      </section>
-      <section id="client">
-        <div class="container">
-          <h1 class="section__heading text-center">Our client</h1>
-          <div class="row">
-              @forelse ($clients as $client)
-                  <div class="px-2">
-                      <div class="client__item">
-                          <img src="{{ Storage::url($client->logo) }}" class="client__img" alt="client logo">
+          <div class="container">
+              <h1 class="section__heading">Subscribe for more <br class="d-md-none"> benefit to you</h1>
+              <div class="subscription__slider">
+                  @foreach ($subscriptions as $sub)
+                      <div class="px-3">
+                          <figure class="subscription__item">
+                              <img src="{{ Storage::url($sub->img) }}" class="subscription__img" alt="{{$sub->title}}">
+                              <figcaption class="subscription__caption">
+                                  <p class="subscription__name">{{$sub->title}}</p>
+                                  <p class="subscription__price">
+                                      Price: <var class="subscription__currency">Rp. {{$sub->price}}</var>
+                                  </p>
+                                  <p class="subscription__duration">Duration: {{ $sub->duration }} Day</p>
+                              </figcaption>
+                              <div class="subscription__detail">
+                                  <p class="subscription__name">{{ $sub->title }}</p>
+                                  <p class="subscription__desc">
+                                      {!! Str::words($sub->desc, 30) !!}
+                                  </p>
+                                  <a href="{{ route('user.subscription.show', $sub->id) }}" class="subscription__btn">
+                                      Subscribe Now
+                                  </a>
+                              </div>
+                          </figure>
                       </div>
-                  </div>
-              @empty
-                  <div class="client__item">
-                      No client found
-                  </div>
-              @endforelse
+                  @endforeach
+              </div>
           </div>
-        </div>
+      </section>
+      @if (count($testimonies) > 0)
+          <section id="testimonies">
+              <div class="container">
+                  <h1 class="section__heading text-center">Testimony</h1>
+                  <div class="testimonies-slider">
+                      @foreach ($testimonies as $testimony)
+                          <div class="px-2">
+                              <div class="card testimony-card">
+                                  <div class="card__header testimony-card__header">
+                                      <img src="{{ Storage::url($testimony->user->profile->avatar) }}"
+                                           alt="desainin testimony" class="card__img card__img--circle testimony__img">
+                                      <p class="testimony__name">{{ $testimony->user->name }}</p>
+                                      <p class="card__text">{{ $testimony->created_at->format('d M Y') }}</p>
+                                  </div>
+                                  <div class="card__body testimony-card__detail" style="text-align: center">
+                                      {{ $testimony->content }}
+                                  </div>
+                              </div>
+                          </div>
+                      @endforeach
+                  </div>
+              </div>
+          </section>
+      @endif
+      <section id="client">
+          <div class="container">
+              <h1 class="section__heading text-center">Our client</h1>
+              <div class="row">
+                  @forelse ($clients as $client)
+                      <div class="px-2">
+                          <div class="client__item">
+                              <img src="{{ Storage::url($client->logo) }}" class="client__img" alt="client logo">
+                          </div>
+                      </div>
+                  @empty
+                      <div class="client__item">No client found</div>
+                  @endforelse
+              </div>
+          </div>
       </section>
     </main>
     @include('partials.footer')
@@ -231,7 +225,8 @@
             </div>
             <div class="modal__body">
                 <form action="{{ route('service.search') }}" class="search-service" method="get">
-                    <input type="search" class="search-service__input" name="search_agent_job"
+                    <label for="search-landing" class="d-none">Search design</label>
+                    <input type="search" id="search-landing" class="search-service__input" name="search_agent_job"
                     placeholder="Find design and click enter..." autocomplete="off" required>
                     <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
                 </form>
