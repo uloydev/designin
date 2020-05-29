@@ -1155,7 +1155,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #servicesPage .service-header__img {
     max-width: 100%;
-    height: 300px;
+    max-height: 300px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -2739,7 +2739,7 @@ footer .row {
     }
 
     #servicesPage .service-header__img {
-        height: 400px;
+        max-height: 400px;
     }
     #servicesPage .service-header__heading {
         font-size: 3rem;
