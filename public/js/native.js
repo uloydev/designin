@@ -2,6 +2,7 @@
     //user js
     const navToggle = document.querySelector('.nav__toggle');
     const primaryNav = document.querySelector('#primaryNav');
+    const domainApp = window.location.origin;
     $(".nav__toggle").click(function () {
         if ($(".overlay--nav-showed").hasClass('overlay--active')) {
             $(".overlay--nav-showed").removeClass('overlay--active')
@@ -96,29 +97,31 @@
     let serviceId = $("#serviceEditPage #service-edit-form input[name='service_id']").val();
     if (window.location.href.pathname === '/agent/service/' + serviceId + '/edit') {
         $("#serviceEditPage #service-edit-form")
-            .attr('action', window.location.origin + '/agent/service/' + serviceId);
+            .attr('action', domainApp + '/agent/service/' + serviceId);
     }
     else if (window.location.href.pathname === '/admin/manage/service/' + serviceId + '/edit') {
         $("#serviceEditPage #service-edit-form")
-            .attr('action', window.location.origin + '/admin/manage/service/' + serviceId);
+            .attr('action', domainApp + '/admin/manage/service/' + serviceId);
     }
 
     if (window.location.pathname === '/agent/service') {
-        $("#servicePage #form-add-service").attr('action', window.location.origin + '/agent/service');
+        $("#servicePage #form-add-service").attr('action', domainApp + '/agent/service');
     }
     else if (window.location.pathname === '/admin/manage/service') {
-        $("#servicePage #form-add-service").attr('action', window.location.origin + '/admin/manage/service');
+        $("#servicePage #form-add-service").attr('action', domainApp + '/admin/manage/service');
     }
 
     if ($(window).width() >= 993) {
         $(".profile-main__orderBy").removeClass('wide');
     }
     else {
-        let jobTitle = $("#manageJobPage .job-title");
-        if (jobTitle.text().length > 20) {
-            let trimmedJobTitle = jobTitle.text().substring(0, 20);
-            jobTitle.text(trimmedJobTitle + '...');
-        }
+        let jobTitles = document.querySelectorAll("#manageJobPage .job-title");
+        jobTitles.forEach(function (jobTitle) {
+            if (jobTitle.textContent.length > 20) {
+                let trimmedJobTitle = jobTitle.textContent.substring(0, 20);
+                jobTitle.text = trimmedJobTitle + '...';
+            }
+        });
     }
 
     const transactionStatus = document.querySelectorAll('#myTransactionPage .profile-main-item__status');
@@ -143,17 +146,16 @@
         }
     });
 
-    let userSavingCash = $("#modal-single-extras #user-token").data('saving');
-    let userSavingToken = Number($("#modal-single-extras #user-token").data('token'));
-    let tokenWithDraw = $("#modal-single-extras #user-token").data('token-withdraw');
-    // let userSavingCash = 2220000;
+    let userSavingCash = $('#modal-single-extras #user-token').data('saving');
+    let userSavingToken = Number($('#modal-single-extras #user-token').data('token'));
+    let tokenWithDraw = $("#modal-single-extras #user-token").data('token-conversion');
+
     let originalPrice = $(".order-price").text().replace(/IDR /g, '');
-    let currentPrice = originalPrice;
     let totalExtras = 0;
     let grand_total;
     let token_usage;
     let promo_discount = 0;
-    let orderQuantity = Number($("#modal-single-extras input[name='quantity']").val());
+    let orderQuantity = Number($("#modal-single-extras #quantity").val());
     if (window.location.href.indexOf('service/show') > -1) {
         grandTotal();
     }
@@ -170,7 +172,7 @@
         $("#modal-single-extras .modal-order-title").text(orderTitle);
         $("#modal-single-extras input[name='modal_order_title']").val(orderTitle);
         $("#modal-single-order input[name='agent_id']").val(agentId);
-        $("#modal-single-order form").attr('action', window.location.origin + '/order/package/' + packageId);
+        $("#modal-single-order form").attr('action', domainApp + '/order/package/' + packageId);
     });
 
     let extraService = [];
@@ -198,8 +200,8 @@
     $("#modal-single-extras #grand-total").text(grand_total);
 
     function grandTotal() {
+        let newPrice, input = document.getElementsByName("extras");
         totalExtras = 0;
-        let input = document.getElementsByName("extras");
         for (let i = 0; i < input.length; i++) {
             if (input[i].checked) {
                 totalExtras += Number(input[i].dataset.priceCash);
@@ -211,7 +213,8 @@
         let price = Number($("#singleServicePage .order-price").text().replace(/IDR /, '')) * orderQuantity;
         if (promo_discount !== 0) {
             newPrice =  Math.ceil(price - price * promo_discount / 100);
-        }else{
+        }
+        else {
             newPrice = price;
         }
         grand_total = Number(newPrice) + Number(totalExtras);
@@ -300,7 +303,7 @@
 
     if (window.location.href.indexOf('/chat') > -1) {
         $("footer").remove();
-        // $("#userChatPage .order-chat__send-box").attr('action', window.location.origin + '/user/');
+        // $("#userChatPage .order-chat__send-box").attr('action', domainApp + '/user/');
         $(window).scroll(function () {
             if ($(this).width() <= 993) {
                 if ($(document).scrollTop() >= $("nav").outerHeight(true)) {
@@ -324,7 +327,7 @@
         let jobId = $(this).data('id');
         let customerEmail = $(this).parents(".accordion__item").find(".customer-email").text();
         let jobProgress = $(this).data('progress');
-        const routingListRequest = window.location.origin + '/agent/list-request';
+        const routingListRequest = domainApp + '/agent/list-request';
 
         $("button[form='form-approval-job']").click(function (e) {
             e.preventDefault();
@@ -411,13 +414,13 @@
         let historyTitle = $.trim($(this).prev().text());
 
         $("#delete-history-job form")
-            .attr('action', window.location.origin + '/agent/list-request/delete/' + historyId);
+            .attr('action', domainApp + '/agent/list-request/delete/' + historyId);
         $("#delete-history-job .modal-job-history-title").text(historyTitle);
     });
 
     $("[data-target='#modal-revision']").click(function () {
         let revisionId = $(this).data('id');
-        const routingListRequest = window.location.origin + '/agent/list-request';
+        const routingListRequest = domainApp + '/agent/list-request';
 
         $("#modal-revision form").attr('action', routingListRequest + '/send-revision/' + revisionId);
     });
@@ -425,8 +428,7 @@
     //admin js
     $("[data-target='#updateSlider'], [data-target='#deleteSlider']").click(function () {
         let sliderId = $(this).data('id');
-        $("#manageMainSliderPage .modal form")
-            .attr('action', window.location.origin + '/manage/main-slider/' + sliderId);
+        $("#adminSettingPage form").attr('action', domainApp + '/manage/main-slider/' + sliderId);
     });
 
     const btnArticles = document.querySelectorAll('.btn[data-target="#delete-article');
@@ -439,7 +441,7 @@
                 modalArticleName.textContent = articleTitle;
             });
             const formDeleteArticle = document.querySelector('#delete-article form');
-            formDeleteArticle.action = window.location.origin + '/admin/manage/blog/' + articleId;
+            formDeleteArticle.action = domainApp + '/admin/manage/blog/' + articleId;
         });
     });
 
@@ -453,7 +455,7 @@
                 modalCategoryName.textContent = nameCategory;
             });
             const formDeleteCategory = document.querySelector('#delete-category-article form');
-            formDeleteCategory.action =  window.location.origin + '/admin/manage/blog-category/' + idCategory;
+            formDeleteCategory.action =  domainApp + '/admin/manage/blog-category/' + idCategory;
         });
     });
 
@@ -464,7 +466,7 @@
         $('.modal-category-name').text(nameCategory);
         $("input[name='edit_category']").val(nameCategory);
         $('#edit-category-article form')
-            .attr('action', window.location.origin + '/admin/manage/blog-category/' + categoryId);
+            .attr('action', domainApp + '/admin/manage/blog-category/' + categoryId);
     });
 
     const createArticleImg = document.querySelector('#blogCreatePage input[type="file"]')
@@ -502,17 +504,17 @@
 
         $("#servicePage .modal-service-title").text(serviceTitle);
         if ($(this).attr('id') === 'from-agent') {
-            $("#modal-delete-service form").attr("action", window.location.origin + '/agent/service/' + serviceId);
+            $("#modal-delete-service form").attr("action", domainApp + '/agent/service/' + serviceId);
         }
         else {
             $("#modal-delete-service form")
-                .attr("action", window.location.origin + '/admin/manage/service/' + serviceId);
+                .attr("action", domainApp + '/admin/manage/service/' + serviceId);
         }
 
         if ($(this).attr('id') === 'btn-add-extra') {
             $("#modal-manipulate-extra .modal-manipulate-title").text("Add new extra");
             $("#form-manipulate-extra input, #form-manipulate-extra textarea").val("");
-            $("#form-manipulate-extra").attr('action', window.location.origin + '/admin/manage/service-extras');
+            $("#form-manipulate-extra").attr('action', domainApp + '/admin/manage/service-extras');
         }
         else if ($(this).attr('id') === 'btn-edit-extra') {
             let extraName = $(this).siblings(".extra-item__name").text().trim();
@@ -525,11 +527,11 @@
             $("#modal-manipulate-extra input[name='token_extra']").val(extraToken);
             $("#modal-manipulate-extra textarea[name='benefit_extra']").val(extraDesc);
             $("#modal-manipulate-extra .modal-manipulate-title").text("Edit extra");
-            $("#form-manipulate-extra").attr('action', window.location.origin + '/admin/manage/service-extras/' + serviceId);
+            $("#form-manipulate-extra").attr('action', domainApp + '/admin/manage/service-extras/' + serviceId);
         }
 
         if ($(this).attr('data-target') === '#modal-delete-extra') {
-            $("#form-delete-extra").attr('action', window.location.origin + '/admin/manage/service-extras/' + serviceId);
+            $("#form-delete-extra").attr('action', domainApp + '/admin/manage/service-extras/' + serviceId);
         }
     });
 
@@ -541,13 +543,13 @@
         if ($(this).attr('id') === 'edit-category') {
             $("#create-edit-category .modal-title").text('Edit category');
             $("#create-edit-category form")
-                .attr('action', window.location.origin + '/admin/manage/blog-category/' + categoryId);
+                .attr('action', domainApp + '/admin/manage/blog-category/' + categoryId);
             $("#create-edit-category input[name='image_url']").prop('required', false);
             $("#create-edit-category label[for='imgCategory']").text('Change icon');
         }
         else {
             $("#create-edit-category .modal-title").text('Add new category');
-            $("#create-edit-category form").attr('action', window.location.origin + '/admin/manage/blog-category');
+            $("#create-edit-category form").attr('action', domainApp + '/admin/manage/blog-category');
             $("#create-edit-category form input[name='image_url']").prop('required', true);
             $("#create-edit-category label[for='imgCategory']").text('Pick icon');
         }
@@ -558,7 +560,7 @@
 
         $("#serviceCategoryPage .service-category-title").text(categoryName);
         $("#serviceCategoryPage #delete-category form")
-            .attr('action', window.location.origin + '/admin/manage/blog-category/' + categoryId);
+            .attr('action', domainApp + '/admin/manage/blog-category/' + categoryId);
     });
 
     $("#manageAgentPage .btn[data-target='#modal-remove-agent'], " +
@@ -567,7 +569,7 @@
             $("button[form='form-edit-agent']").text('Add new agent');
             $("#manageAgentPage #modal-edit-agent form").find("input[name='_method']").prop('disabled', true);
             $("#manageAgentPage #modal-edit-agent form")
-                .attr('action', window.location.origin + '/admin/manage/agent/');
+                .attr('action', domainApp + '/admin/manage/agent/');
         }
         else {
             let agentId = Number($(this).data('id')),
@@ -590,7 +592,7 @@
             $("#manageAgentPage #form-edit-agent textarea[name='agent_address']").val(agentAddress);
             $("#manageAgentPage .agent-name").text(agentName);
             $("#manageAgentPage .modal[id*='agent'] form")
-                .attr('action', window.location.origin + '/admin/manage/agent/' + agentId);
+                .attr('action', domainApp + '/admin/manage/agent/' + agentId);
         }
     });
 
@@ -679,7 +681,7 @@
         let promoName = $(this).parents('tr').find('.promo-name').text();
 
         $("#deletePromo .modal-promo-title").text(promoName);
-        $("#deletePromo form").attr('action', window.location.origin + '/admin/manage/promo/' + promoId);
+        $("#deletePromo form").attr('action', domainApp + '/admin/manage/promo/' + promoId);
     });
     $(".dropdown-item[data-target='#editPromo']").click(function () {
         let promoId = Number($(this).data('id'));
@@ -697,7 +699,7 @@
         $("#editPromo form input[name='promo_code']").val(promoCode);
         $("#editPromo form input[name='promo_discount']").val(promoDisc);
 
-        $("#editPromo form").attr('action', window.location.origin + '/admin/manage/promo/' + promoId);
+        $("#editPromo form").attr('action', domainApp + '/admin/manage/promo/' + promoId);
     });
 
     $("[data-target='#editSubscription'], [data-target='#deleteSubscription']")
@@ -712,7 +714,7 @@
             $("#editSubscription .modal-subscription-title, #deleteSubscription .modal-subscription-title")
                 .text(subscriptionName);
             $("#editSubscription form, #deleteSubscription form")
-                .attr('action', window.location.origin + '/admin/manage/subscription/' + subscriptionId);
+                .attr('action', domainApp + '/admin/manage/subscription/' + subscriptionId);
             $("#editSubscription input[name='title']").val(subscriptionName);
             $("#editSubscription textarea[name='desc']").val(subscriptionDesc);
             $("#editSubscription input[name='token']").val(subscriptionToken);
@@ -722,6 +724,7 @@
         });
 
     //plugin & general
+
     if ($(".progress-job").length) {
         $(".progress-job").slider({
             max: 100,

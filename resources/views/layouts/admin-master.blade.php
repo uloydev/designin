@@ -76,12 +76,6 @@ The above copyright notice and this permission notice shall be included in all c
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('manage.main-slider.index') }}">
-                                        <i class="fab fa-slideshare text-info"></i>
-                                        <span class="nav-link-text">Main slider</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="{{ route('manage.contact-us.index') }}">
                                         <i class="fas fa-envelope text-gray"></i>
                                         <span class="nav-link-text">Message From Customer</span>
@@ -107,11 +101,13 @@ The above copyright notice and this permission notice shall be included in all c
                                                     <span class="sidenav-normal"> My Job </span>
                                                 </a>
                                             </li>
-{{--                                            <li class="nav-item">--}}
-{{--                                                <a href="{{ route('agent.bid-history') }}" class="nav-link">--}}
-{{--                                                    <span class="sidenav-normal"> Bid History </span>--}}
-{{--                                                </a>--}}
-{{--                                            </li>--}}
+                                            {{--
+                                            <li class="nav-item">
+                                                <a href="{{ route('agent.bid-history') }}" class="nav-link">
+                                                    <span class="sidenav-normal"> Bid History </span>
+                                                </a>
+                                            </li>
+                                            --}}
                                         </ul>
                                     </div>
                                 </li>
