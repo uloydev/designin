@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
           ReasonSeeder::class,
           LandingHeaderSeeder::class,
           PromoSeeder::class,
+          ServiceExtrasTemplateSeeder::class,
           ServiceExtrasSeeder::class,
       ]);
     }

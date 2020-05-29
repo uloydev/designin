@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use ServiceExtras;
 
 class Service extends Model
 {
@@ -35,5 +36,10 @@ class Service extends Model
     public function extras()
     {
         return $this->hasMany('App\ServiceExtras');
+    }
+
+    public function extras_template()
+    {
+        return ServiceExtras::where('is_template', true)->get();
     }
 }

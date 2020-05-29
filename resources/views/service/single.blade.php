@@ -17,6 +17,7 @@
                     quantity: $("#modal-single-extras #quantity").val(),
                     grand_total: grand_total,
                     promo_discount: Number($("#singleServicePage .order-price").text().replace(/IDR /, '')) * promo_discount /100,
+                    promo_code: $("#modal-single-order input[name='promo_code']").val()
             };
             $.ajax({
                 type: "POST",

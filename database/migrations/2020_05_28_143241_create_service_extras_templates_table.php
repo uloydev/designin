@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInvoicesTable extends Migration
+class CreateServiceExtrasTemplatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('service_extras_templates', function (Blueprint $table) {
             $table->id();
-            $table->string('payment_token');
-            $table->unsignedInteger('payment_status_code')->nullable();
-            $table->string('payment_status')->nullable();
-            $table->string('payment_type')->nullable();
-            $table->unsignedInteger('order_id');
+            $table->string('name');
+            $table->text('description');
+            $table->unsignedInteger('price');
+            $table->unsignedInteger('price_token');
+            $table->enum('effect', ['deadline-1']);
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateInvoicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('service_extras_templates');
     }
 }

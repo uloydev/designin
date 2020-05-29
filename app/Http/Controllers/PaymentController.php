@@ -12,6 +12,9 @@ use App\ServiceExtras;
 use App\User;
 use Storage;
 use Illuminate\Support\Str;
+use illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewOrderNotification;
 
 class PaymentController extends Controller
 {
@@ -141,12 +144,74 @@ class PaymentController extends Controller
         return $data;
     }
 
-    public function notification(Request $request)
+    public function notification(Request $notif)
     {
-        // not done yet
-        $data = json_encode($request->all());
-        Storage::put('temp'.time().'.json',$data);
+        $transaction = $notif->transaction_status;
+        $type = $notif->payment_type;
+        $orderId = $notif->order_id;
+        $fraud = $notif->fraud_status;
+        $invoice = Invoice::where('order_id', $orderId);
+        $invoice->payment_type = $type;
+        if ($transaction == 'capture') {
+            // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+            if ($type == 'credit_card') {
+                if($fraud == 'challenge') {
+                    // TODO set payment status in merchant's database to 'Challenge by FDS'
+                    // TODO merchant should decide whether this transaction is authorized or not in MAP
+                    $invoice->setPending();
+                } else {
+                    // TODO set payment status in merchant's database to 'Success'
+                    $invoice->setSuccess();
+                    $order = $invoice->order;
+                    foreach(json_decode($order->extras) as $extras_id) {
+                        $extras = ServiceExtras::findOrFail($extras_id);
+                        if ($extras->is_template) {
+                            if ($extras->template->effect == 'duration-1') {
+                                $order->deadline = Carbon::now()->addDays($package->duration - 1);
+                            }
+                        }
+                    }
+                    $order->status = 'process';
+                    $order->save();
+                    Mail::to($order->agent->email)->send(new NewOrderNotification($order));
+                }
+            }
+        } elseif ($transaction == 'settlement') {
+            // TODO set payment status in merchant's database to 'Settlement'
+            $invoice->setSuccess();
+            $order = $invoice->order;
+            foreach(json_decode($order->extras) as $extras_id) {
+                $extras = ServiceExtras::findOrFail($extras_id);
+                if ($extras->is_template) {
+                    if ($extras->template->effect == 'duration-1') {
+                        $order->deadline = Carbon::now()->addDays($package->duration - 1);
+                    }
+                }
+            }
+            $order->status = 'process';
+            $order->save();
+            Mail::to($order->agent->email)->send(new NewOrderNotification($order));
+        } elseif($transaction == 'pending'){
+            // TODO set payment status in merchant's database to 'Pending'
+            $invoice->setPending();
+        } elseif ($transaction == 'deny') {
+            // TODO set payment status in merchant's database to 'Failed'
+            $invoice->setFailed();
+            $invoice->order->status = 'canceled';
+            $invoice->order->save();
+        } elseif ($transaction == 'expire') {
+            // TODO set payment status in merchant's database to 'expire'
+            $invoice->setExpired();
+            $invoice->order->status = 'canceled';
+            $invoice->order->save();
+        } elseif ($transaction == 'cancel') {
+            // TODO set payment status in merchant's database to 'Failed'
+            $invoice->setFailed();
+            $invoice->order->status = 'canceled';
+            $invoice->order->save();
+        }
+        
+        return;
     }
-
     // public function status
 }

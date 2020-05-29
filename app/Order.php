@@ -24,7 +24,8 @@ class Order extends Model
         'quantity',
         'max_revision',
         'duration',
-        'extras'
+        'extras',
+        'invoice_id'
     ];
     protected $casts = ['start_at' => 'datetime', 'deadline' => 'datetime'];
     // protected $with = ['package'];
@@ -52,6 +53,11 @@ class Order extends Model
     public function promo()
     {
         return $this->belongsTo('App\Promo');
+    }
+
+    public function invoice()
+    {
+        return $this->belongsTo('App\Invoice');
     }
 
     // public function extras()

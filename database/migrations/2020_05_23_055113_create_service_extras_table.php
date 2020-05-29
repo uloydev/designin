@@ -16,9 +16,11 @@ class CreateServiceExtrasTable extends Migration
         Schema::create('service_extras', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedInteger('service_id');
+            $table->unsignedInteger('service_id')->nullable();
             $table->unsignedInteger('price');
             $table->unsignedInteger('price_token');
+            $table->boolean('is_template')->default(false);
+            $table->unsignedInteger('template_id')->nullable();
             $table->text('description');
             $table->timestamps();
         });
