@@ -96,12 +96,10 @@
 
     let serviceId = $("#serviceEditPage #service-edit-form input[name='service_id']").val();
     if (window.location.href.pathname === '/agent/service/' + serviceId + '/edit') {
-        $("#serviceEditPage #service-edit-form")
-            .attr('action', domainApp + '/agent/service/' + serviceId);
+        $("#serviceEditPage #service-edit-form").attr('action', domainApp + '/agent/service/' + serviceId);
     }
     else if (window.location.href.pathname === '/admin/manage/service/' + serviceId + '/edit') {
-        $("#serviceEditPage #service-edit-form")
-            .attr('action', domainApp + '/admin/manage/service/' + serviceId);
+        $("#serviceEditPage #service-edit-form").attr('action', domainApp + '/admin/manage/service/' + serviceId);
     }
 
     if (window.location.pathname === '/agent/service') {
@@ -303,7 +301,6 @@
 
     if (window.location.href.indexOf('/chat') > -1) {
         $("footer").remove();
-        // $("#userChatPage .order-chat__send-box").attr('action', domainApp + '/user/');
         $(window).scroll(function () {
             if ($(this).width() <= 993) {
                 if ($(document).scrollTop() >= $("nav").outerHeight(true)) {
@@ -413,8 +410,7 @@
         let historyId = Number($(this).data('id'));
         let historyTitle = $.trim($(this).prev().text());
 
-        $("#delete-history-job form")
-            .attr('action', domainApp + '/agent/list-request/delete/' + historyId);
+        $("#delete-history-job form").attr('action', domainApp + '/agent/list-request/delete/' + historyId);
         $("#delete-history-job .modal-job-history-title").text(historyTitle);
     });
 
@@ -465,8 +461,7 @@
 
         $('.modal-category-name').text(nameCategory);
         $("input[name='edit_category']").val(nameCategory);
-        $('#edit-category-article form')
-            .attr('action', domainApp + '/admin/manage/blog-category/' + categoryId);
+        $('#edit-category-article form').attr('action', domainApp + '/admin/manage/blog-category/' + categoryId);
     });
 
     const createArticleImg = document.querySelector('#blogCreatePage input[type="file"]')
@@ -507,8 +502,7 @@
             $("#modal-delete-service form").attr("action", domainApp + '/agent/service/' + serviceId);
         }
         else {
-            $("#modal-delete-service form")
-                .attr("action", domainApp + '/admin/manage/service/' + serviceId);
+            $("#modal-delete-service form").attr("action", domainApp + '/admin/manage/service/' + serviceId);
         }
 
         if ($(this).attr('id') === 'btn-add-extra') {
@@ -542,8 +536,7 @@
         $(".modal#create-edit-category form input[name='service_category']").val(categoryName);
         if ($(this).attr('id') === 'edit-category') {
             $("#create-edit-category .modal-title").text('Edit category');
-            $("#create-edit-category form")
-                .attr('action', domainApp + '/admin/manage/blog-category/' + categoryId);
+            $("#create-edit-category form").attr('action', domainApp + '/admin/manage/blog-category/' + categoryId);
             $("#create-edit-category input[name='image_url']").prop('required', false);
             $("#create-edit-category label[for='imgCategory']").text('Change icon');
         }
@@ -559,8 +552,7 @@
         let categoryName = $(this).parent().find('span').text();
 
         $("#serviceCategoryPage .service-category-title").text(categoryName);
-        $("#serviceCategoryPage #delete-category form")
-            .attr('action', domainApp + '/admin/manage/blog-category/' + categoryId);
+        $("#serviceCategoryPage #delete-category form").attr('action', domainApp + '/admin/manage/blog-category/' + categoryId);
     });
 
     $("#manageAgentPage .btn[data-target='#modal-remove-agent'], " +
@@ -568,8 +560,7 @@
         if ($(this).attr('id') === 'btn-create-agent') {
             $("button[form='form-edit-agent']").text('Add new agent');
             $("#manageAgentPage #modal-edit-agent form").find("input[name='_method']").prop('disabled', true);
-            $("#manageAgentPage #modal-edit-agent form")
-                .attr('action', domainApp + '/admin/manage/agent/');
+            $("#manageAgentPage #modal-edit-agent form").attr('action', domainApp + '/admin/manage/agent/');
         }
         else {
             let agentId = Number($(this).data('id')),
@@ -591,8 +582,7 @@
             $("#manageAgentPage #form-edit-agent input[name='agent_account']").val(agentAccount);
             $("#manageAgentPage #form-edit-agent textarea[name='agent_address']").val(agentAddress);
             $("#manageAgentPage .agent-name").text(agentName);
-            $("#manageAgentPage .modal[id*='agent'] form")
-                .attr('action', domainApp + '/admin/manage/agent/' + agentId);
+            $("#manageAgentPage .modal[id*='agent'] form").attr('action', domainApp + '/admin/manage/agent/' + agentId);
         }
     });
 
