@@ -27,13 +27,14 @@
                                                 data-toggle="collapse" data-target="#collapse{{ $order->id }}"
                                                 aria-expanded="false" aria-controls="collapse{{ $order->id }}">
                                             <i class="fas fa-chevron-up rotate-180 mr-2"></i>
-                                            {{ Str::words($order->package->title, 5) }}
+                                            {{ Str::words($order->package->service->title, 5) }}
+                                            {{ '(' . $order->package->title . ')' }}
                                         </button>
                                     </h2>
                                     <button type="button" class="btn btn-outline-default btn-sm mr-3"
                                     data-toggle="modal" data-target="#modal-revision" data-backdrop="static"
                                     data-id="{{ $order->id }}" data-title="{{ $order->title }}">
-                                        Send revision ({{3 - $order->results->where('type','revision')->count()}} left)
+                                        Send revision ({{ $order->max_revision - $order->results->where('type','revision')->count() }} left)
                                     </button>
                                 </div>
                                 <div id="collapse{{ $order->id }}" class="collapse"

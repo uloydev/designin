@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Order;
 use App\ProjectResult;
@@ -20,11 +21,10 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $totalOrderNotDone = Order::where('status', 'process')->orWhere('status', 'complaint')->count();
-        $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')
-        ->where('agent_id', Auth::id())
-        ->where('status', 'process')
-        ->orWhere('status', 'complaint')
-        ->select(
+        $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')->where([
+            ['agent_id', Auth::id()],
+            ['status', 'process']
+        ])->orWhere('status', 'complaint')->select(
             'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status',
             'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
         );
@@ -94,8 +94,8 @@ class OrderController extends Controller
             'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
         );
         if ($request->has('search')) {
-            $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
-            ->orWhere('price', 'like', '%'.$request->search.'%');
+            $orders = $orders->where('duration', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('price', 'LIKE', '%'.$request->search.'%');
         }
         if ($request->has('sort', 'sort_type')) {
             try {
@@ -121,11 +121,13 @@ class OrderController extends Controller
         ->where('agent_id', Auth::id())
         ->where('status', 'waiting')
         ->select(
-            'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status', 'progress',
-            'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
+            'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status',
+            'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
         );
         if ($request->has('search')) {
-            $orders = $orders->where('duration', 'like', '%'.$request->search.'%')->orWhere('price', 'like', '%'.$request->search.'%');
+            $orders = $orders->where(
+                'duration', 'LIKE', '%'.$request->search.'%'
+            )->orWhere('price', 'LIKE', '%'.$request->search.'%');
         }
         if ($request->has('sort', 'sort_type')) {
             try {
@@ -230,5 +232,15 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         Mail::to($order->user->email)->send(new OrderRevisionFinishedNotification($order, $revision));
         return redirect()->back()->with('success', 'Project Revision Has Sent Successfully');
+    }
+
+    public function search(Request $request)
+    {
+        $searching = $request->search_order;
+        $orders = Order::whereHas('package.service', function (Builder $query) use ($request) {
+           $query->where('title', 'LIKE', '%' . $request->search_order . '%');
+        })->paginate(10);
+        $orders->appends($request->only('search_order'));
+        return view('job.search', ['searching' => $searching, 'orders' => $orders]);
     }
 }

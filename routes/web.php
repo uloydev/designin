@@ -104,6 +104,7 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::post('list-request/send-review/{id}', 'OrderController@sendReview')->name('list-request.send-review');
         Route::post('list-request/send-result/{id}', 'OrderController@sendResult')->name('list-request.send-result');
         Route::post('list-request/send-revision/{id}', 'OrderController@sendRevision')->name('list-request.send-revision');
+        Route::get('list-request/search', 'OrderController@search')->name('list-request.search');
         Route::resource('list-request', 'OrderController');
         Route::resource('portfolio', 'PortfolioController');
 

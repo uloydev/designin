@@ -1792,7 +1792,7 @@ input[type=number] {
 }
 
 #contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle,
-#servicesPage .nav__toggle, #singleServicePage .nav__toggle, #landingPage .nav__toggle {
+#servicesPage .nav__toggle, #singleServicePage .nav__toggle, #landingPage .nav__toggle, #userChatPage .nav__toggle {
     color: var(--almost-black);
 }
 #contactUsPage main {

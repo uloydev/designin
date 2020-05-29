@@ -1,10 +1,8 @@
 @extends('layouts.admin-master')
-@section('page-title', 'List Request | Unfinished Job')
-@section('page-id', 'listRequest')
-@section('page-name', 'Unfinished Job')
-@section('header')
-    @include('partials.job-header')
-@endsection
+@section('page-title') List Request | Search Job {{ $searching }} @endsection
+@section('page-id', 'searchRequest')
+@section('page-name') List Request | Search Job with keyword {{ "'" . $searching . "'" }} @endsection
+@section('header') @include('partials.job-header') @endsection
 @section('content')
     <div class="alert alert-danger no-fadeout alert-dismissible fade show" id="alert-error" role="alert" style="display: none">
         Something when wrong. Please <a href="{{ route('contact-us.index') }}">contact admin</a>
@@ -16,7 +14,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header border-0">
-                    <h3 class="mb-0">All Available Request</h3>
+                    <h3 class="mb-0">Search results</h3>
                 </div>
                 <div class="card-body">
                     <div class="accordion" id="accordion-request">
@@ -25,8 +23,8 @@
                                 <div id="heading{{$order->id}}" class="d-flex mb-2 align-items-center">
                                     <h2 class="mb-0 d-inline-block mr-auto job-agent-title">
                                         <button class="btn btn-link collapsed text-capitalize" type="button"
-                                        data-toggle="collapse" data-target="#collapse{{$order->id}}"
-                                        aria-expanded="false" aria-controls="collapse{{$order->id}}">
+                                                data-toggle="collapse" data-target="#collapse{{$order->id}}"
+                                                aria-expanded="false" aria-controls="collapse{{$order->id}}">
                                             <i class="fas fa-chevron-up rotate-180 mr-2"></i>
                                             {{ $order->package->service->title }}
                                             {{ '(' . $order->package->title . ')' }}
@@ -35,7 +33,7 @@
                                     @if ($order->progress == '100')
                                         @if ($order->results->count() == 0)
                                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-                                            data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
+                                                    data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
                                                 Send result
                                             </button>
                                         @else
@@ -50,7 +48,7 @@
                                     @endif
                                 </div>
                                 <div id="collapse{{$order->id}}" aria-labelledby="heading{{$order->id}}"
-                                data-parent="#accordion-request" class="collapse">
+                                     data-parent="#accordion-request" class="collapse">
                                     <div class="card-body">{!! $order->request !!}</div>
                                     <ul class="card-footer border-top-0 mb-0 pt-0">
                                         <li>
@@ -66,7 +64,7 @@
                                             <span class="mb-0 text-primary ml-auto mr-3 progress-value">
                                                 {{ $order->progress . '%' }}
                                             </span>
-                                                <span class="badge badge-pill badge-success progress-done">
+                                            <span class="badge badge-pill badge-success progress-done">
                                                 <i class="fas fa-check"></i>
                                             </span>
                                         </li>
@@ -81,16 +79,14 @@
                             </article>
                         @empty
                             <img src="{{ asset('img/empty-state.svg') }}" alt="No request"
-                            class="mx-auto d-block my-5">
+                                 class="mx-auto d-block my-5">
                             <h1 class="text-center display-4 text-muted">Good job! You have no ongoing job</h1>
                         @endforelse
                     </div>
                 </div>
-                @if ($totalOrderNotDone > 0)
-                    <div class="card-footer border-top-0">
-                        {{ $orders->links()  }}
-                    </div>
-                @endif
+                <div class="card-footer border-top-0">
+                    {{ $orders->links() }}
+                </div>
             </div>
         </div>
     </div>
@@ -164,12 +160,12 @@
                         <div class="form-group">
                             <label for="result-message">Message to customer</label>
                             <textarea name="message" id="result-message" placeholder="Message result"
-                            class="form-control" rows="10" required></textarea>
+                                      class="form-control" rows="10" required></textarea>
                         </div>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input invisible file-custom__input"
-                            id="sendResult" name="result_file"
-                            accept="image/*, .psd, .xd, .sketch, .mp4, .zip, .rar, .7z, .pdf">
+                                   id="sendResult" name="result_file"
+                                   accept="image/*, .psd, .xd, .sketch, .mp4, .zip, .rar, .7z, .pdf">
                             <label class="custom-file-label" for="sendResult">Result file</label>
                         </div>
                     </form>
