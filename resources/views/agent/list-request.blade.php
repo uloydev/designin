@@ -69,6 +69,12 @@
                                                 <i class="fas fa-check"></i>
                                             </span>
                                         </li>
+                                        <li>
+                                            <span class="mr-auto">Chat customer</span>
+                                            <a href="{{ route('agent.chat.index', $order->id) }}" class="btn-sm btn-info btn">
+                                                Click to chat
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </article>

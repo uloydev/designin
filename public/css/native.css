@@ -2452,6 +2452,7 @@ body[id*='blog'] .search-service__btn {
     justify-content: center;
 }
 #userChatPage .order-detail__back-btn {
+    margin: 1.5rem 0 0.5rem;
     background-color: var(--third-color) !important;
     color: #fff;
 }
@@ -2507,6 +2508,16 @@ body[id*='blog'] .search-service__btn {
 #userChatPage .order-chat__myself .order-chat__box {
     border-top-right-radius: 0;
     margin-right: 1rem;
+}
+#userChatPage .order-chat__read {
+    color: var(--primary-color);
+}
+#userChatPage .order-chat__delivery, #userChatPage .order-chat__read {
+    margin-top: 10px;
+    display: block;
+}
+#userChatPage .order-chat__delivery {
+    color: #9e9e9e;
 }
 #userChatPage .order-chat__send-box {
     display: flex;
@@ -2756,8 +2767,10 @@ footer .row {
 
     #userChatPage .order-chat__wrapper {
         display: flex;
+        width: 100%;
+        margin-bottom: 2rem;
     }
-    #userChatPage .order-chat__wrapper:nth-child(even) {
+    #userChatPage .order-chat__wrapper--customer {
         justify-content: flex-end;
     }
     #userChatPage .order-chat__myself, #userChatPage .order-chat__agent {
@@ -3057,8 +3070,8 @@ footer .row {
         width: 70%;
     }
     #userChatPage .order-chat__top {
-        height: 60vh;
-        overflow-y: scroll;
+        max-height: 60vh;
+        overflow-y: auto;
         padding-left: 5rem;
         border-left: 1px solid #e0e0e0;
      }

@@ -62,6 +62,8 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
 
 Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(function () {
     Route::resource('subscription', 'SubscriptionController');
+    Route::get('order/{id}/chat', 'MessageController@chat')->name('chat.index');
+    Route::post('order/chat', 'MessageController@sendChat')->name('chat.store');
     Route::prefix('profile')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
         Route::get('edit', 'ProfileController@edit')->name('profile.edit');
@@ -78,6 +80,8 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
 });
 
 Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group(function () {
+    Route::get('order/{id}/chat', 'MessageController@chat')->name('chat.index');
+    Route::post('order/chat', 'MessageController@sendChat')->name('chat.store');
     Route::prefix('profile')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
         Route::put('edit', 'ProfileController@update')->name('profile.update');

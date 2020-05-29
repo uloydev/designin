@@ -24,7 +24,10 @@ class OrderController extends Controller
         ->where('agent_id', Auth::id())
         ->where('status', 'process')
         ->orWhere('status', 'complaint')
-        ->select('orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status', 'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price');
+        ->select(
+            'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status',
+            'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
+        );
         if ($request->has('search')) {
             $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
             ->orWhere('price', 'like', '%'.$request->search.'%');
@@ -58,8 +61,10 @@ class OrderController extends Controller
         $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')->where([
             ['agent_id', Auth::id()],
             ['status', 'finished']
-        ])
-        ->select('orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status', 'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price');
+        ])->select(
+            'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status',
+            'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
+        );
         if ($request->has('search')) {
             $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
             ->orWhere('price', 'like', '%'.$request->search.'%');
@@ -84,7 +89,10 @@ class OrderController extends Controller
     {
         $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')
         ->where('agent_id', Auth::id())
-        ->select('orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status', 'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price');
+        ->select(
+            'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status',
+            'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
+        );
         if ($request->has('search')) {
             $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
             ->orWhere('price', 'like', '%'.$request->search.'%');
@@ -112,22 +120,26 @@ class OrderController extends Controller
         $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')
         ->where('agent_id', Auth::id())
         ->where('status', 'waiting')
-        ->select('orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status', 'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price');
+        ->select(
+            'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status', 'progress',
+            'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
+        );
         if ($request->has('search')) {
-            $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
-            ->orWhere('price', 'like', '%'.$request->search.'%');
+            $orders = $orders->where('duration', 'like', '%'.$request->search.'%')->orWhere('price', 'like', '%'.$request->search.'%');
         }
         if ($request->has('sort', 'sort_type')) {
             try {
-                if($request->sort == 'created_at'){
+                if ($request->sort == 'created_at'){
                     $orders = $orders->orderBy('orders.'.$request->sort, $request->sort_type);
-                }else{
+                }
+                else {
                     $orders = $orders->orderBy($request->sort, $request->sort_type)->paginate(10);
                 }
             } catch (\Throwable $th) {
                 return abort('404');
             }
-        }else{
+        }
+        else {
             $orders = $orders->orderBy('orders.created_at', 'desc')->paginate(10);
         }
         return view('service.incoming', ['orders' => $orders]);

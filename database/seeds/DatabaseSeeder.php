@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
           TestimonySeeder::class,
           OrderSeeder::class,
           ChatSessionSeeder::class,
-          MessageSeeder::class,
+//          MessageSeeder::class,
           ReasonSeeder::class,
           LandingHeaderSeeder::class,
           PromoSeeder::class,

@@ -1,7 +1,8 @@
 <header>
     <div class="row mb-5 justify-content-between">
         <div class="col-12">
-            <form class="navbar-search d-block navbar-search-light mr-sm-3 transform-none" id="navbar-search-main">
+            <form class="navbar-search d-block navbar-search-light mr-sm-3 transform-none"
+                  id="navbar-search-main" method="get">
                 <div class="form-group mb-0">
                     <div class="input-group input-group-alternative input-group-merge">
                         <div class="input-group-prepend">
@@ -10,7 +11,7 @@
                             </label>
                         </div>
                         <input class="form-control" placeholder="Search by date or budget and click enter . . ."
-                        type="text" id="search-job" required>
+                               type="text" id="search-job" name="search_job" required>
                     </div>
                 </div>
                 <button type="button" class="close" data-action="search-close"

@@ -13,6 +13,7 @@ $factory->define(Message::class, function (Faker $faker) {
     return [
         'content'=> $faker->sentence($nbWords = 10, $variableNbWords = true),
         'sender_id'=> $faker->randomElement([$session->user_id, $session->agent_id]),
-        'session_id'=> $session->id
+        'order_id' => $faker->numberBetween($min = 1, $max = 100),
+//        'session_id'=> $session->id
     ];
 });

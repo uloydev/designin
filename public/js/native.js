@@ -294,8 +294,9 @@
         }
     });
 
-    if (window.location.href.indexOf('user/order') > -1) {
-        $("footer").hide();
+    if (window.location.href.indexOf('/chat') > -1) {
+        $("footer").remove();
+        // $("#userChatPage .order-chat__send-box").attr('action', window.location.origin + '/user/');
         $(window).scroll(function () {
             if ($(this).width() <= 993) {
                 if ($(document).scrollTop() >= $("nav").outerHeight(true)) {

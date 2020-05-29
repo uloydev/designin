@@ -66,7 +66,7 @@
                                 </div>
                             @endif
                             <div class="mb-3">
-                                <a href="{{ route('user.order.show', $order->id) }}" class="btn profile-main__btn-chat">Chat agent</a>
+                                <a href="{{ route('user.chat.index', $order->id) }}" class="btn profile-main__btn-chat">Chat agent</a>
                             </div>
                         </div>
                     </article>
