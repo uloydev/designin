@@ -343,6 +343,7 @@ body[id^='blog'] .nav--showed .nav__list {
 }
 .checkbox-custom__label {
     position: relative;
+    line-height: 1.3rem;
     margin-bottom: 0;
     vertical-align: top;
 }
@@ -1463,7 +1464,7 @@ input[type=number] {
     font-style: normal;
 }
 #singleServicePage .single-service__modal-message-info {
-    padding-right: 30px;
+    width: 100%;
 }
 #singleServicePage .single-service__modal-message-info figure {
     padding-bottom: 15px;
@@ -1618,6 +1619,9 @@ input[type=number] {
 }
 #singleServicePage .single-package__btn-token:active {
     background-color: #c17e26 !important;
+}
+#singleServicePage #modal-single-order .modal__content {
+    overflow-y: auto;
 }
 
 #faqPage header {
@@ -2747,6 +2751,10 @@ footer .row {
 
     #singleServicePage .service-single__title {
         font-size: 30px;
+    }
+    #singleServicePage .single-service__modal-message-info {
+        width: auto;
+        padding-right: 2rem;
     }
     #singleServicePage .modal-extras__submit-btn {
         position: absolute;
