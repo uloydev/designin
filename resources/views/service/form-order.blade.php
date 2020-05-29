@@ -53,7 +53,7 @@
                                         <span class="checkbox-custom__icon"><i class='bx bx-check' ></i></span>
                                         {{ $extra->name }}
                                     </label>
-                                    <span class="ml-lg-2 text-success mt-2 mt-lg-0">
+                                    <span class="ml-lg-2 text-success mt-2 mt-lg-0" style="transform: translateX(-1.5rem)">
                                         Price (IDR <var class="form-extras-order__money extra-price-cash">{{ $extra->price }}</var>)
                                     </span>
                                 </div>
@@ -68,7 +68,7 @@
                                         <span class="checkbox-custom__icon"><i class='bx bx-check' ></i></span>
                                         {{ $extra->name }}
                                     </label>
-                                    <span class="ml-lg-2 text-success mt-2 mt-lg-0">
+                                    <span class="ml-lg-2 text-success mt-2 mt-lg-0" style="transform: translateX(-1.5rem)">
                                         Price (IDR <var class="form-extras-order__money extra-price-cash">{{ $extra->price }}</var>)
                                     </span>
                                 </div>
