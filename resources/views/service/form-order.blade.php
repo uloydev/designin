@@ -44,7 +44,7 @@
                         <div id="form-extras-order">
                             <p class="text-gray mb-3">Add Extras: </p>
                             {{-- extras from admin template --}}
-                            @foreach ($service->extras_template as $extra)
+                            @foreach ($extras_template as $extra)
                                 <div class="checkbox-custom flex-column align-items-start align-items-lg-center flex-lg-row">
                                     <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input"
                                            data-price-cash="{{ $extra->price }}" data-price-token="{{ $extra->price_token }}"

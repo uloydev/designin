@@ -78,12 +78,14 @@ class HomeController extends Controller
         $testimonies = $service->testimonies;
         $packages = $service->package;
         $promos = Promo::whereDate('ended_at', '>', Carbon::now()->format('Y-m-d h:m:s'))->get();
+        $extras_template = ServiceExtras::where('is_template', true)->get();
         return view('service.single', [
             'service' => $service,
             'rating' => $rating,
             'testimonies' => $testimonies,
             'packages' => $packages,
-            'promos' => $promos
+            'promos' => $promos,
+            'extras_template' => $extras_template
         ]);
     }
 
