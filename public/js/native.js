@@ -1,4 +1,3 @@
-
     //user js
     const navToggle = document.querySelector('.nav__toggle');
     const primaryNav = document.querySelector('#primaryNav');
@@ -783,9 +782,8 @@
         });
     }
 
-    const fileImage = $('input[accept="image/*"]');
-    fileImage.parent().prev().attr('id', 'cover-preview');
-    fileImage.change(function(){
+    $('input[accept="image/*"]').parent().prev().attr('id', 'cover-preview');
+    $('input[accept="image/*"]').change(function(){
         if (this.files && this.files[0] && this.files.length !== 0) {
             let reader = new FileReader();
             reader.onload = function (e) {
@@ -801,7 +799,6 @@
         infinite: false,
         slidesToShow: 1,
         slidesToScroll: 1,
-        // autoplay: true,
         autoplaySpeed: 2500,
         dots: true,
         arrows: false
@@ -946,4 +943,3 @@
         console.log(token);
         snap.pay(token);
     });
-
