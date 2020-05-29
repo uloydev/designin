@@ -119,7 +119,7 @@ class OrderController extends Controller
     {
         $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')
         ->where('agent_id', Auth::id())
-        ->where('status', 'waiting')
+        ->where('status', 'unpaid')
         ->select(
             'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status',
             'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
