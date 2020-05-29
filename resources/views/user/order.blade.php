@@ -6,6 +6,9 @@
         @include('partials.nav')
     </header>
 @endsection
+@section('script')
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+@endsection
 @section('content')
     @if (session('success'))
         <div class="alert alert--success">
@@ -55,15 +58,20 @@
                                 <div class="mb-3">
                                     Status
                                     @if ($order->status == 'complaint' or $order->status == 'canceled')
-                                        <p class="text-danger font-bold">{{ $order->status }}</p>
+                                    <p class="text-danger font-bold">{{ $order->status }}</p>
                                     @elseif($order->status == 'unpaid')
-                                        <p class="text-warning font-bold">{{ $order->status }}</p>
+                                    <p class="text-warning font-bold">{{ $order->status }}</p>
                                     @elseif ($order->waiting == 'waiting')
-                                        <p class="text-gray font-bold">{{ $order->status }}</p>
+                                    <p class="text-gray font-bold">{{ $order->status }}</p>
                                     @else
-                                        <p class="text-success font-bold">{{ $order->status }}</p>
+                                    <p class="text-success font-bold">{{ $order->status }}</p>
                                     @endif
                                 </div>
+                                @if (!empty($order->invoice))
+                                    <div class="mb-3">
+                                    <button class="btn text-primary" id="pay-button" data-payment-token="{{$order->invoice->payment_token ?? ''}}">Pay now</button>
+                                    </div>
+                                @endif
                             @endif
                             <div class="mb-3">
                                 <a href="{{ route('user.chat.index', $order->id) }}" class="btn profile-main__btn-chat">Chat agent</a>

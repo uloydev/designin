@@ -947,3 +947,10 @@
         minDate: new Date()
     });
 
+    // user order dashboard page
+    $('#pay-button').click(function(){
+        let token = $(this).data('payment-token');
+        console.log(token);
+        snap.pay(token);
+    });
+
