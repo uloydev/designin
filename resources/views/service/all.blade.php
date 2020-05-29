@@ -45,9 +45,11 @@
                 </div>
             </section>
         @empty
-            <div class="alert alert--light">
-                No service category
-            </div>
+            <section class="text-center">
+                <img src="{{ asset('img/not-found.jpg') }}" alt="No service found" height="200">
+                <h2 class="h3">No service found</h2>
+                <a href="{{ route('services') }}" class="btn-link mt-2 d-block">See all service</a>
+            </section>
         @endforelse
     </div>
 @endsection

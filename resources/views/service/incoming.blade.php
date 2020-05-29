@@ -36,7 +36,9 @@
                                     <button class="btn btn-link collapsed text-capitalize" type="button"
                                     data-toggle="collapse" data-target="#collapse{{ $loop->index + 1 }}"
                                     aria-expanded="false" aria-controls="collapse{{ $loop->index + 1 }}">
-                                        <i class="fas fa-chevron-up rotate-180 mr-2"></i>{{$order->package->title}}
+                                        <i class="fas fa-chevron-up rotate-180 mr-2"></i>
+                                        {{ $order->package->service->title }}
+                                        {{ '(' . $order->package->title . ')' }}
                                     </button>
                                 </h2>
                                 <button type="button" class="btn btn-link p-0 text-success mr-3" data-toggle="modal"
@@ -51,9 +53,7 @@
                             </div>
                             <div id="collapse{{ $loop->index + 1 }}" class="collapse"
                             aria-labelledby="heading{{$loop->index + 1}}" data-parent="#accordion-request">
-                                <div class="card-body">
-                                    {{$order->request}}
-                                </div>
+                                <div class="card-body">{{$order->request}}</div>
                                 <div class="card-footer">
                                     <p>From : <span class="customer-email">{{ $order->user->email }}</span></p>
                                     <time>Ordered At : {{ $order->created_at->format('d M Y') }}</time>

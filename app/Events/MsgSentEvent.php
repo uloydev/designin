@@ -21,7 +21,8 @@ class MsgSentEvent
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param $message
+     * @param $session
      */
     public function __construct($message, $session)
     {
@@ -33,7 +34,7 @@ class MsgSentEvent
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel|array
      */
     public function broadcastOn()
     {

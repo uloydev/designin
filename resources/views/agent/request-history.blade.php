@@ -29,7 +29,8 @@
                                         data-target="#collapse{{ $loop->index }}"
                                         aria-controls="collapse{{ $loop->index }}">
                                             <i class="fas fa-chevron-up rotate-180 mr-2"></i>
-                                            {{ $order->package->title }}
+                                            {{ $order->package->service->title }}
+                                            {{ '(' . $order->package->title . ')' }}
                                         </button>
                                     </h2>
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
