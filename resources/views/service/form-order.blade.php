@@ -21,8 +21,9 @@
                     @auth
                         <p class="mb-3">
                             Your saving:
-                            <var class="font-style-normal" id="user-token" data-saving="{{ 10000 * Auth::user()->subscribe_token ?? 0 }}"
-                                 data-token="{{ Auth::user()->subscribe_token ?? 0 }}" data-token-withdraw="10000">
+                            <var class="font-style-normal" id="user-token"
+                            data-saving="{{ $tokenConversion->numeral * Auth::user()->subscribe_token ?? 0 }}"
+                            data-token="{{ Auth::user()->subscribe_token ?? 0 }}" data-token-withdraw="{{ $tokenConversion->numeral }}">
                                 {{ Auth::user()->subscribe_token ?? '0' }}
                             </var> token
                             @if (Auth::user()->subscribe_token > 0)

@@ -153,11 +153,11 @@ The above copyright notice and this permission notice shall be included in all c
                                    aria-haspopup="true" aria-expanded="false">
                                     {{ Auth::user()->name }} <i class="ni ni-bold-down"></i>
                                 </a>
-                                <div class="dropdown-menu  dropdown-menu-right ">
+                                <div class="dropdown-menu  dropdown-menu-right">
                                     <div class="dropdown-header">
                                         <h6 class="text-overflow m-0">Welcome!</h6>
                                     </div>
-                                    <a href="{{ route('admin.dashboard') }}" class="dropdown-item">
+                                    <a href="{{ route('admin.setting') }}" class="dropdown-item">
                                         <i class="ni ni-single-02"></i>
                                         <span>Setting</span>
                                     </a>

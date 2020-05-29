@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Service;
+use App\TokenConversion;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -106,5 +107,18 @@ class AdminController extends Controller
     public function destroy(int $id): Response
     {
         //
+    }
+
+    public function setting()
+    {
+        return view('admin.setting');
+    }
+
+    public function updateToken(Request $request)
+    {
+        $conversion = TokenConversion::first();
+        $conversion->numeral = $request->numeral;
+        $conversion->save();
+        return redirect()->back()->with('success', 'Successfully change token numeral to rupiah');
     }
 }

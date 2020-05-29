@@ -36,6 +36,7 @@ Route::post('contact-us', 'ContactController@send')->name('contact-us.store');
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
     Route::get('setting', 'AdminController@setting')->name('admin.setting');
+    Route::put('token-conversion', 'AdminController@updateToken')->name('admin.convert-token');
     Route::prefix('manage')->name('manage.')->group(function(){
         Route::get('/', 'HomeController@index');
         Route::get('agent/search', 'AgentController@search')->name('agent.search');
