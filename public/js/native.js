@@ -738,8 +738,15 @@ if ($(".progress-job").length) {
 const sendChat = document.querySelector('.order-chat__send-btn');
 const formChat = document.querySelector('.order-chat__send-box');
 const chatUrl = formChat.action;
-let listChatHeight;
-const orderChatId = document.querySelector('input[name="order_id"]').value;
+const orderId = document.querySelector('input[name="order_id"]').value;
+let getChatUrl;
+if (window.location.pathname.indexOf('agent/order/') > -1) {
+    getChatUrl = '/agent/order/' + orderId + '/get-chat';
+}
+else if (window.location.pathname.indexOf('user/order/') > -1) {
+    getChatUrl = '/user/order/' + orderId + '/get-chat';
+}
+
 sendChat.addEventListener('click', function (e) {
     e.preventDefault();
     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -759,10 +766,17 @@ sendChat.addEventListener('click', function (e) {
         }),
     }).then((data) => {
         formChat.reset();
+
     }).catch(function(error) {
         console.log(error);
     });
 });
+
+setInterval(function () {
+    $.get(getChatUrl, function (data) {
+        $("#chat-list").empty().html(data);
+    });
+}, 1000);
 
 $("img").prop('draggable', false);
 $(".alert").not(".no-fadeout").not('#alert-approve').delay(2000).fadeOut('slow');

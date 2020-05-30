@@ -81,16 +81,3 @@
         </div>
     </div>
 @endsection
-@section('script')
-    <script>
-        const orderId = document.querySelector('input[name="order_id"]').value;
-        const role = '{{ Auth::user()->role }}';
-        setInterval(function () {
-            $.get('/' + role + '/order/' + orderId + '/get-chat', function (data) {
-                $("#chat-list").empty().html(data);
-            });
-            const listChatHeight = document.querySelector('.order-chat__top .row').scrollHeight;
-            document.querySelector('.order-chat__top').scrollTo(0, listChatHeight);
-        }, 1000);
-    </script>
-@endsection
