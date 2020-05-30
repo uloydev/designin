@@ -941,6 +941,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     color: var(--gray-medium);
     font-size: 20px;
 }
+
 #landingPage .subscription__slider .slick-arrow {
     position: absolute;
     color: var(--secondary-color);
@@ -1063,6 +1064,9 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #landingPage .testimony-card__detail, .testimony-card__header {
     transform: translateY(-60px);
     border: none !important;
+}
+#landingPage .testimonies-slider, #landingPage .subscription__slider {
+    padding-top: 2.5rem;
 }
 #landingPage .testimonies-slider .slick-slide {
     padding-top: 45px;
@@ -2562,6 +2566,7 @@ footer {
     text-align: center;
 }
 .footer__logo img {
+    max-width: 100%;
     filter: brightness(0.96);
 }
 footer .row {

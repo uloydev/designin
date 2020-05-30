@@ -24,4 +24,17 @@ class Message extends Model
     {
         return $this->session->belongsTo('App\User', Auth::user()->role.'_id');
     }
+
+    //custom method
+    public static function getMessage($id = 0){
+
+        if ($id == 0) {
+            $value = DB::table('messages')->orderBy('id', 'asc')->get();
+        }
+        else {
+            $value = DB::table('messages')->where('id', $id)->first();
+        }
+        return $value;
+
+    }
 }

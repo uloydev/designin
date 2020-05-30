@@ -734,6 +734,36 @@ if ($(".progress-job").length) {
         $("#progress-job-val").text(valueProgressJob);
     });
 }
+
+const sendChat = document.querySelector('.order-chat__send-btn');
+const formChat = document.querySelector('.order-chat__send-box');
+const chatUrl = formChat.action;
+let listChatHeight;
+const orderChatId = document.querySelector('input[name="order_id"]').value;
+sendChat.addEventListener('click', function (e) {
+    e.preventDefault();
+    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    fetch(chatUrl,{
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        },
+        method : 'POST',
+        body : JSON.stringify({
+            'sender_id' : document.querySelector('input[name="sender_id"]').value,
+            'order_id' : document.querySelector('input[name="order_id"]').value,
+            'message' : document.querySelector('input[name="message"]').value
+        }),
+    }).then((data) => {
+        formChat.reset();
+    }).catch(function(error) {
+        console.log(error);
+    });
+});
+
 $("img").prop('draggable', false);
 $(".alert").not(".no-fadeout").not('#alert-approve').delay(2000).fadeOut('slow');
 

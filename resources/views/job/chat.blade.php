@@ -44,60 +44,12 @@
                         <i class='bx bx-arrow-back mr-3'></i> Back
                     </a>
                 @endif
+                <a href="javascript:void(0);" class="btn" id="get-chat">get chat</a>
             </aside>
             <section class="order-chat">
                 @if (count($messages) > 0)
                     <div class="order-chat__top">
-                        <div class="row flex-column mx-0">
-                            @foreach($messages as $message)
-                                @if ($message->sender->role == 'agent')
-                                    <div class="order-chat__wrapper">
-                                        <div class="order-chat__agent">
-                                            <img class="order-chat__avatar" src="{{ Storage::url('temporary/avatar-agent.jpg') }}"
-                                                 alt="Agent avatar">
-                                            <div class="order-chat__box">
-                                                <p class="order-chat__message">{{ $message->content }}</p>
-                                                @if (Auth::user()->role === 'agent')
-                                                    @if ($message->is_read == false)
-                                                        <span class="order-chat__delivery">
-                                                            <i class='bx bx-check-double'></i>
-                                                        </span>
-                                                    @else
-                                                        <span class="order-chat__read">
-                                                            <i class='bx bx-check'></i>
-                                                            {{ $message->updated_at->diffForHumans() }}
-                                                        </span>
-                                                    @endif
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                                @if ($message->sender->role == 'user')
-                                    <div class="order-chat__wrapper order-chat__wrapper--customer">
-                                        <div class="order-chat__myself">
-                                            <img class="order-chat__avatar" src="{{ Storage::url('temporary/people.webp') }}"
-                                                 alt="Agent avatar">
-                                            <div class="order-chat__box">
-                                                <p class="order-chat__message">{{ $message->content }}</p>
-                                                @if (Auth::user()->role === 'user')
-                                                    @if ($message->is_read == false)
-                                                        <span class="order-chat__delivery">
-                                                            <i class='bx bx-check-double'></i>
-                                                        </span>
-                                                    @else
-                                                        <span class="order-chat__read">
-                                                            <i class='bx bx-check'></i>
-                                                            {{ $message->updated_at->diffForHumans() }}
-                                                        </span>
-                                                    @endif
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
+                        <div class="row flex-column mx-0" id="chat-list"></div>
                     </div>
                 @else
                     <div class="order-chat__top text-center">
@@ -128,4 +80,17 @@
             </section>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        const orderId = document.querySelector('input[name="order_id"]').value;
+        const role = '{{ Auth::user()->role }}';
+        setInterval(function () {
+            $.get('/' + role + '/order/' + orderId + '/get-chat', function (data) {
+                $("#chat-list").empty().html(data);
+            });
+            const listChatHeight = document.querySelector('.order-chat__top .row').scrollHeight;
+            document.querySelector('.order-chat__top').scrollTo(0, listChatHeight);
+        }, 1000);
+    </script>
 @endsection
