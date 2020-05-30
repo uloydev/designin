@@ -737,40 +737,47 @@ if ($(".progress-job").length) {
 
 const sendChat = document.querySelector('.order-chat__send-btn');
 const formChat = document.querySelector('.order-chat__send-box');
-const chatUrl = formChat.action;
-const orderId = document.querySelector('input[name="order_id"]').value;
+const order = document.querySelector('input[name="order_id"]');
 let getChatUrl;
-if (window.location.pathname.indexOf('agent/order/') > -1) {
-    getChatUrl = '/agent/order/' + orderId + '/get-chat';
+if (formChat) {
+    const chatUrl = formChat.getAttribute('action');
 }
-else if (window.location.pathname.indexOf('user/order/') > -1) {
-    getChatUrl = '/user/order/' + orderId + '/get-chat';
+if (order) {
+    const orderId = document.querySelector('input[name="order_id"]').value;
+    if (window.location.pathname.indexOf('agent/order/') > -1) {
+        getChatUrl = '/agent/order/' + orderId + '/get-chat';
+    }
+    else if (window.location.pathname.indexOf('user/order/') > -1) {
+        getChatUrl = '/user/order/' + orderId + '/get-chat';
+    }
 }
 
-sendChat.addEventListener('click', function (e) {
-    e.preventDefault();
-    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+if (sendChat) {
+    sendChat.addEventListener('click', function (e) {
+        e.preventDefault();
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    fetch(chatUrl,{
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json, text-plain, */*",
-            "X-Requested-With": "XMLHttpRequest",
-            "X-CSRF-TOKEN": token
-        },
-        method : 'POST',
-        body : JSON.stringify({
-            'sender_id' : document.querySelector('input[name="sender_id"]').value,
-            'order_id' : document.querySelector('input[name="order_id"]').value,
-            'message' : document.querySelector('input[name="message"]').value
-        }),
-    }).then((data) => {
-        formChat.reset();
+        fetch(chatUrl,{
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": token
+            },
+            method : 'POST',
+            body : JSON.stringify({
+                'sender_id' : document.querySelector('input[name="sender_id"]').value,
+                'order_id' : document.querySelector('input[name="order_id"]').value,
+                'message' : document.querySelector('input[name="message"]').value
+            }),
+        }).then((data) => {
+            formChat.reset();
 
-    }).catch(function(error) {
-        console.log(error);
+        }).catch(function(error) {
+            console.log(error);
+        });
     });
-});
+}
 
 setInterval(function () {
     $.get(getChatUrl, function (data) {

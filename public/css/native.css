@@ -2671,7 +2671,7 @@ footer .row {
     }
     #landingPage .services__icon {
         height: 250px;
-    }
+    }#userChatPage .order-chat__top
     #landingPage #services .row .slick-arrow {
         color: #47adcd;
         position: absolute;
@@ -3095,7 +3095,7 @@ footer .row {
     #userChatPage .order-chat__top {
         max-height: 60vh;
         overflow-y: auto;
-        padding-left: 5rem;
+        padding: 0 1rem 0 5rem;
         border-left: 1px solid #e0e0e0;
      }
     #userChatPage .order-chat__send-box {

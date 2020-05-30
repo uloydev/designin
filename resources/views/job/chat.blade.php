@@ -44,7 +44,6 @@
                         <i class='bx bx-arrow-back mr-3'></i> Back
                     </a>
                 @endif
-                <a href="javascript:void(0);" class="btn" id="get-chat">get chat</a>
             </aside>
             <section class="order-chat">
                 @if (count($messages) > 0)
