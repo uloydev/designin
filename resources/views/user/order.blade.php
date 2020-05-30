@@ -68,14 +68,19 @@
                                     @endif
                                 </div>
                                 @if (!empty($order->invoice))
-                                    <div class="mb-3">
-                                    <button class="btn text-primary" id="pay-button" data-payment-token="{{$order->invoice->payment_token ?? ''}}">Pay now</button>
+                                    <div class="mb-3 d-flex flex-column flex-md-row">
+                                        <a href="javascript:void(0);" class="btn text-primary" id="pay-button"
+                                        data-payment-token="{{$order->invoice->payment_token ?? ''}}">
+                                            Pay now
+                                        </a>
+                                        <a href="{{ route('user.chat.index', $order->id) }}" class="btn profile-main__btn-chat mt-2 mt-md-0 ml-md-2">
+                                            Chat agent
+                                        </a>
                                     </div>
+                                @else
+                                    <a href="{{ route('user.chat.index', $order->id) }}" class="btn profile-main__btn-chat">Chat agent</a>
                                 @endif
                             @endif
-                            <div class="mb-3">
-                                <a href="{{ route('user.chat.index', $order->id) }}" class="btn profile-main__btn-chat">Chat agent</a>
-                            </div>
                         </div>
                     </article>
                     @empty

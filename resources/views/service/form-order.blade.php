@@ -27,7 +27,7 @@
                                 {{ Auth::user()->subscribe_token ?? '0' }}
                             </var> token
                             @if (Auth::user()->subscribe_token > 0)
-                                <span style="font-size: 0.8rem">(1 token = IDR {{ '10.000' }})</span>
+                                <span style="font-size: 0.8rem">(1 token = IDR {{ $tokenConversion->numeral }})</span>
                             @endif
                         </p>
                     @else

@@ -33,8 +33,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Paginator::defaultView('vendor.pagination.bootstrap-4');
-//        $blogCategory = BlogCategory::all();
-//        $tokenConversion = TokenConversion::first();
-//        View::share(['blogCategory' => $blogCategory, 'tokenConversion' => $tokenConversion]);
+        $blogCategory = BlogCategory::all();
+        $tokenConversion = TokenConversion::first();
+        View::share(['blogCategory' => $blogCategory, 'tokenConversion' => $tokenConversion]);
     }
 }
