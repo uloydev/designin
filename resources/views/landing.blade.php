@@ -50,7 +50,7 @@
                           <div class="service__item">
                               <img src="{{ Storage::url($category->image_url) }}" class="services__icon" alt="Our service">
                               <p class="services__name">{{ $category->name }}</p>
-                              <a href="{{ route('service.show', $category->id) }}" class="services__btn"></a>
+                              <a href="{{ route('services') . '#' . Str::slug($category->name) }}" class="services__btn"></a>
                           </div>
                       </div>
                   @endforeach
