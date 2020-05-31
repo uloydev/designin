@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('subscribe_to')->nullable();
             $table->unsignedInteger('subscribe_token')->nullable();
             $table->timestamp('subscribe_at')->nullable();
+            $table->unsignedInteger('subscribe_duration')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

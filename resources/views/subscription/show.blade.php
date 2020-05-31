@@ -3,6 +3,9 @@
 @section('page-title')
     {{ $subscription->title }}
 @endsection
+@section('script')
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+@endsection
 @section('header')
     <header>
         @include('partials.nav')
@@ -24,10 +27,11 @@
             {!! $subscription->desc !!}
         </div>
         <div class="subscription__action">
-            <form action="" method="post">
+            <form id="subscribe-form" action="{{ route('user.subscription.payment', $subscription->id) }}" method="post" data-subscription-id="{{ $subscription->id }}">
                 @csrf
                 <p>Quantity : </p>
-                <input type="number" min="1" max="200" value="1" required>
+                <input type="number" min="1" max="200" value="1" name="quantity" required>
+                <input type="hidden" name="user_id" value="{{Auth::id()}}">
                 <button type="submit" class="subscription__btn">Subscribe now</button>
             </form>
         </div>

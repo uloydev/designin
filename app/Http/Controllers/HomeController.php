@@ -139,7 +139,34 @@ class HomeController extends Controller
         $package = Package::findOrFail($id);
         $order = new Order;
         $quantity = intval($request->quantity);
-        $budget = $request->payment;
+        $budget = $package->price * $quantity;
+        if (!empty($request->promo_code)) {
+            $promo = Promo::where('code' , $request->promo_code)->get();
+            $budget -= $budget * $promo->discount / 100;
+            $order->promo_id = $promo->id;
+        }
+        if ($request->has('extras')) {
+            $order->extras = $request->extras;
+            foreach(json_decode($order->extras) as $extras_id) {
+                $extras = ServiceExtras::findOrFail($extras_id);
+                $budget += $extras->price;
+                if ($extras->is_template) {
+                    if ($extras->template->effect == 'duration-1') {
+                        $order->deadline = Carbon::now()->addDays($package->duration - 1);
+                    }
+                }
+            }
+        }
+        if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)){
+            if ($user->subscribe_token >= ceil($budget / 10000)) {
+                $token_usage = ceil($budget / 10000);
+                $budget = 0;
+            }else{
+                return abort(401);
+            }
+        }else{
+            return abort(401);
+        }
         $order->agent_id = intval($request->agent_id);
         $order->package_id = $package->id;
         $order->status = 'process';
@@ -148,24 +175,13 @@ class HomeController extends Controller
         $order->budget = $budget;
         $order->user_id = $user->id;
         $order->quantity = $quantity;
-        foreach(json_decode($order->extras) as $extras_id) {
-            $extras = ServiceExtras::findOrFail($extras_id);
-            if ($extras->is_template) {
-                if ($extras->template->effect == 'duration-1') {
-                    $order->deadline = Carbon::now()->addDays($package->duration - 1);
-                }
-            }
-        }
-        // if (!empty($request->promo_code)) {
-        //     $promo = Promo::where('code' , $request->promo_code)->get();
-        //     $budget -= $budget * $promo->discount / 100;
-        //     $order->promo_id = $promo->id;
-        // }
         if ($request->hasFile('brief_file')) {
             $order->attachment = $request->file('brief_file')->store('public/files');
         }
-        if ($request->has('extras')) {
-            $order->extras = $request->extras;
+        if (isset($token_usage)) {
+            $order->token_usage = $token_usage;
+            $user->token -= $token_usage;
+            $user->save();
         }
         $order->save();
         Mail::to($order->agent->email)->send(new NewOrderNotification($order));
