@@ -14,7 +14,11 @@ use Storage;
 use Illuminate\Support\Str;
 use illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use App\Mail\NewOrderNotification;
+use App\Mail\UserSubscriptionNotification;
+use App\Subscription;
+use App\SubscriptionOrder;
 
 class PaymentController extends Controller
 {
@@ -36,22 +40,29 @@ class PaymentController extends Controller
         $package = Package::findOrFail($id);
         $order = new Order;
         $quantity = intval($request->quantity);
-        $budget = $request->grand_total;
-        // $budget = $package->price * $quantity;
-        // if (!empty($request->promo_code)) {
-        //     $promo = Promo::where('code' , $request->promo_code)->get();
-        //     $budget -= $budget * $promo->discount / 100;
-        //     $order->promo_id = $promo->id;
-        // }
-        // if ($request->hasFile('brief_file')) {
-        //     $order->attachment = $request->file('brief_file')->store('public/files');
-        // }
-        // if ($request->has('extras')) {
-        //     $order->extras = $request->extras;
-        //     foreach(json_decode($order->extras) as $extras_id){
-        //         $budget += ServiceExtras::findOrFail($extras_id)->price;
-        //     }
-        // }
+        // $budget = $request->grand_total;
+        $budget = $package->price * $quantity;
+        if (!empty($request->promo_code)) {
+            $promo = Promo::where('code' , $request->promo_code)->get();
+            $promo_discount = $budget * $promo->discount / 100;
+            $budget -= $promo_discount;
+            $order->promo_id = $promo->id;
+        }
+        if ($request->hasFile('brief_file')) {
+            $order->attachment = $request->file('brief_file')->store('public/files');
+        }
+        if ($request->has('extras')) {
+            $order->extras = $request->extras;
+            foreach(json_decode($order->extras) as $extras_id){
+                $budget += ServiceExtras::findOrFail($extras_id)->price;
+            }
+        }
+        if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)) {
+            if (ceil($budget / 10000) > $user->token){
+                $budget -= $user->token * 10000;
+                $token_usage = $user->token;
+            }
+        }
         $order->agent_id = intval($request->agent_id);
         $order->package_id = $package->id;
         $order->status = 'unpaid';
@@ -59,7 +70,12 @@ class PaymentController extends Controller
         $order->budget = $budget;
         $order->user_id = $user->id;
         $order->quantity = $quantity;
-        $order->extras = $request->extras;
+        // $order->extras = $request->extras;
+        if (isset($token_usage)) {
+            $order->token_usage = $token_usage;
+            $user->token -= $token_usage;
+            $user->save();
+        }
         $order->save();
         // var_dump($order);die;
         // midtrans
@@ -78,7 +94,7 @@ class PaymentController extends Controller
         $item_details = [
             [
                 'id' => $package->id,
-                'quantity' => $request->quantity,
+                'quantity' => $order->quantity,
                 'name' => $package->service->title . '-' . $package->title,
                 'price' => $package->price
             ]
@@ -97,22 +113,22 @@ class PaymentController extends Controller
             }
         }
 
-        if ($request->token_usage > 0){
+        if (isset($token_usage) and $token_usage > 0){
             $token_data = [
                 'id' => 'token',
                 'quantity' => 1,
                 'name' => 'subscription token',
-                'price' => -($request->token_usage * 10000)
+                'price' => -($token_usage * 10000)
             ];
             array_push($item_details, $token_data);
         }
 
-        if ($request->promo_discount > 0) {
+        if (!isset($promo_discount)) {
             $promo_data = [
                 'id' => 'discount',
                 'quantity' => 1,
                 'name' => 'promo discount',
-                'price' => -($request->promo_discount)
+                'price' => -($promo_discount)
             ];
             array_push($item_details, $promo_data);
         }
@@ -144,13 +160,74 @@ class PaymentController extends Controller
         return $data;
     }
 
+    public function subscriptionPayment($id, Request $request)
+    {
+        $sub = Subscription::findOrFail($id);
+        $user = User::findOrFail($request->user_id);
+        $order = new SubscriptionOrder;
+        $order->user_id = $user->id;
+        $order->subscription_id = $sub->id;
+        $order->quantity = $request->quantity;
+        $order->save();
+        $transaction_details = [
+            'order_id' => 'sub-'.$order->id,
+            // 'order_id' => time(), // only for testing
+            'gross_amount' => $order->subscription->price * $order->quantity
+        ];
+
+        $customer_details = [
+            'first_name' => $user->name,
+            'email' => $user->email,
+            'phone' => !empty($user->profile) ? $user->profile->handphone : ''
+        ];
+
+        $item_details = [
+            [
+                'id' => $order->id,
+                'quantity' => $order->quantity,
+                'name' => $order->subscription->title,
+                'price' => $order->subscription->price
+            ]
+        ];
+
+        // Send this options if you use 3Ds in credit card request
+        $credit_card_option = [
+            'secure' => true,
+            'channel' => 'migs'
+        ];
+
+        $transaction_data = [
+            'transaction_details' => $transaction_details,
+            'item_details' => $item_details,
+            'customer_details' => $customer_details,
+            'credit_card' => $credit_card_option,
+        ];
+
+        try {
+            $token = Midtrans::getSnapToken($transaction_data);
+            $data = ['token' => $token, 'status'=>'success'];
+            $order->payment_token = $token;
+            $order->save();
+        } catch (\Throwable $th) {
+            $data = ['status' => 'error'];
+        }
+        return $data;
+    }
+
     public function notification(Request $notif)
     {
         $transaction = $notif->transaction_status;
         $type = $notif->payment_type;
-        $orderId = $notif->order_id;
+        $arr = explode('-', $notif->order_id);
+        $order_type = $arr[0];
+        if ($order_type == 'order') {
+            $orderId = $arr[1];
+            $invoice = Invoice::where('order_id', $orderId)->get();
+        }elseif ($order_type == 'sub') {
+            $orderId = $arr[1];
+            $invoice = SubscriptionOrder::findOrFail($orderId);
+        }
         $fraud = $notif->fraud_status;
-        $invoice = Invoice::where('order_id', $orderId);
         $invoice->payment_type = $type;
         if ($transaction == 'capture') {
             // For credit card transaction, we need to check whether transaction is challenge by FDS or not
@@ -162,7 +239,38 @@ class PaymentController extends Controller
                 } else {
                     // TODO set payment status in merchant's database to 'Success'
                     $invoice->setSuccess();
-                    $order = $invoice->order;
+                    if ($order_type == 'order') {
+                        $order = $invoice->order;
+                        if (!empty(json_decode($order->extras))) {
+                            foreach(json_decode($order->extras) as $extras_id) {
+                                $extras = ServiceExtras::findOrFail($extras_id);
+                                if ($extras->is_template) {
+                                    if ($extras->template->effect == 'duration-1') {
+                                        $order->deadline = Carbon::now()->addDays($package->duration - 1);
+                                    }
+                                }
+                            }
+                        }
+                        $order->status = 'process';
+                        $order->save();
+                        Mail::to($order->agent->email)->send(new NewOrderNotification($order));
+                    }elseif ($order_type == 'sub') {
+                        $user = $invoice->user;
+                        $user->is_subscribe = true;
+                        $user->subscribe_to = $invoice->subscription_id;
+                        $user->subscribe_at = Carbon::now();
+                        $user->subscribe_duration = $invoice->subscription->duration * $invoice->quantity;
+                        $user->subscribe_token = $invoice->subscription->token * $invoice->quantity;
+                        $user->save();
+                        Mail::to($user->email)->send(new UserSubscriptionNotification($user, $invoice));
+                    }
+                }
+            }
+        } elseif ($transaction == 'settlement') {
+            // TODO set payment status in merchant's database to 'Settlement'
+            if ($order_type == 'order') {
+                $order = $invoice->order;
+                if (!empty(json_decode($order->extras))) {
                     foreach(json_decode($order->extras) as $extras_id) {
                         $extras = ServiceExtras::findOrFail($extras_id);
                         if ($extras->is_template) {
@@ -171,47 +279,68 @@ class PaymentController extends Controller
                             }
                         }
                     }
-                    $order->status = 'process';
-                    $order->save();
-                    Mail::to($order->agent->email)->send(new NewOrderNotification($order));
                 }
+                $order->status = 'process';
+                $order->save();
+                Mail::to($order->agent->email)->send(new NewOrderNotification($order));
+            }elseif ($order_type == 'sub') {
+                $user = $invoice->user;
+                $user->is_subscribe = true;
+                $user->subscribe_to = $invoice->subscription_id;
+                $user->subscribe_at = Carbon::now();
+                $user->subscribe_duration = $invoice->subscription->duration * $invoice->quantity;
+                $user->subscribe_token = $invoice->subscription->token * $invoice->quantity;
+                $user->save();
+                Mail::to($user->email)->send(new UserSubscriptionNotification($user, $invoice));
             }
-        } elseif ($transaction == 'settlement') {
-            // TODO set payment status in merchant's database to 'Settlement'
-            $invoice->setSuccess();
-            $order = $invoice->order;
-            foreach(json_decode($order->extras) as $extras_id) {
-                $extras = ServiceExtras::findOrFail($extras_id);
-                if ($extras->is_template) {
-                    if ($extras->template->effect == 'duration-1') {
-                        $order->deadline = Carbon::now()->addDays($package->duration - 1);
-                    }
-                }
-            }
-            $order->status = 'process';
-            $order->save();
-            Mail::to($order->agent->email)->send(new NewOrderNotification($order));
         } elseif($transaction == 'pending'){
             // TODO set payment status in merchant's database to 'Pending'
             $invoice->setPending();
         } elseif ($transaction == 'deny') {
             // TODO set payment status in merchant's database to 'Failed'
             $invoice->setFailed();
-            $invoice->order->status = 'canceled';
-            $invoice->order->save();
+            if ($order_type == 'order') {
+                $invoice->order->status = 'canceled';
+                $invoice->order->save();
+            }
         } elseif ($transaction == 'expire') {
             // TODO set payment status in merchant's database to 'expire'
             $invoice->setExpired();
-            $invoice->order->status = 'canceled';
-            $invoice->order->save();
+            if ($order_type == 'order') {
+                $invoice->order->status = 'canceled';
+                $invoice->order->save();
+            }
         } elseif ($transaction == 'cancel') {
             // TODO set payment status in merchant's database to 'Failed'
             $invoice->setFailed();
-            $invoice->order->status = 'canceled';
-            $invoice->order->save();
+            if ($order_type == 'order') {
+                $invoice->order->status = 'canceled';
+                $invoice->order->save();
+            }
         }
         
         return;
     }
-    // public function status
+
+    public function redirect(Request $request)
+    {
+        if (empty($request->all())) {
+            if(Auth::check()){
+                return redirect()->route(Auth::user()->role . '.dashboard');
+            }
+        }
+        if ($request->has('order_id') and Auth::check()) {
+            $arr = explode('-', $request->order_id);
+            if ($arr[0] == 'order') {
+                $order = Order::findOrFail($arr[1]);
+                return redirect()->route('user.order.index');
+            }elseif ($arr[0] == 'sub') {
+                $order = SubscriptionOrder::findOrFail($arr[1]);
+                return redirect()->route('user.subscription.index');
+            }else {
+                return abort(404);
+            }
+        }
+        return redirect()->route('landing-page');
+    }
 }

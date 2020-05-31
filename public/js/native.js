@@ -954,3 +954,29 @@
         snap.pay(token);
     });
 
+    $('#subscribe-form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (response) {
+                console.log(response);
+                console.log(response.status);
+                console.log(response.token);
+                if (response.status == 'success') {
+                    snap.pay(response.token);
+                    // redirect to user/order after payment
+                }else{
+                    alert('something went wrong with your order');
+                    // snap.hide();
+                }
+            },
+            error: function(response){
+                console.log(response);
+                alert('failed to get payment token');
+                // snap.hide();
+            }
+        });
+    });
+

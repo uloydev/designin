@@ -1,4 +1,4 @@
-@extends('layouts.admin-master')
++@extends('layouts.admin-master')
 @section('page-id', 'singleSubscription')
 @section('page-title') {{ $subscription->title }} @endsection
 @section('page-name')

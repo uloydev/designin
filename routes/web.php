@@ -11,6 +11,7 @@ Route::get('/', 'HomeController@index')->name('landing-page');
 Route::get('services/search', 'HomeController@searchAgentJob')->name('service.search');
 Route::get('services', 'HomeController@services')->name('services');
 Route::get('service/show/{id}', 'HomeController@showService')->name('service.show');
+Route::get('subscription/show/{id}', 'HomeController@showSubscription')->name('subscription.show');
 // Route::post('service/show/{id}/contact', 'HomeController@contactAgent')->name('service.contact');
 // Route::redirect('/service/show/{id}/contact', '/service/show/{id}');
 Route::post('order/package/{id}', 'HomeController@makeOrder')->name('order.store')->middleware('auth');
@@ -32,6 +33,7 @@ Route::name('message.')->prefix('message')->middleware('exceptAdmin')->group(fun
     Route::post('send/{session_id}', 'MessageController@send')->name('send');
 });
 Route::post('contact-us', 'ContactController@send')->name('contact-us.store');
+Route::get('payment/redirect', 'PaymentController@redirect')->name('payment.redirect');
 
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
@@ -62,6 +64,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
 
 Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(function () {
     Route::resource('subscription', 'SubscriptionController');
+    Route::Post('subscription/show/{id}/payment', 'PaymentController@subscriptionPayment')->name('subscription.payment');
     Route::get('order/{id}/chat', 'MessageController@chat')->name('chat.index');
     Route::post('order/chat', 'MessageController@sendChat')->name('chat.store');
     Route::prefix('profile')->group(function () {

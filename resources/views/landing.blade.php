@@ -80,35 +80,17 @@
               <div class="row">
                   <div class="col-12 col-md-7 col-lg-6">
                       <ul class="reason-list">
-                          <li class="reason-list__item">
-                              <p class="reason-list__item-title">
-                                  <i class='bx bx-check-circle reason-list__item-icon'></i>
-                                  Reason 1
-                              </p>
-                              <p class="reason-list__item-desc">
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
-                                  voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
-                              </p>
-                          </li>
-                          <li class="reason-list__item">
-                              <p class="reason-list__item-title">
-                                  <i class='bx bx-check-circle reason-list__item-icon'></i>
-                                  Reason 2
-                              </p>
-                              <p class="reason-list__item-desc">
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
-                                  voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
-                              </p>
-                          </li>
-                          <li class="reason-list__item">
-                              <p class="reason-list__item-title">
-                                  <i class='bx bx-check-circle reason-list__item-icon'></i> Reason 3
-                              </p>
-                              <p class="reason-list__item-desc">
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
-                                  voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
-                              </p>
-                          </li>
+                            @foreach ($reasons as $reason)
+                                <li class="reason-list__item">
+                                    <p class="reason-list__item-title">
+                                    <i class='bx bx-check-circle reason-list__item-icon'></i>
+                                    {{ $reason->title }}
+                                    </p>
+                                    <p class="reason-list__item-desc">
+                                    {{ $reason->description }}
+                                    </p>
+                                </li>
+                            @endforeach
                       </ul>
                   </div>
                   <div class="col-12 col-md-5 col-lg-6 reason-trust">
