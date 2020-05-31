@@ -10,7 +10,7 @@ $factory->define(Client::class, function (Faker $faker) {
     return [
         'name' => 'Danone',
         'logo' => 'public/files/danone.svg',
-        'is_show' => $faker->boolean($chanceOfGettingTrue = 10),
+        'is_show' => true,
         'created_at' => now()
     ];
 });

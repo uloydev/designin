@@ -12,7 +12,7 @@ class ClientSeeder extends Seeder
      */
     public function run()
     {
-        factory(Client::class, 30)->create()->each(function ($blog) {
+        factory(Client::class, 3)->create()->each(function ($blog) {
             $blog->make();
         });
     }
