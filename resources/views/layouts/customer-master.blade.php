@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
-{{--        <meta http-equiv="refresh" content="5">--}}
         @include('partials.stylesheet')
         @yield('css')
         <title>Desainin - @yield('page-title') | No-fuss graphic design service solutions</title>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\LandingHeaderSlider;
 use App\Service;
+use App\TokenConversion;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -106,5 +108,20 @@ class AdminController extends Controller
     public function destroy(int $id): Response
     {
         //
+    }
+
+    public function setting()
+    {
+        $sliders = LandingHeaderSlider::all();
+        $tokenConversion = TokenConversion::first();
+        return view('admin.setting', ['sliders' => $sliders, 'tokenConversion' => $tokenConversion]);
+    }
+
+    public function updateToken(Request $request)
+    {
+        $conversion = TokenConversion::first();
+        $conversion->numeral = $request->numeral;
+        $conversion->save();
+        return redirect()->back()->with('success', 'Successfully change token numeral to rupiah');
     }
 }

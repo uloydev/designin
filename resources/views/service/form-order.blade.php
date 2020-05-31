@@ -21,12 +21,13 @@
                     @auth
                         <p class="mb-3">
                             Your saving:
-                            <var class="font-style-normal" id="user-token" data-saving="{{ 10000 * Auth::user()->subscribe_token ?? 0 }}"
-                                 data-token="{{ Auth::user()->subscribe_token ?? 0 }}" data-token-withdraw="10000">
+                            <var class="font-style-normal" id="user-token"
+                            data-saving="{{ $tokenConversion->numeral * Auth::user()->subscribe_token ?? 0 }}"
+                            data-token="{{ Auth::user()->subscribe_token ?? 0 }}" data-token-conversion="{{ $tokenConversion->numeral }}">
                                 {{ Auth::user()->subscribe_token ?? '0' }}
                             </var> token
                             @if (Auth::user()->subscribe_token > 0)
-                                <span style="font-size: 0.8rem">(1 token = IDR {{ '10.000' }})</span>
+                                <span style="font-size: 0.8rem">(1 token = IDR {{ $tokenConversion->numeral }})</span>
                             @endif
                         </p>
                     @else
@@ -115,7 +116,7 @@
                     <input type="hidden" name="promo_code">
                     <input type="hidden" name="token_usage">
                     <input type="hidden" name="payment" value="">
-                    <input type="hidden" name="agent_id" value="{{$service->agent_id}}">
+                    <input type="hidden" name="agent_id" value="{{ $service->agent_id }}">
                     <label for="send-message" class="d-block mb-3">Your message</label>
                     <textarea name="message_agent" id="send-message" rows="10"
                     placeholder="Put your message here..." required></textarea>

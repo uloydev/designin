@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Storage;
 class LandingHeaderSliderController extends Controller
 {
 
-    public function index()
-    {
-        $sliders = LandingHeaderSlider::all();
-        return view('admin.main-slider', ['sliders' => $sliders]);
-    }
-
     public function store(Request $request)
     {
         $request->validate([

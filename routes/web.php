@@ -26,7 +26,7 @@ Route::resource('blog', 'BlogController')->only(['index', 'show']);
 Route::get('search/blog', 'BlogController@search')->name('blog.search');
 Route::get('search/agentjob', 'HomeController@searchAgentJob')->name('agentjob.search');
 Route::get('blog/categories/{id}', 'BlogCategoryController@show')->name('blog-category.show');
-Route::resource('manage/main-slider', 'LandingHeaderSliderController', ['as' => 'manage'])->except(['create', 'show', 'edit']);
+Route::resource('manage/main-slider', 'LandingHeaderSliderController', ['as' => 'manage'])->only(['store', 'update', 'destroy']);
 Route::name('message.')->prefix('message')->middleware('exceptAdmin')->group(function () {
     Route::get('/', 'MessageController@index')->name('index');
     Route::get('fetch/{session_id}', 'MessageController@fetch')->name('fetch');
@@ -38,6 +38,7 @@ Route::get('payment/redirect', 'PaymentController@redirect')->name('payment.redi
 Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function () {
     Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
     Route::get('setting', 'AdminController@setting')->name('admin.setting');
+    Route::put('token-conversion', 'AdminController@updateToken')->name('admin.convert-token');
     Route::prefix('manage')->name('manage.')->group(function(){
         Route::get('/', 'HomeController@index');
         Route::get('agent/search', 'AgentController@search')->name('agent.search');
@@ -66,6 +67,7 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
     Route::resource('subscription', 'SubscriptionController');
     Route::Post('subscription/show/{id}/payment', 'PaymentController@subscriptionPayment')->name('subscription.payment');
     Route::get('order/{id}/chat', 'MessageController@chat')->name('chat.index');
+    Route::get('order/{id}/get-chat', 'MessageController@getChat')->name('chat.get');
     Route::post('order/chat', 'MessageController@sendChat')->name('chat.store');
     Route::prefix('profile')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
@@ -85,6 +87,7 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
 Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group(function () {
     Route::get('order/{id}/chat', 'MessageController@chat')->name('chat.index');
     Route::post('order/chat', 'MessageController@sendChat')->name('chat.store');
+    Route::get('order/{id}/get-chat', 'MessageController@getChat')->name('chat.get');
     Route::prefix('profile')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
         Route::put('edit', 'ProfileController@update')->name('profile.update');

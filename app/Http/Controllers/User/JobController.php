@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class JobController extends Controller
@@ -12,7 +14,8 @@ class JobController extends Controller
     public function index()
     {
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
-        return view('job.manage', ['listBank' => $listBank]);
+        $orders = Order::where('user_id', Auth::id())->get();
+        return view('job.manage', ['listBank' => $listBank, 'orders' => $orders]);
     }
 
     public function create()

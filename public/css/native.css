@@ -941,6 +941,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     color: var(--gray-medium);
     font-size: 20px;
 }
+
 #landingPage .subscription__slider .slick-arrow {
     position: absolute;
     color: var(--secondary-color);
@@ -1063,6 +1064,9 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #landingPage .testimony-card__detail, .testimony-card__header {
     transform: translateY(-60px);
     border: none !important;
+}
+#landingPage .testimonies-slider, #landingPage .subscription__slider {
+    padding-top: 2.5rem;
 }
 #landingPage .testimonies-slider .slick-slide {
     padding-top: 45px;
@@ -1877,6 +1881,16 @@ input[type=number] {
 #userOrderPage .profile-main__btn-chat:active {
     background-color: #236e9e !important;
 }
+#userOrderPage #pay-button {
+    background-color: var(--primary-color) !important;
+    color: #fff;
+}
+#userOrderPage #pay-button:hover {
+    background-color: var(--primary-color-hover) !important;
+}
+#userOrderPage #pay-button:active {
+    background-color: #109e5b !important;
+}
 
 .profile-aside {
     background-color: #fff;
@@ -2552,6 +2566,7 @@ footer {
     text-align: center;
 }
 .footer__logo img {
+    max-width: 100%;
     filter: brightness(0.96);
 }
 footer .row {
@@ -2656,7 +2671,7 @@ footer .row {
     }
     #landingPage .services__icon {
         height: 250px;
-    }
+    }#userChatPage .order-chat__top
     #landingPage #services .row .slick-arrow {
         color: #47adcd;
         position: absolute;
@@ -3080,7 +3095,7 @@ footer .row {
     #userChatPage .order-chat__top {
         max-height: 60vh;
         overflow-y: auto;
-        padding-left: 5rem;
+        padding: 0 1rem 0 5rem;
         border-left: 1px solid #e0e0e0;
      }
     #userChatPage .order-chat__send-box {

@@ -45,6 +45,12 @@ class MessageController extends Controller
     {
         $order = Order::findOrFail($id);
         $messages = Message::with('sender.profile')->where('order_id', $id)->get();
+        return view('job.chat', ['order' => $order, 'messages' => $messages]);
+    }
+
+    public function getChat($id){
+        $order = Order::findOrFail($id);
+        $messages = Message::with('sender.profile')->where('order_id', $id)->get();
         if (Auth::user()->role == 'agent') {
             Message::where('order_id', $id)->whereHas('sender', function (Builder $query) {
                 $query->where('role', 'user');
@@ -55,7 +61,8 @@ class MessageController extends Controller
                 $query->where('role', 'agent');
             })->update(['is_read' => true]);
         }
-        return view('job.chat', ['order' => $order, 'messages' => $messages]);
+
+        return view('job.listChat', ['order' => $order, 'messages' => $messages]);
     }
 
     public function sendChat(Request $request)
@@ -65,7 +72,5 @@ class MessageController extends Controller
         $chat->order_id = $request->order_id;
         $chat->sender_id = intval($request->sender_id);
         $chat->save();
-
-        return redirect()->back();
     }
 }
