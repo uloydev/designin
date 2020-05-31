@@ -14,28 +14,32 @@ class ServiceCategorySeeder extends Seeder
     {
         $categories = [
             [
-                'name' => 'Category 1',
-                'image_url' => 'temporary/t-shirt.png'
+                'name' => 'Logo',
+                'image_url' => 'files/logo-category.svg'
             ],
             [
-                'name' => 'Category 2',
-                'image_url' => 'temporary/t-shirt.png'
+                'name' => 'Social Media',
+                'image_url' => 'files/sosmed-category.svg'
             ],
             [
-                'name' => 'Category 3',
-                'image_url' => 'temporary/t-shirt.png'
+                'name' => 'Packaging',
+                'image_url' => 'files/packaging-category.svg'
             ],
             [
-                'name' => 'Category 4',
-                'image_url' => 'temporary/t-shirt.png'
+                'name' => 'Pattern / Hijab',
+                'image_url' => 'files/pattern-category.svg'
             ],
             [
-                'name' => 'Category 5',
-                'image_url' => 'temporary/t-shirt.png'
+                'name' => 'T-Shirt',
+                'image_url' => 'files/tshirt-category.svg'
             ],
             [
-                'name' => 'Category 6',
-                'image_url' => 'temporary/t-shirt.png'
+                'name' => 'Poster',
+                'image_url' => 'files/poster-category.svg'
+            ],
+            [
+                'name' => 'Brosur',
+                'image_url' => 'files/brochure-category.svg'
             ]
         ];
         foreach ($categories as $key => $value) {

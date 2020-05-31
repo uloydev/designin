@@ -16,6 +16,7 @@
 }
  body {
      font-size: 13px;
+     font-family: 'Montserrat', serif;
  }
 header > .container {
     padding: 40px 0;
@@ -138,7 +139,6 @@ nav .container {
     flex-direction: column;
     height: 100%;
     padding: 0;
-    width: 90%;
 }
 .nav__toggle {
     color: var(--almost-white);
@@ -250,33 +250,36 @@ body[id^='blog'] .nav--showed .nav__list {
 }
 .search-service {
     position: relative;
-    display: block;
+    display: flex;
 }
 .nav--showed .search-service {
     width: 100%;
 }
 .search-service__input {
-    height: 40px;
-    padding: 0 10px 0 50px;
+    height: 50px;
+    padding: 0 calc(50px + 1.5rem) 0 1.5rem;
     width: 100%;
     border: 1px solid #c7c7c7;
-    border-radius: 5px;
+    border-radius: 2rem;
 }
 .search-service__btn {
-    cursor: pointer ;
+    cursor: pointer;
     color: #fff;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 0;
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
     font-size: 20px;
-    border-radius: 5px 0 0 5px;
+    border-radius: 0 2rem 2rem 0;
     border: none;
-    background-color: var(--primary-color);
+    background-color: #000;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
-.search-service__btn:hover {
+nav .search-service__input {
+    height: 40px;
+}
+nav .search-service__btn {
+    height: 40px;
     background-color: var(--primary-color);
 }
 
@@ -599,7 +602,7 @@ body:not(#landingPage):not([id*='blog']):not(#faqPage) main {
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
-body:not(#landingPage):not([id*='blog']) #primaryNav {
+body:not([id*='blog']) #primaryNav {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     z-index: 2;
     background-color: #fff;
@@ -661,15 +664,8 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     margin-left: auto;
     margin-right: auto;
 }
-#landingPage #modal-search-service .search-service__btn {
-    position: static;
-    transform: none;
-    background-color: transparent;
-    font-size: 40px;
-    margin-bottom: 20px;
-}
-#landingPage #modal-search-service .search-service__input::placeholder {
-    color: #c4c4c4;
+#landingPage .search-service__input::placeholder {
+    color: #b4b4b4;
     font-weight: normal;
 }
 #landingPage #modal-search-service .search-service__input {
@@ -686,14 +682,20 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #landingPage header {
     height: 80vh;
     width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: url('../img/landing-header.webp');
 }
 #landingPage header > .container {
     position: relative;
     width: 100% !important;
     height: calc(100% - 80px);
     padding: 0;
-    background-color: rgba(0, 0, 0, 0.25);
     max-width: none !important;
+}
+#landingPage .header__text span {
+    display: block;
 }
 #landingPage .landing__slider {
     position: absolute;
@@ -716,16 +718,14 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #landingPage .landing__slogan {
     position: absolute;
     top: 50%;
+    left: 5%;
     width: 90%;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%);
+    max-width: 450px;
+    transform: translateY(-50%);
 }
 #landingPage .header__text {
-    color: #fff;
-    text-align: center;
-    text-transform: capitalize;
-    margin-bottom: 30px;
-    text-shadow: 3px 3px rgba(64, 64, 64, 0.7);
+    color: #000;
+    margin-bottom: 1rem;
 }
 #landingPage .header__btn {
     padding: 20px 35px;
@@ -752,20 +752,11 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #landingPage .section__heading {
     text-transform: capitalize;
-    text-align: center;
     font-weight: bold;
     width: 100%;
     position: relative;
-}
-#landingPage .section__heading::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: -15px;
-    height: 3px;
-    width: 60px;
-    background-color: var(--fourth-color);
+    color: #000;
+    font-family: 'Montserrat', serif;
 }
 #landingPage section .row {
     padding-top: calc(15px + 45px); /*start from 15px*/
@@ -792,24 +783,17 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #landingPage .service__item {
     position: relative;
+    margin-bottom: 2.5rem;
 }
 #landingPage .services__icon {
-    height: 200px;
-    width: 100%;
-    object-fit: cover;
-    margin: 0 auto;
+    height: 75px;
     display: block;
-    border-radius: 6px;
+    margin: 0 auto 1rem;
 }
 #landingPage .services__name {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    color: #fff;
-    font-size: 1.2rem;
-    text-align: left;
-    z-index: 1;
-    font-weight: bold;
+    color: #000;
+    font-size: 1rem;
+    text-align: center;
 }
 #landingPage .services__btn {
     opacity: 0;
@@ -836,13 +820,18 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     margin: 15px 0 25px;
 }
 #landingPage .reason-list__item {
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
 }
 #landingPage .reason-list__item-title {
     font-size: 1.2rem;
-    line-height: 40px;
+    margin-bottom: 1rem;
     font-weight: bold;
     color: #222325;
+    display: flex;
+    align-items: center;
+}
+#landingPage .reason-list__item-title img {
+    margin-right: 1rem;
 }
 #landingPage .reason-list__item-icon {
     color: var(--primary-color);
@@ -931,15 +920,25 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     left: auto !important;
     right: 40px;
 }
-#landingPage #how-we-work .how-we-work__list {
-    padding: 0 0.8rem;
-    margin-top: 1.5rem;
+#landingPage .how-we-work__list {
+    background-color: var(--almost-white);
+    padding: 2rem 1rem;
+    height: 100%;
+    text-align: center;
+    border-radius: 10px;
 }
-#landingPage #how-we-work .how-we-work__list li {
-    list-style-type: decimal;
-    margin-bottom: 15px;
-    color: var(--gray-medium);
-    font-size: 20px;
+#landingPage .how-we-work__list img {
+    max-width: 100%;
+    margin: 0 auto 1rem;
+    height: 200px;
+}
+#landingPage .how-we-work__list p:first-of-type {
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+#landingPage .how-we-work__list p:last-child {
+    color: #727272;
 }
 
 #landingPage .subscription__slider .slick-arrow {
@@ -950,20 +949,22 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #landingPage .subscription__item {
     text-align: center;
+    overflow: visible;
     width: 100%;
     position: relative;
     border-radius: 15px;
-    overflow: hidden;
     margin: 0 0 40px;
+    background-color: #fffdd0;
+    padding: 2rem;
+    transition: all 150ms;
 }
-#landingPage .subscription__item:hover {
+#landingPage .subscription__item:hover, #landingPage .subscription__item:hover .subscription__btn {
     box-shadow: 0 10px 18px 0 rgba(70, 70, 70, 0.15);
 }
 #landingPage .subscription__img {
     display: block;
     object-fit: cover;
     width: 100%;
-    height: 400px;
 }
 #landingPage .subscription__overlay {
     position: absolute;
@@ -972,28 +973,31 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     left: 0;
     height: 100%;
 }
+#landingPage .subscription__box {
+    position: relative;
+}
 #landingPage .subscription__caption {
     position: absolute;
     bottom: 0;
-    background-color: #fff;
     padding: 20px;
-    width: 75%;
     border-radius: 0 15px 0 0;
     text-align: left;
+    color: #fff;
 }
 #landingPage .subscription__name {
-    color: #0E3075;
-    margin-bottom: 15px;
     font-size: 19px;
     font-weight: 600;
+    margin-bottom: 1rem;
+}
+#landingPage .subscription__duration {
+    color: #dcdcdc;
+    margin-bottom: 1rem;
 }
 #landingPage .subscription__price {
-    color: var(--text-color);
     font-size: 17px;
     letter-spacing: 1px;
 }
 #landingPage .subscription__currency {
-    color: #18a663;
     font-style: normal;
 }
 #landingPage .subscription__detail {
@@ -1020,15 +1024,66 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     color: var(--text-color);
     font-size: 17px;
 }
-#landingPage .subscription__btn {
-    background-color: var(--fourth-color) !important;
-    margin-top: auto;
-    border: 1px solid var(--fourth-color);
+#landingPage #subscription .subscription__btn {
+    margin-top: 1rem;
+    width: 150px;
+    background-image: linear-gradient(256deg, #808190 0%, #4e515e 100%);
+    border: 1px solid var(--primary-color);
     color: #fff;
     text-shadow: 1px 1px 3px rgb(90, 90, 90);
+    position: absolute;
+    bottom: 0;
+    transform: translateY(50%) translateX(-50%);
+    left: 50%;
+}
+#landingPage #inspire .slick-arrow {
+    position: absolute;
+    top: -10px;
+    color: var(--secondary-color);
+    transform: translateY(-100%);
+}
+#landingPage #inspire .inspire__slider {
+    padding-top: 1.5rem;
+}
+#landingPage #inspire .inspire__slider .bxs-chevron-left {
+    left: 0;
+}
+#landingPage #inspire .bxs-chevron-right {
+    right: 0;
+}
+#landingPage .inspire__item {
+    overflow: hidden;
+    border-radius: 20px;
+    padding-bottom: 10px;
+    box-shadow: 3px 3px 4px rgba(83, 83, 83, 0.15);
+    border: 1px solid #e8e8e8;
+}
+#landingPage .inspire__img {
+    display: block;
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+#landingPage .inspire__avatar {
+    margin-right: 1rem;
+}
+#landingPage .inspire__detail {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: calc(70px + 30px);
+    padding: 15px 0 15px 2rem;
+    align-items: flex-start;
+    justify-content: center;
+    align-content: flex-start;
+}
+#landingPage .inspire__agent {
+    margin-bottom: 0.5rem;
+    color: #000;
+    font-weight: bold;
 }
 #landingPage #testimonies {
-    background-color: var(--primary-color);
+    background-color: #e5a033;
 }
 #landingPage #testimonies #no-testimony {
     width: 100%;
@@ -1043,9 +1098,6 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #landingPage #testimonies .section__heading {
     color: #fff;
-}
-#landingPage #testimonies .section__heading::after {
-    background-color: #fff;
 }
 #landingPage .testimony__img {
     width: 80px !important;
@@ -1079,34 +1131,30 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #landingPage .client__item {
     padding: 0 20px;
-    margin-top: 30px;
 }
 #landingPage .client__img {
     max-width: 100%;
     display: block;
     margin: 0 auto;
+    max-height: 85px;
 }
-#landingPage #client .row {
-    margin-top: -30px;
+#landingPage #client .container {
+    padding: 0;
 }
 #landingPage #client .slick-arrow {
     position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     color: var(--secondary-color);
-    top: -60px;
-    transform: translateY(100%);
 }
 #landingPage #client .bxs-chevron-left {
-    left: 0;
+    left: -1rem !important;
 }
 #landingPage #client .bxs-chevron-right {
-    right: 0;
+    right: -1rem !important;
 }
 #landingPage #interest {
     width: 100%;
-}
-#landingPage #interest .interest-slider__item {
-    position: relative;
-    transition: all 150ms;
 }
 #landingPage #interest .interest-slider__overlay {
     background-color: rgba(0, 0, 0, 0.2);
@@ -1123,35 +1171,116 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     width: 100%;
     height: 100%;
 }
-#landingPage #interest .interest-slider__item:hover .interest-slider__overlay {
-    opacity: 1;
-    visibility: visible;
+#landingPage #interest .interest-slider {
+    position: relative;
+    height: 200px;
+    padding: 0 1rem;
+    display: flex;
+    margin-top: 2.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
 }
-#landingPage #interest .interest-slider__item img {
-    width: 100%;
+#landingPage .interest__img {
+    max-width: 100%;
+    height: 200px;
     object-fit: cover;
-    object-position: center;
-}
-#landingPage #interest .interest-slider__title {
     position: absolute;
-    top: 50%;
-    width: 100%;
-    text-align: center;
-    transform: translateY(-50%);
-    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.7);
-    font-weight: bold;
     left: 0;
-    color: #fff;
-    font-size: 1.5rem;
+    top: 0;
+    z-index: -1;
+}
+#landingPage .interest-slider__title {
+    left: 1rem;
+    max-width: calc(100% - 2rem);
+    color: #000;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+#landingPage .interest-slider__title span {
+    font-weight: bold;
 }
 #landingPage #interest .interest-slider__link {
+    background-color: #000;
+    color: #fff;
+    padding: 1rem 1.3rem;
+    border-radius: 10px;
+}
+#landingPage #client {
+    padding: 1.2rem 0;
+    box-shadow: 0 4px 6px rgba(90, 90, 90, 0.2);
+}
+
+#landingPage #help .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+}
+#landingPage .help__bg {
+    max-width: 100%;
+    z-index: -1;
+    object-fit: cover;
+    height: 350px;
+    display: none;
+}
+#landingPage #help h1 {
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+}
+#landingPage .help__box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#landingPage .help__btn {
+    margin-top: 1rem;
+    background-color: #000 !important;
+    color: #fff;
+    padding: 10px 1rem;
+}
+#landingPage #help h1 span {
+    display: block;
+}
+#landingPage #help h1 span:first-child {
+    font-weight: lighter;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+#landingPage .blog-article {
+    position: relative;
+}
+#landingPage .blog-article__img {
+    max-height: 200px;
+    margin-right: 1rem;
+}
+#landingPage .blog-article {
+    display: flex;
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    border: 1px solid #efefef;
+    border-radius: 10px;
+    box-shadow: 2px 3px 4px rgba(87, 87, 87, 0.14);
+    transition: all 150ms;
+}
+#landingPage .blog-article:hover {
+    box-shadow: none;
+}
+#landingPage .blog-article__title {
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+#landingPage .blog-article__link {
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0;
     width: 100%;
     height: 100%;
-    z-index: 2;
+    opacity: 0;
 }
 
 #servicesPage header {
@@ -2627,68 +2756,47 @@ footer .row {
     .modal--xl .modal__content {
         max-width: 1150px;
     }
-    #landingPage .header__text {
-        font-size: 45px;
-        text-align: right;
-    }
-    #landingPage #modal-search-service .search-service {
-        flex-direction: row-reverse;
-        justify-content: center;
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 675px;
-    }
-    #landingPage #modal-search-service .search-service__btn {
-        margin-bottom: 0;
-        position: absolute;
-        transform: translateY(-50%) translateX(50%);
-    }
-    #landingPage #modal-search-service .search-service__input {
-        text-align: center;
-        font-size: 2.5rem;
-        height: 50px;
-        padding-left: 4.3rem;
-    }
-    #landingPage header {
-        height: 60vh;
-    }
     #landingPage header > .container {
         padding-bottom: 60px;
         height: calc(100% - 80px);
     }
-    #landingPage .header__btn:not(.header__btn--secondary) {
-        margin: 0;
+    #landingPage .header__text span {
+        font-size: 1.5em;
     }
-    #landingPage .header__btn--secondary {
-        margin: 0 20px 0 0;
-    }
-    #landingPage .reason-slider__title {
-        font-size: 21px;
+    #landingPage .services__icon {
+        height: 100px;
     }
     #landingPage .testimonies-slider .slick-track, #landingPage .testimonies-slider .slick-slide {
         height: auto;
     }
-    #landingPage .services__icon {
-        height: 250px;
-    }#userChatPage .order-chat__top
     #landingPage #services .row .slick-arrow {
         color: #47adcd;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
     }
-    #landingPage #client {
-        padding: 60px 0;
-    }
-    #landingPage #client .slick-arrow {
-        top: 50%;
-        transform: translateY(100%);
-    }
     #landingPage #interest .interest-slider__title {
-        width: 70%;
-        text-align: left;
+        font-size: 1.4rem;
+    }
+    #landingPage #interest .interest-slider__link, #landingPage #interest .interest-slider__title {
+        position: absolute;
         left: 30px;
+        top: 50%;
+        transform: translateY(-100%);
+    }
+    #landingPage #interest .interest-slider__link {
+        transform: translateY(1rem);
+    }
+    #landingPage #interest .interest-slider {
+        height: auto;
+        padding: 0;
+    }
+    #landingPage .interest__img {
+        height: auto;
+        position: relative;
+    }
+    #landingPage #help h1 span {
+        font-size: 3rem;
     }
 
     #blogIndexPage main .article__title {
@@ -2931,6 +3039,8 @@ footer .row {
     #landingPage #primaryNav {
         position: absolute;
         top: 0;
+        background-color: transparent;
+        box-shadow: none;
     }
     #landingPage #primaryNav .container > ul > .nav__list, #landingPage .nav__list--logo .nav__link {
         color: var(--almost-white);
@@ -2939,7 +3049,9 @@ footer .row {
         background-color: var(--almost-white);
     }
     #landingPage header {
+        padding: 1rem 0;
         height: 80vh;
+        background-size: cover;
         position: relative;
         background-color: rgba(0, 0, 0, 0.25);
     }
@@ -2976,9 +3088,6 @@ footer .row {
     #landingPage #services .col-6:nth-child(n+3) {
         margin-top: 0;
     }
-    #landingPage .services__icon {
-        height: 18.75rem;
-    }
     #landingPage .services__btn:hover + .service__overlay {
         background-color: rgba(0, 0, 0, 0) !important;
     }
@@ -2989,11 +3098,30 @@ footer .row {
         width: 80%;
         max-width: 800px;
     }
-    #landingPage #interest .interest-slider__item img {
-        height: 280px;
-    }
     #landingPage #interest .interest-slider__title {
-        width: 50%;
+        font-size: 2rem;
+        transform: translateY(calc(-50% - 2rem));
+    }
+    #landingPage #interest .interest-slider__link {
+        transform: translateY(calc(100% - 1rem));
+    }
+    #landingPage .inspire__slider .slick-slide:first-child > div {
+        padding-left: 0;
+    }
+    #landingPage .inspire__slider .slick-slide > div {
+        padding: 1.5rem;
+    }
+    #landingPage .inspire__slider .slick-list {
+        overflow: visible;
+    }
+    #landingPage .help__bg {
+        display: block;
+    }
+    #landingPage .help__box {
+        max-width: 60%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     #contactUsPage .contact-us__heading {
@@ -3112,9 +3240,6 @@ footer .row {
 }
 
 @media screen and (min-width: 1200px) {
-    #landingPage header {
-        height: 90vh;
-    }
     nav ul > .container > .nav__list:not(.nav__list--logo) {
         font-size: 18px;
         margin-left: 40px;
@@ -3123,6 +3248,13 @@ footer .row {
         height: 235px;
         width: 235px;
     }
+    #landingPage #interest .interest-slider__title {
+        font-size: 2.5rem;
+    }
+    #landingPage #interest .interest-slider__link {
+        transform: translateY(100%);
+    }
+
     #userOrderPage .profile-main-item progress {
         width: 60%;
     }

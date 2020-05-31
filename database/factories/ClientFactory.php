@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(Client::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'logo' => 'public/temporary/client.png',
-        'is_show' => $faker->boolean($chanceOfGettingTrue = 50),
+        'name' => 'Danone',
+        'logo' => 'public/files/danone.svg',
+        'is_show' => $faker->boolean($chanceOfGettingTrue = 10),
         'created_at' => now()
     ];
 });

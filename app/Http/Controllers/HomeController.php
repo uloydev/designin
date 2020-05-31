@@ -30,7 +30,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $topService = Service::where('is_popular', true)->limit(4)->get();
+        $topService = ServiceCategory::all();
         $images = CarouselImage::all();
         $promos = Blog::where('is_main', true)->whereHas('category', function (Builder $query){
             $query->where('name', 'Promo');
@@ -39,7 +39,7 @@ class HomeController extends Controller
         $testimonies = Testimony::where('is_main', true)->get();
         $subscriptions = Subscription::all();
         $reasons = Reason::all();
-        $landingHeaders = LandingHeaderSlider::all();
+        $blogs = Blog::where('is_main', true)->get();
 //        dd($landingHeaders);
         return view('landing')->with([
             'images' => $images,
@@ -49,7 +49,7 @@ class HomeController extends Controller
             'subscriptions' => $subscriptions,
             'reasons' => $reasons,
             'topService' => $topService,
-            'landingHeaders' => $landingHeaders
+            'blogs' => $blogs
         ]);
     }
 

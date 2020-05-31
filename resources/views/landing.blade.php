@@ -11,109 +11,94 @@
   <header>
       @include('partials.nav')
       <div class="container">
-          <div class="landing__slider">
-              @foreach ($landingHeaders as $slider)
-                  <img src="{{ Storage::url($slider->img) }}" alt="Desainin landing page">
-              @endforeach
-          </div>
           <div class="landing__slogan">
-              <h1 class="header__text">
-                  Find designer just like <br class="d-none d-md-block"> <span style="color: #94E5EB"></span>
-              </h1>
-              <div class="row mx-0 flex-column flex-md-row align-items-center justify-content-end">
-                  <a href="javascript:void(0)" class="header__btn header__btn--secondary btn-modal"
-                     data-target="#modal-search-service">
-                      <i class='bx bx-search-alt mr-2 bx-sm'></i> Find what you want
-                  </a>
-                  <a href="#services" class="header__btn">
-                      Order What You Want <i class='bx bxs-cart-add ml-2 bx-sm'></i>
-                  </a>
-              </div>
+              <h1 class="header__text">Bikin desain apa saja <span>Gak pake ribet</span></h1>
+              <form action="{{ route('service.search') }}" method="get" class="search-service">
+                  <label for="search-landing" class="d-none">Search design</label>
+                  <input type="search" id="search-landing" class="search-service__input" name="search_agent_job"
+                         placeholder="Cari desain melalui jaringan desainer kami..." autocomplete="off" required>
+                  <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
+              </form>
           </div>
       </div>
   </header>
+  <section id="client">
+      <div class="container">
+          <div class="client__slider">
+              @forelse ($clients as $client)
+                  <div class="px-2">
+                      <div class="client__item">
+                          <img src="{{ Storage::url($client->logo) }}" class="client__img" alt="client logo">
+                      </div>
+                  </div>
+              @empty
+                  <div class="client__item">No client found</div>
+              @endforelse
+          </div>
+      </div>
+  </section>
   <main>
       <section id="services">
           <div class="container">
-              <h1 class="section__heading">Popular service</h1>
+              <h1 class="section__heading">Explore our top service</h1>
               <a href="{{ route('services') }}" class="service__all-link">
                   See all service <i class='bx bxs-right-arrow-alt'></i>
               </a>
               <div class="row">
-                  @foreach ($topService as $service)
-                      <div class="col-6 col-lg-3">
+                  @foreach ($topService as $category)
+                      <div class="col-6 col-md-4 col-lg-2">
                           <div class="service__item">
-                              <img src="{{ Storage::url($service->image) }}" class="services__icon" alt="Our service">
-                              <p class="services__name">{{ $service->title }}</p>
-                              <a href="{{ route('service.show', $service->id) }}" class="services__btn"></a>
-                              <div class="service__overlay"></div>
+                              <img src="{{ Storage::url($category->image_url) }}" class="services__icon" alt="Our service">
+                              <p class="services__name">{{ $category->name }}</p>
+                              <a href="{{ route('service.show', $category->id) }}" class="services__btn"></a>
                           </div>
                       </div>
                   @endforeach
               </div>
           </div>
       </section>
-      <section id="interest">
-          <div class="container">
-              <h1 class="section__heading text-center">Our Promo</h1>
-              <div class="row justify-content-between">
-                  <div class="col-12">
-                      <div class="interest-slider">
-                          @foreach($promos as $promo)
-                              <div class="interest-slider__item">
-                                  <p class="interest-slider__title">{{ $promo->title }}</p>
-                                  <img src="{{ Storage::url($promo->cover) }}" height="350" alt="Cover">
-                                  <a href="{{ route('blog.show', $promo->id) }}" class="interest-slider__link">
-                                      src only
-                                  </a>
-                                  <div class="interest-slider__overlay"></div>
-                              </div>
-                          @endforeach
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
       <section id="reasons">
           <div class="container">
-              <h1 class="section__heading">Why you should trust <strong>Desainin</strong></h1>
+              <h1 class="section__heading">Pasti beres dengan desainin.id, Gak perlu ribet!</h1>
               <div class="row">
                   <div class="col-12 col-md-7 col-lg-6">
                       <ul class="reason-list">
                           <li class="reason-list__item">
                               <p class="reason-list__item-title">
-                                  <i class='bx bx-check-circle reason-list__item-icon'></i>
-                                  Reason 1
+                                  <img src="{{ asset('img/reason-icon1.svg') }}" alt="Reason 1" height="40">
+                                  Bikin desain tanpa pusing
                               </p>
                               <p class="reason-list__item-desc">
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
-                                  voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
+                                  Jaminan kualitas desain kami pastikan. Jaringan desainer kami
+                                  sudah melalui veriﬁkasi skill dan tema desain yang pasti sesuai kebutuhan user kami
                               </p>
                           </li>
                           <li class="reason-list__item">
                               <p class="reason-list__item-title">
-                                  <i class='bx bx-check-circle reason-list__item-icon'></i>
-                                  Reason 2
+                                  <img src="{{ asset('img/reason-icon2.svg') }}" alt="Reason 2" height="40">
+                                  Harga jujur di depan, pasti mujur
                               </p>
                               <p class="reason-list__item-desc">
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
-                                  voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
+                                  segala keperluanmu, dengan jasa profesional dari jaringan desainer kami.
+                                  Dari tugas sekolah sampai bisnis. gak ada biaya sembunyi-sembunyi
                               </p>
                           </li>
                           <li class="reason-list__item">
                               <p class="reason-list__item-title">
-                                  <i class='bx bx-check-circle reason-list__item-icon'></i> Reason 3
+                                  <img src="{{ asset('img/reason-icon3.svg') }}" alt="Reason 2" height="30">
+                                  Layanan Personal, 24/7
                               </p>
                               <p class="reason-list__item-desc">
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate facere nulla
-                                  voluptas voluptates? Assumenda atque beatae cumque dolor facere soluta?
+                                  desainin.id selalu bersamamu, hubungi kami semudah chat
+                                  melalui apa saja. Telpon, Whatsapp atau chat in-Web. Diskusikan
+                                  kebutuhan project kamu melalui tim kami. Bukan bot apalagi yang bukan-bukan.
                               </p>
                           </li>
                       </ul>
                   </div>
                   <div class="col-12 col-md-5 col-lg-6 reason-trust">
                       <a href="javascript:void(0);" class="reason-trust__btn"><i class='bx bx-play'></i></a>
-                      <img src="{{ asset('img/reason-trust.png') }}" width="100%" alt="How desainin work">
+                      <img src="{{ asset('img/reason-trust.webp') }}" width="100%" alt="How desainin work">
                       <div class="reason-trust__overlay">
                           <div class="reason-trust__modal">
                               <a href="" class="reason-trust__close-btn"><i class='bx bx-x' ></i></a>
@@ -129,17 +114,132 @@
       </section>
       <section id="how-we-work">
           <div class="container">
-              <h1 class="section__heading">How we work</h1>
+              <h1 class="section__heading">Cari tahu cara kerja desainin.id</h1>
               <div class="row">
-                  <div class="col-12 col-md-5 col-lg-6 position-relative pr-5">
-                      <img src="{{ asset('img/how-we-work.png') }}" width="100%" alt="How desainin work">
+                  <div class="col-12 col-md-4">
+                      <div class="how-we-work__list">
+                          <img src="{{ asset('img/how-we-work1.svg') }}" alt="How we work">
+                          <p>Cari desain yang kamu inginkan</p>
+                          <p>
+                              Cari desain yang kamu butuhkan melalui jaringan desainer profesional kami.
+                              selesaikan pembayaran melalui saluran aman kami.
+                          </p>
+                      </div>
                   </div>
-                  <div class="col-12 col-md-7 col-lg-6 d-flex align-items-center">
-                      <ul class="how-we-work__list">
-                          <li>Select the Subscription Package or single service that you want</li>
-                          <li>Describe what you want in our brief design Form</li>
-                          <li>Pay your design, and be chill!</li>
+                  <div class="col-12 col-md-4">
+                      <div class="how-we-work__list">
+                          <img src="{{ asset('img/how-we-work2.svg') }}" alt="How we work">
+                          <p>Submit desain impian kamu </p>
+                          <p>
+                              Lakukan brief untuk desain yang kamu inginkan. sampaikan
+                              secara lengkap kepada kami. akan kami pastikan desain terbaik untuk kamu.
+                          </p>
+                      </div>
+                  </div>
+                  <div class="col-12 col-md-4">
+                      <div class="how-we-work__list">
+                          <img src="{{ asset('img/how-we-work3.svg') }}" alt="How we work">
+                          <p>Dapatkan desain kamu!</p>
+                          <p>
+                              tadaaa!! desain kamu sudah jadi. Jangan lupa berikan review
+                              untuk jaringan desainer kami. untuk akses terbaik bagi desain berkualitas.
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <section id="inspire">
+          <div class="container">
+              <h1>Inspirasi desain dari jaringan desainer kami</h1>
+              <div class="inspire__slider">
+                  <figure class="inspire__item">
+                      <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Inspiration from desainin" class="inspire__img">
+                      <figcaption class="inspire__detail">
+                          <img src="{{ Storage::url('temporary/people.webp') }}" alt="Agent desainin" height="70" class="inspire__avatar">
+                          <p class="inspire__agent">Desain 1</p>
+                          <small>By agent 1</small>
+                      </figcaption>
+                  </figure>
+                  <figure class="inspire__item">
+                      <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Inspiration from desainin" class="inspire__img">
+                      <figcaption class="inspire__detail">
+                          <img src="{{ Storage::url('temporary/people.webp') }}" alt="Agent desainin" height="70" class="inspire__avatar">
+                          <p class="inspire__agent">Desain 1</p>
+                          <small>By agent 1</small>
+                      </figcaption>
+                  </figure>
+                  <figure class="inspire__item">
+                      <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Inspiration from desainin" class="inspire__img">
+                      <figcaption class="inspire__detail">
+                          <img src="{{ Storage::url('temporary/people.webp') }}" alt="Agent desainin" height="70" class="inspire__avatar">
+                          <p class="inspire__agent">Desain 1</p>
+                          <small>By agent 1</small>
+                      </figcaption>
+                  </figure>
+                  <figure class="inspire__item">
+                      <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Inspiration from desainin" class="inspire__img">
+                      <figcaption class="inspire__detail">
+                          <img src="{{ Storage::url('temporary/people.webp') }}" alt="Agent desainin" height="70" class="inspire__avatar">
+                          <p class="inspire__agent">Desain 1</p>
+                          <small>By agent 1</small>
+                      </figcaption>
+                  </figure>
+              </div>
+          </div>
+      </section>
+      <section id="interest">
+          <div class="container">
+              <h1 class="section__heading text-center">Our Promo</h1>
+              <div class="interest-slider">
+                  <img src="{{ asset('img/promo1.webp') }}" alt="Desainin Promo" class="interest__img">
+                  <p class="interest-slider__title">
+                      Langganan sekarang <span class="d-block">desain lebih hemat sampai <br> 50%</span>
+                  </p>
+                  <a href="{{ route('blog.index') }}" class="interest-slider__link">Read more</a>
+              </div>
+          </div>
+      </section>
+      <section id="promo">
+          <div class="container">
+              <div class="row">
+                  <div class="col-12 col-md-7 col-lg-6">
+                      <ul class="reason-list">
+                          <li class="reason-list__item">
+                              <p class="reason-list__item-title">
+                                  <img src="{{ asset('img/reason-icon1.svg') }}" alt="Reason 1" height="40">
+                                  Pasti lebih murah, makin gak pusing
+                              </p>
+                              <p class="reason-list__item-desc">
+                                  Dengan berlangganan, dapatkan request desain dengan harga
+                                  yang lebih murah, hingga 50%. Cara baru untuk memastikan
+                                  urusan desain tanpa ribet.
+                              </p>
+                          </li>
+                          <li class="reason-list__item">
+                              <p class="reason-list__item-title">
+                                  <img src="{{ asset('img/reason-icon2.svg') }}" alt="Reason 2" height="40">
+                                  Tanpa kontrak, sesuai kebutuhan
+                              </p>
+                              <p class="reason-list__item-desc">
+                                  dan gunakan tanpa ribet. Jangan batasi ide anda dengan kontrak
+                                  dan administrasi. 100% akses ke jaringan desainer kami.
+                              </p>
+                          </li>
+                          <li class="reason-list__item">
+                              <p class="reason-list__item-title">
+                                  <img src="{{ asset('img/reason-icon3.svg') }}" alt="Reason 2" height="30">
+                                  Layanan khusus langganan
+                              </p>
+                              <p class="reason-list__item-desc">
+                                  Jangan khawatir, kami akan pastikan user langganan kami memiliki pelayanan prioritas
+                                  dari A sampai Z, kami siap untuk anda.
+                              </p>
+                          </li>
                       </ul>
+                  </div>
+                  <div class="col-12 col-md-5 col-lg-6 reason-trust text-center">
+                      <img src="{{ asset('img/people-promo.webp') }}" height="300" alt="How desainin work" class="d-block mx-auto">
                   </div>
               </div>
           </div>
@@ -150,89 +250,55 @@
               <div class="subscription__slider">
                   @foreach ($subscriptions as $sub)
                       <div class="px-3">
-                          <figure class="subscription__item">
-                              <img src="{{ Storage::url($sub->img) }}" class="subscription__img" alt="{{$sub->title}}">
-                              <figcaption class="subscription__caption">
-                                  <p class="subscription__name">{{$sub->title}}</p>
-                                  <p class="subscription__price">
-                                      Price: <var class="subscription__currency">Rp. {{$sub->price}}</var>
-                                  </p>
-                                  <p class="subscription__duration">Duration: {{ $sub->duration }} Day</p>
-                              </figcaption>
-                              <div class="subscription__detail">
-                                  <p class="subscription__name">{{ $sub->title }}</p>
-                                  <p class="subscription__desc">
-                                      {!! Str::words($sub->desc, 30) !!}
-                                  </p>
-                                  <a href="{{ route('user.subscription.show', $sub->id) }}" class="subscription__btn">
-                                      Subscribe Now
-                                  </a>
+                          <div class="subscription__item">
+                              <p class="subscription__name">{{$sub->title}}</p>
+                              <div class="subscription__box">
+                                  <img src="{{ Storage::url($sub->img) }}" class="subscription__img" alt="{{$sub->title}}">
+                                  <div class="subscription__caption">
+                                      <p class="subscription__duration">Berlaku: {{ $sub->duration }} Day</p>
+                                      <p class="subscription__price">
+                                          <var class="subscription__currency">IDR {{$sub->price}}</var>
+                                      </p>
+                                  </div>
                               </div>
-                          </figure>
+                              <a href="{{ route('user.subscription.show', $sub->id) }}" class="subscription__btn">
+                                  Beli Paket
+                              </a>
+                          </div>
                       </div>
                   @endforeach
               </div>
           </div>
       </section>
-      @if (count($testimonies) > 0)
-          <section id="testimonies">
-              <div class="container">
-                  <h1 class="section__heading text-center">Testimony</h1>
-                  <div class="testimonies-slider">
-                      @foreach ($testimonies as $testimony)
-                          <div class="px-2">
-                              <div class="card testimony-card">
-                                  <div class="card__header testimony-card__header">
-                                      <img src="{{ Storage::url($testimony->user->profile->avatar) }}"
-                                           alt="desainin testimony" class="card__img card__img--circle testimony__img">
-                                      <p class="testimony__name">{{ $testimony->user->name }}</p>
-                                      <p class="card__text">{{ $testimony->created_at->format('d M Y') }}</p>
-                                  </div>
-                                  <div class="card__body testimony-card__detail" style="text-align: center">
-                                      {{ $testimony->content }}
-                                  </div>
-                              </div>
-                          </div>
-                      @endforeach
-                  </div>
-              </div>
-          </section>
-      @endif
-      <section id="client">
+      <section id="blog">
           <div class="container">
-              <h1 class="section__heading text-center">Our client</h1>
-              <div class="row">
-                  @forelse ($clients as $client)
-                      <div class="px-2">
-                          <div class="client__item">
-                              <img src="{{ Storage::url($client->logo) }}" class="client__img" alt="client logo">
-                          </div>
+              <h1 class="section__heading mb-5">Food for Thoughts</h1>
+              @foreach($blogs as $blog)
+                  <article class="blog-article">
+                      <img src="{{ Storage::url($blog->header_image) }}" alt="{{ $blog->title }}" class="blog-article__img">
+                      <div class="blog-article__detail">
+                          <p class="blog-article__title">{{ $blog->title }}</p>
+                          <p>{{ Str::words($blog->contents, 80) }}</p>
                       </div>
-                  @empty
-                      <div class="client__item">No client found</div>
-                  @endforelse
+                      <a href="" class="blog-article__link">src only</a>
+                  </article>
+              @endforeach
+          </div>
+      </section>
+      <section id="help">
+          <div class="container">
+              <img src="{{ asset('img/help.webp') }}" alt="Help" class="help__bg">
+              <div class="help__box">
+                  <h1>
+                      <span>Oopss...</span>
+                      <span>butuh bantuan atau bingung dengan layanan kami?</span>
+                  </h1>
+                  <a href="https://wa.me/628118696858" class="help__btn" target="_blank">Whatsapp us</a>
               </div>
           </div>
       </section>
     </main>
     @include('partials.footer')
-    <div class="modal" id="modal-search-service">
-        <div class="modal__content">
-            <div class="modal__header">
-                <a href="javascript:void(0)" class="btn-close-modal btn-close-modal--search-service">
-                    <i class='bx bx-x' ></i>
-                </a>
-            </div>
-            <div class="modal__body">
-                <form action="{{ route('service.search') }}" class="search-service" method="get">
-                    <label for="search-landing" class="d-none">Search design</label>
-                    <input type="search" id="search-landing" class="search-service__input" name="search_agent_job"
-                    placeholder="Find design and click enter..." autocomplete="off" required>
-                    <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="overlay overlay--nav-showed"></div>
     @include('partials.script')
   </body>

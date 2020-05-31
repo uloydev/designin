@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(Subscription::class, function (Faker $faker) {
-    $subscribeName = ['Quick-Shot', 'Discovery', 'Startup'];
+    $subscribeName = ['Enterprise Pack', 'Discovery Pack', 'Start-up Pack'];
     return [
         'title' => $subscribeName[$faker->numberBetween(0, 2)],
         'desc' => '<p>Excalibur blue marvel satana kang steve rogers, husk cardiac? Crossbones ink toxin sunfire'.
@@ -50,7 +50,7 @@ $factory->define(Subscription::class, function (Faker $faker) {
                     'grand master surge cuckoos riptide! Wiccan karnak sprite jackal black bolt lockjaw mephisto batroc'.
                     'Taskmaster harrier ant man empath spot lilith'.
                     '</p>',
-        'img' => 'temporary/subscription.jpg',
+        'img' => $faker->randomElement(['files/discovery.webp', 'files/startup.webp', 'files/enterprise.webp']),
         'token' => $faker->numberBetween($min = 20, $max = 40),
         'price' => $faker->randomElement([450000, 1050000, 3600000]),
         'duration' => $faker->randomElement([7, 30]),
