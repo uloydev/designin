@@ -13,7 +13,7 @@ use Illuminate\Support\Carbon;
 $factory->define(Order::class, function (Faker $faker) {
     $agent_id = User::inRandomOrder()->firstWhere('role', 'agent')->id;
     $package = Package::inRandomOrder()->firstWhere('service_id', Service::inRandomOrder()->firstWhere('agent_id', $agent_id)->id);
-    $status = $faker->randomElement(['unpaid', 'process', 'complaint', 'finished']);
+    $status = $faker->randomElement(['process', 'complaint', 'finished']);
     $data = [
         'user_id' => User::inRandomOrder()->firstWhere('role', 'user')->id,
         'package_id' => $package->id,
