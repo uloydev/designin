@@ -98,19 +98,18 @@ class ProfileController extends Controller
 
     public function avatarUpdate(Request $request)
     {
-        $user = Auth::user();
         $request->validate([
-            'avatar' => 'required|file|mimes:jpg,jpeg,png,gif,webp'
+            'avatar' => 'bail|required|max:2000|image|'
         ]);
         if ($request->hasFile('avatar')) {
-            if (!empty($user->profile)) {
-                Storage::delete($user->profile->avatar);
+            if (!empty(Auth::user()->profile->avatar)) {
+                Storage::delete(Auth::user()->profile->avatar);
             }
-            $avatar = Storage::putFile('uploads/avatar', $request->file('avatar'));
-            UserProfile::updateOrCreate(['user_id' => $user->id], [
-                'avatar' => $avatar,
-                'user_id' => $user->id
-            ]);
+            $avatar = $request->file('avatar')->store('public/files');
+            UserProfile::updateOrCreate(
+                ['user_id' => Auth::id()],
+                ['avatar' => $avatar]
+            );
         }
         return redirect()->back()->with('success', 'Profile Updated Successfully');
     }

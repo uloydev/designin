@@ -528,18 +528,22 @@ $("#serviceCategoryPage .btn[data-target='#create-edit-category']").click(functi
     let categoryName = $(this).data('category-name');
 
     $(".modal#create-edit-category form input[name='service_category']").val(categoryName);
-    if ($(this).attr('id') === 'edit-category') {
+    if ($(this).attr('id') === 'edit-service-category') {
         $("#create-edit-category .modal-title").text('Edit category');
-        $("#create-edit-category form")
-            .attr('action', window.location.origin + '/admin/manage/blog-category/' + categoryId);
+        $("#create-edit-category form").attr('action', window.location.origin + '/admin/manage/service-category/' + categoryId);
+        $("#create-edit-category input[name='name']").val(categoryName);
         $("#create-edit-category input[name='image_url']").prop('required', false);
         $("#create-edit-category label[for='imgCategory']").text('Change icon');
+        $("#create-edit-category button[type='submit']").text('Update category');
+        $("#create-edit-category form").append("<input type='hidden' name='_method' value='PUT'>");
     }
-    else {
+    else if($(this).attr('id') === 'create-service-category') {
+        $("#create-edit-category form input[name='_method']").remove();
         $("#create-edit-category .modal-title").text('Add new category');
-        $("#create-edit-category form").attr('action', window.location.origin + '/admin/manage/blog-category');
+        $("#create-edit-category form").attr('action', window.location.origin + '/admin/manage/service-category');
         $("#create-edit-category form input[name='image_url']").prop('required', true);
         $("#create-edit-category label[for='imgCategory']").text('Pick icon');
+        $("#create-edit-category button[type='submit']").text('Add new category');
     }
 });
 $("#serviceCategoryPage .btn[data-target='#delete-category']").click(function () {
@@ -548,7 +552,7 @@ $("#serviceCategoryPage .btn[data-target='#delete-category']").click(function ()
 
     $("#serviceCategoryPage .service-category-title").text(categoryName);
     $("#serviceCategoryPage #delete-category form")
-        .attr('action', window.location.origin + '/admin/manage/blog-category/' + categoryId);
+        .attr('action', window.location.origin + '/admin/manage/service-category/' + categoryId);
 });
 
 $("#manageAgentPage .btn[data-target='#modal-remove-agent'], " +
@@ -735,6 +739,7 @@ if (window.location.pathname.indexOf('agent/order/') > -1) {
 else if (window.location.pathname.indexOf('user/order/') > -1) {
     getChatUrl = '/user/order/' + orderId + '/get-chat';
 }
+console.log(getChatUrl);
 $('.order-chat__send-btn').click(function (e) {
     e.preventDefault();
     let token = $('meta[name="csrf-token"]').attr('content');
@@ -761,13 +766,14 @@ $('.order-chat__send-btn').click(function (e) {
     $.get(getChatUrl, function (data) {
         $("#chat-list").empty().html(data);
     });
+
 });
 
 setInterval(function () {
     $.get(getChatUrl, function (data) {
         $("#chat-list").empty().html(data);
     });
-}, 3000);
+}, 100);
 
 $("img").prop('draggable', false);
 $(".alert").not(".no-fadeout").not('#alert-approve').delay(2000).fadeOut('slow');

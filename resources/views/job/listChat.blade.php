@@ -1,8 +1,8 @@
-@foreach($messages as $message)
+@forelse($messages as $message)
     @if ($message->sender->role == 'agent')
         <div class="order-chat__wrapper">
             <div class="order-chat__agent">
-                <img class="order-chat__avatar" src="{{ Storage::url('temporary/avatar-agent.jpg') }}"
+                <img class="order-chat__avatar" src="{{ Storage::url($message->sender->profile->avatar) }}"
                      alt="Agent avatar">
                 <div class="order-chat__box">
                     <p class="order-chat__message">
@@ -32,7 +32,7 @@
     @if ($message->sender->role == 'user')
         <div class="order-chat__wrapper order-chat__wrapper--customer">
             <div class="order-chat__myself">
-                <img class="order-chat__avatar" src="{{ Storage::url('temporary/people.webp') }}"
+                <img class="order-chat__avatar" src="{{ Storage::url($message->sender->profile->avatar) }}"
                      alt="Agent avatar">
                 <div class="order-chat__box">
                     <p class="order-chat__message">{{ $message->content }}</p>
@@ -52,4 +52,6 @@
             </div>
         </div>
     @endif
-@endforeach
+@empty
+    <div class="text-center">No chat before. Let's chat now!</div>
+@endforelse

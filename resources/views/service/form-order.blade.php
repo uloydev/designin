@@ -12,7 +12,8 @@
                     {{-- quatity need to pass to $request --}}
                     <div class="d-flex align-items-center">
                         <label for="quantity" class="mr-2">Quantity</label>
-                        <input type="number" id="quantity" min="1" value="1" max="20" form="form-last" required name="quantity">
+                        <input type="number" id="quantity" min="1" value="1" max="20" form="form-last"
+                        name="quantity" required>
                     </div>
                     <p class="my-3">
                         Price: IDR <var class="modal-order-price" data-original-price=""></var>
@@ -23,7 +24,8 @@
                             Your saving:
                             <var class="font-style-normal" id="user-token"
                             data-saving="{{ $tokenConversion->numeral * Auth::user()->subscribe_token ?? 0 }}"
-                            data-token="{{ Auth::user()->subscribe_token ?? 0 }}" data-token-conversion="{{ $tokenConversion->numeral }}">
+                            data-token="{{ Auth::user()->subscribe_token ?? 0 }}"
+                            data-token-conversion="{{ $tokenConversion->numeral }}">
                                 {{ Auth::user()->subscribe_token ?? '0' }}
                             </var> token
                             @if (Auth::user()->subscribe_token > 0)
@@ -38,7 +40,9 @@
                             </var> token
                         </p>
                     @endauth
-                    <p class="mb-3" id="grand-total-text">Grand total: IDR <output id="grand-total" name="grand_total"></output></p>
+                    <p class="mb-3" id="grand-total-text">
+                        Grand total: IDR <output id="grand-total" name="grand_total"></output>
+                    </p>
                     <input type="hidden" name="modal_order_title">
                     @if (count($service->extras) > 0)
                         <p>Total extras: <output id="total_extras" name="total_extras">IDR 0</output></p>
@@ -48,14 +52,21 @@
                             @foreach ($extras_template as $extra)
                                 <div class="checkbox-custom flex-column align-items-start align-items-lg-center flex-lg-row">
                                     <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input"
-                                           data-price-cash="{{ $extra->price }}" data-price-token="{{ $extra->price_token }}"
+                                           data-price-cash="{{ $extra->price }}"
+                                           data-price-token="{{ $extra->price_token }}"
                                            value="{{$extra->id}}" name="extras">
                                     <label class="checkbox-custom__label" for="extras-{{$extra->id}}">
                                         <span class="checkbox-custom__icon"><i class='bx bx-check' ></i></span>
                                         {{ $extra->name }}
                                     </label>
                                     <span class="ml-lg-2 text-success mt-2 mt-lg-0" style="transform: translateX(-1.5rem)">
-                                        Price (IDR <var class="form-extras-order__money extra-price-cash">{{ $extra->price }}</var>)
+                                        Price
+                                        (
+                                        IDR
+                                        <var class="form-extras-order__money extra-price-cash">
+                                            {{ $extra->price }}
+                                        </var>
+                                        )
                                     </span>
                                 </div>
                             @endforeach
@@ -63,14 +74,19 @@
                             @foreach ($service->extras as $extra)
                                 <div class="checkbox-custom flex-column align-items-start align-items-lg-center flex-lg-row">
                                     <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input"
-                                           data-price-cash="{{ $extra->price }}" data-price-token="{{ $extra->price_token }}"
+                                           data-price-cash="{{ $extra->price }}"
+                                           data-price-token="{{ $extra->price_token }}"
                                            value="{{$extra->id}}" name="extras">
                                     <label class="checkbox-custom__label" for="extras-{{$extra->id}}">
                                         <span class="checkbox-custom__icon"><i class='bx bx-check' ></i></span>
                                         {{ $extra->name }}
                                     </label>
                                     <span class="ml-lg-2 text-success mt-2 mt-lg-0" style="transform: translateX(-1.5rem)">
-                                        Price (IDR <var class="form-extras-order__money extra-price-cash">{{ $extra->price }}</var>)
+                                        Price
+                                        (IDR
+                                        <var class="form-extras-order__money extra-price-cash">
+                                            {{ $extra->price }}
+                                        </var>)
                                     </span>
                                 </div>
                             @endforeach
@@ -98,8 +114,9 @@
         <div class="modal__body row mx-0">
             <div class="single-service__modal-message-info">
                 <figure class="text-center">
-                    <img src="{{ Storage::url('temporary/people.webp')  }}" alt="Agent Photo" height="70">
-                    <figcaption class="mt-1">{{ $service->agent->name }}</figcaption>
+                    <img src="{{ Storage::url($service->agent->profile->avatar)  }}" alt="Agent Photo"
+                    height="70" width="70" style="border-radius: 50%">
+                    <figcaption class="mt-1">{{ Str::words($service->agent->name, 3) }}</figcaption>
                 </figure>
                 <p>Please include: </p>
                 <ul>

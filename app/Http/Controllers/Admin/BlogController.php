@@ -15,10 +15,14 @@ class BlogController extends Controller
 
     public function index()
     {
-        $blogs = Blog::with(['category', 'author'])->latest()->paginate(10);
+        $blogs = Blog::with('category')->latest()->paginate(10);
         $number = $blogs->firstItem();
         $blogCategories = BlogCategory::all();
-        return view('blog.manage-article', ['blogs' => $blogs, 'number' => $number, 'blogCategories' => $blogCategories]);
+        return view('blog.manage-article', [
+            'blogs' => $blogs,
+            'number' => $number,
+            'blogCategories' => $blogCategories
+        ]);
     }
 
     public function create()
@@ -36,7 +40,6 @@ class BlogController extends Controller
         $createBlog->title = $request->title;
         $createBlog->category_id = $request->category_id;
         $createBlog->contents = $request->contents;
-        $createBlog->author_id = Auth::id();
         if (Blog::all()->count() <= 6) {
             $createBlog->is_main = $request->is_main;
         }else {
@@ -48,9 +51,9 @@ class BlogController extends Controller
 
     public function show($id)
     {
-        $blog = Blog::with(['category', 'author'])->findOrFail($id);
+        $blog = Blog::with('category')->findOrFail($id);
         $popular = Blog::orderBy('hits', 'desc')->take(3)->get();
-        $related_blogs = Blog::with(['category', 'author'])->inRandomOrder()->take(3)->get()->except($id);
+        $related_blogs = Blog::with('category')->inRandomOrder()->take(3)->get()->except($id);
         return view('blog.single', [
             'blog' => $blog,
             'relates' => $related_blogs,

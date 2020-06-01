@@ -7,6 +7,14 @@
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
+    @elseif ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
     <div class="row">
         <div class="col-xl-4 order-xl-2">

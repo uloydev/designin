@@ -8,12 +8,7 @@ class Blog extends Model
 {
     protected $table = 'blog';
     protected $with = ['category'];
-    protected $fillable = ['title', 'header_image', 'contents', 'author_id', 'category_id', 'hits', 'is_main'];
-
-    public function author()
-    {
-        return $this->belongsTo('App\User', 'author_id');
-    }
+    protected $fillable = ['title', 'header_image', 'contents', 'category_id', 'hits', 'is_main'];
 
     public function category()
     {

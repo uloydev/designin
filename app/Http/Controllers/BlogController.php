@@ -29,7 +29,7 @@ class BlogController extends Controller
 
     public function show($id)
     {
-        $blog = Blog::with(['category', 'author'])->findOrFail($id);
+        $blog = Blog::with('category')->findOrFail($id);
         $blog->hits = (!$blog->hits) ? 1 : $blog->hits++;
         $blog->update();
         $popular = Blog::orderBy('hits', 'desc')->take(3)->get();
@@ -45,7 +45,7 @@ class BlogController extends Controller
 
     public function search(Request $request)
     {
-        $blogs = Blog::with(['category', 'author'])->where('title', 'LIKE', '%' . $request->query . '%')->get();
+        $blogs = Blog::with('category')->where('title', 'LIKE', '%' . $request->query . '%')->get();
         return ['blogs' => $blogs];
     }
 }

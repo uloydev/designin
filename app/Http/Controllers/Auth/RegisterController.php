@@ -77,7 +77,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
         $userProfile = new UserProfile;
-        $userProfile->avatar = 'temporary/people.webp';
+        $userProfile->avatar = 'files/people.webp';
         $userProfile->user_id = $user->id;
         return $user;
     }

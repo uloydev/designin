@@ -46,15 +46,9 @@
                 @endif
             </aside>
             <section class="order-chat">
-                @if (count($messages) > 0)
-                    <div class="order-chat__top">
-                        <div class="row flex-column mx-0" id="chat-list">@include('job.listChat')</div>
-                    </div>
-                @else
-                    <div class="order-chat__top text-center">
-                        No chat before. Let's chat now!
-                    </div>
-                @endif
+                <div class="order-chat__top">
+                    <div class="row flex-column mx-0" id="chat-list"></div>
+                </div>
                 @if (Route::currentRouteName() === 'agent.chat.index')
                     <form class="order-chat__send-box" method="post" action="{{ route('agent.chat.store') }}">
                         @csrf

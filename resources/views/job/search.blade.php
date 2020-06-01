@@ -1,7 +1,7 @@
 @extends('layouts.admin-master')
 @section('page-title') List Request | Search Job {{ $searching }} @endsection
 @section('page-id', 'searchRequest')
-@section('page-name') List Request | Search Job with keyword {{ "'" . $searching . "'" }} @endsection
+@section('page-name') List Request | Search Job with keyword <q>{{ $searching }}</q> @endsection
 @section('header') @include('partials.job-header') @endsection
 @section('content')
     <div class="alert alert-danger no-fadeout alert-dismissible fade show" id="alert-error" role="alert" style="display: none">
