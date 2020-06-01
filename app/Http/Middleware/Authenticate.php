@@ -5,6 +5,10 @@ namespace App\Http\Middleware;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Auth;
 use Closure;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\URL;
 
 class Authenticate extends Middleware
@@ -12,13 +16,11 @@ class Authenticate extends Middleware
 
     protected function redirectTo($request)
     {
-    if (! $request->expectsJson()) {
-        return route('login', [
-            'redirect'=>$request
-            ]);
+        if (! $request->expectsJson()) {
+            return route('login', ['redirect'=>$request]);
         }
     }
-    
+
     public function handle($request, Closure $next)
     {
         if(Auth::check()){

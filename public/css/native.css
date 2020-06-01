@@ -1359,6 +1359,7 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #servicesPage .service__action {
     display: flex;
+    flex-wrap: wrap;
     margin-top: auto;
     justify-content: space-between;
     padding: 0 20px 20px;
@@ -1366,7 +1367,12 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     color: var(--primary-color);
 }
 #servicesPage .service__rating {
+    margin-bottom: 0.5rem;
     color: var(--almost-black);
+}
+#servicesPage .service__price {
+    font-style: normal;
+    font-weight: bold;
 }
 #servicesPage .service__goto {
     position: absolute;

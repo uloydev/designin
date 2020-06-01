@@ -5,7 +5,14 @@
                 <img class="order-chat__avatar" src="{{ Storage::url('temporary/avatar-agent.jpg') }}"
                      alt="Agent avatar">
                 <div class="order-chat__box">
-                    <p class="order-chat__message">{{ $message->content }}</p>
+                    <p class="order-chat__message">
+                        @if (Auth::user()->name === $message->sender->name)
+                            <span class="mr-1">You:</span>
+                        @else
+                            <span class="mr-1">{{ $message->sender->name . ':' }}</span>
+                        @endif
+                        {{ $message->content }}
+                    </p>
                     @if (Auth::user()->role === 'agent')
                         @if ($message->is_read == false)
                             <span class="order-chat__delivery">

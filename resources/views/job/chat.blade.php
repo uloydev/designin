@@ -48,7 +48,7 @@
             <section class="order-chat">
                 @if (count($messages) > 0)
                     <div class="order-chat__top">
-                        <div class="row flex-column mx-0" id="chat-list"></div>
+                        <div class="row flex-column mx-0" id="chat-list">@include('job.listChat')</div>
                     </div>
                 @else
                     <div class="order-chat__top text-center">

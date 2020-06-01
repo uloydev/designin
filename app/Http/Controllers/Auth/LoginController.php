@@ -23,11 +23,6 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected function redirectTo(Request $request)
     {
         // dd($request);
@@ -67,6 +62,6 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             return redirect($this->redirectTo($request));
         }
-        return redirect()->route('login')->withSuccess('Oppes! You have entered invalid credentials');
+        return redirect()->route('login')->with('success', 'Oops! You have entered invalid credentials');
     }
 }

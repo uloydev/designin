@@ -725,55 +725,49 @@ if ($(".progress-job").length) {
     });
 }
 
-const sendChat = document.querySelector('.order-chat__send-btn');
-const formChat = document.querySelector('.order-chat__send-box');
-const order = document.querySelector('input[name="order_id"]');
+const order = $('input[name="order_id"]');
+const chatUrl = $('.order-chat__send-box').attr('action');
+const orderId = $('input[name="order_id"]').val();
 let getChatUrl;
-if (formChat) {
-    const chatUrl = formChat.getAttribute('action');
+if (window.location.pathname.indexOf('agent/order/') > -1) {
+    getChatUrl = '/agent/order/' + orderId + '/get-chat';
 }
-if (order) {
-    const orderId = document.querySelector('input[name="order_id"]').value;
-    if (window.location.pathname.indexOf('agent/order/') > -1) {
-        getChatUrl = '/agent/order/' + orderId + '/get-chat';
-    }
-    else if (window.location.pathname.indexOf('user/order/') > -1) {
-        getChatUrl = '/user/order/' + orderId + '/get-chat';
-    }
+else if (window.location.pathname.indexOf('user/order/') > -1) {
+    getChatUrl = '/user/order/' + orderId + '/get-chat';
 }
+$('.order-chat__send-btn').click(function (e) {
+    e.preventDefault();
+    let token = $('meta[name="csrf-token"]').attr('content');
 
-if (sendChat) {
-    sendChat.addEventListener('click', function (e) {
-        e.preventDefault();
-        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-        fetch(chatUrl,{
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json, text-plain, */*",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-TOKEN": token
-            },
-            method : 'POST',
-            body : JSON.stringify({
-                'sender_id' : document.querySelector('input[name="sender_id"]').value,
-                'order_id' : document.querySelector('input[name="order_id"]').value,
-                'message' : document.querySelector('input[name="message"]').value
-            }),
-        }).then((data) => {
-            formChat.reset();
-
-        }).catch(function(error) {
-            console.log(error);
-        });
+    fetch(chatUrl,{
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        },
+        method : 'POST',
+        body : JSON.stringify({
+            'sender_id' : $('input[name="sender_id"]').val(),
+            'order_id' : $('input[name="order_id"]').val(),
+            'message' : $('input[name="message"]').val()
+        }),
+    }).then((data) => {
+        $('.order-chat__send-box')[0].reset();
+    }).catch(function(error) {
+        console.log(error);
     });
-}
+
+    $.get(getChatUrl, function (data) {
+        $("#chat-list").empty().html(data);
+    });
+});
 
 setInterval(function () {
     $.get(getChatUrl, function (data) {
         $("#chat-list").empty().html(data);
     });
-}, 1000);
+}, 3000);
 
 $("img").prop('draggable', false);
 $(".alert").not(".no-fadeout").not('#alert-approve').delay(2000).fadeOut('slow');

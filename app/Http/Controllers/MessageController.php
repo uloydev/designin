@@ -45,6 +45,16 @@ class MessageController extends Controller
     {
         $order = Order::findOrFail($id);
         $messages = Message::with('sender.profile')->where('order_id', $id)->get();
+        if (Auth::user()->role == 'agent') {
+            Message::where('order_id', $id)->whereHas('sender', function (Builder $query) {
+                $query->where('role', 'user');
+            })->update(['is_read' => true]);
+        }
+        else {
+            Message::where('order_id', $id)->whereHas('sender', function (Builder $query) {
+                $query->where('role', 'agent');
+            })->update(['is_read' => true]);
+        }
         return view('job.chat', ['order' => $order, 'messages' => $messages]);
     }
 
