@@ -15,6 +15,7 @@
     visibility: visible;
 }
  body {
+     overflow-x: hidden;
      font-size: 13px;
      font-family: 'Montserrat', serif;
  }
@@ -1069,18 +1070,18 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #landingPage .inspire__detail {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: calc(70px + 30px);
-    padding: 15px 0 15px 2rem;
-    align-items: flex-start;
-    justify-content: center;
-    align-content: flex-start;
+    padding: 15px 2rem;
 }
-#landingPage .inspire__agent {
+#landingPage .inspire__caption {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#landingPage .inspire__title {
     margin-bottom: 0.5rem;
     color: #000;
     font-weight: bold;
+    overflow-wrap: break-word;
 }
 #landingPage #testimonies {
     background-color: #e5a033;
@@ -1251,27 +1252,33 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     margin-bottom: 10px;
 }
 #landingPage .blog-article {
-    position: relative;
-}
-#landingPage .blog-article__img {
-    max-height: 200px;
-    margin-right: 1rem;
-}
-#landingPage .blog-article {
     display: flex;
+    position: relative;
     margin-bottom: 2.5rem;
     padding: 2rem;
     border: 1px solid #efefef;
     border-radius: 10px;
     box-shadow: 2px 3px 4px rgba(87, 87, 87, 0.14);
     transition: all 150ms;
+    flex-wrap: wrap;
 }
 #landingPage .blog-article:hover {
     box-shadow: none;
 }
+#landingPage .blog-article__detail {
+    padding: 0 1rem;
+    width: 100%;
+}
+#landingPage .blog-article__img {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    margin: 0 auto 1rem;
+}
 #landingPage .blog-article__title {
     color: #000;
     font-weight: bold;
+    text-align: center;
     margin-bottom: 1rem;
 }
 #landingPage .blog-article__link {
@@ -2803,6 +2810,16 @@ footer .row {
     }
     #landingPage #help h1 span {
         font-size: 3rem;
+    }
+    #landingPage .blog-article__detail {
+        width: calc(100% - 200px);
+    }
+    #landingPage .blog-article__title {
+        text-align: left;
+        font-size: 1.2rem;
+    }
+    #landingPage .blog-article__img {
+        margin: 0;
     }
 
     #blogIndexPage main .article__title {

@@ -50,7 +50,8 @@
                           <div class="service__item">
                               <img src="{{ Storage::url($category->image_url) }}" class="services__icon" alt="Our service">
                               <p class="services__name">{{ $category->name }}</p>
-                              <a href="{{ route('services') . '#' . Str::slug($category->name) }}" class="services__btn"></a>
+                              <a href="{{ route('services') . '#' . Str::slug($category->name) }}"
+                                 class="services__btn"></a>
                           </div>
                       </div>
                   @endforeach
@@ -153,38 +154,20 @@
           <div class="container">
               <h1>Inspirasi desain dari jaringan desainer kami</h1>
               <div class="inspire__slider">
+                  @foreach($inspirations as $inspire)
                   <figure class="inspire__item">
-                      <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Inspiration from desainin" class="inspire__img">
+                      <img src="{{ Storage::url($inspire->image) }}" class="inspire__img"
+                           alt="Inspiration from desainin">
                       <figcaption class="inspire__detail">
-                          <img src="{{ Storage::url('temporary/people.webp') }}" alt="Agent desainin" height="70" class="inspire__avatar">
-                          <p class="inspire__agent">Desain 1</p>
-                          <small>By agent 1</small>
+                          <img src="{{ Storage::url($inspire->agent->profile->avatar) }}" alt="Agent desainin"
+                               height="70" class="inspire__avatar">
+                          <div class="inspire__caption">
+                              <p class="inspire__title">{{ $inspire->title}}</p>
+                              <small>By {{ $inspire->agent->name }}</small>
+                          </div>
                       </figcaption>
                   </figure>
-                  <figure class="inspire__item">
-                      <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Inspiration from desainin" class="inspire__img">
-                      <figcaption class="inspire__detail">
-                          <img src="{{ Storage::url('temporary/people.webp') }}" alt="Agent desainin" height="70" class="inspire__avatar">
-                          <p class="inspire__agent">Desain 1</p>
-                          <small>By agent 1</small>
-                      </figcaption>
-                  </figure>
-                  <figure class="inspire__item">
-                      <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Inspiration from desainin" class="inspire__img">
-                      <figcaption class="inspire__detail">
-                          <img src="{{ Storage::url('temporary/people.webp') }}" alt="Agent desainin" height="70" class="inspire__avatar">
-                          <p class="inspire__agent">Desain 1</p>
-                          <small>By agent 1</small>
-                      </figcaption>
-                  </figure>
-                  <figure class="inspire__item">
-                      <img src="{{ Storage::url('files/service-design2.jpg') }}" alt="Inspiration from desainin" class="inspire__img">
-                      <figcaption class="inspire__detail">
-                          <img src="{{ Storage::url('temporary/people.webp') }}" alt="Agent desainin" height="70" class="inspire__avatar">
-                          <p class="inspire__agent">Desain 1</p>
-                          <small>By agent 1</small>
-                      </figcaption>
-                  </figure>
+                  @endforeach
               </div>
           </div>
       </section>
@@ -239,7 +222,8 @@
                       </ul>
                   </div>
                   <div class="col-12 col-md-5 col-lg-6 reason-trust text-center">
-                      <img src="{{ asset('img/people-promo.webp') }}" height="300" alt="How desainin work" class="d-block mx-auto">
+                      <img src="{{ asset('img/people-promo.webp') }}" height="300"
+                           alt="How desainin work" class="d-block mx-auto">
                   </div>
               </div>
           </div>
@@ -275,12 +259,13 @@
               <h1 class="section__heading mb-5">Food for Thoughts</h1>
               @foreach($blogs as $blog)
                   <article class="blog-article">
-                      <img src="{{ Storage::url($blog->header_image) }}" alt="{{ $blog->title }}" class="blog-article__img">
+                      <img src="{{ Storage::url($blog->header_image) }}" alt="{{ $blog->title }}"
+                           class="blog-article__img">
                       <div class="blog-article__detail">
                           <p class="blog-article__title">{{ $blog->title }}</p>
-                          <p>{{ Str::words($blog->contents, 80) }}</p>
+                          <p>{{ Str::words($blog->contents, 30) }}</p>
                       </div>
-                      <a href="" class="blog-article__link">src only</a>
+                      <a href="{{ route('blog.show', $blog->id) }}" class="blog-article__link">src only</a>
                   </article>
               @endforeach
           </div>

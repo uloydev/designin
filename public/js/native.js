@@ -904,6 +904,13 @@ inspireSlider.slick({
     swipeToSlide: true,
     responsive: [
         {
+            breakpoint: 993,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+            }
+        },
+        {
             breakpoint: 768,
             settings: {
                 slidesToShow: 1,

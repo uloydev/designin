@@ -40,7 +40,7 @@ class HomeController extends Controller
         $subscriptions = Subscription::all();
         $reasons = Reason::all();
         $blogs = Blog::where('is_main', true)->get();
-//        dd($landingHeaders);
+        $inspirations = Service::where('is_popular', true)->get();
         return view('landing')->with([
             'images' => $images,
             'promos' => $promos,
@@ -49,6 +49,7 @@ class HomeController extends Controller
             'subscriptions' => $subscriptions,
             'reasons' => $reasons,
             'topService' => $topService,
+            'inspirations' => $inspirations,
             'blogs' => $blogs
         ]);
     }
