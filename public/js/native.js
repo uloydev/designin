@@ -1,4 +1,3 @@
-
 //user js
 const navToggle = document.querySelector('.nav__toggle');
 const primaryNav = document.querySelector('#primaryNav');
@@ -136,9 +135,7 @@ transactionStatus.forEach(function (status) {
 let userSavingCash = $("#modal-single-extras #user-token").data('saving');
 let userSavingToken = Number($("#modal-single-extras #user-token").data('token'));
 let tokenWithDraw = $("#modal-single-extras #user-token").data('token-conversion');
-// let userSavingCash = 2220000;
 let originalPrice = $(".order-price").text().replace(/IDR /g, '');
-let currentPrice = originalPrice;
 let totalExtras = 0;
 let grand_total;
 let token_usage;
@@ -233,7 +230,7 @@ allPromoCode.forEach(function (codePromo) {
     allPromoDiscount.push(codePromo.dataset.codeDiscount);
     allPromoCodeList.push(promoCodeVal);
 });
-// $('#singleServicePage #list-promo').remove();
+
 $("#promo-code").focusout(function () {
     if ($(this).val().length !== 0) {
         let promoCode = $(this).val();
@@ -258,7 +255,6 @@ $("#promo-code").focusout(function () {
         promo_discount = 0;
         grandTotal();
     }
-    console.log(promo_discount);
 });
 
 $(".modal-extras__submit-btn").click(function () {
@@ -279,8 +275,6 @@ $("#modal-single-order #show-modal-single-extras").click(function () {
 $("#modal-single-order form").submit(function (e) {
     e.preventDefault();
     if (Number($("#modal-single-order input[name='payment']").val()) !== 0) {
-        console.log($("#modal-single-order textarea[name='message_agent']").val());
-        console.log("value = " + $("#modal-single-order input[name='payment']").val());
         payment();
     }
     else {
@@ -290,7 +284,6 @@ $("#modal-single-order form").submit(function (e) {
 
 if (window.location.href.indexOf('/chat') > -1) {
     $("footer").remove();
-    // $("#userChatPage .order-chat__send-box").attr('action', window.location.origin + '/user/');
     $(window).scroll(function () {
         if ($(this).width() <= 993) {
             if ($(document).scrollTop() >= $("nav").outerHeight(true)) {
@@ -435,9 +428,9 @@ btnArticles.forEach(function (btnArticle) {
 
 const btnCategories = document.querySelectorAll('.btn[data-target="#delete-category-article');
 btnCategories.forEach(function (btnCategory) {
+    let idCategory = btnCategory.dataset.categoryId;
+    let nameCategory = btnCategory.dataset.categoryName;
     btnCategory.addEventListener("click", function () {
-        let idCategory = btnCategory.dataset.categoryId;
-        let nameCategory = btnCategory.dataset.categoryName;
         let modalCategoryNames = document.querySelectorAll('.modal-category-name');
         modalCategoryNames.forEach(function (modalCategoryName) {
             modalCategoryName.textContent = nameCategory;
@@ -1023,7 +1016,6 @@ $("#editPromo #edit-promo-start, #addPromo #add-promo-start").datepicker({
 // user order dashboard page
 $('#pay-button').click(function(){
     let token = $(this).data('payment-token');
-    console.log(token);
     snap.pay(token);
 });
 
@@ -1035,10 +1027,7 @@ $('#subscribe-form').submit(function(e) {
         url: $(this).attr('action'),
         data: $(this).serialize(),
         success: function (response) {
-            console.log(response);
-            console.log(response.status);
-            console.log(response.token);
-            if (response.status == 'success') {
+            if (response.status === 'success') {
                 snap.pay(response.token);
                 // redirect to user/order after payment
             }else{

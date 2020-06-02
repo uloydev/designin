@@ -127,7 +127,7 @@
                 </ul>
             </div>
             <div class="col">
-                <form action="{{-- url on js = '/service/show/$id' --}}" method="post" id="form-last">
+                <form action="{{-- url on js = '/service/show/$id' --}}" method="post" id="form-last" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" id="data-extras" name="extras">
                     <input type="hidden" name="promo_code">

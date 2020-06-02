@@ -36,20 +36,24 @@
                     agent_id: $("input[name='agent_id']").val(),
                     message_agent: $("#modal-single-order textarea[name='message_agent']").val(),
                     quantity: $("#modal-single-extras #quantity").val(),
+                    brief_file: $("#message_file")[0].files[0],
                     promo_code: $("#modal-single-order input[name='promo_code']").val()
             };
+            let formData = new FormData();
+            for (const [key, value] of Object.entries(ajaxData)) {
+                formData.append(key, value);
+            }
             $.ajax({
                 type: "POST",
                 url: $("#modal-single-order form").attr('action') + '/payment',
-                data: ajaxData,
+                data: formData,
+                contentType: false,
+                processData: false,
                 beforeSend: function(){
-                    console.log(ajaxData);
+                    $("#progress-payment").addClass('show-modal');
                 },
                 success: function (response) {
-                    console.log(response);
-                    console.log(response.status);
-                    console.log(response.token);
-                    $(".loader").fadeOut('slow');
+                    $("#progress-payment").removeClass('show-modal');
                     if (response.status === 'success') {
                         snap.pay(response.token);
                         // redirect to user/order after payment
@@ -59,7 +63,7 @@
                     }
                 },
                 error: function(response){
-                    console.log(response);
+                    $("#progress-payment").removeClass('show-modal');
                     alert('failed to get payment token');
                     // snap.hide();
                 }
