@@ -117,7 +117,7 @@
           <div class="container">
               <h1 class="section__heading">Cari tahu cara kerja desainin.id</h1>
               <div class="row">
-                  <div class="col-12 col-md-4">
+                  <div class="col-12 col-md-4 mb-4 mb-md-0">
                       <div class="how-we-work__list">
                           <img src="{{ asset('img/how-we-work1.svg') }}" alt="How we work">
                           <p>Cari desain yang kamu inginkan</p>
@@ -127,7 +127,7 @@
                           </p>
                       </div>
                   </div>
-                  <div class="col-12 col-md-4">
+                  <div class="col-12 col-md-4 mb-4 mb-md-0">
                       <div class="how-we-work__list">
                           <img src="{{ asset('img/how-we-work2.svg') }}" alt="How we work">
                           <p>Submit desain impian kamu </p>

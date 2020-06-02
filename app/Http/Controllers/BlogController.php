@@ -45,7 +45,20 @@ class BlogController extends Controller
 
     public function search(Request $request)
     {
-        $blogs = Blog::with('category')->where('title', 'LIKE', '%' . $request->query . '%')->get();
-        return ['blogs' => $blogs];
+        $blogs = Blog::with('category')
+                ->where('title', 'LIKE', '%' . $request->search_article . '%')
+                ->paginate(10);
+        $populars = Blog::orderBy('hits', 'DESC')->take(3)->get();
+        $mainArticle = Blog::where('is_main', true)->orderBy('updated_at', 'DESC')->take(6)->get();
+        $categories = BlogCategory::all();
+        $blogs->appends($request->only('search_article'));
+        $query = $request->search_article;
+        return view('blog.index', [
+            'blogs' => $blogs,
+            'populars' => $populars,
+            'categories' => $categories,
+            'mainArticle' => $mainArticle,
+            'query' => $query
+        ]);
     }
 }
