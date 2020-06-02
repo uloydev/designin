@@ -2,8 +2,30 @@
 @section('page-title') {{ $service->title }} @endsection
 @section('header') @include('partials.nav') @endsection
 @section('page-id', 'singleService')
+@section('css')
+    <style>
+        .loader {
+            height: 100px;
+            width: 100%;
+            text-align: center;
+            padding: 1em;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 200ms;
+        }
+        /* Set the color of the icon */
+        svg path,
+        svg rect {
+            fill: #FF6700;
+        }
+
+    </style>
+@endsection
 @section('script')
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js"
+            data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
     <script>
         // call this function if not using token payment
         function payment(){
@@ -14,20 +36,25 @@
                     agent_id: $("input[name='agent_id']").val(),
                     message_agent: $("#modal-single-order textarea[name='message_agent']").val(),
                     quantity: $("#modal-single-extras #quantity").val(),
+                    brief_file: $("#message_file")[0].files[0],
                     promo_code: $("#modal-single-order input[name='promo_code']").val()
             };
+            let formData = new FormData();
+            for (const [key, value] of Object.entries(ajaxData)) {
+                formData.append(key, value);
+            }
             $.ajax({
                 type: "POST",
                 url: $("#modal-single-order form").attr('action') + '/payment',
-                data: ajaxData,
+                data: formData,
+                contentType: false,
+                processData: false,
                 beforeSend: function(){
-                    console.log(ajaxData);
+                    $("#progress-payment").addClass('show-modal');
                 },
                 success: function (response) {
-                    console.log(response);
-                    console.log(response.status);
-                    console.log(response.token);
-                    if (response.status == 'success') {
+                    $("#progress-payment").removeClass('show-modal');
+                    if (response.status === 'success') {
                         snap.pay(response.token);
                         // redirect to user/order after payment
                     }else{
@@ -36,7 +63,7 @@
                     }
                 },
                 error: function(response){
-                    console.log(response);
+                    $("#progress-payment").removeClass('show-modal');
                     alert('failed to get payment token');
                     // snap.hide();
                 }
@@ -126,8 +153,8 @@
                             </div>
                             @auth
                                 <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
-                                        data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
-                                        data-package-title="{{ $package->title }}" {{ Auth::check() == false ? 'disabled' : ''  }}>
+                                data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
+                                data-package-title="{{ $package->title }}">
                                     Continue (IDR {{ $package->price }})
                                 </button>
                                 <p class="mt-3 text-gray text-center">
@@ -136,7 +163,8 @@
                                 </p>
                             @endauth
                             @guest
-                                <a class="btn-modal single-package__btn" href="{{route('login').'?redirect='.URL::current()}}">
+                                <a class="btn-modal single-package__btn"
+                                   href="{{route('login').'?redirect='.URL::current()}}">
                                     Continue (IDR {{ $package->price }}
                                 </a>
                             @endguest

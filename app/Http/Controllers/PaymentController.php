@@ -26,12 +26,12 @@ class PaymentController extends Controller
     {
         /**
          * request parameter [
-         * user_id, 
-         * promo_code, 
-         * brief_file, 
-         * extras, 
-         * agent_id, 
-         * message_agent, 
+         * user_id,
+         * promo_code,
+         * brief_file,
+         * extras,
+         * agent_id,
+         * message_agent,
          * quantity
          * ]
          */
@@ -329,7 +329,7 @@ class PaymentController extends Controller
                 $invoice->order->save();
             }
         }
-        
+
         return;
     }
 
