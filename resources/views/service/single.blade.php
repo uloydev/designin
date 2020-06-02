@@ -2,8 +2,30 @@
 @section('page-title') {{ $service->title }} @endsection
 @section('header') @include('partials.nav') @endsection
 @section('page-id', 'singleService')
+@section('css')
+    <style>
+        .loader {
+            height: 100px;
+            width: 100%;
+            text-align: center;
+            padding: 1em;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 200ms;
+        }
+        /* Set the color of the icon */
+        svg path,
+        svg rect {
+            fill: #FF6700;
+        }
+
+    </style>
+@endsection
 @section('script')
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js"
+            data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
     <script>
         // call this function if not using token payment
         function payment(){
@@ -27,7 +49,8 @@
                     console.log(response);
                     console.log(response.status);
                     console.log(response.token);
-                    if (response.status == 'success') {
+                    $(".loader").fadeOut('slow');
+                    if (response.status === 'success') {
                         snap.pay(response.token);
                         // redirect to user/order after payment
                     }else{
@@ -126,8 +149,8 @@
                             </div>
                             @auth
                                 <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
-                                        data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
-                                        data-package-title="{{ $package->title }}" {{ Auth::check() == false ? 'disabled' : ''  }}>
+                                data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
+                                data-package-title="{{ $package->title }}">
                                     Continue (IDR {{ $package->price }})
                                 </button>
                                 <p class="mt-3 text-gray text-center">
@@ -136,7 +159,8 @@
                                 </p>
                             @endauth
                             @guest
-                                <a class="btn-modal single-package__btn" href="{{route('login').'?redirect='.URL::current()}}">
+                                <a class="btn-modal single-package__btn"
+                                   href="{{route('login').'?redirect='.URL::current()}}">
                                     Continue (IDR {{ $package->price }}
                                 </a>
                             @endguest

@@ -435,9 +435,9 @@ btnArticles.forEach(function (btnArticle) {
 
 const btnCategories = document.querySelectorAll('.btn[data-target="#delete-category-article');
 btnCategories.forEach(function (btnCategory) {
-    let idCategory = btnCategory.dataset.categoryId;
-    let nameCategory = btnCategory.dataset.categoryName;
     btnCategory.addEventListener("click", function () {
+        let idCategory = btnCategory.dataset.categoryId;
+        let nameCategory = btnCategory.dataset.categoryName;
         let modalCategoryNames = document.querySelectorAll('.modal-category-name');
         modalCategoryNames.forEach(function (modalCategoryName) {
             modalCategoryName.textContent = nameCategory;
@@ -739,7 +739,6 @@ if (window.location.pathname.indexOf('agent/order/') > -1) {
 else if (window.location.pathname.indexOf('user/order/') > -1) {
     getChatUrl = '/user/order/' + orderId + '/get-chat';
 }
-console.log(getChatUrl);
 $('.order-chat__send-btn').click(function (e) {
     e.preventDefault();
     let token = $('meta[name="csrf-token"]').attr('content');
