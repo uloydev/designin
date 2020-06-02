@@ -228,6 +228,16 @@ class PaymentController extends Controller
             $orderId = $arr[1];
             $invoice = SubscriptionOrder::findOrFail($orderId);
         }
+        // signature verification
+        $orderId = $notif->order_id;
+        $statusCode = $notif->status_code;
+        $grossAmount = $notif->gross_ammount;
+        $serverKey = env('MIDTRANS_SERVER_KEY');
+        $input = $orderId.$statusCode.$grossAmount.$serverKey;
+        $signature = openssl_digest($input, 'sha512');
+        if ($signature !== $notif->signature_key) {
+            return;
+        }
         $fraud = $notif->fraud_status;
         $invoice->payment_type = $type;
         if ($transaction == 'capture') {
