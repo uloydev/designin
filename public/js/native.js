@@ -732,7 +732,8 @@ if (window.location.pathname.indexOf('agent/order/') > -1) {
 else if (window.location.pathname.indexOf('user/order/') > -1) {
     getChatUrl = '/user/order/' + orderId + '/get-chat';
 }
-$('.order-chat__send-btn').click(function (e) {
+
+$('.order-chat__send-box').submit(function (e) {
     e.preventDefault();
     let token = $('meta[name="csrf-token"]').attr('content');
 
@@ -755,9 +756,7 @@ $('.order-chat__send-btn').click(function (e) {
         console.log(error);
     });
 
-    $.get(getChatUrl, function (data) {
-        $("#chat-list").empty().html(data);
-    });
+    $("#loader-sendChat").removeClass('d-none');
 
 });
 
@@ -765,7 +764,7 @@ setInterval(function () {
     $.get(getChatUrl, function (data) {
         $("#chat-list").empty().html(data);
     });
-}, 100);
+}, 3000);
 
 $("img").prop('draggable', false);
 $(".alert").not(".no-fadeout").not('#alert-approve').delay(2000).fadeOut('slow');

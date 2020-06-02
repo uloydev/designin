@@ -12,7 +12,7 @@ class UserProfileSeeder extends Seeder
      */
     public function run()
     {
-        factory(UserProfile::class, 4)->create()->each(function ($profile) {
+        factory(UserProfile::class, 5)->create()->each(function ($profile) {
             $profile->make();
         });
     }
