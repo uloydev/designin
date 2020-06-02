@@ -58,11 +58,12 @@ class PaymentController extends Controller
             }
         }
         if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)) {
-            if (ceil($budget / 10000) > $user->token){
-                $budget -= $user->token * 10000;
-                $token_usage = $user->token;
+            if (ceil($budget / 10000) > $user->subscribe_token){
+                $budget -= $user->subscribe_token * 10000;
+                $token_usage = $user->subscribe_token;
             }
         }
+        // var_dump(ceil($budget / 10000)."--".$user->subscribe_token);die;
         $order->agent_id = intval($request->agent_id);
         $order->package_id = $package->id;
         $order->status = 'unpaid';
@@ -73,14 +74,14 @@ class PaymentController extends Controller
         // $order->extras = $request->extras;
         if (isset($token_usage)) {
             $order->token_usage = $token_usage;
-            $user->token -= $token_usage;
+            $user->subscribe_token -= $token_usage;
             $user->save();
         }
         $order->save();
         // var_dump($order);die;
         // midtrans
         $transaction_details = [
-            'order_id' => $order->id,
+            'order_id' => 'order-'.$order->id,
             // 'order_id' => time(), // only for testing
             'gross_amount' => $order->budget
         ];
@@ -100,7 +101,7 @@ class PaymentController extends Controller
             ]
         ];
 
-        if (!empty($order->extras)) {
+        if (!empty(json_decode($order->extras))) {
             foreach(json_decode($order->extras) as $extras_id){
                 $extras = ServiceExtras::findOrFail($extras_id);
                 $extras_data = [
@@ -123,7 +124,7 @@ class PaymentController extends Controller
             array_push($item_details, $token_data);
         }
 
-        if (!isset($promo_discount)) {
+        if (isset($promo_discount)) {
             $promo_data = [
                 'id' => 'discount',
                 'quantity' => 1,
