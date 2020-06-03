@@ -26,7 +26,7 @@ class ContactUsNotification extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->data->subject_answer)
+        return $this->subject('Your message has been replied from Desainin')
                     ->markdown('emails.reply-message')
                     ->with('data', $this->data);
     }

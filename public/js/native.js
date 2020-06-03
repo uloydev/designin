@@ -733,6 +733,37 @@ else if (window.location.pathname.indexOf('user/order/') > -1) {
     getChatUrl = '/user/order/' + orderId + '/get-chat';
 }
 
+$('#readMessagePage .accordion__item form').submit(function (e) {
+    e.preventDefault();
+    let formSubmit = $(this);
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: formSubmit.attr('action'),
+        method: 'put',
+        data: {
+            answer: formSubmit.find("textarea[name='answer']").val()
+        },
+        beforeSend: function() {
+            $("#modalLoader").modal('show');
+        },
+        success: function(){
+            $(".alert").show().delay(1000).fadeOut('slow');
+            $("#modalLoader").modal('hide');
+        },
+        error: function(xhr) {
+            console.log(xhr.statusText + xhr.responseText);
+            $("#modalLoader").modal('hide');
+        },
+    });
+});
+
+$("#readMessagePage .accordion__item input").filter("[readonly]").parent().siblings(".is-answered").removeClass("d-none");
+
 $('.order-chat__send-box').submit(function (e) {
     e.preventDefault();
     let token = $('meta[name="csrf-token"]').attr('content');

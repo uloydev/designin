@@ -16,7 +16,12 @@ class ContactController extends Controller
     {
         $messages = ContactUs::where('is_answered', false)->latest()->paginate(10);
         $totalAnswered = ContactUs::where('is_answered', true)->count();
-        return view('contact-us.read', ['messages' => $messages, 'totalAnswered' => $totalAnswered]);
+        $totalNotAnswered = ContactUs::where('is_answered', false)->count();
+        return view('contact-us.read', [
+            'messages' => $messages,
+            'totalAnswered' => $totalAnswered,
+            'totalNotAnswered' => $totalNotAnswered
+        ]);
     }
 
     public function edit($id)
@@ -33,10 +38,8 @@ class ContactController extends Controller
         $message = ContactUs::findOrFail($id);
         $message->answer = $request->answer;
         $message->is_answered = true;
-        $message->subject_answer = $request->subject;
         $message->save();
         Mail::to($message->email)->send(new ContactUsNotification($message));
-        return redirect()->back()->with('success', 'Successfully reply message from customer');
     }
 
     public function destroy($id)
@@ -47,14 +50,24 @@ class ContactController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->search;
-        $messages = ContactUs::whereDate('created_at', 'LIKE', $query)->orWhere('email', 'LIKE', $query)->paginate(10);
-        $messages->appends($request->only('search_agent'));
+        $searching = $request->search;
+        if ($searching == 'is_answered=true') {
+            $messages = ContactUs::where('is_answered', true)->latest()->paginate(10);
+        }
+        else {
+            $messages = ContactUs::when($searching, function ($query) use ($searching) {
+                $query->where('email', 'LIKE', "%{$searching}%")
+                    ->orWhere('name', 'LIKE', "%{$searching}%");
+            })->paginate(10);
+        }
+        $messages->appends($request->only('search'));
         $totalAnswered = ContactUs::where('is_answered', true)->count();
+        $totalNotAnswered = ContactUs::where('is_answered', false)->count();
         return view('contact-us.read', [
             'messages' => $messages,
             'totalAnswered' => $totalAnswered,
-            'query' => $query
+            'searching' => $searching,
+            'totalNotAnswered' => $totalNotAnswered
         ]);
     }
 }

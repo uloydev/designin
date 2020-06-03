@@ -18,7 +18,6 @@ class CreateContactUsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->text('message');
-            $table->string('subject_answer')->nullable();
             $table->text('answer')->nullable();
             $table->boolean('is_answered')->default(false);
             $table->timestamps();
