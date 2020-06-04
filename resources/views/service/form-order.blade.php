@@ -1,6 +1,3 @@
-@php
-    use Illuminate\Support\Carbon;
-@endphp
 <div class="modal modal--xl modal-extras" id="modal-single-extras">
     <div class="modal__content modal-extras__content">
         <div class="modal__header pb-3">
@@ -23,7 +20,7 @@
                     </p>
 
                     @auth
-                        @if (Auth::user()->is_subscribe and Carbon::now() <= Auth::user()->subscribe_at->addDays(Auth::user()->subscribe_duration))
+                        @if (Auth::user()->is_subscribe)
                             <p class="mb-3">
                                 Your saving:
                                 <var class="font-style-normal" id="user-token"
