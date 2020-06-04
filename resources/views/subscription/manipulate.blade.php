@@ -22,6 +22,11 @@
                         value="{{ old('price') }}" required>
                     </div>
                     <div class="form-group">
+                        <label for="addToken">How much token user get?</label>
+                        <input type="number" name="token" id="addToken" class="form-control" placeholder="Ex: 100"
+                        value="{{ old('token') }}" required>
+                    </div>
+                    <div class="form-group">
                         <label for="addDesc">Subscription Description</label>
                         <textarea name="desc" id="addDesc" rows="10" class="form-control textarea-summernote"
                         required>{{ old('desc') }}</textarea>
