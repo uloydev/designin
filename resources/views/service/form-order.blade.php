@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Carbon;
+@endphp
 <div class="modal modal--xl modal-extras" id="modal-single-extras">
     <div class="modal__content modal-extras__content">
         <div class="modal__header pb-3">
@@ -20,22 +23,24 @@
                     </p>
 
                     @auth
-                        <p class="mb-3">
-                            Your saving:
-                            <var class="font-style-normal" id="user-token"
-                            data-saving="{{ $tokenConversion->numeral * Auth::user()->subscribe_token ?? 0 }}"
-                            data-token="{{ Auth::user()->subscribe_token ?? 0 }}"
-                            data-token-conversion="{{ $tokenConversion->numeral }}">
-                                {{ Auth::user()->subscribe_token ?? '0' }}
-                            </var> token
-                            @if (Auth::user()->subscribe_token > 0)
-                                <span style="font-size: 0.8rem">(1 token = IDR {{ $tokenConversion->numeral }})</span>
-                            @endif
-                        </p>
+                        @if (Auth::user()->is_subscribe and Carbon::now() <= Auth::user()->subscribe_at->addDays(Auth::user()->subscribe_duration))
+                            <p class="mb-3">
+                                Your saving:
+                                <var class="font-style-normal" id="user-token"
+                                data-saving="{{ $tokenConversion->numeral * Auth::user()->subscribe_token ?? 0 }}"
+                                data-token="{{ Auth::user()->subscribe_token ?? 0 }}"
+                                data-token-conversion="{{ $tokenConversion->numeral }}">
+                                    {{ Auth::user()->subscribe_token ?? '0' }}
+                                </var> token
+                                @if (Auth::user()->subscribe_token > 0)
+                                    <span style="font-size: 0.8rem">(1 token = IDR {{ $tokenConversion->numeral }})</span>
+                                @endif
+                            </p>
+                        @endif
                     @else
                         <p class="mb-3">
                             Your saving:
-                            <var class="font-style-normal" id="user-token" data-saving="{{ 10000 * 0 }}">
+                            <var class="font-style-normal" id="user-token" data-saving="{{ $tokenConversion->numeral * 0 }}">
                                 {{ '0' }}
                             </var> token
                         </p>

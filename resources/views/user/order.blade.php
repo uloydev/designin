@@ -37,7 +37,7 @@
                             <div class="profile-main__order-detail ml-xl-5">
                                 <div class="mb-3">
                                     What you order
-                                    <span class="profile-main__title">{{ $order->package->service->title }}</span>
+                                    <span class="profile-main__title">{{ $order->package->service->title ?? 'service deleted by admin'}}</span>
                                 </div>
                                 <div class="mb-3">
                                     Start on:
