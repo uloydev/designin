@@ -9,9 +9,10 @@
         <img src="{{ asset('img/faq.png') }}" class="faq-header__cover">
         <div class="col-12 col-lg-6 faq-header__caption pr-0">
           <h1 class="faq-header__heading">How can we <br class="d-lg-none"> <strong>help you?</strong></h1>
-          <form class="faq-header__search-form" action="index.html" method="post">
-            <input type="search" placeholder="Find anything you want..." class="faq-header__search-input"
-                   name="search_faq" autofocus required>
+          <form class="faq-header__search-form" action="{{ route('faq.index') }}" method="get">
+              <label for="search-faq" class="d-none">Search FAQ</label>
+              <input type="search" placeholder="Find anything you want..." class="faq-header__search-input"
+                     id="search-faq" name="search_faq" autofocus>
             <button type="submit" class="faq-header__search-btn"><i class='bx bx-search-alt'></i></button>
           </form>
         </div>
@@ -41,11 +42,15 @@
                   </details>
               </article>
           @empty
-              <div class="alert alert--light">
-                  No faq found
-              </div>
+              <article class="text-center">
+                  <img src="{{ asset('img/not-found.jpg') }}" alt="FAQ not found" height="200">
+                  <h1>No FAQ record / what you're looking isn't there</h1>
+                  <a href="{{ route('faq.index') }}" class="text-link d-block mt-3">Refresh</a>
+              </article>
           @endforelse
-          <a href="" class="question-answer__show-more">Show more</a>
+          @if (count($faqs) > 5)
+                  <a href="" class="question-answer__show-more">Show more</a>
+          @endif
       </section>
     </div>
   </div>

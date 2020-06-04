@@ -93,11 +93,11 @@ class HomeController extends Controller
 
     public function faq(Request $request)
     {
-        if($request->has('search_faq')){
-            $faqs = Faq::where('question','like','%'.$request->search_faq.'%')
-            ->orWhere('answer','like','%'.$request->search_faq.'%')->get();
+        if ($request->has('search_faq')) {
+            $faqs = Faq::where('question', 'LIKE', '%' . $request->search_faq . '%')
+                    ->orWhere('answer', 'LIKE', '%' . $request->search_faq . '%')->get();
             $faqCategories = FaqCategory::all();
-        }else{
+        } else {
             $faqs = Faq::all();
             $faqCategories = FaqCategory::all();
         }
