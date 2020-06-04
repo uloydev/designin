@@ -61,4 +61,5 @@ class BlogController extends Controller
             'query' => $query
         ]);
     }
+
 }

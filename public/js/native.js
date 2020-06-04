@@ -972,6 +972,10 @@ $("#testimonies .testimonies-slider").slick({
 
 $(".profile-main__orderBy, #blogCategoryPage .category-header__filter, "+
     ".service-single__filter-review, .nice-select").niceSelect();
+
+$(".profile-main__orderBy, #blogCategoryPage .category-header__filter").change(function () {
+    $(this).parents("form").submit();
+});
 $("#servicesPage .category [id^='service-slider']").slick({
     infinite: false,
     slidesToShow: 1,

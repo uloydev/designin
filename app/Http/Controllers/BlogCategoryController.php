@@ -14,4 +14,18 @@ class BlogCategoryController extends Controller
         $articleCategory = BlogCategory::findOrFail($id);
         return view('blog.category', ['articles' => $articles, 'articleCategory' => $articleCategory]);
     }
+    public function filtering($id, Request $request)
+    {
+        $articleCategory = BlogCategory::findOrFail($id);
+        if ($request->filter == 'hits') {
+            $articles = Blog::where('category_id', $id)->orderBy('hits', 'DESC')->paginate(10);
+            $articles->appends($request->only('filter'));
+            return view('blog.category', ['articles' => $articles, 'articleCategory' => $articleCategory]);
+        }
+        else if ($request->filter == 'DESC' or $request->filter == 'ASC') {
+            $articles = Blog::where('category_id', $id)->orderBy('created_at', $request->filter)->paginate(10);
+            $articles->appends($request->only('filter'));
+            return view('blog.category', ['articles' => $articles, 'articleCategory' => $articleCategory]);
+        }
+    }
 }

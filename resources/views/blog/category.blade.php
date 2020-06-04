@@ -6,7 +6,7 @@
 @section('css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css"
           rel="stylesheet">
-@stop
+@endsection
 @section('header')
     <header>
         <div class="container py-5 px-0">
@@ -22,19 +22,19 @@
             </div>
             <div class="category-header__content">
                 <h1 class="text-center mb-3 mb-md-0">{{ $articleCategory->name }}</h1>
-                <form action="" method="get">
-                    @csrf
-                    <select name="filter" class="category-header__filter wide">
+                <form action="{{ route('blog-category.filtering', $articleCategory->id) }}" method="get">
+                    <label for="filter-article" class="d-none">Filter</label>
+                    <select name="filter" class="category-header__filter wide" id="filter-article">
                         <option value="" disabled selected>Filter Article</option>
-                        <option value="">Latest</option>
-                        <option value="">Oldest</option>
-                        <option value="">Most Popular</option>
+                        <option value="DESC">Latest</option>
+                        <option value="ASC">Oldest</option>
+                        <option value="hits">Most Popular</option>
                     </select>
                 </form>
             </div>
         </div>
     </header>
-@stop
+@endsection
 @section('content')
     <section>
         <div class="container py-4">
@@ -52,11 +52,15 @@
                                     </a>
                                 </p>
                                 <p class="category-article__content">
-                                    {!! Str::words($article->contents, 22) !!}
+                                    {!! Str::words($article->contents, 10) !!}
                                 </p>
                                 <div class="category-article__action">
-                                    <a href="">{{ $articleCategory->name }}</a>
-                                    <time>{{ date('d-M-Y') }}</time>
+                                    <a href="">{{ $article->category->name }}</a>
+                                    <time class="ml-2">{{ $article->created_at->format('d F Y') }}</time>
+                                    <span class="ml-auto">
+                                        <i class='bx bxs-happy-heart-eyes'></i>
+                                        <var class="font-style-normal">{{ $article->hits }}</var>
+                                    </span>
                                 </div>
                             </div>
                         </article>
