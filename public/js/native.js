@@ -83,11 +83,11 @@ $("#blogIndexPage main section .article__time").css('left', articleCategoryWidth
 $("body[id^='blog'] main section nav").addClass('nav-pagination');
 
 let serviceId = $("#serviceEditPage #service-edit-form input[name='service_id']").val();
-if (window.location.href.pathname === '/agent/service/' + serviceId + '/edit') {
+if (window.location.pathname === '/agent/service/' + serviceId + '/edit') {
     $("#serviceEditPage #service-edit-form")
         .attr('action', window.location.origin + '/agent/service/' + serviceId);
 }
-else if (window.location.href.pathname === '/admin/manage/service/' + serviceId + '/edit') {
+else if (window.location.pathname === '/admin/manage/service/' + serviceId + '/edit') {
     $("#serviceEditPage #service-edit-form")
         .attr('action', window.location.origin + '/admin/manage/service/' + serviceId);
 }
