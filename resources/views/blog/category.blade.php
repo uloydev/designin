@@ -22,7 +22,7 @@
         <div class="container py-5 px-0">
             <div class="row mb-5">
                 <div class="col">
-                    <form action="http://localhost:8000/blog/categories/1?filter=oldest" class="search-service" method="get">
+                    <form action="" class="search-service" method="get">
                         <input type="search" class="search-service__input" name="search_blog"
                                placeholder="Find any article..." required>
                         <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
