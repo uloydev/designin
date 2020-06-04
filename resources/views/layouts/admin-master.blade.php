@@ -10,7 +10,7 @@ The above copyright notice and this permission notice shall be included in all c
 <html lang="en">
     <head>
         @include('partials.meta')
-        <title>Desainin {{ Route::current() == 'admin/*' ? 'Admin' : 'Agent' }} - @yield('page-title')</title>
+        <title>Desainin {{ in_array('agent' , explode('.', Route::currentRouteName())) ? 'Agent' : 'Admin'}} - @yield('page-title')</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
         <link rel="stylesheet" href="{{ asset('plugin/argon-dashboard/assets/vendor/nucleo/css/nucleo.css') }}">
         <link rel="stylesheet"

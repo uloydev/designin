@@ -19,32 +19,24 @@ use App\Mail\NewOrderNotification;
 use App\Mail\UserSubscriptionNotification;
 use App\Subscription;
 use App\SubscriptionOrder;
+use App\TokenConversion;
 
 class PaymentController extends Controller
 {
     public function orderPayment($id, Request $request)
     {
-        /**
-         * request parameter [
-         * user_id,
-         * promo_code,
-         * brief_file,
-         * extras,
-         * agent_id,
-         * message_agent,
-         * quantity
-         * ]
-         */
-        // security level very low need to be fixed later
+        $token_conversion = TokenConversion::first();
+        if (empty($token_conversion)) {
+            return;
+        }
         $user = User::findOrFail($request->user_id);
         $package = Package::findOrFail($id);
         $order = new Order;
         $quantity = intval($request->quantity);
-        // $budget = $request->grand_total;
         $budget = $package->price * $quantity;
         if (!empty($request->promo_code)) {
-            $promo = Promo::where('code' , $request->promo_code)->get();
-            $promo_discount = $budget * $promo->discount / 100;
+            $promo = Promo::where('code' , $request->promo_code)->first();
+            $promo_discount = floor($budget * $promo->discount / 100);
             $budget -= $promo_discount;
             $order->promo_id = $promo->id;
         }
@@ -58,12 +50,11 @@ class PaymentController extends Controller
             }
         }
         if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)) {
-            if (ceil($budget / 10000) > $user->subscribe_token){
-                $budget -= $user->subscribe_token * 10000;
+            if (ceil($budget / $token_conversion->numeral) > $user->subscribe_token){
+                $budget -= $user->subscribe_token * $token_conversion->numeral;
                 $token_usage = $user->subscribe_token;
             }
         }
-        // var_dump(ceil($budget / 10000)."--".$user->subscribe_token);die;
         $order->agent_id = intval($request->agent_id);
         $order->package_id = $package->id;
         $order->status = 'unpaid';
@@ -71,14 +62,12 @@ class PaymentController extends Controller
         $order->budget = $budget;
         $order->user_id = $user->id;
         $order->quantity = $quantity;
-        // $order->extras = $request->extras;
         if (isset($token_usage)) {
             $order->token_usage = $token_usage;
             $user->subscribe_token -= $token_usage;
             $user->save();
         }
         $order->save();
-        // var_dump($order);die;
         // midtrans
         $transaction_details = [
             'order_id' => 'order-'.$order->id,
@@ -119,7 +108,7 @@ class PaymentController extends Controller
                 'id' => 'token',
                 'quantity' => 1,
                 'name' => 'subscription token',
-                'price' => -($token_usage * 10000)
+                'price' => -($token_usage * $token_conversion->numeral)
             ];
             array_push($item_details, $token_data);
         }

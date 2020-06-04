@@ -25,6 +25,7 @@ use App\Promo;
 use App\Mail\NewOrderNotification;
 use App\Mail\ContactAgentNotification;
 use App\ServiceExtras;
+use app\TokenConversion;
 
 class HomeController extends Controller
 {
@@ -119,34 +120,21 @@ class HomeController extends Controller
 
     public function makeOrder(Request $request, $id)
     {
-        // if ($request->payment == 'token') {
-        //     if ($user->is_subscribe) {
-        //         $subscription = $user->subscription;
-        //         if ( $user->subscribe_at->addDays($subscription->duration) <= Carbon::now()
-        //         and $user->subscribe_token >= $package->token_price ) {
-        //             $budget = $subscription->price / $subscription->token * $package->token_price;
-        //             $user->subscribe_token -= $package->token_price;
-        //         }else{
-        //             $user->is_subscribe = false;
-        //             $user->save();
-        //             return redirect()->back()->with('error', 'your subscription is expired');
-        //         }
-        //     }else{
-        //         return redirect()->back()->with('error', 'you have no subscription');
-        //     }
-        // }
-        // dd($request);
+        $token_conversion = TokenConversion::first();
+        if (empty($token_conversion)) {
+            return abort(500);
+        }
         $user = Auth::user();
         $package = Package::findOrFail($id);
         $order = new Order;
         $quantity = intval($request->quantity);
         $budget = $package->price * $quantity;
         if (!empty($request->promo_code)) {
-            $promo = Promo::where('code' , $request->promo_code)->get();
+            $promo = Promo::where('code' , $request->promo_code)->first();
             $budget -= $budget * $promo->discount / 100;
             $order->promo_id = $promo->id;
         }
-        if ($request->has('extras')) {
+        if ($request->has('extras') and !empty($request->extras)) {
             $order->extras = $request->extras;
             foreach(json_decode($order->extras) as $extras_id) {
                 $extras = ServiceExtras::findOrFail($extras_id);
@@ -159,8 +147,8 @@ class HomeController extends Controller
             }
         }
         if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)){
-            if ($user->subscribe_token >= ceil($budget / 10000)) {
-                $token_usage = ceil($budget / 10000);
+            if ($user->subscribe_token >= ceil($budget / $token_conversion->numeral)) {
+                $token_usage = ceil($budget / $token_conversion->numeral);
                 $budget = 0;
             }else{
                 return abort(401);
@@ -181,7 +169,7 @@ class HomeController extends Controller
         }
         if (isset($token_usage)) {
             $order->token_usage = $token_usage;
-            $user->token -= $token_usage;
+            $user->subscribe_token -= $token_usage;
             $user->save();
         }
         $order->save();

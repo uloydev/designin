@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Carbon;
+@endphp
 @extends('layouts.customer-master')
 @section('page-title') {{ $service->title }} @endsection
 @section('header') @include('partials.nav') @endsection
@@ -57,15 +60,17 @@
                     if (response.status === 'success') {
                         snap.pay(response.token);
                         // redirect to user/order after payment
-                    }else{
+                    }
+                    else if(response === ''){
+                        alert('something went wrong with internal server');
+                    }
+                    else{
                         alert('something went wrong with your order');
-                        // snap.hide();
                     }
                 },
                 error: function(response){
                     $("#progress-payment").removeClass('show-modal');
                     alert('failed to get payment token');
-                    // snap.hide();
                 }
             });
 
@@ -157,10 +162,12 @@
                                 data-package-title="{{ $package->title }}">
                                     Continue (IDR {{ $package->price }})
                                 </button>
+                                @if (Auth::user()->is_subscribe and Carbon::now() <= Auth::user()->subscribe_at->addDays(Auth::user()->subscribe_duration))
                                 <p class="mt-3 text-gray text-center">
                                     Token you have: {{ Auth::user()->subscribe_token . ' token' ?? 0 . ' token' }}
                                     <span class="text-small d-block mt-2">(1 token = IDR {{ '10000' }})</span>
                                 </p>
+                                @endif
                             @endauth
                             @guest
                                 <a class="btn-modal single-package__btn"

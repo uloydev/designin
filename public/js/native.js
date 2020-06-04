@@ -83,11 +83,11 @@ $("#blogIndexPage main section .article__time").css('left', articleCategoryWidth
 $("body[id^='blog'] main section nav").addClass('nav-pagination');
 
 let serviceId = $("#serviceEditPage #service-edit-form input[name='service_id']").val();
-if (window.location.href.pathname === '/agent/service/' + serviceId + '/edit') {
+if (window.location.pathname === '/agent/service/' + serviceId + '/edit') {
     $("#serviceEditPage #service-edit-form")
         .attr('action', window.location.origin + '/agent/service/' + serviceId);
 }
-else if (window.location.href.pathname === '/admin/manage/service/' + serviceId + '/edit') {
+else if (window.location.pathname === '/admin/manage/service/' + serviceId + '/edit') {
     $("#serviceEditPage #service-edit-form")
         .attr('action', window.location.origin + '/admin/manage/service/' + serviceId);
 }
@@ -675,6 +675,7 @@ $(".dropdown-item[data-target='#editPromo']").click(function () {
     let promoEnd = $(this).parents('tr').find('.promo-end').text();
     let promoCode = $(this).parents('tr').find('.promo-code').text();
     let promoDisc = $(this).parents('tr').find('.promo-disc').text();
+    let promoLimit = $(this).parents('tr').find('.promo-limit').text();
 
     $("#editPromo form input[name='promo_name']").val(promoName);
     $("#editPromo form input[name='promo_start']").val(promoStart);
@@ -682,8 +683,8 @@ $(".dropdown-item[data-target='#editPromo']").click(function () {
     $("#editPromo form input[name='promo_end']").val(promoEnd);
     $("#editPromo form input[name='promo_end']").data('datepicker').selectDate(new Date(promoEnd));
     $("#editPromo form input[name='promo_code']").val(promoCode);
-    $("#editPromo form input[name='promo_discount']").val(promoDisc);
-
+    $("#editPromo form input[name='promo_discount']").val(parseInt(promoDisc));
+    $("#editPromo form input[name='promo_limit']").val(parseInt(promoLimit));
     $("#editPromo form").attr('action', window.location.origin + '/admin/manage/promo/' + promoId);
 });
 
