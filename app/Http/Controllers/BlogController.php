@@ -11,8 +11,8 @@ class BlogController extends Controller
     public function index(Request $request)
     {
         if ($request->has('search_blog')) {
-            $blogs = Blog::where('title', 'like', $request->search_blog)
-            ->orWhere('contents', 'like', $request->search_blog)->paginate(5);
+            $blogs = Blog::where('title', 'like', '%'.$request->search_blog.'%')
+            ->orWhere('contents', 'like', '%'.$request->search_blog.'%')->paginate(5);
         } else {
             $blogs = Blog::latest()->paginate(5);
         }

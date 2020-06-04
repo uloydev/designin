@@ -70,13 +70,13 @@
       <aside class="col-12 col-md-4">
         <div class="article-popular">
           <h3 class="article-popular__heading">
-            <span>Latest news</span>
+            <span>Popular blogs</span>
           </h3>
           @foreach ($populars as $popular)
               <article class="mb-5">
                 <div class="article__detail">
                   <p class="article__title article__title--popular">
-                    <a href="">{{ Str::words($popular->title, 8) }}</a>
+                    <a href="{{ route('blog.show', $popular->id) }}">{{ Str::words($popular->title, 8) }}</a>
                   </p>
                   <span class="article-popular__category">{{ $popular->category->name }}</span>
                   <time class="article-popular__time">{{ $popular->created_at->format('D m, Y') }}</time>
