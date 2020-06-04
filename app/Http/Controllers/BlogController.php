@@ -34,7 +34,7 @@ class BlogController extends Controller
         $blog->update();
         $popular = Blog::orderBy('hits', 'desc')->take(3)->get();
         $blog_categories = BlogCategory::all();
-        $related_blogs = Blog::with(['category', 'author'])->inRandomOrder()->take(3)->get()->except($id);
+        $related_blogs = Blog::with('category')->inRandomOrder()->take(3)->get()->except($id);
         return view('blog.single', [
             'blog' => $blog,
             'relates' => $related_blogs,
