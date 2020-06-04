@@ -28,7 +28,7 @@
           <article class="mb-5">
             <div class="article__detail pl-0">
               <p class="article__title article__title--popular">
-                <a href="{{ route('manage.blog.show', $article->id) }}">{{ $article->title }}</a>
+                <a href="{{ route('blog.show', $article->id) }}">{{ $article->title }}</a>
               </p>
               <span class="article-popular__category">{{ $article->category->name }}</span>
               <time class="article-popular__time">{{ $article->updated_at->format('d M, Y') }}</time>
@@ -45,7 +45,7 @@
           <article class="mb-5">
             <div class="article__detail pl-0">
               <p class="article__title article__title--popular">
-                <a href="{{ route('manage.blog.show', $related->id) }}">{{ $related->title }}</a>
+                <a href="{{ route('blog.show', $related->id) }}">{{ $related->title }}</a>
               </p>
               <span class="article-popular__category">{{ $related->category->name }}</span>
               <time class="article-popular__time">{{ $related->updated_at->format('d M, Y') }}</time>
