@@ -42,11 +42,15 @@
                   </details>
               </article>
           @empty
-              <div class="alert alert--light">
-                  No faq found
-              </div>
+              <article class="text-center">
+                  <img src="{{ asset('img/not-found.jpg') }}" alt="FAQ not found" height="200">
+                  <h1>No FAQ record / what you're looking isn't there</h1>
+                  <a href="{{ route('faq.index') }}" class="text-link d-block mt-3">Refresh</a>
+              </article>
           @endforelse
-          <a href="" class="question-answer__show-more">Show more</a>
+          @if (count($faqs) > 5)
+                  <a href="" class="question-answer__show-more">Show more</a>
+          @endif
       </section>
     </div>
   </div>
