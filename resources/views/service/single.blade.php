@@ -1,6 +1,3 @@
-@php
-    use Illuminate\Support\Carbon;
-@endphp
 @extends('layouts.customer-master')
 @section('page-title') {{ $service->title }} @endsection
 @section('header') @include('partials.nav') @endsection
@@ -162,7 +159,7 @@
                                 data-package-title="{{ $package->title }}">
                                     Continue (IDR {{ $package->price }})
                                 </button>
-                                @if (Auth::user()->is_subscribe and Carbon::now() <= Auth::user()->subscribe_at->addDays(Auth::user()->subscribe_duration))
+                                @if (Auth::user()->is_subscribe)
                                 <p class="mt-3 text-gray text-center">
                                     Token you have: {{ Auth::user()->subscribe_token . ' token' ?? 0 . ' token' }}
                                     <span class="text-small d-block mt-2">(1 token = IDR {{ '10000' }})</span>
