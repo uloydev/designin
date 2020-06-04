@@ -15,7 +15,7 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-link text-gray-dark" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-danger" id="form-delete-promo">Delete</button>
+                <button type="submit" class="btn btn-danger" id="form-delete-promo" form="form-delete-promo">Delete</button>
             </div>
         </div>
     </div>
@@ -54,12 +54,12 @@
                     </div>
                     <div class="form-group">
                         <label for="promo-discount">Promo discount (%)</label>
-                        <input id="promo-discount" type="text" placeholder="Ex: 10"
+                        <input id="promo-discount" type="number" placeholder="Ex: 10"
                                 class="form-control" name="promo_discount" required>
                     </div>
                     <div class="form-group">
                         <label for="promo-limit">Promo limit</label>
-                        <input id="promo-limit" type="text" placeholder="Ex: 100"
+                        <input id="promo-limit" type="number" placeholder="Ex: 100"
                                 class="form-control" name="promo_limit" required>
                     </div>
                 </form>
@@ -106,8 +106,13 @@
                     </div>
                     <div class="form-group">
                         <label for="promo-discount">Promo discount (%)</label>
-                        <input id="promo-discount" type="text" placeholder="Ex: 10"
+                        <input id="promo-discount" type="number" placeholder="Ex: 10"
                                 class="form-control" name="promo_discount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-limit">Promo limit</label>
+                        <input id="promo-limit" type="number" placeholder="Ex: 100"
+                                class="form-control" name="promo_limit" required>
                     </div>
                 </form>
             </div>

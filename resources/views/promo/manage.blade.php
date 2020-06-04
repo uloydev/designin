@@ -72,9 +72,9 @@
                                 </td>
                             </tr>
                         @endforeach
-                        {{-- {{ $promos->links() }} --}}
                     </tbody>
                 </table>
+                {{ $promos->links() }}
             </div>
         </div>
     </div>
