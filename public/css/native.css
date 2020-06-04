@@ -2469,7 +2469,10 @@ body[id*='blog'] .search-service__btn {
 }
 #blogCategoryPage .category-header__filter, #blogCategoryPage .category-header__filter .option {
     color: white;
-    background-color: var(--almost-black);
+    background-color: var(--almost-black) !important;
+}
+#blogCategoryPage .category-header__filter .option:hover {
+    background-color: #1d1c1c !important;
 }
 #blogCategoryPage .category-header__filter .option.disabled {
     color: #969696;
@@ -2498,6 +2501,8 @@ body[id*='blog'] .search-service__btn {
 #blogCategoryPage .category-article__action {
     padding-top: 15px;
     font-size: 80%;
+    display: flex;
+    align-content: center;
 }
 #blogCategoryPage .category-article__action a {
     color: #000;

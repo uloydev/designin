@@ -24,8 +24,9 @@ Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
 Route::get('testimony', 'HomeController@testimonies')->name('testimony');
 Route::resource('blog', 'BlogController')->only(['index', 'show']);
-Route::get('search/blog', 'BlogController@search')->name('blog.search');
+Route::get('blog/search', 'BlogController@search')->name('blog.search');
 Route::get('search/agentjob', 'HomeController@searchAgentJob')->name('agentjob.search');
+Route::get('blog/categories/{id}/filtering/', 'BlogCategoryController@filtering')->name('blog-category.filtering');
 Route::get('blog/categories/{id}', 'BlogCategoryController@show')->name('blog-category.show');
 Route::resource('manage/main-slider', 'LandingHeaderSliderController', ['as' => 'manage'])->only(['store', 'update', 'destroy']);
 Route::name('message.')->prefix('message')->middleware('exceptAdmin')->group(function () {

@@ -42,7 +42,7 @@
             </div>
         </div>
     </header>
-@stop
+@endsection
 @section('content')
     <section>
         <div class="container py-4">
@@ -60,11 +60,15 @@
                                     </a>
                                 </p>
                                 <p class="category-article__content">
-                                    {!! Str::words($article->contents, 22) !!}
+                                    {!! Str::words($article->contents, 10) !!}
                                 </p>
                                 <div class="category-article__action">
-                                    <a href="{{ route('blog.show', $article->id) }}">{{ $articleCategory->name }}</a>
-                                    <time>{{ date('d-M-Y') }}</time>
+                                    <a href="{{ route('blog.show', $article->id) }}">{{ $article->category->name }}</a>
+                                    <time class="ml-2">{{ $article->created_at->format('d F Y') }}</time>
+                                    <span class="ml-auto">
+                                        <i class='bx bxs-happy-heart-eyes'></i>
+                                        <var class="font-style-normal">{{ $article->hits }}</var>
+                                    </span>
                                 </div>
                             </div>
                         </article>
