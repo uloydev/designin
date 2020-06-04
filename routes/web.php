@@ -20,6 +20,7 @@ Route::get('order/package/{id}', 'HomeController@redirectOrderPage');
 Route::post('payment/notification', 'PaymentController@notification');
 Route::get('promo/check', 'HomeController@checkPromoCode')->name('promo.check');
 Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
+//Route::get('faq/search', 'HomeController@searchFaq')->name('faq.search');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
 Route::get('testimony', 'HomeController@testimonies')->name('testimony');
 Route::resource('blog', 'BlogController')->only(['index', 'show']);
