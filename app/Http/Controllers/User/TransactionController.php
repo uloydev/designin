@@ -13,13 +13,30 @@ use Illuminate\Support\Facades\Auth;
 class TransactionController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
 
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
+        $orders = Order::where('user_id', Auth::id());
+        if($request->has('filter')) {
+            if ($request->filter == 'latest') {
+                $orders = $orders->latest();
+            }elseif ($request->filter =='oldest') {
+                $orders = $orders->oldest();
+            }elseif ($request->filter =='finish') {
+                $orders = $orders->where('status', 'finished');
+            }elseif ($request->filter =='process') {
+                $orders = $orders->where(function ($query){
+                    $query->where('status', 'process')
+                    ->orWhere('status', 'complaint');
+                });
+            }else{
+                return abort(404);
+            }
+        }
+        $orders = $orders->paginate(10);
         $subscriptions = Subscription::paginate(12);
         $totalSubcription = Subscription::count();
-        $orders = Order::where('user_id', Auth::id())->latest()->paginate(10);
         return view('user.manage-transaction', [
             'subscriptions' => $subscriptions,
             'totalSubcription' => $totalSubcription,

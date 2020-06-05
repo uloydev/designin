@@ -33,7 +33,7 @@
                                         </button>
                                     </h2>
                                     @if ($order->progress == '100')
-                                        @if ($order->results->count() == 0)
+                                        @if (!empty($order->result))
                                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
                                             data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
                                                 Send result
@@ -47,6 +47,18 @@
                                                 data-progress="{{ $order->progress }}">
                                             Report progress
                                         </button>
+                                    @endif
+                                    @if (!empty($order->result))
+                                        <div class="mb-3 d-flex flex-column flex-md-row">
+                                            <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-warning">Download Result</a>
+                                        </div>
+                                    @endif
+                                    @if ($order->revision->count() > 0)
+                                        @foreach ($order->revision as $revision)
+                                            <div class="mb-3 d-flex flex-column flex-md-row">
+                                                <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$revision->id]) }}" class="btn text-warning">Download Revision {{ $loop->iteration }}</a>
+                                            </div>
+                                        @endforeach
                                     @endif
                                 </div>
                                 <div id="collapse{{$order->id}}" aria-labelledby="heading{{$order->id}}"

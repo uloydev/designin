@@ -8,6 +8,14 @@
 @endsection
 @section('script')
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script>
+        let filter = $('#order-filter').val();
+        $('#order-filter').change(function(){
+            if($(this).val() !== filter){
+                $('#form-filter-order').submit();
+            }
+        });
+    </script>
 @endsection
 @section('content')
     @if (session('success'))
@@ -15,18 +23,23 @@
             {{ session('success') }}
         </div>
     @endif
+    @if (session('error'))
+        <div class="alert alert--error">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="container">
         <div class="row justify-content-between align-items-start">
             @include('user.profile')
             <section class="profile-main">
                 @include('partials.profile-nav')
-                <form action="" class="profile-main__filter">
+                <form id="form-filter-order" action="" class="profile-main__filter">
                     <label for="order-filter"><h1>Your order</h1></label>
-                    <select name="" id="order-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
-                        <option value="">All order</option>
-                        <option value="">Completed</option>
-                        <option value="">Active</option>
-                        <option value="">Canceled</option>
+                    <select name="filter" id="order-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
+                        <option value="all">All order</option>
+                        <option value="completed">Completed</option>
+                        <option value="process">Active</option>
+                        <option value="canceled">Canceled</option>
                     </select>
                 </form>
                 <div class="profile-main__content">
@@ -61,6 +74,8 @@
                                             <p class="text-danger font-bold">{{ $order->status }}</p>
                                         @elseif($order->status == 'unpaid')
                                             <p class="text-warning font-bold">{{ $order->status }}</p>
+                                        @elseif($order->status == 'check_revision' or $order->status == 'check_result')
+                                        <p class="text-success font-bold">{{ $order->status }}</p>
                                         @elseif ($order->waiting == 'waiting')
                                             <p class="text-gray font-bold">{{ $order->status }}</p>
                                         @else
@@ -76,6 +91,30 @@
                                         </div>
                                     @endif
                                 @endif
+                                    @if (!empty($order->result))
+                                        <div class="mb-3 d-flex flex-column flex-md-row">
+                                            <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-warning">Download Result</a>
+                                        </div>
+                                        @if ($order->status == 'check_result')
+                                            <div class="mb-3 d-flex flex-column flex-md-row">
+                                                <a href="{{ route('user.order.accept', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-success">Accept Result</a>
+                                                <a href="{{ route('user.order.reject', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-danger">Reject Result ({{ $order->max_revision - $order->revision->count() }} revision left)</a>
+                                            </div>
+                                        @endif
+                                    @endif
+                                    @if ($order->revision->count() > 0)
+                                        @foreach ($order->revision as $revision)
+                                            <div class="mb-3 d-flex flex-column flex-md-row">
+                                                <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$revision->id]) }}" class="btn text-warning">Download Revision {{ $loop->iteration }}</a>
+                                            </div>
+                                        @endforeach
+                                        @if ($order->status == 'check_revision')
+                                            <div class="mb-3 d-flex flex-column flex-md-row">
+                                                <a href="{{ route('user.order.accept', ['id'=>$order->id, 'result_id'=>$order->revision->last()->id]) }}" class="btn text-success">Accept Result</a>
+                                                <a href="{{ route('user.order.reject', ['id'=>$order->id, 'result_id'=>$order->revision->last()->id]) }}" class="btn text-danger">Reject Result ({{ $order->max_revision - $order->revision->count() }} revision left)</a>
+                                            </div>
+                                        @endif
+                                    @endif
                                 <a href="{{ route('user.chat.index', $order->id) }}" class="btn profile-main__btn-chat">
                                     Chat agent
                                 </a>

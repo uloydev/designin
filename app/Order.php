@@ -45,9 +45,14 @@ class Order extends Model
         return $this->belongsTo('App\Package');
     }
 
-    public function results()
+    public function result()
     {
-        return $this->hasMany('App\ProjectResult');
+        return $this->hasOne('App\ProjectResult')->where('type', 'result');
+    }
+
+    public function revision()
+    {
+        return $this->hasMany('App\ProjectResult')->where('type', 'revision');
     }
 
     public function promo()

@@ -4,17 +4,27 @@
 @section('header')
     @include('partials.nav')
 @endsection
+@section('script')
+    <script>
+        let filter = $('#sub-filter').val();
+        $('#sub-filter').change(function(){
+            if($(this).val() !== filter){
+                $('#sub-filter-form').submit();
+            }
+        });
+    </script>
+@endsection
 @section('content')
     <div class="container">
         <div class="row justify-content-between align-items-start">
             @include('user.profile')
             <section class="profile-main">
                 @include('partials.profile-nav')
-                <form action="" class="profile-main__filter">
-                    <label for="order-filter"><h1>My Subscription</h1></label>
-                    <select name="" id="order-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
-                        <option value="" selected>Latest</option>
-                        <option value="">Oldest</option>
+                <form action="" id="sub-filter-form" class="profile-main__filter">
+                    <label for="sub-filter"><h1>My Subscription</h1></label>
+                    <select name="filter" id="sub-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
+                        <option value="latest" selected>Latest</option>
+                        <option value="oldest">Oldest</option>
                     </select>
                 </form>
                 <div class="profile-main__content">
@@ -41,6 +51,7 @@
                         </div>
                     @endforelse
                 </div>
+                {{ $subscriptions->links() }}
             </section>
         </div>
     </div>

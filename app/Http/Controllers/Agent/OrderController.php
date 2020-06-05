@@ -20,7 +20,11 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $totalOrderNotDone = Order::where('status', 'process')->orWhere('status', 'complaint')->count();
+        $totalOrderNotDone = Order::where('status', 'process')
+            ->orWhere('status', 'complaint')
+            ->orWhere('status', 'check_result')
+            ->orWhere('status', 'check_revision')
+            ->count();
         $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')->where([
             ['agent_id', Auth::id()],
             ['status', 'process']
@@ -57,7 +61,11 @@ class OrderController extends Controller
 
     public function history(Request $request)
     {
-        $totalOrderNotDone = Order::where('status', '<>', 'finished')->count();
+        $totalOrderNotDone = Order::where('status', 'process')
+        ->orWhere('status', 'complaint')
+        ->orWhere('status', 'check_result')
+        ->orWhere('status', 'check_revision')
+        ->count();
         $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')->where([
             ['agent_id', Auth::id()],
             ['status', 'finished']
@@ -209,6 +217,8 @@ class OrderController extends Controller
         try {
             $result->save();
             $order = Order::findOrFail($id);
+            $order->status = 'check_result';
+            $order->save();
             Mail::to($order->user->email)->send(new OrderFinishedNotification($order, $result));
             return response()->json(['success' => 'Successfully Upload Result. Please wait until customer accept this']);
         } catch (\Throwable $throwable) {
@@ -230,6 +240,8 @@ class OrderController extends Controller
         $revision->agent_id = Auth::id();
         $revision->save();
         $order = Order::findOrFail($id);
+        $order->status = 'check_revision';
+        $order->save();
         Mail::to($order->user->email)->send(new OrderRevisionFinishedNotification($order, $revision));
         return redirect()->back()->with('success', 'Project Revision Has Sent Successfully');
     }

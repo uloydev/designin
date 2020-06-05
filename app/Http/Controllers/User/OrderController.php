@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\UserProfile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use App\ProjectResult;
 
 class OrderController extends Controller
 {
@@ -16,12 +18,42 @@ class OrderController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
         $profile = UserProfile::where('user_id', Auth::id())->first();
-        $orders = Order::where('user_id', Auth::id())->latest()->paginate(10);
-        return  view('user.order', ['profile' => $profile, 'listBank' => $listBank, 'orders' => $orders]);
+        $orders = Order::where('user_id', Auth::id());
+        if($request->has('filter')){
+            if ($request->filter == 'all'){
+                $orders = $orders->latest();
+            }elseif ($request->filter == 'completed') {
+                $orders = $orders->where(function ($query){
+                    $query->where('status', 'finished')
+                    ->orWhere('status', 'check_result')
+                    ->orWhere('status', 'check_revision');
+                })->latest();
+            }elseif ($request->filter == 'process') {
+                $orders = $orders->where(function ($query) {
+                    $query->where('status', 'process')
+                    ->orWhere('status', 'complaint');
+                })->latest();
+            }elseif ($request->filter == 'canceled') {
+                $orders = $orders->where('status', 'canceled')->latest();
+            }else{
+                return abort(404);
+            }
+            $orders = $orders->paginate(10);
+            $pagination = $orders->appends ( array (
+                'filter' => $request->filter 
+            ) );
+        }else{
+            $orders = $orders->latest()->paginate(10);
+        }
+        $data = ['profile' => $profile, 'listBank' => $listBank, 'orders' => $orders];
+        if ($request->has('filter')) {
+            $data['filter'] = $request->filter;
+        }
+        return  view('user.order', $data);
     }
 
     public function create()
@@ -53,5 +85,32 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function acceptResult($id, $result_id)
+    {
+        $order = Order::findOrFail($id);
+        $result = ProjectResult::findOrFail($result_id);
+        if ($order->id !== $result->order_id or $order->user_id !== Auth::id()) {
+            return abort(401);
+        }
+        $order->status = 'finished';
+        $order->save();
+        return redirect()->back()->with('success', 'order result accepted successfully. order finished.');
+    }
+
+    public function rejectResult($id, $result_id)
+    {
+        $order = Order::findOrFail($id);
+        $result = ProjectResult::findOrFail($result_id);
+        if ($order->id !== $result->order_id or $order->user_id !== Auth::id()) {
+            return abort(401);
+        }
+        if ($order->max_revision - $order->revision->count() == 0) {
+            return redirect()->back()->with('error', 'order already reach revision limit ('. $order->max_revision .' revision)');
+        }
+        $order->status = 'complaint';
+        $order->save();
+        return redirect()->back()->with('success', 'order result rejected successfully. please wait agent to send a new one.');
     }
 }

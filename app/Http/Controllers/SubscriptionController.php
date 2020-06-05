@@ -13,11 +13,22 @@ use Illuminate\Support\Facades\Auth;
 class SubscriptionController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $subscriptions = Subscription::paginate(5);
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
         $orders = Order::where('user_id', Auth::id())->latest()->paginate(10);
+        if ($request->has('filter')) {
+            if ($request->filter == 'latest') {
+                $subscriptions = Subscription::latest();
+            }elseif ($request->filter =='oldest') {
+                $subscriptions = Subscription::oldest();
+            }else{
+                return abort(404);
+            }
+            $subscriptions = $subscriptions->paginate(5);
+        }else{
+            $subscriptions = Subscription::paginate(5);
+        }
         return view('subscription.index', [
             'subscriptions' => $subscriptions,
             'listBank' => $listBank,

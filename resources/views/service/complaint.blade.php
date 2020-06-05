@@ -27,14 +27,14 @@
                                                 data-toggle="collapse" data-target="#collapse{{ $order->id }}"
                                                 aria-expanded="false" aria-controls="collapse{{ $order->id }}">
                                             <i class="fas fa-chevron-up rotate-180 mr-2"></i>
-                                            {{ Str::words($order->package->service->title, 5) }}
+                                            {{ Str::words($order->package->service->title, 5) ?? 'service deleted by admin' }}
                                             {{ '(' . $order->package->title . ')' }}
                                         </button>
                                     </h2>
                                     <button type="button" class="btn btn-outline-default btn-sm mr-3"
                                     data-toggle="modal" data-target="#modal-revision" data-backdrop="static"
                                     data-id="{{ $order->id }}" data-title="{{ $order->title }}">
-                                        Send revision ({{ $order->max_revision - $order->results->where('type','revision')->count() }} left)
+                                        Send revision ({{ $order->max_revision - $order->revision->count() }} left)
                                     </button>
                                 </div>
                                 <div id="collapse{{ $order->id }}" class="collapse"
@@ -49,6 +49,18 @@
                                         </time>
                                     </div>
                                 </div>
+                                @if (!empty($order->result))
+                                        <div class="mb-3 d-flex flex-column flex-md-row">
+                                            <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-warning">Download Result</a>
+                                        </div>
+                                    @endif
+                                    @if ($order->revision->count() > 0)
+                                        @foreach ($order->revision as $revision)
+                                            <div class="mb-3 d-flex flex-column flex-md-row">
+                                                <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$revision->id]) }}" class="btn text-warning">Download Revision {{ $loop->iteration }}</a>
+                                            </div>
+                                        @endforeach
+                                    @endif
                             </article>
                         @empty
                             <img src="{{ asset('img/work-done.jpg') }}" alt="No complain job"

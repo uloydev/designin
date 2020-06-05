@@ -65,6 +65,8 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
     });
 });
 
+Route::get('download/order/{id}/result/{result_id}', 'DownloadController@downloadResult')->name('order.result.download');
+
 Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(function () {
     Route::resource('subscription', 'SubscriptionController');
     Route::Post('subscription/show/{id}/payment', 'PaymentController@subscriptionPayment')->name('subscription.payment');
@@ -80,6 +82,8 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
     Route::namespace('User')->group(function() {
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
         Route::resource('order', 'OrderController');
+        Route::get('order/{id}/result/accept/{result_id}', 'OrderController@acceptResult')->name('order.accept');
+        Route::get('order/{id}/result/reject/{result_id}', 'OrderController@rejectResult')->name('order.reject');
         Route::resource('job', 'JobController');
         Route::resource('testimony', 'TestimonyController')->only(['index', 'create', 'store']);
         Route::resource('transaction', 'TransactionController');

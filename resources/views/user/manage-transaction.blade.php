@@ -4,19 +4,29 @@
 @section('header')
     @include('partials.nav')
 @endsection
+@section('script')
+    <script>
+        let filter = $('#transaction-filter').val();
+        $('#transaction-filter').change(function(){
+            if($(this).val() !== filter){
+                $('#form-filter-transaction').submit();
+            }
+        });
+    </script>
+@endsection
 @section('content')
-    <div class="container">s
+    <div class="container">
         <div class="row justify-content-between align-items-start">
             @include('user.profile')
             <section class="profile-main">
                 @include('partials.profile-nav')
-                <form action="" class="profile-main__filter justify-content-lg-start">
-                    <label for="order-filter" class="mr-lg-auto"><h1>My Transaction</h1></label>
-                    <select name="" id="order-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
-                        <option value="" selected>Recent</option>
-                        <option value="">Oldest</option>
-                        <option value="">Finish</option>
-                        <option value="">Unfinished</option>
+                <form action="" id="form-filter-transaction" class="profile-main__filter justify-content-lg-start">
+                    <label for="transaction-filter" class="mr-lg-auto"><h1>My Transaction</h1></label>
+                    <select name="filter" id="transaction-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
+                        <option value="latest" selected>Recent</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="finish">Finish</option>
+                        <option value="process">Unfinished</option>
                     </select>
                 </form>
                 <div class="profile-main__content">
