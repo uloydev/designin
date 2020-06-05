@@ -9,7 +9,7 @@
                   <h1 class="text-center text-md-left">Find any article here</h1>
               </div>
               <div class="col">
-                  <form action="{{ route('blog.search') }}" class="search-service" method="get">
+                  <form action="{{ route('blog.search') . '#list-article' }}" class="search-service" method="get">
                       <label for="search" class="d-none">Search article</label>
                       <input class="search-service__input" id="search" name="search_article" type="search"
                       placeholder="Type anything and hit enter..." value="{{ $query ?? '' }}" required>
@@ -42,7 +42,7 @@
 @section('content')
   <div class="container">
     <div class="row justify-content-md-between">
-      <section class="col-12 col-md-8">
+      <section class="col-12 col-md-8 {{ isset($query) ? 'pt-4' : '' }}" id="list-article">
           @isset($query)
               <h1 class="mb-5">Search article with keyword <q>{{ $query }}</q></h1>
           @endisset

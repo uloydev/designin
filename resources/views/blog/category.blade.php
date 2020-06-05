@@ -6,7 +6,7 @@
 @section('css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css"
           rel="stylesheet">
-@stop
+@endsection
 @section('script')
 <script>
     let filter = $('#filter-blog select[name=filter]').val();
@@ -22,16 +22,16 @@
         <div class="container py-5 px-0">
             <div class="row mb-5">
                 <div class="col">
-                    <form action="" class="search-service" method="get">
+                    <form action="{{ route('blog-category.show', $articleCategory->id) }}" class="search-service" method="get">
                         <input type="search" class="search-service__input" name="search_blog"
-                               placeholder="Find any article..." required>
+                               placeholder="Find any article..." value="{{ $query ?? '' }}">
                         <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
                     </form>
                 </div>
             </div>
             <div class="category-header__content">
                 <h1 class="text-center mb-3 mb-md-0">{{ $articleCategory->name }}</h1>
-                <form action="" method="get" id="filter-blog">
+                <form action="{{ route('blog-category.show', $articleCategory->id) }}" method="get" id="filter-blog">
                     <select name="filter" class="category-header__filter wide">
                         <option value="disabled" disabled selected>Filter Article</option>
                         <option value="latest">Latest</option>
@@ -74,8 +74,16 @@
                         </article>
                     </div>
                 @empty
-                    <div class="alert alert--light col text-center">
-                        No article
+                    <div class="col-12 text-center">
+                        <article class="category-article flex-column align-items-center">
+                            <img src="{{ asset('img/not-found.jpg') }}" alt="Article not found" height="200" class="d-block">
+                            <h4>
+                                No article found.
+                                <a href="{{ url()->previous() }}" class="text-link d-block mt-2 align-items-center d-flex">
+                                    <i class='bx bx-left-arrow-alt'></i> Back to previous page
+                                </a>
+                            </h4>
+                        </article>
                     </div>
                 @endforelse
             </div>
