@@ -8,14 +8,10 @@ use App\BlogCategory;
 
 class BlogController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->has('search_blog')) {
-            $blogs = Blog::where('title', 'like', '%'.$request->search_blog.'%')
-            ->orWhere('contents', 'like', '%'.$request->search_blog.'%')->paginate(5);
-        } else {
-            $blogs = Blog::latest()->paginate(5);
-        }
+
+        $blogs = Blog::latest()->paginate(5);
         $populars = Blog::orderBy('hits', 'DESC')->take(3)->get();
         $mainArticle = Blog::where('is_main', true)->orderBy('updated_at', 'DESC')->take(6)->get();
         $categories = BlogCategory::all();
@@ -47,6 +43,7 @@ class BlogController extends Controller
     {
         $blogs = Blog::with('category')
                 ->where('title', 'LIKE', '%' . $request->search_article . '%')
+                ->orWhere('contents', 'LIKE', '%' . $request->search_article . '%')
                 ->paginate(10);
         $populars = Blog::orderBy('hits', 'DESC')->take(3)->get();
         $mainArticle = Blog::where('is_main', true)->orderBy('updated_at', 'DESC')->take(6)->get();

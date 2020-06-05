@@ -82,6 +82,11 @@ $('#blogIndexPage #main-article .col-12').filter(':not(:nth-child(-n+2))').addCl
 $("#blogIndexPage main section .article__time").css('left', articleCategoryWidth + 40);
 $("body[id^='blog'] main section nav").addClass('nav-pagination');
 
+$("#blogIndexPage .page-item .page-link").each(function () {
+    let goTo = $(this).attr('href');
+    $(this).attr('href', goTo + '#list-article')
+});
+
 let serviceId = $("#serviceEditPage #service-edit-form input[name='service_id']").val();
 if (window.location.pathname === '/agent/service/' + serviceId + '/edit') {
     $("#serviceEditPage #service-edit-form")

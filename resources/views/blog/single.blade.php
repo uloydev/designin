@@ -33,7 +33,7 @@
               <span class="article-popular__category">{{ $article->category->name }}</span>
               <time class="article-popular__time">{{ $article->updated_at->format('d M, Y') }}</time>
             </div>
-            <img src="{{ asset('img/article2.jpg') }}" class="article__img article__img--popular">
+            <img src="{{ asset('img/article2.jpg') }}" class="article__img article__img--popular" alt="Popular blog">
           </article>
           @endforeach
         </div>
