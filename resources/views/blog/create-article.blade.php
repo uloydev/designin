@@ -1,6 +1,9 @@
 @extends('layouts.blog-master')
 @section('page-title', 'Create new article')
 @section('page-id', 'blogCreate')
+@section('css')
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+@endsection
 @section('content')
     @if ($errors->any())
         <div class="alert alert--danger">
@@ -46,4 +49,7 @@
           </div>
       </div>
   </div>
+@endsection
+@section('script')
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 @endsection

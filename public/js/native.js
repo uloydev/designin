@@ -411,6 +411,15 @@ $("[data-target='#modal-revision']").click(function () {
 });
 
 //admin js
+$("#blogEditPage form .file-custom__label").text('Update cover');
+$("#blogEditPage form .file-custom__input").change(function () {
+    if ($(this).val().length === 0) {
+        $(this).next().text('Update cover');
+    }
+    else {
+        $(this).next().text($(this)[0].files[0].name);
+    }
+});
 $("#blog-add-category input[name='name']").keypress(function (e) {
     if(e.which === 32) return false;
 })
@@ -1016,10 +1025,20 @@ $("#servicesPage .category [id^='service-slider']").slick({
     ]
 });
 
-$("#blog-content").summernote({
-    placeholder: 'Insert your content here',
-    minHeight: 300
-});
+if (window.location.href.indexOf('blog') > -1 && window.location.href.indexOf('edit') > -1 ||
+    window.location.href.indexOf('blog/create') > -1) {
+    const blogContent = $('#blog-content').get(0);
+    const blogContentName = $('#blog-content').data('name');
+    new Quill(blogContent, {
+        theme: 'snow',
+        placeholder: 'Insert content here . . .',
+    });
+    $(`<textarea name="${blogContentName}" class="d-none"></textarea>`).insertAfter('#blog-content');
+    $("#blogEditPage form, #blogCreatePage form").submit(function () {
+        let getBlogContent = $("#blog-content .ql-editor").html();
+        $(`textarea[name="${blogContentName}"]`).val(getBlogContent);
+    });
+}
 
 $("#servicePage textarea[name='description'], #serviceEditPage textarea[name='service_description'], " +
     "textarea[name='detail_job'], #editSubscription textarea[name='desc']").summernote({

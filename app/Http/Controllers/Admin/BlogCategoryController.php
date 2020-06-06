@@ -33,7 +33,7 @@ class BlogCategoryController extends Controller
         ]);
         $blogCategory->name = $request->edit_category;
         $blogCategory->save();
-        return redirect()->back()->with('edit_category', 'Category Updated Succefully');
+        return redirect()->back()->with('success', 'Category Updated Succefully');
     }
 
     public function destroy($id)
@@ -45,6 +45,6 @@ class BlogCategoryController extends Controller
             Storage::delete($blog->header_image);
         }
         $category->delete();
-        return redirect()->back()->with('delete_category', 'Category Deleted Succefully');
+        return redirect()->back()->with('success', 'Category Deleted Succefully');
     }
 }

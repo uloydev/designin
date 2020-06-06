@@ -1,5 +1,10 @@
 @section('css')
 {{--  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">--}}
+    <style>
+        .ql-editor{
+            min-height: 300px;
+        }
+    </style>
 @endsection
 @csrf
 <div class="mb-3">
@@ -20,13 +25,15 @@
 </div>
 <div class="mb-3">
   <label for="blog-content" class="mb-2 d-block">Content</label>
-  <textarea id="blog-content" rows="8" name="contents" required>{!! $article->contents ?? '' !!}</textarea>
+  <div id="blog-content" data-name="contents">{!! $article->contents ?? '' !!}</div>
 </div>
 <div class="form-group">
   <img src="" alt="cover preview">
   <div class="file-custom">
     <input accept="image/*" class="file-custom__input" id="blog-cover" name="header_image" type="file">
-    <label class="file-custom__label" for="blog-cover">Pick a cover</label>
+    <label class="file-custom__label" for="blog-cover">
+        Pick a cover
+    </label>
   </div>
 </div>
 @if ($mainArticles <= 6)
@@ -37,5 +44,5 @@
 @endif
 
 @section('script')
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}" charset="utf-8"></script>
+{{--<script src="{{ asset('js/bootstrap.bundle.min.js') }}" charset="utf-8"></script>--}}
 @endsection

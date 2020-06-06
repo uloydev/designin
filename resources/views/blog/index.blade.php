@@ -40,65 +40,89 @@
   </header>
 @endsection
 @section('content')
-  <div class="container">
-    <div class="row justify-content-md-between">
-      <section class="col-12 col-md-8 {{ isset($query) ? 'pt-4' : '' }}" id="list-article">
-          @isset($query)
-              <h1 class="mb-5">Search article with keyword <q>{{ $query }}</q></h1>
-          @endisset
-          @forelse ($blogs as $blog)
-              <article>
-                  <img src="{{ Storage::url($blog->header_image) }}" class="article__img" alt="Article {{ $blog->title }} Image">
-                  <div class="article__detail">
-                    <p class="article__title">
-                      <a href="{{ route('blog.show', $blog->id) }}">{{ Str::words($blog->title, 5) }}</a>
-                    </p>
-                    <p class="article__content">{{ Str::words($blog->contents, 20) }}</p>
-                    <span class="article__category">{{ $blog->category->name }}</span>
-                    <time class="article__time">{{ $blog->created_at->format('D m, Y') }}</time>
-                  </div>
-              </article>
-          @empty
-              <article class="flex-column align-items-center">
-                  <img src="{{ asset('img/not-found.jpg') }}" alt="No article found" height="200" class="d-block mx-auto">
-                  <h1 class="my-2">No article found.</h1>
-                  <a href="{{ route('blog.index') }}" class="text-link">See all article</a>
-              </article>
-          @endforelse
-          {{ $blogs->links() }}
-      </section>
-      <aside class="col-12 col-md-4">
-        <div class="article-popular">
-          <h3 class="article-popular__heading">
-            <span>Popular blogs</span>
-          </h3>
-          @foreach ($populars as $popular)
-              <article class="mb-5">
-                <div class="article__detail">
-                  <p class="article__title article__title--popular">
-                    <a href="{{ route('blog.show', $popular->id) }}">{{ Str::words($popular->title, 8) }}</a>
-                  </p>
-                  <span class="article-popular__category">{{ $popular->category->name }}</span>
-                  <time class="article-popular__time">{{ $popular->created_at->format('D m, Y') }}</time>
+    @if ($errors->any())
+        <div class="alert alert--danger">
+            @foreach($errors->all() as $error)
+                {{ $error }}
+            @endforeach
+        </div>
+    @elseif(session('success'))
+        <div class="alert alert--success">
+            {{ session('success') }}
+        </div>
+    @endif
+    <div class="container">
+        <div class="row justify-content-md-between">
+            <section class="col-12 col-md-8 {{ isset($query) ? 'pt-4' : '' }}" id="list-article">
+                @isset($query)
+                    <h1 class="mb-5">Search article with keyword <q>{{ $query }}</q></h1>
+                @endisset
+                @forelse ($blogs as $blog)
+                    <article>
+                        <img src="{{ Storage::url($blog->header_image) }}" class="article__img"
+                             alt="Article {{ $blog->title }} Image">
+                        <div class="article__detail">
+                            <p class="article__title">
+                                <a href="{{ route('blog.show', $blog->id) }}">
+                                    {{ Str::words($blog->title, 5) }}
+                                </a>
+                            </p>
+                            <p class="article__content">{{ Str::words($blog->contents, 20) }}</p>
+                            <span class="article__category">{{ $blog->category->name }}</span>
+                            <time class="article__time">{{ $blog->created_at->format('D m, Y') }}</time>
+                        </div>
+                    </article>
+                @empty
+                    <article class="flex-column align-items-center">
+                        <img src="{{ asset('img/not-found.jpg') }}" alt="No article found" height="200"
+                             class="d-block mx-auto">
+                        <h1 class="my-2">No article found.</h1>
+                        <a href="{{ route('blog.index') }}" class="text-link">See all article</a>
+                    </article>
+                @endforelse
+                {{ $blogs->links() }}
+            </section>
+            <aside class="col-12 col-md-4">
+                <div class="article-popular">
+                    <h3 class="article-popular__heading">
+                        <span>Popular blogs</span>
+                    </h3>
+                    @foreach ($populars as $popular)
+                        <article class="mb-5">
+                            <div class="article__detail">
+                                <p class="article__title article__title--popular">
+                                    <a href="{{ route('blog.show', $popular->id) }}">
+                                        {{ Str::words($popular->title, 8) }}
+                                    </a>
+                                </p>
+                                <span class="article-popular__category">
+                                    {{ $popular->category->name }}
+                                </span>
+                                <time class="article-popular__time">
+                                    {{ $popular->created_at->format('D m, Y') }}
+                                </time>
+                            </div>
+                            <img src="{{ Storage::url($popular->header_image) }}"
+                                 class="article__img article__img--popular"
+                                 alt="{{ $popular->title }} Article Image">
+                        </article>
+                    @endforeach
                 </div>
-                <img src="{{ Storage::url($popular->header_image) }}" class="article__img article__img--popular"
-                     alt="{{ $popular->title }} Article Image">
-              </article>
-          @endforeach
+                <div class="article-category">
+                    <h3 class="article-popular__heading">
+                        <span>Category</span>
+                    </h3>
+                    <ul>
+                        @foreach ($categories as $category)
+                            <li class="article-category__item mb-3">
+                                <a href="{{ route('blog-category.show', $category->id) }}">
+                                    {{ $category->name }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </aside>
         </div>
-        <div class="article-category">
-          <h3 class="article-popular__heading">
-            <span>Category</span>
-          </h3>
-          <ul>
-              @foreach ($categories as $category)
-                  <li class="article-category__item mb-3">
-                      <a href="{{ route('blog-category.show', $category->id) }}">{{ $category->name }}</a>
-                  </li>
-              @endforeach
-          </ul>
-        </div>
-      </aside>
     </div>
-  </div>
 @endsection

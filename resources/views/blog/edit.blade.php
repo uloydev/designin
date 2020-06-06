@@ -1,6 +1,9 @@
 @extends('layouts.blog-master')
 @section('page-title', 'Edit article')
 @section('page-id', 'blogEdit')
+@section('css')
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+@endsection
 @section('content')
   <div class="container py-4">
   <form action="{{ route('manage.blog.update', $article->id) }}" method="post" enctype="multipart/form-data">
@@ -8,4 +11,7 @@
       <button type="submit" class="btn btn-success btn-block">Update article</button>
     </form>
   </div>
+@endsection
+@section('script')
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 @endsection

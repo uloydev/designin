@@ -78,13 +78,13 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $blog = Blog::findOrFail($id);
         $request->validate([
             'title'=>'required',
-            'header_image'=>'file|mimes:jpg,jpeg,png,gif,svg',
+            'header_image'=>'nullable|image',
             'category_id'=>'required',
             'contents'=>'required',
         ]);
+        $blog = Blog::findOrFail($id);
         $blog->title = $request->title;
         $blog->contents = $request->contents;
         $blog->category_id = $request->category_id;

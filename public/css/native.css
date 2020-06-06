@@ -437,7 +437,6 @@ nav .search-service__btn {
     margin-bottom: 15px;
 }
 .file-custom__input {
-    visibility: hidden;
     opacity: 0;
     overflow: hidden;
     height: 0;
