@@ -236,7 +236,7 @@ allPromoCode.forEach(function (codePromo) {
     allPromoCodeList.push(promoCodeVal);
 });
 
-$("#promo-code").focusout(function () {
+$("#modal-single-extras #promo-code").focusout(function () {
     if ($(this).val().length !== 0) {
         let promoCode = $(this).val();
         if (allPromoCodeList.includes(promoCode) === true) {
