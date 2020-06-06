@@ -23,8 +23,8 @@
                 <form action="" id="sub-filter-form" class="profile-main__filter">
                     <label for="sub-filter"><h1>My Subscription</h1></label>
                     <select name="filter" id="sub-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
-                        <option value="latest" selected>Latest</option>
-                        <option value="oldest">Oldest</option>
+                        <option value="latest" {{(!session('filter') or session('filter') == 'latest') ? 'selected=selected' : ''}}>Latest</option>
+                        <option value="oldest" {{(session('filter') == 'oldest' ? 'selected=selected' : '')}}>Oldest</option>
                     </select>
                 </form>
                 <div class="profile-main__content">

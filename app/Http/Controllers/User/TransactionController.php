@@ -33,8 +33,12 @@ class TransactionController extends Controller
             }else{
                 return abort(404);
             }
+            $orders = $orders->paginate(10);
+            $request->session()->flash('filter', $request->filter);
+            $orders->appends(['filter']);
+        }else{
+            $orders = $orders->paginate(10);
         }
-        $orders = $orders->paginate(10);
         $subscriptions = Subscription::paginate(12);
         $totalSubcription = Subscription::count();
         return view('user.manage-transaction', [

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\ProjectResult;
+use App\Testimony;
+use App\Service;
+use App\Package;
 
 class OrderController extends Controller
 {
@@ -42,6 +45,7 @@ class OrderController extends Controller
             }else{
                 return abort(404);
             }
+            $request->session()->flash('filter', $request->filter);
             $orders = $orders->paginate(10);
             $pagination = $orders->appends ( array (
                 'filter' => $request->filter 
@@ -112,5 +116,23 @@ class OrderController extends Controller
         $order->status = 'complaint';
         $order->save();
         return redirect()->back()->with('success', 'order result rejected successfully. please wait agent to send a new one.');
+    }
+
+    public function sendReview($id, Request $request)
+    {
+        $user = Auth::user();
+        $order = Order::where('user_id', $user->id)->findOrFail($id);
+        $package = Package::findOrFail($order->package_id);
+        $service = Service::findOrFail($package->service_id);
+        $testimony = new Testimony;
+        $testimony->content = $request->content;
+        $testimony->rating = $request->rating;
+        $testimony->user_id = $user->id;
+        $testimony->service_id = $service->id;
+        $testimony->save();
+        $order->is_reviewed = true;
+        $order->save();
+        return redirect()->back()->with('success', 'your review has been sent');
+    
     }
 }
