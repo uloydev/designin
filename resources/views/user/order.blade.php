@@ -37,10 +37,18 @@
                 <form id="form-filter-order" action="" class="profile-main__filter">
                     <label for="order-filter"><h1>Your order</h1></label>
                     <select name="filter" id="order-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
-                        <option value="all" {{(!session('filter') or session('filter') == 'all') ? 'selected=selected' : ''}}>All order</option>
-                        <option value="completed" {{(session('filter') == 'completed') ? 'selected=selected' : ''}}>Completed</option>
-                        <option value="process" {{(session('filter') == 'process') ? 'selected=selected' : ''}}>Active</option>
-                        <option value="canceled" {{(session('filter') == 'canceled') ? 'selected=selected' : ''}}>Canceled</option>
+                        <option value="all" {{(!session('filter') or session('filter') == 'all') ? 'selected=selected' : ''}}>
+                            All order
+                        </option>
+                        <option value="completed" {{(session('filter') == 'completed') ? 'selected=selected' : ''}}>
+                            Completed
+                        </option>
+                        <option value="process" {{(session('filter') == 'process') ? 'selected=selected' : ''}}>
+                            Active
+                        </option>
+                        <option value="canceled" {{(session('filter') == 'canceled') ? 'selected=selected' : ''}}>
+                            Canceled
+                        </option>
                     </select>
                 </form>
                 <div class="profile-main__content">
@@ -51,7 +59,9 @@
                             <div class="profile-main__order-detail ml-xl-5">
                                 <div class="mb-3">
                                     What you order
-                                    <span class="profile-main__title">{{ $order->package->service->title ?? 'service deleted by admin'}}</span>
+                                    <span class="profile-main__title">
+                                        {{ $order->package->service->title ?? 'service deleted by admin'}}
+                                    </span>
                                 </div>
                                 <div class="mb-3">
                                     Start on:
@@ -85,7 +95,7 @@
                                     </div>
                                     @if (!empty($order->invoice))
                                         <div class="mb-3 d-flex flex-column flex-md-row">
-                                            <a href="javascript:void(0);" class="btn text-primary" id="pay-button"
+                                            <a href="javascript:void(0);" class="btn" id="pay-button"
                                             data-payment-token="{{$order->invoice->payment_token ?? ''}}">
                                                 Pay now
                                             </a>
@@ -94,30 +104,53 @@
                                 @endif
                                     @if (!empty($order->result))
                                         <div class="mb-3 d-flex flex-column flex-md-row">
-                                            <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-warning">Download Result</a>
+                                            <a class="btn text-warning"
+                                               href="{{ route('order.result.download',
+                                               ['id'=>$order->id, 'result_id'=>$order->result->id]) }}">
+                                                Download Result
+                                            </a>
                                         </div>
                                         @if ($order->status == 'check_result')
                                             <div class="mb-3 d-flex flex-column flex-md-row">
-                                                <a href="{{ route('user.order.accept', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-success">Accept Result</a>
-                                                <a href="{{ route('user.order.reject', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-danger">Reject Result ({{ $order->max_revision - $order->revision->count() }} revision left)</a>
+                                                <a class="btn text-success" href="{{ route('user.order.accept',
+                                                ['id'=>$order->id, 'result_id'=>$order->result->id]) }}">
+                                                    Accept Result
+                                                </a>
+                                                <a class="btn text-danger" href="{{ route('user.order.reject',
+                                                ['id'=>$order->id, 'result_id'=>$order->result->id]) }}">
+                                                    Reject Result ({{ $order->max_revision - $order->revision->count() }}
+                                                    revision left)
+                                                </a>
                                             </div>
                                         @endif
                                     @endif
                                     @if ($order->revision->count() > 0)
                                         @foreach ($order->revision as $revision)
                                             <div class="mb-3 d-flex flex-column flex-md-row">
-                                                <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$revision->id]) }}" class="btn text-warning">Download Revision {{ $loop->iteration }}</a>
+                                                <a class="btn text-warning" href="{{ route('order.result.download',
+                                                   ['id'=>$order->id, 'result_id'=>$revision->id]) }}">
+                                                    Download Revision {{ $loop->iteration }}
+                                                </a>
                                             </div>
                                         @endforeach
                                         @if ($order->status == 'check_revision')
                                             <div class="mb-3 d-flex flex-column flex-md-row">
-                                                <a href="{{ route('user.order.accept', ['id'=>$order->id, 'result_id'=>$order->revision->last()->id]) }}" class="btn text-success">Accept Result</a>
-                                                <a href="{{ route('user.order.reject', ['id'=>$order->id, 'result_id'=>$order->revision->last()->id]) }}" class="btn text-danger">Reject Result ({{ $order->max_revision - $order->revision->count() }} revision left)</a>
+                                                <a class="btn text-success" href="{{ route('user.order.accept',
+                                                ['id'=>$order->id, 'result_id'=>$order->revision->last()->id]) }}">
+                                                    Accept Result
+                                                </a>
+                                                <a class="btn text-danger" href="{{ route('user.order.reject',
+                                                ['id'=>$order->id, 'result_id'=>$order->revision->last()->id]) }}">
+                                                    Reject Result
+                                                    ({{ $order->max_revision - $order->revision->count() }} revision left)
+                                                </a>
                                             </div>
                                         @endif
                                     @endif
                                 <div class="row mx-0">
-                                    <a href="javascript:void(0);" class="btn-success btn-modal" data-target="#modal-review">Review</a>
+                                    <a href="javascript:void(0);" class="btn-success btn-modal" data-target="#modal-review">
+                                        Review
+                                    </a>
                                     <a href="{{ route('user.chat.index', $order->id) }}" class="profile-main__btn-chat">
                                         Chat agent
                                     </a>

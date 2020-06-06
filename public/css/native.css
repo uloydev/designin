@@ -1965,8 +1965,9 @@ input[type=number] {
     padding: 10px 1rem;
 }
 
-#contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle, #userOrderPage .nav__toggle, #userSubscriptionPage .nav__toggle,
-#servicesPage .nav__toggle, #singleServicePage .nav__toggle, #landingPage .nav__toggle, #userChatPage .nav__toggle, #myTransactionPage .nav__toggle {
+#contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle, #userOrderPage .nav__toggle,
+#userSubscriptionPage .nav__toggle, #servicesPage .nav__toggle, #singleServicePage .nav__toggle, #landingPage .nav__toggle,
+#userChatPage .nav__toggle, #myTransactionPage .nav__toggle {
     color: var(--almost-black);
 }
 #contactUsPage main {
@@ -2049,6 +2050,8 @@ input[type=number] {
     background-color: #236e9e !important;
 }
 #userOrderPage #pay-button {
+    display: block;
+    width: 100%;
     background-color: var(--primary-color) !important;
     color: #fff;
 }
@@ -2112,9 +2115,6 @@ input[type=number] {
 .profile-main-item__detail {
     display: flex;
     flex-direction: column;
-}
-.profile-main__job-detail {
-    /*max-height: calc(80px + 4rem);*/
 }
 .profile-main__job-action {
     display: flex;
