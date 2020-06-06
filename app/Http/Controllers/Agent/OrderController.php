@@ -25,30 +25,33 @@ class OrderController extends Controller
             ->orWhere('status', 'check_result')
             ->orWhere('status', 'check_revision')
             ->count();
-        $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')->where([
-            ['agent_id', Auth::id()],
-            ['status', 'process']
-        ])->orWhere('status', 'complaint')->select(
-            'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status',
-            'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
-        );
-        if ($request->has('search')) {
-            $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
-            ->orWhere('price', 'like', '%'.$request->search.'%');
-        }
-        if ($request->has('sort', 'sort_type')) {
-            try {
-                if($request->sort == 'created_at'){
-                    $orders = $orders->orderBy('orders.'.$request->sort, $request->sort_type);
-                }else{
-                    $orders = $orders->orderBy($request->sort, $request->sort_type)->paginate(10);
-                }
-            } catch (\Throwable $th) {
-                return abort('404');
+        $orders = Order::where('agent_id', Auth::id())->where(function ($query) {
+            $query->where('status', 'process')
+            ->orWhere('status', 'complaint');
+        });
+        if($request->has('sort') and !empty($request->sort)){
+            if ($request->sort == 'budget-desc') {
+                $orders = $orders->orderBy('budget', 'desc');
+            }elseif ($request->sort == 'budget-asc'){
+                $orders = $orders->orderBy('budget', 'asc');
+            }elseif ($request->sort == 'duration-desc') {
+                $orders = $orders->orderBy('duration', 'desc');
+            }elseif ($request->sort == 'duration-asc'){
+                $orders = $orders->orderBy('duration', 'asc');
+            }elseif ($request->sort == 'time-desc') {
+                $orders = $orders->latest();
+            }elseif ($request->sort == 'time-asc'){
+                $orders = $orders->oldest();
+            }else{
+                return abort(404);
             }
-        }
-        else {
-            $orders = $orders->orderBy('orders.created_at', 'desc')->paginate(10);
+            $orders = $orders->paginate(10);
+            $pagination = $orders->appends([
+                'sort' => $request->sort 
+            ]);
+            $request->session()->flash('sort', $request->sort);
+        }else{
+            $orders = $orders->latest()->paginate(10);
         }
         return view('agent.list-request', ['orders' => $orders, 'totalOrderNotDone' => $totalOrderNotDone]);
     }
@@ -66,63 +69,70 @@ class OrderController extends Controller
         ->orWhere('status', 'check_result')
         ->orWhere('status', 'check_revision')
         ->count();
-        $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')->where([
+        $orders = Order::where([
             ['agent_id', Auth::id()],
             ['status', 'finished']
-        ])->select(
-            'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status',
-            'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
-        );
-        if ($request->has('search')) {
-            $orders = $orders->where('duration', 'like', '%'.$request->search.'%')
-            ->orWhere('price', 'like', '%'.$request->search.'%');
-        }
-        if ($request->has('sort', 'sort_type')) {
-            try {
-                if($request->sort == 'created_at'){
-                    $orders = $orders->orderBy('orders.'.$request->sort, $request->sort_type);
-                }else{
-                    $orders = $orders->orderBy($request->sort, $request->sort_type)->paginate(10);
-                }
-            } catch (\Throwable $th) {
-                return abort('404');
+        ]);
+        if($request->has('sort') and !empty($request->sort)){
+            if ($request->sort == 'budget-desc') {
+                $orders = $orders->orderBy('budget', 'desc');
+            }elseif ($request->sort == 'budget-asc'){
+                $orders = $orders->orderBy('budget', 'asc');
+            }elseif ($request->sort == 'duration-desc') {
+                $orders = $orders->orderBy('duration', 'desc');
+            }elseif ($request->sort == 'duration-asc'){
+                $orders = $orders->orderBy('duration', 'asc');
+            }elseif ($request->sort == 'time-desc') {
+                $orders = $orders->latest();
+            }elseif ($request->sort == 'time-asc'){
+                $orders = $orders->oldest();
+            }else{
+                return abort(404);
             }
+            $orders = $orders->paginate(10);
+            $pagination = $orders->appends([
+                'sort' => $request->sort 
+            ]);
+            $request->session()->flash('sort', $request->sort);
         }else{
-            $orders = $orders->orderBy('orders.created_at', 'desc')->paginate(10);
+            $orders = $orders->latest()->paginate(10);
         }
         return view('agent.request-history', ['orders'=>$orders, 'totalOrderNotDone' => $totalOrderNotDone]);
     }
 
     public function bidHistory(Request $request)
     {
-        $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')
-        ->where('agent_id', Auth::id())
-        ->select(
-            'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status',
-            'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
-        );
-        if ($request->has('search')) {
-            $orders = $orders->where('duration', 'LIKE', '%'.$request->search.'%')
-            ->orWhere('price', 'LIKE', '%'.$request->search.'%');
-        }
-        if ($request->has('sort', 'sort_type')) {
-            try {
-                if($request->sort == 'created_at'){
-                    $orders = $orders->orderBy('orders.'.$request->sort, $request->sort_type);
-                }else{
-                    $orders = $orders->orderBy($request->sort, $request->sort_type)->paginate(10);
-                }
-            } catch (\Throwable $th) {
-                return abort('404');
+        $orders = Order::where('agent_id', Auth::id());
+        if($request->has('sort') and !empty($request->sort)){
+            if ($request->sort == 'budget-desc') {
+                $orders = $orders->orderBy('budget', 'desc');
+            }elseif ($request->sort == 'budget-asc'){
+                $orders = $orders->orderBy('budget', 'asc');
+            }elseif ($request->sort == 'duration-desc') {
+                $orders = $orders->orderBy('duration', 'desc');
+            }elseif ($request->sort == 'duration-asc'){
+                $orders = $orders->orderBy('duration', 'asc');
+            }elseif ($request->sort == 'time-desc') {
+                $orders = $orders->latest();
+            }elseif ($request->sort == 'time-asc'){
+                $orders = $orders->oldest();
+            }else{
+                return abort(404);
             }
+            $orders = $orders->paginate(10);
+            $orders->appends([
+                'sort' => $request->sort 
+            ]);
+            $request->session()->flash('sort', $request->sort);
         }else{
-            $orders = $orders->orderBy('orders.created_at', 'desc')->paginate(10);
+            $orders = $orders->latest()->paginate(10);
         }
         return view('agent.bid-history', [
             'orders'=>$orders
         ]);
     }
 
+    // not used
     public function incoming(Request $request)
     {
         $orders = Order::leftJoin('package', 'package.id', '=', 'orders.package_id')
@@ -132,34 +142,38 @@ class OrderController extends Controller
             'orders.id', 'agent_id', 'user_id', 'package_id', 'orders.created_at', 'deadline', 'started_at', 'status',
             'progress', 'request', 'orders.updated_at', 'package.duration', 'is_reviewed', 'package.price'
         );
-        if ($request->has('search')) {
-            $orders = $orders->where(
-                'duration', 'LIKE', '%'.$request->search.'%'
-            )->orWhere('price', 'LIKE', '%'.$request->search.'%');
-        }
-        if ($request->has('sort', 'sort_type')) {
-            try {
-                if ($request->sort == 'created_at'){
-                    $orders = $orders->orderBy('orders.'.$request->sort, $request->sort_type);
-                }
-                else {
-                    $orders = $orders->orderBy($request->sort, $request->sort_type)->paginate(10);
-                }
-            } catch (\Throwable $th) {
-                return abort('404');
-            }
-        }
-        else {
-            $orders = $orders->orderBy('orders.created_at', 'desc')->paginate(10);
-        }
         return view('service.incoming', ['orders' => $orders]);
     }
 
-    public function complaint()
+    public function complaint(Request $request)
     {
         $totalComplaint = Order::where('agent_id', Auth::id())->where('status', 'complaint')->count();
-        $complaints = Order::where('agent_id', Auth::id())->where('status', 'complaint')->paginate(10);
-        return view('service.complaint', ['complaints' => $complaints, 'totalComplaint' => $totalComplaint]);
+        $orders = Order::where('agent_id', Auth::id())->where('status', 'complaint');
+        if($request->has('sort') and !empty($request->sort)){
+            if ($request->sort == 'budget-desc') {
+                $orders = $orders->orderBy('budget', 'desc');
+            }elseif ($request->sort == 'budget-asc'){
+                $orders = $orders->orderBy('budget', 'asc');
+            }elseif ($request->sort == 'duration-desc') {
+                $orders = $orders->orderBy('duration', 'desc');
+            }elseif ($request->sort == 'duration-asc'){
+                $orders = $orders->orderBy('duration', 'asc');
+            }elseif ($request->sort == 'time-desc') {
+                $orders = $orders->latest();
+            }elseif ($request->sort == 'time-asc'){
+                $orders = $orders->oldest();
+            }else{
+                return abort(404);
+            }
+            $orders = $orders->paginate(10);
+            $pagination = $orders->appends([
+                'sort' => $request->sort 
+            ]);
+            $request->session()->flash('sort', $request->sort);
+        }else{
+            $orders = $orders->latest()->paginate(10);
+        }
+        return view('service.complaint', ['complaints' => $orders, 'totalComplaint' => $totalComplaint]);
     }
 
     public function approval(Request $request, $id)
@@ -249,10 +263,35 @@ class OrderController extends Controller
     public function search(Request $request)
     {
         $searching = $request->search_order;
-        $orders = Order::whereHas('package.service', function (Builder $query) use ($request) {
-           $query->where('title', 'LIKE', '%' . $request->search_order . '%');
-        })->paginate(10);
-        $orders->appends($request->only('search_order'));
+        $orders = Order::where('agent_id', Auth::id())->whereHas('package.service', function (Builder $query) use ($request) {
+            $query->where('title', 'LIKE', '%' . $request->search_order . '%')
+            ->orWhere('budget', 'LIKE', '%' . $request->search_order . '%');
+        });
+        if($request->has('sort') and !empty($request->sort)){
+            if ($request->sort == 'budget-desc') {
+                $orders = $orders->orderBy('budget', 'desc');
+            }elseif ($request->sort == 'budget-asc'){
+                $orders = $orders->orderBy('budget', 'asc');
+            }elseif ($request->sort == 'duration-desc') {
+                $orders = $orders->orderBy('duration', 'desc');
+            }elseif ($request->sort == 'duration-asc'){
+                $orders = $orders->orderBy('duration', 'asc');
+            }elseif ($request->sort == 'time-desc') {
+                $orders = $orders->latest();
+            }elseif ($request->sort == 'time-asc'){
+                $orders = $orders->oldest();
+            }else{
+                return abort(404);
+            }
+            $orders = $orders->paginate(10);
+            $pagination = $orders->appends([
+                'sort' => $request->sort 
+            ]);
+            $request->session()->flash('sort', $request->sort);
+        }else{
+            $orders = $orders->latest()->paginate(10);
+        }
+        $orders->appends(['search_order' => $request->search_order]);
         return view('job.search', ['searching' => $searching, 'orders' => $orders]);
     }
 }

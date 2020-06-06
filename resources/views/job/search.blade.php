@@ -3,6 +3,24 @@
 @section('page-id', 'searchRequest')
 @section('page-name') List Request | Search Job with keyword <q>{{ $searching }}</q> @endsection
 @section('header') @include('partials.job-header') @endsection
+@push('script')
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        $('#form-sort-job #sort-job').change(function (e) {
+            e.preventDefault();
+            let url = document.location.href.split('?')[0] + '?';
+            if (params.toString() !== "") {
+                params.toString().split('&').forEach(element=>{
+                    let q = element.split('=');
+                    if (q[0] !== 'sort') {
+                        url += q[0] + '=' + q[1] + '&';
+                    }
+                });
+            }
+            window.location.replace(url + $('#form-sort-job').serialize());
+        });
+    </script>
+@endpush
 @section('content')
     <div class="alert alert-danger no-fadeout alert-dismissible fade show" id="alert-error" role="alert" style="display: none">
         Something when wrong. Please <a href="{{ route('contact-us.index') }}">contact admin</a>
@@ -31,10 +49,15 @@
                                         </button>
                                     </h2>
                                     @if ($order->progress == '100')
-                                        @if ($order->results->count() == 0)
+                                        @if ($order->status == 'process')
                                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-                                                    data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
+                                            data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
                                                 Send result
+                                            </button>
+                                        @elseif($order->status == 'complaint')
+                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                            data-target="#modal-result" data-backdrop="static" data-id="{{$order->id}}">
+                                                Send revision ({{$order->max_revision - $order->revision->count()}} revision left)
                                             </button>
                                         @else
                                             <span class="text-gray">Already finished but customer not accept yet</span>
@@ -47,6 +70,18 @@
                                         </button>
                                     @endif
                                 </div>
+                                @if (!empty($order->result))
+                                    <div class="mb-3 d-flex flex-column flex-md-row">
+                                        <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-warning">Download Result</a>
+                                    </div>
+                                @endif
+                                @if ($order->revision->count() > 0)
+                                    @foreach ($order->revision as $revision)
+                                        <div class="mb-3 d-flex flex-column flex-md-row">
+                                            <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$revision->id]) }}" class="btn text-warning">Download Revision {{ $loop->iteration }}</a>
+                                        </div>
+                                    @endforeach
+                                @endif
                                 <div id="collapse{{$order->id}}" aria-labelledby="heading{{$order->id}}"
                                      data-parent="#accordion-request" class="collapse">
                                     <div class="card-body">{!! $order->request !!}</div>

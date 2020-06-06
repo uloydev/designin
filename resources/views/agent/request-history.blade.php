@@ -11,6 +11,24 @@
         </div>
     @endif
 @endsection
+@push('script')
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        $('#form-sort-job #sort-job').change(function (e) {
+            e.preventDefault();
+            let url = document.location.href.split('?')[0] + '?';
+            if (params.toString() !== "") {
+                params.toString().split('&').forEach(element=>{
+                    let q = element.split('=');
+                    if (q[0] !== 'sort') {
+                        url += q[0] + '=' + q[1] + '&';
+                    }
+                });
+            }
+            window.location.replace(url + $('#form-sort-job').serialize());
+        });
+    </script>
+@endpush
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -38,7 +56,18 @@
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
-
+                                @if (!empty($order->result))
+                                    <div class="mb-3 d-flex flex-column flex-md-row">
+                                        <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-warning">Download Result</a>
+                                    </div>
+                                @endif
+                                @if ($order->revision->count() > 0)
+                                    @foreach ($order->revision as $revision)
+                                        <div class="mb-3 d-flex flex-column flex-md-row">
+                                            <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$revision->id]) }}" class="btn text-warning">Download Revision {{ $loop->iteration }}</a>
+                                        </div>
+                                    @endforeach
+                                @endif
                                 <div id="collapse{{ $loop->index }}" aria-labelledby="heading{{ $loop->index }}"
                                 class="collapse" data-parent="#accordionJobHistory">
                                     <div class="card-body">

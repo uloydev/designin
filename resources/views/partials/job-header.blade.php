@@ -21,11 +21,11 @@
         <div class="col-12 col-lg-7" id="filter-job">
             <div class="card">
                 <ul class="nav">
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link text-center" href="{{ route('agent.list-request.incoming') }}">
                             Incoming Job
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         @if (Route::currentRouteName() === 'agent.list-request.index')
                             <a class="nav-link text-center active" href="{{ route('agent.list-request.index') }}">
@@ -68,14 +68,14 @@
                     Sort By
                 </label>
                 <div class="col-12 col-md-6 col-lg-8">
-                    <form action="" method="get">
-                        <select class="nice-select wide text-capitalize" id="filter-request">
-                            <option value="1">Highest budget</option>
-                            <option value="1">Cheapest budget</option>
-                            <option value="2">Highest duration</option>
-                            <option value="2">Cheapest duration</option>
-                            <option value="" selected>Latest</option>
-                            <option value="">Oldest</option>
+                    <form id="form-sort-job" action="" method="get">
+                        <select name='sort' class="nice-select wide text-capitalize" id="sort-job">
+                            <option value="budget-desc" {{ (session('sort') == 'budget-desc') ? 'selected=selected' : '' }}>Highest budget</option>
+                            <option value="budget-asc" {{ (session('sort') == 'budget-asc') ? 'selected=selected' : '' }}>Cheapest budget</option>
+                            <option value="duration-desc" {{ (session('sort') == 'duration-desc') ? 'selected=selected' : '' }}>Highest duration</option>
+                            <option value="duration-asc" {{ (session('sort') == 'duration-asc') ? 'selected=selected' : '' }}>Lowest duration</option>
+                            <option value="time-desc" {{ (!session('sort') or session('sort') == 'time-desc') ? 'selected=selected' : '' }}>Latest</option>
+                            <option value="time-asc" {{ (session('sort') == 'time-asc') ? 'selected=selected' : '' }}>Oldest</option>
                         </select>
                     </form>
                 </div>
