@@ -285,7 +285,7 @@
       </section>
     </main>
     @include('partials.footer')
-    <div class="overlay overlay--nav-showed"></div>
+    @stack('element')
     @include('partials.script')
   </body>
 </html>

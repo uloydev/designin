@@ -54,5 +54,4 @@
       </section>
     </div>
   </div>
-  <div class="overlay overlay--nav-showed"></div>
 @endsection

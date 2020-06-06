@@ -182,7 +182,6 @@
     </div>
 @endsection
 @push('element')
-    <div class="overlay overlay--nav-showed"></div>
     <datalist id="list-promo">
         @foreach($promos as $promo)
             <option value="{{ $promo->code }}" data-code-discount="{{ $promo->discount }}">{{ $promo->code }}</option>

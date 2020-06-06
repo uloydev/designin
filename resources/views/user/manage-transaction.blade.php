@@ -23,14 +23,15 @@
                 <form action="" id="form-filter-transaction" class="profile-main__filter justify-content-lg-start">
                     <label for="transaction-filter" class="mr-lg-auto"><h1>My Transaction</h1></label>
                     <select name="filter" id="transaction-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
-                        <option value="latest" {{(!session('filter') or session('filter') == 'latest') ? 'selected=selected' : ''}}>Recent</option>
+                        <option value="latest" {{(!session('filter') or session('filter') == 'latest') ? 'selected=selected' : ''}}>
+                            Recent
+                        </option>
                         <option value="oldest" {{(session('filter') == 'oldest') ? 'selected=selected' : ''}}>Oldest</option>
                         <option value="finish" {{(session('filter') == 'finish') ? 'selected=selected' : ''}}>Finish</option>
                         <option value="process" {{(session('filter') == 'process') ? 'selected=selected' : ''}}>Unfinished</option>
                     </select>
                 </form>
                 <div class="profile-main__content">
-                    {{-- foreach --}}
                     @foreach ($orders as $order)
                     <article class="profile-main-item">
                         <div class="col profile-main-item__detail">
@@ -53,19 +54,28 @@
                                         {{ $order->deadline ?? '-' }}
                                     </time>
                                 </p>
-                                <p class="mb-3">Status:
+                                <p class="mb-3">
+                                    Status:
                                     <span data-status="unpaid" class="profile-main-item__status">
                                         {{ $order->status }}
                                     </span>
+                                </p>
+                                <p class="mb-3">
+                                    Review
+                                    <a href="javascript:void(0);" class="btn-success btn-modal" data-target="#modal-review">
+                                        Review
+                                    </a>
                                 </p>
                             </div>
                         </div>
                     </article>
                     @endforeach
-                    {{-- endforeach --}}
                 </div>
                 {{ $orders->links() }}
             </section>
         </div>
     </div>
 @endsection
+@push('element')
+    @include('partials.review-job')
+@endpush

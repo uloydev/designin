@@ -1,9 +1,9 @@
 <aside class="profile-aside">
     <figure class="profile-aside__box">
-        @empty($profile)
-            <img src="{{ Storage::url('temporary/people.webp') }}" alt="Profile Picture" class="profile-aside__img">
-        @else
+        @isset($profile)
             <img src="{{ Storage::url($profile->avatar) }}" alt="Profile Picture" class="profile-aside__img">
+        @else
+            <img src="{{ Storage::url('temporary/people.webp') }}" alt="Profile Picture" class="profile-aside__img">
         @endempty
         <figcaption class="profile-aside__detail">
             <a href="" class="profile-aside__name">Bariq Dharmawan</a>

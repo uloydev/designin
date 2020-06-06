@@ -1,6 +1,7 @@
 @extends('layouts.customer-master')
 @section('page-title', 'Order Management')
 @section('page-id', 'userOrder')
+@section('css') <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> @endsection
 @section('header')
     <header>
         @include('partials.nav')
@@ -115,9 +116,12 @@
                                             </div>
                                         @endif
                                     @endif
-                                <a href="{{ route('user.chat.index', $order->id) }}" class="btn profile-main__btn-chat">
-                                    Chat agent
-                                </a>
+                                <div class="row mx-0">
+                                    <a href="javascript:void(0);" class="btn-success btn-modal" data-target="#modal-review">Review</a>
+                                    <a href="{{ route('user.chat.index', $order->id) }}" class="profile-main__btn-chat">
+                                        Chat agent
+                                    </a>
+                                </div>
                             </div>
                         </article>
                     @empty
@@ -131,5 +135,5 @@
     </div>
 @endsection
 @push('element')
-    <div class="overlay overlay--nav-showed"></div>
+    @include('partials.review-job')
 @endpush

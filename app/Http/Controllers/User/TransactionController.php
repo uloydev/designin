@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Subscription;
@@ -17,6 +18,7 @@ class TransactionController extends Controller
     {
 
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
+        $profile = UserProfile::where('user_id', Auth::id())->first();
         $orders = Order::where('user_id', Auth::id());
         if($request->has('filter')) {
             if ($request->filter == 'latest') {
@@ -45,7 +47,8 @@ class TransactionController extends Controller
             'subscriptions' => $subscriptions,
             'totalSubcription' => $totalSubcription,
             'listBank' => $listBank,
-            'orders' => $orders
+            'orders' => $orders,
+            'profile' => $profile
         ]);
 
     }

@@ -75,3 +75,7 @@
         </ul>
     </div>
 </nav>
+
+@push('element')
+    <div class="overlay overlay--nav-showed"></div>
+@endpush

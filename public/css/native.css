@@ -409,15 +409,15 @@ nav .search-service__btn {
     background-color: #d43c33;
 }
 .btn-success {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color) !important;
     color: #fff;
-    border: 1px solid var(--primary-color-hover);
+    border: 1px solid var(--primary-color-hover) !important;;
 }
 .btn-success:hover {
-    background-color: var(--primary-color-hover);
+    background-color: var(--primary-color-hover) !important;;
 }
 .btn-success:active {
-    background-color: #139e5d;
+    background-color: #139e5d !important;;
 }
 .btn-success, .btn-danger, .profile-aside__edit-btn {
     box-shadow: 0 4px 3px rgba(41, 41, 41, 0.2);
@@ -1965,8 +1965,8 @@ input[type=number] {
     padding: 10px 1rem;
 }
 
-#contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle,
-#servicesPage .nav__toggle, #singleServicePage .nav__toggle, #landingPage .nav__toggle, #userChatPage .nav__toggle {
+#contactUsPage .nav__toggle, #faqPage .nav__toggle, #seeSubscriptionPage .nav__toggle, #userOrderPage .nav__toggle, #userSubscriptionPage .nav__toggle,
+#servicesPage .nav__toggle, #singleServicePage .nav__toggle, #landingPage .nav__toggle, #userChatPage .nav__toggle, #myTransactionPage .nav__toggle {
     color: var(--almost-black);
 }
 #contactUsPage main {
@@ -2040,6 +2040,7 @@ input[type=number] {
     padding: 10px 1rem;
     border-radius: 6px;
     text-align: center;
+    display: inline-flex;
 }
 #userOrderPage .profile-main__btn-chat:hover {
     background-color: #2b7aad !important;
