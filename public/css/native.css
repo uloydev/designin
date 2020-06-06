@@ -2114,7 +2114,7 @@ input[type=number] {
     flex-direction: column;
 }
 .profile-main__job-detail {
-    max-height: calc(80px + 4rem);
+    /*max-height: calc(80px + 4rem);*/
 }
 .profile-main__job-action {
     display: flex;

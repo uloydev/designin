@@ -39,7 +39,7 @@
                                 <p class="mb-3">
                                     Project name:&nbsp;
                                     <span class="profile-main__job-title">
-                                        {{ $order->package->service->title . ' - ' . $order->package->title }}
+                                        {{ '(' . $order->package->title . ') ' . Str::limit($order->package->service->title, 20) }}
                                     </span>
                                 </p>
                                 <p class="mb-3">
@@ -54,18 +54,18 @@
                                         {{ $order->deadline ?? '-' }}
                                     </time>
                                 </p>
-                                <p class="mb-3">
+                                <div class="mb-3 d-flex justify-content-between align-items-center">
                                     Status:
                                     <span data-status="unpaid" class="profile-main-item__status">
                                         {{ $order->status }}
                                     </span>
-                                </p>
-                                <p class="mb-3">
+                                </div>
+                                <div class="mb-3 d-flex justify-content-between align-items-center">
                                     Review
                                     <a href="javascript:void(0);" class="btn-success btn-modal" data-target="#modal-review">
-                                        Review
+                                        Click to review
                                     </a>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </article>
