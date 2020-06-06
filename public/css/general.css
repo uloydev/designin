@@ -38,6 +38,15 @@ body {
     --gray-medium: #717171;
     --text-gray-dark: #4a4a4a;
 }
+.ql-editor {
+    min-height: 200px;
+}
+.ql-editor strong {
+    font-weight:bold;
+}
+.ql-editor u {
+    text-decoration: underline;
+}
 .full-height {
     height: 100%;
 }

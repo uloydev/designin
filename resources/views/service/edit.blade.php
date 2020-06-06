@@ -50,6 +50,13 @@
                                 <label class="custom-file-label" for="serviceLogo">Update Logo</label>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="popular"
+                                       name="is_popular" {{ $service->is_popular == true ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="popular">Mark as popular for inspiration</label>
+                            </div>
+                        </div>
                         <a href="{{ url()->previous() }}" class="btn btn-link text-muted">Cancel</a>
                         <button type="submit" class="btn btn-success">Update service</button>
                     </form>

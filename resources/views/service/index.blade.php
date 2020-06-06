@@ -2,6 +2,9 @@
 @section('page-title', 'Manage Service')
 @section('page-id', 'service')
 @section('page-name', 'Service Management')
+@section('css')
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+@endsection
 @section('header')
     <header class="mb-5 d-flex align-items-center">
         <button type="button" class="btn btn-success btn-sm mr-auto" data-toggle="modal"
@@ -241,3 +244,6 @@
     @include('service.create-delete')
     @includeWhen(Auth::user()->role === 'admin', 'service.edit-fee')
 @endsection
+@push('script')
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+@endpush

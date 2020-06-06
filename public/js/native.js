@@ -1025,8 +1025,22 @@ $("#servicesPage .category [id^='service-slider']").slick({
     ]
 });
 
-if (window.location.href.indexOf('blog') > -1 && window.location.href.indexOf('edit') > -1 ||
-    window.location.href.indexOf('blog/create') > -1) {
+
+//quill js plugin
+if ($("#servicePage #service-rich-desc").length > 0) {
+    const serviceDesc = $("#servicePage #service-rich-desc").get(0);
+    const quillName = $("#servicePage #service-rich-desc").data('name');
+    const textareaServiceDesc = $(`<textarea name="${quillName}" class="d-none">`).insertAfter(serviceDesc);
+    let richServiceDesc = new Quill(serviceDesc, {
+        theme: 'snow',
+        placeholder: 'Place description here . . .'
+    });
+    richServiceDesc.on('editor-change', function () {
+        let serviceDescVal = $("#servicePage #service-rich-desc .ql-editor").html();
+        textareaServiceDesc.val(serviceDescVal);
+    });
+}
+if ($('#blog-content').length > 0) {
     const blogContent = $('#blog-content').get(0);
     const blogContentName = $('#blog-content').data('name');
     new Quill(blogContent, {
@@ -1039,8 +1053,9 @@ if (window.location.href.indexOf('blog') > -1 && window.location.href.indexOf('e
         $(`textarea[name="${blogContentName}"]`).val(getBlogContent);
     });
 }
+//end of quill js
 
-$("#servicePage textarea[name='description'], #serviceEditPage textarea[name='service_description'], " +
+$("#serviceEditPage textarea[name='service_description'], " +
     "textarea[name='detail_job'], #editSubscription textarea[name='desc']").summernote({
     minHeight: 300
 });

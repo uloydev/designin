@@ -42,14 +42,21 @@
                     </div>
                     <div class="form-group">
                         <label for="service-description" class="mb-3">Service Description</label>
-                        <textarea name="description" class="form-control text-dark" rows="7"
-                                  id="service-description" placeholder="Place description here" required></textarea>
+                        {{-- textarea on js with name = description --}}
+                        <div class="quill-editor" id="service-rich-desc" data-name="description"
+                             data-placeholder="Place description here . . ."></div>
                     </div>
                     <div class="form-group">
                         <p class="text-darker">Service Icon</p>
                         <div class="custom-file">
                             <input type="file" name="image" class="custom-file-input d-none" id="imgService">
                             <label class="custom-file-label" for="imgService">Choose Icon</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="popular" name="is_popular">
+                            <label class="custom-control-label" for="popular">Mark as popular for inspiration</label>
                         </div>
                     </div>
                 </form>

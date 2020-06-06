@@ -43,6 +43,12 @@ class ServiceController extends Controller
         $service->image = $request->file('image')->store('public/files');
         $service->agent_id = $request->agent_id;
         $service->service_category_id = $request->service_category_id;
+        if ($request->has('is_popular')) {
+            $service->is_popular = true;
+        }
+        else {
+            $service->is_popular = false;
+        }
 
         $service->save();
         return redirect()->back()->with('create', 'Succesfully create new service');
@@ -76,6 +82,12 @@ class ServiceController extends Controller
             Storage::delete($service->image);
             $path = $request->file('service_img')->store('public/files');
             $service->image = $path;
+        }
+        if ($request->has('is_popular')) {
+            $service->is_popular = true;
+        }
+        else {
+            $service->is_popular = false;
         }
         $service->save();
         return redirect()->route('manage.service.index');

@@ -1,10 +1,3 @@
-@section('css')
-    <style>
-        .ql-editor{
-            min-height: 300px;
-        }
-    </style>
-@endsection
 @csrf
 <div class="mb-3">
     <label for="blog-title" class="mb-2 d-block">Title Article</label>
@@ -34,12 +27,14 @@
             Pick a cover
         </label>
     </div>
+    @isset($article)
     <p>
         Old cover:
         <a href="{{ Storage::url($article->header_image) }}" class="text-link" target="_blank">
             See cover
         </a>
     </p>
+    @endisset
 </div>
 @if ($mainArticles < 6)
 <div class="mb-3 checkbox-custom">
