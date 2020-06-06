@@ -62,14 +62,15 @@
                 </ul>
             </div>
         </div>
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-lg-4">
             <div class="row mx-0 align-items-center justify-content-between">
                 <label for="filter-request" class="text-white col-12 col-md-auto mb-3 mb-md-0 text-center">
                     Sort By
                 </label>
                 <div class="col-12 col-md-6 col-lg-8">
                     <form id="form-sort-job" action="" method="get">
-                        <select name='sort' class="nice-select wide text-capitalize" id="sort-job">
+                        <label for="sort-job" class="d-none">sort job</label>
+                        <select name="sort" class="nice-select wide text-capitalize" id="sort-job">
                             <option value="budget-desc" {{ (session('sort') == 'budget-desc') ? 'selected=selected' : '' }}>Highest budget</option>
                             <option value="budget-asc" {{ (session('sort') == 'budget-asc') ? 'selected=selected' : '' }}>Cheapest budget</option>
                             <option value="duration-desc" {{ (session('sort') == 'duration-desc') ? 'selected=selected' : '' }}>Highest duration</option>
