@@ -19,10 +19,10 @@ class BlogCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=> 'required|alpha_dash'
+            'name'=> 'bail|required|alpha_dash'
         ]);
         BlogCategory::create($request->all());
-        return redirect()->back()->with('create_category', 'Category Created Succefully');
+        return redirect()->back()->with('success', 'Category Created Succefully');
     }
 
     public function update(Request $request, $id)

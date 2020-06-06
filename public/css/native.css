@@ -517,6 +517,13 @@ nav .search-service__btn {
     align-items: center;
     padding: 0 20px 30px;
 }
+.modal__btn-action {
+
+}
+.modal__btn---block {
+    display: block;
+    width: 100%;
+}
 .btn-close-modal {
     transition: all 200ms;
     background-color: transparent !important;
@@ -590,6 +597,11 @@ nav .search-service__btn {
 .alert--success {
     background-color: var(--primary-color);
     border-color: var(--primary-color-hover);
+}
+.alert--danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }
 
 .text-success {
@@ -1046,6 +1058,14 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #landingPage #inspire .inspire__slider {
     padding-top: 1.5rem;
 }
+#landingPage .inspire__link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+}
 #landingPage #inspire .inspire__slider .bxs-chevron-left {
     left: 0;
 }
@@ -1054,10 +1074,15 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #landingPage .inspire__item {
     overflow: hidden;
+    position: relative;
     border-radius: 20px;
     padding-bottom: 10px;
     box-shadow: 3px 3px 4px rgba(83, 83, 83, 0.15);
     border: 1px solid #e8e8e8;
+    transition: all 150ms;
+}
+#landingPage .inspire__item:hover {
+    box-shadow: none;
 }
 #landingPage .inspire__img {
     display: block;

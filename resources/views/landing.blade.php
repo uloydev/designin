@@ -166,6 +166,7 @@
                               <small>By {{ $inspire->agent->name }}</small>
                           </div>
                       </figcaption>
+                      <a href="" class="inspire__link">item link</a>
                   </figure>
                   @endforeach
               </div>

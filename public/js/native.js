@@ -411,6 +411,9 @@ $("[data-target='#modal-revision']").click(function () {
 });
 
 //admin js
+$("#blog-add-category input[name='name']").keypress(function (e) {
+    if(e.which === 32) return false;
+})
 $("[data-target='#updateSlider'], [data-target='#deleteSlider']").click(function () {
     let sliderId = $(this).data('id');
     $("#manageMainSliderPage .modal form")

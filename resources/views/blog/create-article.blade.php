@@ -2,6 +2,17 @@
 @section('page-title', 'Create new article')
 @section('page-id', 'blogCreate')
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert--danger">
+            @foreach($errors->all() as $error)
+                {{ $error }}
+            @endforeach
+        </div>
+    @elseif(session('success'))
+        <div class="alert alert--success">
+            {{ session('success') }}
+        </div>
+    @endif
   <div class="container py-4">
       <form action="{{ route('manage.blog.store') }}" method="post" enctype="multipart/form-data">
           @include('blog.form')
@@ -11,27 +22,28 @@
   </div>
 @endsection
 @section('element')
-  <div class="modal fade" id="blog-add-category" data-backdrop="static" tabindex="-1" role="dialog"
-       aria-labelledby="add-categoryLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="add-categoryLabel">Add new category</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form class="" id="form-add-category" action="{{route('manage.blog-category.store')}}" method="post">
-            @csrf
-            <input type="text" placeholder="Add your new category" class="form-control" name="name">
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="submit" form="form-add-category" class="btn btn-success">Submit</button>
-        </div>
+  <div class="modal fade" id="blog-add-category">
+      <div class="modal__content">
+          <div class="modal__header">
+              <h5 class="modal__title">Add new category</h5>
+              <a href="javascript:void(0);" class="btn-close-modal">
+                  <i class='bx bx-x'></i>
+              </a>
+          </div>
+          <div class="modal__body pt-4">
+              <form class="" id="form-add-category" action="{{ route('manage.blog-category.store') }}" method="post">
+                  @csrf
+                  <div class="col-12 px-0">
+                      <label for="add-category" class="d-none">Add category here</label>
+                      <input type="text" placeholder="Ex: promos" id="add-category" class="input-custom" name="name" required>
+                  </div>
+              </form>
+          </div>
+          <div class="modal__footer">
+              <button type="submit" form="form-add-category" class="btn btn-success d-block col-12">
+                  Submit
+              </button>
+          </div>
       </div>
-    </div>
   </div>
 @endsection
