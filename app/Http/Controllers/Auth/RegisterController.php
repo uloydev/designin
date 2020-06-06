@@ -31,12 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-     protected function redirectTo()
-     {
-         if (Auth::user()->role === 'user') {
-             return 'user/dashboard';
-         }
-     }
+    protected $redirectTo = 'user/dashboard';
 
     /**
      * Create a new controller instance.
@@ -63,12 +58,6 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
     protected function create(array $data)
     {
         $user = User::create([
@@ -76,9 +65,11 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        $userProfile = new UserProfile;
-        $userProfile->avatar = 'files/people.webp';
-        $userProfile->user_id = $user->id;
+        UserProfile::create([
+            'avatar' => 'files/people.webp',
+            'user_id' => $user->id
+        ]);
+
         return $user;
     }
 }
