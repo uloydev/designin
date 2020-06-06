@@ -41,7 +41,11 @@ class BlogController extends Controller
         $createBlog->category_id = $request->category_id;
         $createBlog->contents = $request->contents;
         if (Blog::all()->count() <= 6) {
-            $createBlog->is_main = $request->is_main;
+            if ($request->is_main == "true") {
+                $createBlog->is_main = true;
+            } else {
+                $createBlog->is_main = false;
+            }
         }else {
             $createBlog->is_main = false;
         }
@@ -66,7 +70,11 @@ class BlogController extends Controller
         $article = Blog::findOrFail($id);
         $mainArticles = Blog::where('is_main', true)->count();
         $categories = BlogCategory::all();
-        return view('blog.edit', ['article'=> $article, 'categories' => $categories, 'mainArticles' => $mainArticles]);
+        return view('blog.edit', [
+            'article'=> $article,
+            'categories' => $categories,
+            'mainArticles' => $mainArticles
+        ]);
     }
 
     /**
@@ -91,6 +99,12 @@ class BlogController extends Controller
         if ($request->hasFile('header_image')) {
             Storage::delete($blog->header_image);
             $blog->header_image = $request->file('header_image')->store('public/files');
+        }
+        if ($request->has('is_main')) {
+            $blog->is_main = intval($request->is_main);
+        }
+        else {
+            $blog->is_main = Blog::findOrFail($id)->is_main;
         }
         $blog->save();
         return redirect()->route('manage.blog.index')->with('success', 'Blog update succefully');

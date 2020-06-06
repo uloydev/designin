@@ -13,8 +13,9 @@
     </main>
     @include('partials.footer')
     @yield('element')
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     @include('partials.script')
-    @yield('script')
+    @stack('script')
     <div class="overlay overlay--nav-showed"></div>
   </body>
 </html>

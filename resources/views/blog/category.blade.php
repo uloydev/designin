@@ -7,7 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css"
           rel="stylesheet">
 @endsection
-@section('script')
+@push('script')
 <script>
     let filter = $('#filter-blog select[name=filter]').val();
     $('#filter-blog select[name=filter]').change(function(){
@@ -16,7 +16,7 @@
         }
     });
 </script>
-@endsection
+@endpush
 @section('header')
     <header>
         <div class="container py-5 px-0">

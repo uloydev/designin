@@ -1,5 +1,4 @@
 @section('css')
-{{--  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">--}}
     <style>
         .ql-editor{
             min-height: 300px;
@@ -27,22 +26,28 @@
   <label for="blog-content" class="mb-2 d-block">Content</label>
   <div id="blog-content" data-name="contents">{!! $article->contents ?? '' !!}</div>
 </div>
-<div class="form-group">
-  <img src="" alt="cover preview">
-  <div class="file-custom">
-    <input accept="image/*" class="file-custom__input" id="blog-cover" name="header_image" type="file">
-    <label class="file-custom__label" for="blog-cover">
-        Pick a cover
-    </label>
-  </div>
+<div class="mb-3">
+    <img src="" alt="cover preview">
+    <div class="file-custom">
+        <input accept="image/*" class="file-custom__input" id="blog-cover" name="header_image" type="file">
+        <label class="file-custom__label" for="blog-cover">
+            Pick a cover
+        </label>
+    </div>
+    <p>
+        Old cover:
+        <a href="{{ Storage::url($article->header_image) }}" class="text-link" target="_blank">
+            See cover
+        </a>
+    </p>
 </div>
-@if ($mainArticles <= 6)
-<div class="custom-control custom-switch form-group">
-    <input type="checkbox" name="is_main" class="custom-control-input" id="is_main">
-    <label class="custom-control-label" for="is_main">Make article primary</label>
+@if ($mainArticles < 6)
+<div class="mb-3 checkbox-custom">
+    <input type="checkbox" name="is_main" class="checkbox-custom__input" id="is_main"
+           value="1" {{ $article->is_main == true ? 'checked' : '' }}>
+    <label class="checkbox-custom__label" for="is_main">
+        <span class="checkbox-custom__icon"><i class='bx bx-check' ></i></span>
+        Make article primary
+    </label>
 </div>
 @endif
-
-@section('script')
-{{--<script src="{{ asset('js/bootstrap.bundle.min.js') }}" charset="utf-8"></script>--}}
-@endsection
