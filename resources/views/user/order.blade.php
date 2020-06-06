@@ -36,10 +36,10 @@
                 <form id="form-filter-order" action="" class="profile-main__filter">
                     <label for="order-filter"><h1>Your order</h1></label>
                     <select name="filter" id="order-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
-                        <option value="all">All order</option>
-                        <option value="completed">Completed</option>
-                        <option value="process">Active</option>
-                        <option value="canceled">Canceled</option>
+                        <option value="all" {{(!session('filter') or session('filter') == 'all') ? 'selected=selected' : ''}}>All order</option>
+                        <option value="completed" {{(session('filter') == 'completed') ? 'selected=selected' : ''}}>Completed</option>
+                        <option value="process" {{(session('filter') == 'process') ? 'selected=selected' : ''}}>Active</option>
+                        <option value="canceled" {{(session('filter') == 'canceled') ? 'selected=selected' : ''}}>Canceled</option>
                     </select>
                 </form>
                 <div class="profile-main__content">

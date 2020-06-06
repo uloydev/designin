@@ -26,8 +26,12 @@ class SubscriptionController extends Controller
                 return abort(404);
             }
             $subscriptions = $subscriptions->paginate(5);
+            $request->session()->flash('filter', $request->filter);
+            $pagination = $subscriptions->appends ( array (
+                'filter' => $request->filter 
+            ) );
         }else{
-            $subscriptions = Subscription::paginate(5);
+            $subscriptions = Subscription::latest()->paginate(5);
         }
         return view('subscription.index', [
             'subscriptions' => $subscriptions,

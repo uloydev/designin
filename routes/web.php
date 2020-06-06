@@ -79,6 +79,7 @@ Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(fu
         Route::put('edit/avatar', 'ProfileController@avatarUpdate')->name('profile.avatar.update');
     });
     Route::namespace('User')->group(function() {
+        Route::post('order/{id}/review', 'OrderController@sendReview')->name('order.review');
         Route::get('dashboard', 'HomeController@index')->name('dashboard');
         Route::resource('order', 'OrderController');
         Route::get('order/{id}/result/accept/{result_id}', 'OrderController@acceptResult')->name('order.accept');

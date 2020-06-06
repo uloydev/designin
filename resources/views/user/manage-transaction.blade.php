@@ -23,10 +23,10 @@
                 <form action="" id="form-filter-transaction" class="profile-main__filter justify-content-lg-start">
                     <label for="transaction-filter" class="mr-lg-auto"><h1>My Transaction</h1></label>
                     <select name="filter" id="transaction-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
-                        <option value="latest" selected>Recent</option>
-                        <option value="oldest">Oldest</option>
-                        <option value="finish">Finish</option>
-                        <option value="process">Unfinished</option>
+                        <option value="latest" {{(!session('filter') or session('filter') == 'latest') ? 'selected=selected' : ''}}>Recent</option>
+                        <option value="oldest" {{(session('filter') == 'oldest') ? 'selected=selected' : ''}}>Oldest</option>
+                        <option value="finish" {{(session('filter') == 'finish') ? 'selected=selected' : ''}}>Finish</option>
+                        <option value="process" {{(session('filter') == 'process') ? 'selected=selected' : ''}}>Unfinished</option>
                     </select>
                 </form>
                 <div class="profile-main__content">
@@ -64,6 +64,7 @@
                     @endforeach
                     {{-- endforeach --}}
                 </div>
+                {{ $orders->links() }}
             </section>
         </div>
     </div>
