@@ -13,7 +13,7 @@ class CreateTestimoniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('testimonies', function (Blueprint $table) {
+        Schema::create('testimony', function (Blueprint $table) {
             $table->id();
             $table->text('content');
             $table->unsignedInteger('rating');

@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
 
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('order', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('agent_id')->nullable();
@@ -30,7 +30,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('progress')->default(0);
             $table->timestamp('started_at')->nullable();
             $table->timestamp('deadline')->nullable();
-            $table->boolean('is_reviewed')->nullable();
+            $table->boolean('is_reviewed')->default(false);
             $table->longText('request')->nullable();
             $table->string('attachment')->nullable();
             $table->unsignedInteger('budget');

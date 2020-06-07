@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Testimony extends Model
 {
+    protected $table = 'testimony';
     protected $fillable = ['content', 'rating', 'service_id', 'user_id', 'is_main'];
 
     public function user()

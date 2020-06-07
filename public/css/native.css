@@ -2042,6 +2042,8 @@ input[type=number] {
     border-radius: 6px;
     text-align: center;
     display: inline-flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
 }
 #userOrderPage .profile-main__btn-chat:hover {
     background-color: #2b7aad !important;

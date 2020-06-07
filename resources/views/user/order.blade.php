@@ -8,7 +8,7 @@
     </header>
 @endsection
 @section('script')
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}" src="https://app.sandbox.midtrans.com/snap/snap.js"></script>
     <script>
         let filter = $('#order-filter').val();
         $('#order-filter').change(function(){
@@ -102,59 +102,58 @@
                                         </div>
                                     @endif
                                 @endif
-                                    @if (!empty($order->result))
+                                @if (!empty($order->result))
+                                    <div class="mb-3 d-flex flex-column flex-md-row">
+                                        <a class="btn text-warning" href="{{ route('order.result.download',
+                                        ['id'=>$order->id, 'result_id'=>$order->result->id]) }}">
+                                            Download Result
+                                        </a>
+                                    </div>
+                                    @if ($order->status == 'check_result')
                                         <div class="mb-3 d-flex flex-column flex-md-row">
-                                            <a class="btn text-warning"
-                                               href="{{ route('order.result.download',
-                                               ['id'=>$order->id, 'result_id'=>$order->result->id]) }}">
-                                                Download Result
+                                            <a class="btn text-success" href="{{ route('user.order.accept',
+                                            ['id'=>$order->id, 'result_id'=>$order->result->id]) }}">
+                                                Accept Result
+                                            </a>
+                                            <a class="btn text-danger" href="{{ route('user.order.reject',
+                                            ['id'=>$order->id, 'result_id'=>$order->result->id]) }}">
+                                                Reject Result ({{ $order->max_revision - $order->revision->count() }}
+                                                revision left)
                                             </a>
                                         </div>
-                                        @if ($order->status == 'check_result')
-                                            <div class="mb-3 d-flex flex-column flex-md-row">
-                                                <a class="btn text-success" href="{{ route('user.order.accept',
-                                                ['id'=>$order->id, 'result_id'=>$order->result->id]) }}">
-                                                    Accept Result
-                                                </a>
-                                                <a class="btn text-danger" href="{{ route('user.order.reject',
-                                                ['id'=>$order->id, 'result_id'=>$order->result->id]) }}">
-                                                    Reject Result ({{ $order->max_revision - $order->revision->count() }}
-                                                    revision left)
-                                                </a>
-                                            </div>
-                                        @endif
                                     @endif
-                                    @if ($order->revision->count() > 0)
-                                        @foreach ($order->revision as $revision)
-                                            <div class="mb-3 d-flex flex-column flex-md-row">
-                                                <a class="btn text-warning" href="{{ route('order.result.download',
+                                @endif
+                                @if ($order->revision->count() > 0)
+                                    @foreach ($order->revision as $revision)
+                                        <div class="mb-3 d-flex flex-column flex-md-row">
+                                            <a class="btn text-warning" href="{{ route('order.result.download',
                                                    ['id'=>$order->id, 'result_id'=>$revision->id]) }}">
-                                                    Download Revision {{ $loop->iteration }}
-                                                </a>
-                                            </div>
-                                        @endforeach
-                                        @if ($order->status == 'check_revision')
-                                            <div class="mb-3 d-flex flex-column flex-md-row">
-                                                <a class="btn text-success" href="{{ route('user.order.accept',
-                                                ['id'=>$order->id, 'result_id'=>$order->revision->last()->id]) }}">
-                                                    Accept Result
-                                                </a>
-                                                <a class="btn text-danger" href="{{ route('user.order.reject',
-                                                ['id'=>$order->id, 'result_id'=>$order->revision->last()->id]) }}">
-                                                    Reject Result
-                                                    ({{ $order->max_revision - $order->revision->count() }} revision left)
-                                                </a>
-                                            </div>
-                                        @endif
+                                                Download Revision {{ $loop->iteration }}
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                    @if ($order->status == 'check_revision')
+                                        <div class="mb-3 d-flex flex-column flex-md-row">
+                                            <a class="btn text-success" href="{{ route('user.order.accept',
+                                            ['id'=>$order->id, 'result_id'=>$order->revision->last()->id]) }}">
+                                                Accept Result
+                                            </a>
+                                            <a class="btn text-danger" href="{{ route('user.order.reject',
+                                            ['id'=>$order->id, 'result_id'=>$order->revision->last()->id]) }}">
+                                                Reject Result
+                                                ({{ $order->max_revision - $order->revision->count() }} revision left)
+                                            </a>
+                                        </div>
                                     @endif
-                                <div class="row mx-0">
+                                @endif
+                                <a href="{{ route('user.chat.index', $order->id) }}" class="profile-main__btn-chat">
+                                    Chat agent
+                                </a>
+                                @if ($order->is_reviewed == false AND $order->status === 'finished')
                                     <a href="javascript:void(0);" class="btn-success btn-modal" data-target="#modal-review">
                                         Review
                                     </a>
-                                    <a href="{{ route('user.chat.index', $order->id) }}" class="profile-main__btn-chat">
-                                        Chat agent
-                                    </a>
-                                </div>
+                                @endif
                             </div>
                         </article>
                     @empty

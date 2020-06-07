@@ -7,7 +7,7 @@ use App\ServiceExtras;
 
 class Order extends Model
 {
-    protected $table = 'orders';
+    protected $table = 'order';
     protected $fillable = [
         'user_id',
         'agent_id',
