@@ -49,10 +49,12 @@ class PaymentController extends Controller
                 $budget += ServiceExtras::findOrFail($extras_id)->price;
             }
         }
-        if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)) {
-            if (ceil($budget / $token_conversion->numeral) > $user->subscribe_token){
-                $budget -= $user->subscribe_token * $token_conversion->numeral;
-                $token_usage = $user->subscribe_token;
+        if (!empty($user->subscribe_at) and !empty($user->subscribe_duration)){
+            if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)) {
+                if (ceil($budget / $token_conversion->numeral) > $user->subscribe_token){
+                    $budget -= $user->subscribe_token * $token_conversion->numeral;
+                    $token_usage = $user->subscribe_token;
+                }
             }
         }
         $order->agent_id = intval($request->agent_id);
@@ -135,6 +137,7 @@ class PaymentController extends Controller
             'customer_details' => $customer_details,
             'credit_card' => $credit_card_option,
         ];
+        // var_dump($order, $transaction_data);die;
         try {
             $token = Midtrans::getSnapToken($transaction_data);
             $data = ['token' => $token, 'status'=>'success'];

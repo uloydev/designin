@@ -147,10 +147,14 @@ class HomeController extends Controller
                 }
             }
         }
-        if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)){
-            if ($user->subscribe_token >= ceil($budget / $token_conversion->numeral)) {
-                $token_usage = ceil($budget / $token_conversion->numeral);
-                $budget = 0;
+        if (!empty($user->subscribe_at) and !empty($user->subscribe_duration)){
+            if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)){
+                if ($user->subscribe_token >= ceil($budget / $token_conversion->numeral)) {
+                    $token_usage = ceil($budget / $token_conversion->numeral);
+                    $budget = 0;
+                }else{
+                    return abort(401);
+                }
             }else{
                 return abort(401);
             }

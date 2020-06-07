@@ -32,7 +32,7 @@
             let ajaxData = {
                     _token:'{{csrf_token()}}',
                     user_id:'{{Auth::id()}}',
-                    extras:JSON.stringify(extraService),
+                    extras:$("#modal-single-order #data-extras").val(),
                     agent_id: $("input[name='agent_id']").val(),
                     message_agent: $("#modal-single-order textarea[name='message_agent']").val(),
                     quantity: $("#modal-single-extras #quantity").val(),
@@ -63,9 +63,11 @@
                     }
                     else{
                         alert('something went wrong with your order');
+                        console.log(response);
                     }
                 },
                 error: function(response){
+                    console.log(response);
                     $("#progress-payment").removeClass('show-modal');
                     alert('failed to get payment token');
                 }
