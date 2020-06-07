@@ -48,7 +48,7 @@ class OrderController extends Controller
             $request->session()->flash('filter', $request->filter);
             $orders = $orders->paginate(10);
             $pagination = $orders->appends ( array (
-                'filter' => $request->filter 
+                'filter' => $request->filter
             ) );
         }else{
             $orders = $orders->latest()->paginate(10);
@@ -111,11 +111,15 @@ class OrderController extends Controller
             return abort(401);
         }
         if ($order->max_revision - $order->revision->count() == 0) {
-            return redirect()->back()->with('error', 'order already reach revision limit ('. $order->max_revision .' revision)');
+            return redirect()->back()->with(
+                'error', 'order already reach revision limit ('. $order->max_revision .' revision)'
+            );
         }
         $order->status = 'complaint';
         $order->save();
-        return redirect()->back()->with('success', 'order result rejected successfully. please wait agent to send a new one.');
+        return redirect()->back()->with(
+            'success', 'order result rejected successfully. please wait agent to send a new one.'
+        );
     }
 
     public function sendReview($id, Request $request)
@@ -133,6 +137,5 @@ class OrderController extends Controller
         $order->is_reviewed = true;
         $order->save();
         return redirect()->back()->with('success', 'your review has been sent');
-    
     }
 }

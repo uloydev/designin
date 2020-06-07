@@ -23,14 +23,15 @@
                 <form action="" id="form-filter-transaction" class="profile-main__filter justify-content-lg-start">
                     <label for="transaction-filter" class="mr-lg-auto"><h1>My Transaction</h1></label>
                     <select name="filter" id="transaction-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
-                        <option value="latest" {{(!session('filter') or session('filter') == 'latest') ? 'selected=selected' : ''}}>Recent</option>
+                        <option value="latest" {{(!session('filter') or session('filter') == 'latest') ? 'selected=selected' : ''}}>
+                            Recent
+                        </option>
                         <option value="oldest" {{(session('filter') == 'oldest') ? 'selected=selected' : ''}}>Oldest</option>
                         <option value="finish" {{(session('filter') == 'finish') ? 'selected=selected' : ''}}>Finish</option>
                         <option value="process" {{(session('filter') == 'process') ? 'selected=selected' : ''}}>Unfinished</option>
                     </select>
                 </form>
                 <div class="profile-main__content">
-                    {{-- foreach --}}
                     @foreach ($orders as $order)
                     <article class="profile-main-item">
                         <div class="col profile-main-item__detail">
@@ -38,7 +39,7 @@
                                 <p class="mb-3">
                                     Project name:&nbsp;
                                     <span class="profile-main__job-title">
-                                        {{ $order->package->service->title . ' - ' . $order->package->title }}
+                                        {{ '(' . $order->package->title . ') ' . Str::limit($order->package->service->title, 20) }}
                                     </span>
                                 </p>
                                 <p class="mb-3">
@@ -53,19 +54,28 @@
                                         {{ $order->deadline ?? '-' }}
                                     </time>
                                 </p>
-                                <p class="mb-3">Status:
+                                <div class="mb-3 d-flex justify-content-between align-items-center">
+                                    Status:
                                     <span data-status="unpaid" class="profile-main-item__status">
                                         {{ $order->status }}
                                     </span>
-                                </p>
+                                </div>
+                                <div class="mb-3 d-flex justify-content-between align-items-center">
+                                    Review
+                                    <a href="javascript:void(0);" class="btn-success btn-modal" data-target="#modal-review">
+                                        Click to review
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </article>
                     @endforeach
-                    {{-- endforeach --}}
                 </div>
                 {{ $orders->links() }}
             </section>
         </div>
     </div>
 @endsection
+@push('element')
+    @include('partials.review-job')
+@endpush

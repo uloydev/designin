@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Subscription;
+use App\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
@@ -16,6 +17,7 @@ class SubscriptionController extends Controller
     public function index(Request $request)
     {
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
+        $profile = UserProfile::where('user_id', Auth::id())->first();
         $orders = Order::where('user_id', Auth::id())->latest()->paginate(10);
         if ($request->has('filter')) {
             if ($request->filter == 'latest') {
@@ -28,7 +30,7 @@ class SubscriptionController extends Controller
             $subscriptions = $subscriptions->paginate(5);
             $request->session()->flash('filter', $request->filter);
             $pagination = $subscriptions->appends ( array (
-                'filter' => $request->filter 
+                'filter' => $request->filter
             ) );
         }else{
             $subscriptions = Subscription::latest()->paginate(5);
@@ -36,7 +38,8 @@ class SubscriptionController extends Controller
         return view('subscription.index', [
             'subscriptions' => $subscriptions,
             'listBank' => $listBank,
-            'orders' => $orders
+            'orders' => $orders,
+            'profile' => $profile
         ]);
     }
 

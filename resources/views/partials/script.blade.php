@@ -7,4 +7,5 @@
 <script src="{{ asset('plugin/air-datepicker/dist/js/datepicker.min.js') }}"></script>
 <script src="{{ asset('plugin/air-datepicker/dist/js/i18n/datepicker.en.js') }}"></script>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="{{ asset('plugin/jquery-star-rating-plugin/src/jquery.star.rating.min.js') }}"></script>
 <script src="{{ asset('js/native.js') }}"></script>

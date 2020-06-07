@@ -31,6 +31,3 @@
         </div>
     </div>
 @endsection
-@section('element')
-    <div class="overlay overlay--nav-showed"></div>
-@endsection
