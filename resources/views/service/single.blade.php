@@ -32,7 +32,7 @@
             let ajaxData = {
                     _token:'{{csrf_token()}}',
                     user_id:'{{Auth::id()}}',
-                    extras:$("#modal-single-order #data-extras").val(),
+                    extras:$("#modal-single-order #data-extras").val() == '' ? '[]' : $("#modal-single-order #data-extras").val(),
                     agent_id: $("input[name='agent_id']").val(),
                     message_agent: $("#modal-single-order textarea[name='message_agent']").val(),
                     quantity: $("#modal-single-extras #quantity").val(),

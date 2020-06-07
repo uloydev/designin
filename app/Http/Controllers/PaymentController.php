@@ -43,7 +43,7 @@ class PaymentController extends Controller
         if ($request->hasFile('brief_file')) {
             $order->attachment = $request->file('brief_file')->store('public/files');
         }
-        if ($request->has('extras')) {
+        if ($request->has('extras') and !empty(json_decode($request->extras))) {
             $order->extras = $request->extras;
             foreach(json_decode($order->extras) as $extras_id){
                 $budget += ServiceExtras::findOrFail($extras_id)->price;
@@ -137,7 +137,6 @@ class PaymentController extends Controller
             'customer_details' => $customer_details,
             'credit_card' => $credit_card_option,
         ];
-        // var_dump($order, $transaction_data);die;
         try {
             $token = Midtrans::getSnapToken($transaction_data);
             $data = ['token' => $token, 'status'=>'success'];
