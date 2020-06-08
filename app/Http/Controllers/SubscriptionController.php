@@ -19,24 +19,27 @@ class SubscriptionController extends Controller
         $listBank = json_decode(File::get('js/bank_indonesia.json'));
         $profile = UserProfile::where('user_id', Auth::id())->first();
         $orders = Order::where('user_id', Auth::id())->latest()->paginate(10);
+        $subscriptionHistory = Order::where('user_id', Auth::id())->whereNotNull('subscription_id');
+        $subscriptions = Subscription::get();
         if ($request->has('filter')) {
             if ($request->filter == 'latest') {
-                $subscriptions = Subscription::latest();
+                $subscriptionHistory = $subscriptionHistory->latest();
             }elseif ($request->filter =='oldest') {
-                $subscriptions = Subscription::oldest();
+                $subscriptionHistory = $subscriptionHistory->oldest();
             }else{
                 return abort(404);
             }
-            $subscriptions = $subscriptions->paginate(5);
+            $subscriptionHistory = $subscriptionHistory->paginate(5);
             $request->session()->flash('filter', $request->filter);
-            $pagination = $subscriptions->appends ( array (
+            $pagination = $subscriptionHistory->appends ( array (
                 'filter' => $request->filter
             ) );
         }else{
-            $subscriptions = Subscription::latest()->paginate(5);
+                $subscriptionHistory = $subscriptionHistory->latest()->paginate(5);
         }
         return view('subscription.index', [
             'subscriptions' => $subscriptions,
+            'subscriptionHistory' => $subscriptionHistory,
             'listBank' => $listBank,
             'orders' => $orders,
             'profile' => $profile
