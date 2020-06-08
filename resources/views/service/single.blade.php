@@ -87,7 +87,7 @@
                              alt="Service Agent Avatar" height="25">
                         <p class="ml-2">{{ $service->agent->email }}</p>
                         <div class="service-single__rating">
-                            @if ($rating < 5)
+                            @if ($rating <= 5)
                                 @for ($i = 0; $i < $rating; $i++)
                                     {!! "<i class='bx bxs-star' ></i>" !!}
                                 @endfor

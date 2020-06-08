@@ -64,8 +64,8 @@ class HomeController extends Controller
         }
         foreach ($categories as $category) {
             foreach ($category->services as $service) {
-                $rating = $service->testimonies->pluck('rating')->avg();
-                $rating = $rating ? $rating : 0;
+                $testimony = Testimony::where('service_id', $service->id)->pluck('rating');
+                $rating = empty($testimony) ? 0 : $testimony->avg();
                 $service->rating = $rating;
             }
         }
@@ -75,8 +75,8 @@ class HomeController extends Controller
     public function showService($id)
     {
         $service = Service::findOrFail($id);
-        $rating = $service->testimonies->pluck('rating')->avg();
-        $rating = $rating ? $rating : 0;
+        $testimony = Testimony::where('service_id', $service->id)->pluck('rating');
+        $rating = empty($testimony) ? 0 : $testimony->avg();
         $testimonies = $service->testimonies;
         $packages = $service->package;
         $promos = Promo::whereDate('ended_at', '>', Carbon::now()->format('Y-m-d h:m:s'))->get();

@@ -1,6 +1,7 @@
 @extends('layouts.customer-master')
 @section('page-title', 'All Services')
 @section('page-id', 'services')
+@section('css') <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> @endsection
 @section('header')
     <header>
         @include('partials.nav')
@@ -33,7 +34,17 @@
                                     {!! Str::words($service->description, 12) !!}
                                 </div>
                                 <div class="service__action">
-                                    <p class="service__rating">Rating : {{ $service->rating }}</p>
+                                    <p class="service__rating">Rating : 
+                                        @if ($service->rating <= 5)
+                                            @for ($i = 0; $i < $service->rating; $i++)
+                                                {!! "<i class='bx bxs-star' ></i>" !!}
+                                            @endfor
+                                            @for ($i = 0; $i < 5 - $service->rating; $i++)
+                                                {!! "<i class='bx bx-star' ></i>" !!}
+                                            @endfor
+                                        @endif
+                                        ( {{ ceil($service->rating) }} / 5 )    
+                                    </p>
                                     <span class="service__price">Start at: <var>IDR 300,000</var></span>
                                     <a href="{{ route('service.show', $service->id) }}" class="service__goto">
                                         <span>click service</span>
