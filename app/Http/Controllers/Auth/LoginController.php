@@ -58,7 +58,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'username' => 'bail|required|alpha_dash|unique:users',
+            'username' => 'bail|required|alpha_dash',
             'password' => 'bail|required|max:12|min:8',
         ]);
 
