@@ -6,7 +6,7 @@
             <img src="{{ Storage::url('temporary/people.webp') }}" alt="Profile Picture" class="profile-aside__img">
         @endempty
         <figcaption class="profile-aside__detail">
-            <a href="" class="profile-aside__name">Bariq Dharmawan</a>
+            <a href="" class="profile-aside__name">{{ Auth::user()->name }}</a>
             <button class="btn-modal btn-link d-block text-center col" data-target="#modal-edit-profile">
                 <i class='bx bxs-edit-alt' ></i> Edit profile
             </button>
@@ -57,10 +57,12 @@
                 <a href="" class="btn-close-modal"><i class='bx bx-x'></i></a>
             </div>
             <div class="modal__body">
-                <form action="{{ route('user.profile.update', Auth::id()) }}" method="post">
-                    @csrf
+                <form action="{{ route('user.profile.update') }}" method="post" enctype="multipart/form-data">
+                    @csrf @method('PUT')
                     <input type="text" class="input-custom mb-3" name="name" value="{{ Auth::user()->email }}"
                            placeholder="Your email" required>
+                    <input type="text" class="input-custom mb-3" name="username" value="{{ Auth::user()->username }}"
+                           placeholder="Your username" required>
                     <input type="text" class="input-custom mb-3" name="email" value="{{ Auth::user()->name }}"
                            placeholder="Your name" required>
                     <input type="tel" class="input-custom mb-3" name="handphone"

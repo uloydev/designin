@@ -30,7 +30,7 @@ class SubscriptionController extends Controller
             $mySubscription->appends($request->only('keyword', 'limit'));
         }
         else {
-            $mySubscription->latest()->paginate(5);
+            $mySubscription = $mySubscription->latest()->paginate(5);
         }
         return view('subscription.index', [
             'mySubscription' => $mySubscription,

@@ -11,6 +11,11 @@
       const loginBtn = document.getElementById('login');
       const signupBtn = document.getElementById('signup');
       const signupBox = document.querySelector('.signup');
+      const inputUsername = document.querySelector("input[name='username']");
+      inputUsername.onkeypress = function(e) {
+          let  key = e.keyCode;
+          return (key !== 32);
+      };
 
       loginBtn.addEventListener('click', (e) => {
       let parent = e.target.parentNode.parentNode;

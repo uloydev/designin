@@ -420,7 +420,7 @@ $("#blogEditPage form .file-custom__input").change(function () {
         $(this).next().text($(this)[0].files[0].name);
     }
 });
-$("#blog-add-category input[name='name']").keypress(function (e) {
+$("#blog-add-category input[name='name'], #add_category, #edit_category, input[name='username']").keypress(function (e) {
     if(e.which === 32) return false;
 })
 $("[data-target='#updateSlider'], [data-target='#deleteSlider']").click(function () {
@@ -672,10 +672,6 @@ $(".question-answer__show-more").click(function (e) {
     showFaq = (showFaq + 5 <= faqTotal) ? showFaq + 5 : faqTotal;
     faqActive.slice(0, showFaq - 1).show();
     if (showFaq === faqTotal) $(".question-answer__show-more").hide()
-});
-
-$("#add_category, #edit_category").keypress(function (e) {
-    if (e.which === 32) return false;
 });
 
 $(".dropdown-item[data-target='#deletePromo']").click(function () {

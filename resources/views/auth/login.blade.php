@@ -24,9 +24,9 @@
                 <a href="{{ route('login') }}"><span>or</span>Log in</a>
             </h2>
             <div class="form-holder">
-                <input type="email" name="email" class="input" placeholder="Email" autocomplete="email" required/>
+                <input type="text" name="username" class="input" placeholder="Your username" required>
                 <input type="password" name="password" class="input" minlength="8" placeholder="Password"
-                       autocomplete="new-password" required/>
+                       autocomplete="new-password" required>
                 @isset($data['redirect'])
                     <input type="hidden" name="redirect" value="{{$data['redirect']}}">
                 @endisset

@@ -58,15 +58,20 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-        'email' => 'required',
-        'password' => 'required',
+            'username' => 'bail|required|alpha_dash|unique:users',
+            'password' => 'bail|required|max:12|min:8',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
             return redirect($this->redirectTo($request));
         }
         return redirect()->route('login')->with('success', 'Oops! You have entered invalid credentials');
+    }
+
+    public function username()
+    {
+        return 'username';
     }
 
     public function redirectToProvider($provider)

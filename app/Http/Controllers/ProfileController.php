@@ -35,7 +35,6 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = Auth::user();
         $request->validate([
             'name'=> 'required',
             'email'=> 'required|email',
@@ -44,7 +43,9 @@ class ProfileController extends Controller
             'bank'=> 'required',
             'name_card' => 'file|mimetypes:image/jpeg,image/png,image/webp',
             'account_number'=> 'required|numeric'
-            ]);
+        ]);
+
+        $user = Auth::user();
         if ($user->role == 'agent') {
             $request->validate([
                 'portfolios.*' => 'mimes:jpeg,png,webp'

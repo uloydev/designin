@@ -17,11 +17,13 @@ class UserSeeder extends Seeder
             [
                 'name'=>'Admin Desainin',
                 'email'=>'admin@test.com',
+                'username' => 'admin',
                 'role'=>'admin',
                 'password'=> Hash::make('password'),
             ],
             [
                 'name'=>$faker->name,
+                'username' => 'agent_test',
                 'email'=>'agent@test.com',
                 'role'=>'agent',
                 'email_verified_at' => Carbon::now(),
@@ -29,12 +31,14 @@ class UserSeeder extends Seeder
             ],
             [
                 'name'=>$faker->name,
+                'username' => $faker->userName,
                 'email'=>$faker->freeEmail,
                 'role'=>'agent',
                 'password'=> Hash::make('password'),
             ],
             [
-                'name'=>$faker->name,
+                'name'=> $faker->name,
+                'username' => 'sanchez',
                 'email_verified_at' => Carbon::now(),
                 'email'=>'sanchez77rodriguez@gmail.com',
                 'role' => 'user',
@@ -43,6 +47,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name'=>$faker->name,
+                'username' => 'usersub',
                 'email'=>'usersub@test.com',
                 'role' => 'user',
                 'is_subscribe' => $faker->boolean($chanceOfGettingTrue = 50),
