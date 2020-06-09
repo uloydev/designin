@@ -16,9 +16,14 @@
               <form action="{{ route('service.search') }}" method="get" class="search-service">
                   <label for="search-landing" class="d-none">Search design</label>
                   <input type="search" id="search-landing" class="search-service__input" name="search_agent_job"
-                         placeholder="Cari desain melalui jaringan desainer kami..." autocomplete="off" required>
+                  list="all-service" placeholder="Cari desain melalui jaringan desainer kami..." autocomplete="off" required>
                   <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
               </form>
+              <datalist id="all-service">
+                  @foreach($services as $service)
+                      <option value="{{ $service->title }}">{{ $service->title }}</option>
+                  @endforeach
+              </datalist>
           </div>
       </div>
   </header>

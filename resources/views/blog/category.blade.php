@@ -19,12 +19,22 @@
     <header>
         <div class="container py-5 px-0">
             <div class="row mb-5">
+                <div class="col-auto d-flex align-items-center" style="font-size: 20px">
+                    <a href="{{ route('blog.index') }}" class="text-link">
+                        <i class='bx bx-arrow-back mr-2'></i> Back
+                    </a>
+                </div>
                 <div class="col">
                     <form action="{{ route('blog-category.show', $articleCategory->id) }}" class="search-service" method="get">
-                        <input type="search" class="search-service__input" name="search_blog"
-                               placeholder="Find any article..." value="{{ $query ?? '' }}">
+                        <input type="search" class="search-service__input" name="search_blog" list="blog-related"
+                               placeholder="Find related article..." value="{{ $query ?? '' }}">
                         <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
                     </form>
+                    <datalist id="blog-related">
+                        @foreach($blogRelated as $article)
+                            <option value="{{ $article->title }}">{{ $article->title }}</option>
+                        @endforeach
+                    </datalist>
                 </div>
             </div>
             <div class="category-header__content">

@@ -22,7 +22,7 @@
                 </form>
                 <datalist id="all-service">
                     @foreach($services as $service)
-                        <option value="{{ $service->title }}"><a href="{{ route('service.show', $service->id) }}">{{ $service->title }}</a></option>
+                        <option value="{{ $service->title }}">{{ $service->title }}</option>
                     @endforeach
                 </datalist>
             </li>

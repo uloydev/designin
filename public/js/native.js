@@ -955,15 +955,18 @@ inspireSlider.slick({
         }
     ]
 });
-inspireSlider.on('wheel', (function(e) {
-    e.preventDefault();
-    if (e.originalEvent.deltaY < 0) {
-        $(this).slick('slickNext');
-    }
-    else {
-        $(this).slick('slickPrev');
-    }
-}));
+const totalInspire = inspireSlider.find('.slick-slide:not(.slick-cloned)').length;
+if (totalInspire > 3) {
+    inspireSlider.on('wheel', (function(e) {
+        e.preventDefault();
+        if (e.originalEvent.deltaY < 0) {
+            $(this).slick('slickNext');
+        }
+        else {
+            $(this).slick('slickPrev');
+        }
+    }));
+}
 
 $("#testimonies .testimonies-slider").slick({
     infinite: false,
@@ -1021,13 +1024,14 @@ $("#servicesPage .category [id^='service-slider']").slick({
     ]
 });
 
-
 //quill js plugin
-$(".search-service__input").flexdatalist({
+const flexdatalist = $(".search-service__input").flexdatalist({
     minLength: 1,
+    cache: false,
+    searchContain: true
 });
 $(".search-service__input").on('select:flexdatalist', function (event, set, options) {
-    $(this).parent().submit();
+    $(this).parent().submit()
 });
 if ($("#servicePage #service-rich-desc").length > 0) {
     const serviceDesc = $("#servicePage #service-rich-desc").get(0);

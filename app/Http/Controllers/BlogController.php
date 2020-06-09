@@ -10,7 +10,7 @@ class BlogController extends Controller
 {
     public function index()
     {
-
+        $allBlog = Blog::all();
         $blogs = Blog::latest()->paginate(5);
         $populars = Blog::orderBy('hits', 'DESC')->take(3)->get();
         $mainArticle = Blog::where('is_main', true)->orderBy('updated_at', 'DESC')->take(6)->get();
@@ -19,7 +19,8 @@ class BlogController extends Controller
             'blogs'=> $blogs,
             'populars' => $populars,
             'categories' => $categories,
-            'mainArticle' => $mainArticle
+            'mainArticle' => $mainArticle,
+            'allBlog' => $allBlog
         ]);
     }
 
@@ -50,12 +51,14 @@ class BlogController extends Controller
         $categories = BlogCategory::all();
         $blogs->appends($request->only('search_article'));
         $query = $request->search_article;
+        $allBlog = Blog::all();
         return view('blog.index', [
             'blogs' => $blogs,
             'populars' => $populars,
             'categories' => $categories,
             'mainArticle' => $mainArticle,
-            'query' => $query
+            'query' => $query,
+            'allBlog' => $allBlog
         ]);
     }
 

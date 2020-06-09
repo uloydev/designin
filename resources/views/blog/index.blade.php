@@ -11,10 +11,15 @@
               <div class="col">
                   <form action="{{ route('blog.search') . '#list-article' }}" class="search-service" method="get">
                       <label for="search" class="d-none">Search article</label>
-                      <input class="search-service__input" id="search" name="search_article" type="search"
+                      <input class="search-service__input" id="search" name="search_article" type="search" list="all-blog"
                       placeholder="Type anything and hit enter..." value="{{ $query ?? '' }}" required>
                       <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
                   </form>
+                  <datalist id="all-blog">
+                      @foreach($allBlog as $blog)
+                          <option value="{{ $blog->title }}">{{ $blog->title }}</option>
+                      @endforeach
+                  </datalist>
               </div>
           </div>
           <div class="row" id="main-article">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Blog;
 use App\BlogCategory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class BlogCategoryController extends Controller
@@ -11,6 +12,9 @@ class BlogCategoryController extends Controller
     public function show($id, Request $request)
     {
         $query = '';
+        $blogRelated = Blog::with(['category' => function ($query) use ($request) {
+            $query->where('name', $request->search_blog);
+        }])->get();
         if ($request->has('search_blog')) {
             $query = $request->search_blog;
             $articles = Blog::where('category_id', $id)
@@ -40,6 +44,7 @@ class BlogCategoryController extends Controller
         return view('blog.category', [
             'articles' => $articles,
             'articleCategory' => $articleCategory,
+            'blogRelated' => $blogRelated,
             'query' => $query
         ]);
     }
