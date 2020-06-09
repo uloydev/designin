@@ -1023,6 +1023,12 @@ $("#servicesPage .category [id^='service-slider']").slick({
 
 
 //quill js plugin
+$(".search-service__input").flexdatalist({
+    minLength: 1,
+});
+$(".search-service__input").on('select:flexdatalist', function (event, set, options) {
+    $(this).parent().submit();
+});
 if ($("#servicePage #service-rich-desc").length > 0) {
     const serviceDesc = $("#servicePage #service-rich-desc").get(0);
     const quillName = $("#servicePage #service-rich-desc").data('name');

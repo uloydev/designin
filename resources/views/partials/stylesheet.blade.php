@@ -8,4 +8,5 @@
 <link href="{{ asset('plugin/jquery-tabs/jquery.tabs.min.css') }}" rel="stylesheet">
 <link href="{{ asset('plugin/nice-select/css/nice-select.css') }}" rel="stylesheet">
 <link href="{{ asset('plugin/air-datepicker/dist/css/datepicker.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('plugin/flexdatalist/jquery.flexdatalist.min.css') }}">
 <link href="{{ asset('css/native.css') }}" rel="stylesheet">

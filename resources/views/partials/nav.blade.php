@@ -16,10 +16,15 @@
                 <form action="{{ route('service.search') }}" class="search-service" method="get">
                     @csrf
                     <label class="d-none" for="search-service">Search Service</label>
-                    <input type="search" class="search-service__input" name="search_agent_job"
+                    <input type="search" class="search-service__input" name="search_agent_job" list="all-service"
                     placeholder="Find design ..." id="search-service" value="{{ $query ?? '' }}" required>
                     <button class="search-service__btn"><i class='bx bx-search-alt'></i></button>
                 </form>
+                <datalist id="all-service">
+                    @foreach($services as $service)
+                        <option value="{{ $service->title }}"><a href="{{ route('service.show', $service->id) }}">{{ $service->title }}</a></option>
+                    @endforeach
+                </datalist>
             </li>
             <li class="nav__list ml-lg-auto">
                 <a href="{{ route('services') }}" class="nav__link">All Service</a>

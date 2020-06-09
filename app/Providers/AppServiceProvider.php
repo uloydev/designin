@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\BlogCategory;
+use App\Service;
 use App\TokenConversion;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\ServiceProvider;
@@ -35,6 +36,11 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('vendor.pagination.bootstrap-4');
         $blogCategory = BlogCategory::all();
         $tokenConversion = TokenConversion::first();
-        View::share(['blogCategory' => $blogCategory, 'tokenConversion' => $tokenConversion]);
+        $services = Service::all();
+        View::share([
+            'blogCategory' => $blogCategory,
+            'tokenConversion' => $tokenConversion,
+            'services' => $services
+        ]);
     }
 }
