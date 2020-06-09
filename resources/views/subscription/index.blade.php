@@ -21,7 +21,12 @@
             <section class="profile-main">
                 @include('partials.profile-nav')
                 <form action="" id="sub-filter-form" class="profile-main__filter">
-                    <label for="sub-filter"><h1>My Subscription</h1></label>
+                    <label for="sub-filter">
+                        <h1>My Subscription</h1>
+                        <a href="{{ route('landing-page'). '#subscription' }}" class="text-link mt-2 d-inline-block">
+                            Buy new subscription
+                        </a>
+                    </label>
                     <select name="filter" id="sub-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
                         <option value="latest" {{(!session('filter') or session('filter') == 'latest') ? 'selected=selected' : ''}}>
                             Latest
@@ -32,7 +37,7 @@
                     </select>
                 </form>
                 <div class="profile-main__content">
-                    @forelse($subscriptions as $subscription)
+                    @forelse($mySubscription as $subscription)
                         <article class="profile-main-item">
                             <img src="{{ Storage::url($subscription->img) }}" class="profile-main__order-img"
                                  alt="order image">
@@ -45,19 +50,24 @@
                                     Price:
                                     <var class="profile-main-item__price">{{ 'IDR ' . $subscription->price }}</var>
                                 </p>
-                                <a href="{{ route('service.show', $subscription->id)  }}" class="profile-main-item__link">
+                                <a href="{{ route('user.subscription.show', $subscription->id)  }}" class="profile-main-item__link">
                                     See details
                                 </a>
                             </div>
                         </article>
                     @empty
-                        <div class="alert alert--light">
-                            You never subscribe anything. Let's subscribe
-                            <a href="{{ route('subscription.index') }}" class="alert__link">now</a>
-                        </div>
+                        <article class="profile-main-item flex-column align-items-center justify-content-start col-12">
+                            <img src="{{ asset('img/zero-state.svg') }}" alt="No subscribtion found">
+                            <p class="mt-4">
+                                You never subscribe anything.
+                                <a href="{{ route('landing-page'). '#subscription' }}" class="text-link">
+                                    Let's subscribe
+                                </a>
+                            </p>
+                        </article>
                     @endforelse
                 </div>
-                {{ $subscriptions->links() }}
+                {{ $mySubscription->links() }}
             </section>
         </div>
     </div>

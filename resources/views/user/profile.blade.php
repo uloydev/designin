@@ -17,6 +17,9 @@
             Email: <a href="mailto:email@gmail.com" class="profile-aside__link">{{ Auth::user()->email }}</a>
         </p>
         <p class="profile-aside__text">
+            Your bank: <span>{{ Auth::user()->profile->bank }}</span>
+        </p>
+        <p class="profile-aside__text">
             Phone number:
             <a href="tel:+{{ $profile->handphone ?? '-' }}" class="profile-aside__link">
                 {{ $profile->handphone ?? '-' }}
@@ -27,14 +30,22 @@
         </p>
     </div>
     <div class="profile-aside__box-info">
-        <p class="profile-aside__text">
-            Finished order: <span class="profile-aside__info">{{ count($orders->where('status', 'finished')) }}</span>
+        <p class="profile-aside__text flex-row">
+            My token:
+            <var class="profile-aside__info">
+                {{ Auth::user()->subscribe_token . ' token' }}
+            </var>
         </p>
-        <p class="profile-aside__text">
-            Current order: <span class="profile-aside__info">{{ count($orders->where('status', 'process')) }}</span>
+        <p class="profile-aside__text flex-row">
+            Finished order:
+            <span class="profile-aside__info">{{ count($orders->where('status', 'finished')) . ' order(s)' }}</span>
         </p>
-        <p class="profile-aside__text">
-            Join on: <time>{{ Auth::user()->created_at->format('d M Y') }}</time>
+        <p class="profile-aside__text flex-row">
+            Current order:
+            <span class="profile-aside__info">{{ count($orders->where('status', 'process')) . ' order(s)' }}</span>
+        </p>
+        <p class="profile-aside__text flex-row">
+            Join on: <time class="profile-aside__info">{{ Auth::user()->created_at->format('d F Y') }}</time>
         </p>
     </div>
 </aside>
@@ -48,19 +59,29 @@
             <div class="modal__body">
                 <form action="{{ route('user.profile.update', Auth::id()) }}" method="post">
                     @csrf
-                    <input type="text" class="input-custom mb-3" name="name" placeholder="Your email" required>
-                    <input type="text" class="input-custom mb-3" name="email" placeholder="Your name" required>
-                    <input type="tel" class="input-custom mb-3" name="handphone" placeholder="Your phone number" required>
+                    <input type="text" class="input-custom mb-3" name="name" value="{{ Auth::user()->email }}"
+                           placeholder="Your email" required>
+                    <input type="text" class="input-custom mb-3" name="email" value="{{ Auth::user()->name }}"
+                           placeholder="Your name" required>
+                    <input type="tel" class="input-custom mb-3" name="handphone"
+                           value="{{ Auth::user()->profile->handphone ?? '' }}" placeholder="Your phone number" required>
                     <input type="number" class="input-custom mb-3" name="account_number"
-                    placeholder="Your account number" required>
+                           value="{{ Auth::user()->profile->account_number ?? '' }}" placeholder="Your account number" required>
                     <select class="nice-select wide mb-3" name="bank">
+                        <option value="" @if (Auth::user()->profile->bank === '') selected @endif disabled>
+                            Your bank
+                        </option>
                         @foreach ($listBank as $bank)
-                            <option value="{{ $bank->value }}">{{ $bank->label }}</option>
+                            <option value="{{ $bank->value }}" @if (Auth::user()->profile->bank === $bank->value) selected @endif>
+                                {{ $bank->label }}
+                            </option>
                         @endforeach
                     </select>
-                    <textarea name="address" rows="8" class="input-custom mb-3" placeholder="Your Address" required></textarea>
+                    <textarea name="address" rows="8" class="input-custom mb-3"
+                              placeholder="Your Address" required>{{ Auth::user()->profile->address }}</textarea>
                     <div class="file-custom">
-                        <input type="file" name="avatar" class="file-custom__input" id="avatar-file" data-label="Upload photo profile">
+                        <input type="file" name="avatar" class="file-custom__input" id="avatar-file"
+                               data-label="Upload photo profile">
                         <label for="avatar-file" class="file-custom__label">Upload photo profile</label>
                     </div>
                     <div class="file-custom">

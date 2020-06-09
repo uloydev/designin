@@ -69,7 +69,7 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
 Route::get('download/order/{id}/result/{result_id}', 'DownloadController@downloadResult')->name('order.result.download');
 
 Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(function () {
-    Route::resource('subscription', 'SubscriptionController');
+    Route::resource('subscription', 'SubscriptionController')->only(['index', 'show']);
     Route::post('subscription/show/{id}/payment', 'PaymentController@subscriptionPayment')->name('subscription.payment');
     Route::get('order/{id}/chat', 'MessageController@chat')->name('chat.index');
     Route::get('order/{id}/get-chat', 'MessageController@getChat')->name('chat.get');
