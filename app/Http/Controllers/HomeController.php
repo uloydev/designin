@@ -64,8 +64,8 @@ class HomeController extends Controller
         }
         foreach ($categories as $category) {
             foreach ($category->services as $service) {
-                $rating = $service->testimonies->pluck('rating')->avg();
-                $rating = $rating ? $rating : 0;
+                $testimony = Testimony::where('service_id', $service->id)->pluck('rating');
+                $rating = empty($testimony) ? 0 : $testimony->avg();
                 $service->rating = $rating;
             }
         }
@@ -75,8 +75,8 @@ class HomeController extends Controller
     public function showService($id)
     {
         $service = Service::findOrFail($id);
-        $rating = $service->testimonies->pluck('rating')->avg();
-        $rating = $rating ? $rating : 0;
+        $testimony = Testimony::where('service_id', $service->id)->pluck('rating');
+        $rating = empty($testimony) ? 0 : $testimony->avg();
         $testimonies = $service->testimonies;
         $packages = $service->package;
         $promos = Promo::whereDate('ended_at', '>', Carbon::now()->format('Y-m-d h:m:s'))->get();
@@ -147,10 +147,14 @@ class HomeController extends Controller
                 }
             }
         }
-        if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)){
-            if ($user->subscribe_token >= ceil($budget / $token_conversion->numeral)) {
-                $token_usage = ceil($budget / $token_conversion->numeral);
-                $budget = 0;
+        if (!empty($user->subscribe_at) and !empty($user->subscribe_duration)){
+            if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)){
+                if ($user->subscribe_token >= ceil($budget / $token_conversion->numeral)) {
+                    $token_usage = ceil($budget / $token_conversion->numeral);
+                    $budget = 0;
+                }else{
+                    return abort(401);
+                }
             }else{
                 return abort(401);
             }

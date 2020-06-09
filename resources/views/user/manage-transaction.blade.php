@@ -4,6 +4,7 @@
 @section('header')
     @include('partials.nav')
 @endsection
+@section('css') <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> @endsection
 @section('script')
     <script>
         let filter = $('#transaction-filter').val();
@@ -60,12 +61,14 @@
                                         {{ $order->status }}
                                     </span>
                                 </div>
+                                @if (!$order->is_reviewed)
                                 <div class="mb-3 d-flex justify-content-between align-items-center">
                                     Review
                                     <a href="javascript:void(0);" class="btn-success btn-modal" data-target="#modal-review">
                                         Click to review
                                     </a>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </article>

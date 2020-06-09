@@ -149,7 +149,7 @@
                                 <a href="{{ route('user.chat.index', $order->id) }}" class="profile-main__btn-chat">
                                     Chat agent
                                 </a>
-                                @if ($order->is_reviewed == false AND $order->status === 'finished')
+                                @if (!$order->is_reviewed AND $order->status === 'finished')
                                     <a href="javascript:void(0);" class="btn-success btn-modal" data-target="#modal-review">
                                         Review
                                     </a>

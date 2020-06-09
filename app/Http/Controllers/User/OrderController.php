@@ -124,6 +124,7 @@ class OrderController extends Controller
 
     public function sendReview($id, Request $request)
     {
+        // dd($request);
         $user = Auth::user();
         $order = Order::where('user_id', $user->id)->findOrFail($id);
         $package = Package::findOrFail($order->package_id);

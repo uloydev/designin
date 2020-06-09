@@ -43,16 +43,18 @@ class PaymentController extends Controller
         if ($request->hasFile('brief_file')) {
             $order->attachment = $request->file('brief_file')->store('public/files');
         }
-        if ($request->has('extras')) {
+        if ($request->has('extras') and !empty(json_decode($request->extras))) {
             $order->extras = $request->extras;
             foreach(json_decode($order->extras) as $extras_id){
                 $budget += ServiceExtras::findOrFail($extras_id)->price;
             }
         }
-        if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)) {
-            if (ceil($budget / $token_conversion->numeral) > $user->subscribe_token){
-                $budget -= $user->subscribe_token * $token_conversion->numeral;
-                $token_usage = $user->subscribe_token;
+        if (!empty($user->subscribe_at) and !empty($user->subscribe_duration)){
+            if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)) {
+                if (ceil($budget / $token_conversion->numeral) > $user->subscribe_token){
+                    $budget -= $user->subscribe_token * $token_conversion->numeral;
+                    $token_usage = $user->subscribe_token;
+                }
             }
         }
         $order->agent_id = intval($request->agent_id);

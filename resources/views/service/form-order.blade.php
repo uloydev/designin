@@ -46,7 +46,7 @@
                         Grand total: IDR <output id="grand-total" name="grand_total"></output>
                     </p>
                     <input type="hidden" name="modal_order_title">
-                    @if (count($service->extras) > 0)
+                    @if (count($extras_template) > 0)
                         <p>Total extras: <output id="total_extras" name="total_extras">IDR 0</output></p>
                         <div id="form-extras-order">
                             <p class="text-gray mb-3">Add Extras: </p>
@@ -54,8 +54,8 @@
                             @foreach ($extras_template as $extra)
                                 <div class="checkbox-custom flex-column align-items-start align-items-lg-center flex-lg-row">
                                     <input type="checkbox" id="extras-{{$extra->id}}" class="checkbox-custom__input"
-                                           data-price-cash="{{ $extra->price }}"
-                                           data-price-token="{{ $extra->price_token }}"
+                                           data-price-cash="{{ $extra->template->price }}"
+                                           data-price-token="{{ $extra->template->price_token }}"
                                            value="{{$extra->id}}" name="extras">
                                     <label class="checkbox-custom__label" for="extras-{{$extra->id}}">
                                         <span class="checkbox-custom__icon"><i class='bx bx-check' ></i></span>
@@ -66,7 +66,7 @@
                                         (
                                         IDR
                                         <var class="form-extras-order__money extra-price-cash">
-                                            {{ $extra->price }}
+                                            {{ $extra->template->price }}
                                         </var>
                                         )
                                     </span>

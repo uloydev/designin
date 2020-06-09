@@ -26,7 +26,9 @@
                         <option value="latest" {{(!session('filter') or session('filter') == 'latest') ? 'selected=selected' : ''}}>
                             Latest
                         </option>
-                        <option value="oldest" {{(session('filter') == 'oldest' ? 'selected=selected' : '')}}>Oldest</option>
+                        <option value="oldest" {{(session('filter') == 'oldest' ? 'selected=selected' : '')}}>
+                            Oldest
+                        </option>
                     </select>
                 </form>
                 <div class="profile-main__content">

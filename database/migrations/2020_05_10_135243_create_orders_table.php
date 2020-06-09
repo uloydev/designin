@@ -23,7 +23,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('agent_id')->nullable();
-            $table->unsignedInteger('package_id');
+            $table->unsignedInteger('package_id')->nullable();
+            $table->unsignedInteger('subscription_id')->nullable();
             $table->enum('status', [
                 'unpaid', 'process', 'complaint', 'finished', 'canceled', 'check_result', 'check_revision'
             ]);
