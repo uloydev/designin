@@ -278,6 +278,28 @@ opacity: 1;
 visibility: visible;
 -webkit-transition: all .3s ease;
 }
+.login-sosmed {
+    color: #fff;
+    border: 0;
+    border-radius: 15px;
+    display: block;
+    margin: 15px auto;
+    padding: 15px 45px;
+    width: auto;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: all .3s ease;
+    text-align: center;
+}
+.login-sosmed--google {
+    background-color: #dc4e4e;
+}
+.login-sosmed--fb {
+    background-color: #4b70ab;
+}
 #forgot-password {
   color: #6c43b8;
 }

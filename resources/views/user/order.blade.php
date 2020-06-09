@@ -167,5 +167,7 @@
     </div>
 @endsection
 @push('element')
-    @include('partials.review-job')
+    @isset($order)
+        @includeWhen($order->is_reviewed == false AND $order->status === 'finished', 'partials.review-job')
+    @endisset
 @endpush

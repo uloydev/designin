@@ -23,7 +23,9 @@
                 <form action="" id="sub-filter-form" class="profile-main__filter">
                     <label for="sub-filter"><h1>My Subscription</h1></label>
                     <select name="filter" id="sub-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
-                        <option value="latest" {{(!session('filter') or session('filter') == 'latest') ? 'selected=selected' : ''}}>Latest</option>
+                        <option value="latest" {{(!session('filter') or session('filter') == 'latest') ? 'selected=selected' : ''}}>
+                            Latest
+                        </option>
                         <option value="oldest" {{(session('filter') == 'oldest' ? 'selected=selected' : '')}}>Oldest</option>
                     </select>
                 </form>
@@ -41,7 +43,9 @@
                                     Price:
                                     <var class="profile-main-item__price">{{ 'IDR ' . $subscription->price }}</var>
                                 </p>
-                                <a href="{{ route('service.show', $subscription->id)  }}" class="profile-main-item__link">See details</a>
+                                <a href="{{ route('service.show', $subscription->id)  }}" class="profile-main-item__link">
+                                    See details
+                                </a>
                             </div>
                         </article>
                     @empty

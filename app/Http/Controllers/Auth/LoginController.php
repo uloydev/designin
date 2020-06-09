@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
+use App\UserProfile;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -64,4 +68,50 @@ class LoginController extends Controller
         }
         return redirect()->route('login')->with('success', 'Oops! You have entered invalid credentials');
     }
+
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function handleProviderCallback($provider)
+    {
+        $user = Socialite::driver($provider)->user();
+//        $authUser = $this->findOrCreateUser($user, $provider);
+//        $authUser = User::where('provider_id', $user->id)->first();
+//        if ($authUser) {
+//            return $authUser;
+//        }
+//        else{
+//            $data = User::create([
+//                'name'     => $user->name,
+//                'email'    => !empty($user->email)? $user->email : '' ,
+//                'provider' => $provider,
+//                'provider_id' => $user->id
+//            ]);
+//
+//        }
+        $authUser = User::firstOrCreate(
+            ['email' => $user->getEmail()],
+            [
+                'name' => $user->name,
+                'provider' => $provider,
+                'provider_id' => $user->id,
+                'email_verified_at' => Carbon::now()
+            ]
+        );
+        UserProfile::create([
+            'avatar' => 'files/people.webp',
+            'user_id' => $authUser->id
+        ]);
+
+        Auth::login($authUser);
+        if (Auth::user()->email_verified_at == '') {
+            return redirect('email/verify');
+        }
+        else {
+            return redirect('/');
+        }
+    }
+
 }

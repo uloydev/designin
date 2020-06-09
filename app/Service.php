@@ -37,9 +37,4 @@ class Service extends Model
     {
         return $this->hasMany('App\ServiceExtras');
     }
-
-    // public function extras_template()
-    // {
-    //     return ServiceExtras::where('is_template', true)->get();
-    // }
 }

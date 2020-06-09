@@ -166,7 +166,7 @@ return [
          *
          * Package Service Providers...
          */
-
+        Laravel\Socialite\SocialiteServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
@@ -230,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Midtrans' => Marprinhm\Midtrans\Facades\Midtrans::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];

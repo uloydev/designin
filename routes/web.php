@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify'=>true]);
 // Route::get('login', 'Auth\LoginController@loginlogin')->name('login');
+Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider')->name('auth.index');
+Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('auth.callback');
 
 Route::get('/', 'HomeController@index')->name('landing-page');
 Route::get('services/search', 'HomeController@searchAgentJob')->name('service.search');
@@ -68,7 +70,7 @@ Route::get('download/order/{id}/result/{result_id}', 'DownloadController@downloa
 
 Route::name('user.')->prefix('user')->middleware(['auth', 'verified'])->group(function () {
     Route::resource('subscription', 'SubscriptionController');
-    Route::Post('subscription/show/{id}/payment', 'PaymentController@subscriptionPayment')->name('subscription.payment');
+    Route::post('subscription/show/{id}/payment', 'PaymentController@subscriptionPayment')->name('subscription.payment');
     Route::get('order/{id}/chat', 'MessageController@chat')->name('chat.index');
     Route::get('order/{id}/get-chat', 'MessageController@getChat')->name('chat.get');
     Route::post('order/chat', 'MessageController@sendChat')->name('chat.store');

@@ -32,7 +32,7 @@
                     </select>
                 </form>
                 <div class="profile-main__content">
-                    @foreach ($orders as $order)
+                    @forelse ($orders as $order)
                     <article class="profile-main-item">
                         <div class="col profile-main-item__detail">
                             <div class="profile-main__job-detail">
@@ -69,7 +69,10 @@
                             </div>
                         </div>
                     </article>
-                    @endforeach
+                    @empty
+                        <img src="{{ asset('img/empty-state.svg') }}" alt="No request" class="mx-auto d-block my-5">
+                        <h1 class="text-center display-4 text-muted">You have no transaction</h1>
+                    @endforelse
                 </div>
                 {{ $orders->links() }}
             </section>
@@ -77,5 +80,7 @@
     </div>
 @endsection
 @push('element')
-    @include('partials.review-job')
+    @isset($order)
+        @includeWhen($order->is_reviewed == false AND $order->status === 'finished', 'partials.review-job')
+    @endisset
 @endpush
