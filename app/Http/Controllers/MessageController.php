@@ -36,7 +36,7 @@ class MessageController extends Controller
             'sender_id' => Auth::id(),
             'session_id' => $session_id
         ]);
-        $message = Message::find($message->id); // refreshing model to get sender
+        $message = Message::find($message->id);
         Broadcast(new MsgSentEvent($message, $session));
         return ['status'=> 'ok', 'message'=> $message];
     }

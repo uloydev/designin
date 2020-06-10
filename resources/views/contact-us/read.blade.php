@@ -4,6 +4,11 @@
 @section('page-title', 'Message From Customer')
 @section('header')
     <header>
+        @if(session('success'))
+            <div class="alert alert-default" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="alert alert-default" role="alert" style="display: none">
             Successfully reply message from customer
         </div>
@@ -94,7 +99,7 @@
                                         </button>
                                     </h2>
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#delete-history-job" data-id="{{ $message->id }}">
+                                    data-target="#delete-message-customer" data-id="{{ $message->id }}" data-sender="{{ $message->email }}">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -112,7 +117,8 @@
                                                 </label>
                                                 <textarea name="answer" class="form-control" id="message-review"
                                                 placeholder="Oooh thanks for your advice, we will ..."
-                                                rows="10" {{ $message->is_answered == true ? 'readonly' : '' }} required></textarea>
+                                                rows="10" {{ $message->is_answered == true ? 'readonly' : '' }}
+                                                required></textarea>
                                             </div>
                                             <button type="submit" class="btn btn-default">Send Review</button>
                                             <span class="text-info d-none is-answered">
@@ -161,7 +167,34 @@
     </div>
 @endsection
 @section('element')
-    <div class="modal fade" id="modalLoader" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="delete-message-customer" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete customer message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure wanna remove message from
+                        <span class="modal-message-sender font-weight-bold"></span>
+                    </p>
+                    <form action="{{--routing on js--}}" method="post" id="form-delete-message-customer">
+                        @csrf @method('DELETE')
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger" form="form-delete-message-customer">
+                        Yes, delete it
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalLoader" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">

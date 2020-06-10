@@ -777,6 +777,14 @@ else if (window.location.pathname.indexOf('user/order/') > -1) {
     getChatUrl = '/user/order/' + orderId + '/get-chat';
 }
 
+$("[data-target='#delete-message-customer']").click(function () {
+    let messageId = $(this).data('id');
+    let messageSender = $(this).data('sender');
+
+    $("#delete-message-customer .modal-message-sender").text(messageSender);
+    $("#delete-message-customer form").attr('action', window.location.origin + '/admin/manage/contact-us/' + messageId);
+});
+
 $('#readMessagePage .accordion__item form').submit(function (e) {
     e.preventDefault();
     let formSubmit = $(this);
