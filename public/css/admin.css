@@ -319,16 +319,15 @@
     font-size: 1.2rem;
 }
 
+#subscriptionPage .subscription__item {
+    padding: 1rem;
+}
 #subscriptionPage .subscription__item .card-img-top {
-    height: 200px;
     max-width: 100%;
     width: auto;
+    max-height: 300px;
     object-position: center;
     object-fit: cover;
-}
-
-#manageMainSliderPage .header .container-fluid {
-    /*padding-right: 0 !important;*/
 }
 
 footer {

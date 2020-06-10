@@ -57,7 +57,7 @@
                     <div class="card card-stats">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col">
+                                <div class="col d-flex flex-column">
                                     <h5 class="card-title text-uppercase text-link mb-0">Unanswered message</h5>
                                     <span class="h2 font-weight-bold mb-0">{{ $totalNotAnswered }}</span>
                                 </div>
@@ -76,7 +76,7 @@
                     <div class="card card-stats">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col">
+                                <div class="col d-flex flex-column">
                                     <h5 class="card-title text-uppercase text-link mb-0">Answered message</h5>
                                     <span class="h2 font-weight-bold mb-0">{{ $totalAnswered }}</span>
                                 </div>
