@@ -1069,7 +1069,7 @@ if (window.location.href.indexOf('admin') === -1) {
 if ($("#servicePage #service-rich-desc").length > 0) {
     const serviceDesc = $("#servicePage #service-rich-desc").get(0);
     const quillName = $("#servicePage #service-rich-desc").data('name');
-    const textareaServiceDesc = $(`<textarea name="${quillName}" class="d-none">`).insertAfter(serviceDesc);
+    const textareaServiceDesc = $(`<textarea name="${quillName}" class="d-none" required>`).insertAfter(serviceDesc);
     let richServiceDesc = new Quill(serviceDesc, {
         theme: 'snow',
         placeholder: 'Place description here . . .'
@@ -1082,14 +1082,20 @@ if ($("#servicePage #service-rich-desc").length > 0) {
 if ($("#showPackagePage #benefit_package").length > 0) {
     const serviceDesc = $("#showPackagePage #benefit_package").get(0);
     const quillName = $("#showPackagePage #benefit_package").data('name');
-    const textareaServiceDesc = $(`<textarea name="${quillName}" class="d-none">`).insertAfter(serviceDesc);
+    const textareaServiceDesc = $(`<textarea name="${quillName}" class="d-none" required>`).insertAfter(serviceDesc);
     let richServiceDesc = new Quill(serviceDesc, {
         theme: 'snow',
         placeholder: 'What will they get if using this package . . .'
     });
     richServiceDesc.on('editor-change', function () {
-        let serviceDescVal = $("#showPackagePage #benefit_package .ql-editor").html();
-        textareaServiceDesc.val(serviceDescVal);
+        let serviceDescVal;
+        if (richServiceDesc.getLength() > 0) {
+            serviceDescVal = $("#showPackagePage #benefit_package .ql-editor").html();
+            textareaServiceDesc.val(serviceDescVal);
+        }
+        else {
+            textareaServiceDesc.val("");
+        }
     });
 }
 if ($('#blog-content').length > 0) {
@@ -1099,7 +1105,7 @@ if ($('#blog-content').length > 0) {
         theme: 'snow',
         placeholder: 'Insert content here . . .',
     });
-    $(`<textarea name="${blogContentName}" class="d-none"></textarea>`).insertAfter('#blog-content');
+    $(`<textarea name="${blogContentName}" class="d-none" required></textarea>`).insertAfter('#blog-content');
     $("#blogEditPage form, #blogCreatePage form").submit(function () {
         let getBlogContent = $("#blog-content .ql-editor").html();
         $(`textarea[name="${blogContentName}"]`).val(getBlogContent);

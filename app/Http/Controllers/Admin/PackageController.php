@@ -62,7 +62,7 @@ class PackageController extends Controller
         $package->description = $request->benefit_package;
         $package->price = $request->price_package;
         $package->duration = $request->duration_package;
-        $package->token_price = $request->token_package ?? 0;
+        $package->token_price = $request->token_package;
         $package->save();
         return redirect()->back()->with(
             'success', "package for " . $package->service->title . " updated successfully"

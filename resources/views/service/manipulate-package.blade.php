@@ -14,12 +14,12 @@
                     @csrf @method('PUT')
                     <input type="hidden" name="service_id" value="{{ $service->id }}" required readonly>
                     <div class="form-group">
-                        <label for="name-edit">package name</label>
+                        <label for="name-edit">Package name</label>
                         <input type="text" class="form-control" id="name" name="name_package"
-                               placeholder="Ex: Reduce delivery by 1 day" autofocus required>
+                               placeholder="Ex: silver package" autofocus required>
                     </div>
                     <div class="input-group form-group">
-                        <label class="col-12 px-0" for="price">package price</label>
+                        <label class="col-12 px-0" for="price">Package price</label>
                         <div class="input-group-prepend">
                             <div class="input-group-text">Rp</div>
                         </div>
@@ -27,9 +27,10 @@
                                id="price" placeholder="package price" required>
                     </div>
                     <div class="form-group">
+                        <label for="duration">Package duration</label>
                         <div class="input-group">
-                            <input type="number" class="form-control" name="duration_package" placeholder="Duration"
-                                   min="1" max="999" aria-label="duration" aria-describedby="duration">
+                            <input type="number" id="duration" class="form-control" name="duration_package"
+                            placeholder="Duration" min="1" max="999" aria-label="duration" required>
                             <div class="input-group-append">
                                 <span class="input-group-text" id="duration">day(s)</span>
                             </div>
