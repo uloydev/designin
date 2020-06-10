@@ -2,27 +2,6 @@
 @section('page-title') {{ $service->title }} @endsection
 @section('header') @include('partials.nav') @endsection
 @section('page-id', 'singleService')
-@section('css')
-    <style>
-        .loader {
-            height: 100px;
-            width: 100%;
-            text-align: center;
-            padding: 1em;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 200ms;
-        }
-        /* Set the color of the icon */
-        svg path,
-        svg rect {
-            fill: #FF6700;
-        }
-
-    </style>
-@endsection
 @section('script')
     <script src="https://app.sandbox.midtrans.com/snap/snap.js"
             data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
@@ -32,7 +11,7 @@
             let ajaxData = {
                     _token:'{{csrf_token()}}',
                     user_id:'{{Auth::id()}}',
-                    extras:$("#modal-single-order #data-extras").val() == '' ? '[]' : $("#modal-single-order #data-extras").val(),
+                    extras: $("#modal-single-order #data-extras").val() === '' ? '[]' : $("#modal-single-order #data-extras").val(),
                     agent_id: $("input[name='agent_id']").val(),
                     message_agent: $("#modal-single-order textarea[name='message_agent']").val(),
                     quantity: $("#modal-single-extras #quantity").val(),
@@ -200,7 +179,9 @@
 @push('element')
     <datalist id="list-promo">
         @foreach($promos as $promo)
-            <option value="{{ $promo->code }}" data-code-discount="{{ $promo->discount }}">{{ $promo->code }}</option>
+            <option value="{{ $promo->code }}" data-code-discount="{{ $promo->discount }}">
+                {{ $promo->code }}
+            </option>
         @endforeach
     </datalist>
     @include('service.form-order')

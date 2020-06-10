@@ -72,13 +72,19 @@
                                 </div>
                                 @if (!empty($order->result))
                                     <div class="mb-3 d-flex flex-column flex-md-row">
-                                        <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-warning">Download Result</a>
+                                        <a href="{{ route('order.result.download', [
+                                        'id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-warning">
+                                            Download Result
+                                        </a>
                                     </div>
                                 @endif
                                 @if ($order->revision->count() > 0)
                                     @foreach ($order->revision as $revision)
                                         <div class="mb-3 d-flex flex-column flex-md-row">
-                                            <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$revision->id]) }}" class="btn text-warning">Download Revision {{ $loop->iteration }}</a>
+                                            <a href="{{ route('order.result.download',
+                                            ['id'=>$order->id, 'result_id'=>$revision->id]) }}" class="btn text-warning">
+                                                Download Revision {{ $loop->iteration }}
+                                            </a>
                                         </div>
                                     @endforeach
                                 @endif
