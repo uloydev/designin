@@ -259,8 +259,8 @@
                             datasets: [{
                                 label: 'Income',
                                 data: [
-                                    @for($i = 0; $i < count($test); $i++)
-                                    {{ $test[$i] }},
+                                    @for($i = 1; $i <= count($incomeArr); $i++)
+                                    {{ $incomeArr[$i] }},
                                     @endfor
                                 ]
                             }]

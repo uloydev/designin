@@ -99,7 +99,8 @@
                                         </button>
                                     </h2>
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                    data-target="#delete-message-customer" data-id="{{ $message->id }}" data-sender="{{ $message->email }}">
+                                    data-target="#delete-message-customer" data-id="{{ $message->id }}"
+                                    data-sender="{{ $message->email }}">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>

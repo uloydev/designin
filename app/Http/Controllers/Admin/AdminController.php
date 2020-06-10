@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\LandingHeaderSlider;
+use App\Order;
 use App\Service;
 use App\TokenConversion;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -24,6 +26,21 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $incomes = Order::select('id', 'created_at')->get()->groupBy(function ($date){
+            return Carbon::parse($date->created_at)->format('m');
+        });
+        $incomesCount = [];
+        $incomeArr = [];
+        foreach ($incomes as $key => $income) {
+            $incomesCount[(int)$key] = count($income);
+        }
+        for($i = 1; $i <= 12; $i++){
+            if(!empty($incomesCount[$i])){
+                $incomeArr[$i] = $incomesCount[$i];
+            }else{
+                $incomeArr[$i] = 0;
+            }
+        }
         $test = [0, 20, 10, 30, 15, 40, 20, 60, 20, 100, 90, 50];
         $articles = Blog::latest()->take(10)->get();
         $totalArticle = Blog::count();
@@ -39,7 +56,7 @@ class AdminController extends Controller
             'totalCustomer' => $totalCustomer,
             'totalPromo' => $totalPromo,
             'services' => $services,
-            'test' => $test,
+            'incomeArr' => $incomeArr,
             'totalArticle' => $totalArticle
         ]);
     }
