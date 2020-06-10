@@ -19,7 +19,7 @@ class CreatePackagesTable extends Migration
             $table->text('description');
             $table->string('image')->default('files/service-design.jpg');
             $table->unsignedInteger('price');
-            $table->unsignedInteger('token_price');
+            $table->unsignedInteger('token_price')->default(0);
             $table->unsignedInteger('duration');
             $table->integer('service_id');
             $table->timestamps();

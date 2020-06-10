@@ -1529,6 +1529,11 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     margin: 100px 0 40px;
     border-top: 1px solid #d7d7d7;
 }
+#singleServicePage .service-single__compare {
+    padding-top: 2rem;
+    border-top: 1px solid #d7d7d7;
+    margin-top: 2rem;
+}
 #singleServicePage .service-single__header-review {
     display: flex;
     align-items: center;
@@ -1734,6 +1739,18 @@ input[type=number] {
 #singleServicePage .single-package .jq-tab-content-wrapper {
     border: 1px solid #d2d2d2;
     border-top: none;
+}
+#singleServicePage .single-package__top *, #singleServicePage .service-single__compare * {
+    list-style-type: initial;
+    text-decoration: initial;
+}
+#singleServicePage .single-package__top ul, #singleServicePage .single-package__top ol,
+#singleServicePage .service-single__compare ul, #singleServicePage .service-single__compare ol{
+    padding-left: 1rem;
+}
+#singleServicePage .single-package__top a, #singleServicePage .service-single__compare a {
+    color: var(--third-color);
+    text-decoration: underline;
 }
 #singleServicePage .single-package__top p:first-child {
     font-weight: bolder;

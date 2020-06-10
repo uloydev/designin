@@ -411,6 +411,36 @@ $("[data-target='#modal-revision']").click(function () {
 });
 
 //admin js
+$("[data-target='#modal-manipulate-package'], [data-target='#modal-delete-package']").click(function () {
+    let packageId = $(this).data('id');
+    let packageTitle = $(this).parents('.list-group-item').find('.package-item__name').text();
+    let packageToken = $(this).data('token');
+    let packageDuration = $(this).data('duration');
+    let packageDesc = $(this).data('desc');
+    let packagePrice = Number($(this).parents('.list-group-item').find('.package-item__price').text());
+
+    if ($(this).attr('id') === 'btn-edit-package') {
+        $("#modal-manipulate-package #form-manipulate-package")
+            .attr('action', window.location.origin + '/admin/manage/package/' + packageId);
+        $("#modal-manipulate-package #form-manipulate-package input[name='_method']").prop('disabled', false);
+    }
+    else if ($(this).attr('id') === 'btn-delete-package') {
+        $("#modal-delete-package #form-delete-package")
+            .attr('action', window.location.origin + '/admin/manage/package/' + packageId);
+    }
+    else {
+        $("#modal-manipulate-package #form-manipulate-package")
+            .attr('action', window.location.origin + '/admin/manage/package/');
+        $("#modal-manipulate-package #form-manipulate-package input[name='_method']").prop('disabled', true);
+    }
+
+    $("#showPackagePage .modal-manipulate-title").text(!packageTitle ? "Create new" : packageTitle);
+    $("#modal-manipulate-package input[name='name_package']").val(packageTitle);
+    $("#modal-manipulate-package input[name='duration_package']").val(packageDuration);
+    $("#modal-manipulate-package input[name='price_package']").val(packagePrice);
+    $("#modal-manipulate-package input[name='token_package']").val(packageToken);
+    $("#modal-manipulate-package #benefit_package .ql-editor").html(packageDesc);
+});
 $("#blogEditPage form .file-custom__label").text('Update cover');
 $("#blogEditPage form .file-custom__input").change(function () {
     if ($(this).val().length === 0) {
@@ -812,7 +842,7 @@ setInterval(function () {
 }, 3000);
 
 $("img").prop('draggable', false);
-$(".alert").not(".no-fadeout").not('#alert-approve').delay(2000).fadeOut('slow');
+$(".alert").not(".no-fadeout").not('#alert-approve').delay(3000).fadeOut('slow');
 
 $("#editPromo input[name='promo_end']").datepicker({
     minDate: new Date($("#editPromo input[name='promo_start']").val())
@@ -1025,14 +1055,17 @@ $("#servicesPage .category [id^='service-slider']").slick({
 });
 
 //quill js plugin
-const flexdatalist = $(".search-service__input").flexdatalist({
-    minLength: 1,
-    cache: false,
-    searchContain: true
-});
-$(".search-service__input").on('select:flexdatalist', function (event, set, options) {
-    $(this).parent().submit()
-});
+if (window.location.href.indexOf('admin') === -1) {
+    const flexdatalist = $(".search-service__input").flexdatalist({
+        minLength: 1,
+        cache: false,
+        searchContain: true
+    });
+    $(".search-service__input").on('select:flexdatalist', function (event, set, options) {
+        $(this).parent().submit()
+    });
+}
+
 if ($("#servicePage #service-rich-desc").length > 0) {
     const serviceDesc = $("#servicePage #service-rich-desc").get(0);
     const quillName = $("#servicePage #service-rich-desc").data('name');
@@ -1043,6 +1076,19 @@ if ($("#servicePage #service-rich-desc").length > 0) {
     });
     richServiceDesc.on('editor-change', function () {
         let serviceDescVal = $("#servicePage #service-rich-desc .ql-editor").html();
+        textareaServiceDesc.val(serviceDescVal);
+    });
+}
+if ($("#showPackagePage #benefit_package").length > 0) {
+    const serviceDesc = $("#showPackagePage #benefit_package").get(0);
+    const quillName = $("#showPackagePage #benefit_package").data('name');
+    const textareaServiceDesc = $(`<textarea name="${quillName}" class="d-none">`).insertAfter(serviceDesc);
+    let richServiceDesc = new Quill(serviceDesc, {
+        theme: 'snow',
+        placeholder: 'What will they get if using this package . . .'
+    });
+    richServiceDesc.on('editor-change', function () {
+        let serviceDescVal = $("#showPackagePage #benefit_package .ql-editor").html();
         textareaServiceDesc.val(serviceDescVal);
     });
 }

@@ -11,7 +11,7 @@ use App\Order;
 class PackageController extends Controller
 {
 
-    public function index()
+    public function index($id)
     {
         $service = Service::findOrFail($id);
         $allPackage = Package::where('service_id', $id)->paginate(10);
@@ -27,14 +27,14 @@ class PackageController extends Controller
     {
         $service = Service::findOrFail($request->service_id);
         $package = new Package;
-        $package->title = $request->title;
-        $package->description = $request->description;
-        $package->price = $request->price;
-        $package->duration = $request->duration;
+        $package->title = $request->name_package;
+        $package->description = $request->benefit_package;
+        $package->price = $request->price_package;
+        $package->duration = $request->duration_package;
+        $package->token_price = $request->token_package;
         $package->service_id = $request->service_id;
-        $package->token_price = $request->token_price;
         $package->save();
-        return redirect()->back()->with('success', 'package for "'+ $service->title +'" created successfully');
+        return redirect()->back()->with('success', 'package for "' . $service->title .'" created successfully');
     }
 
     public function show($id)
@@ -50,23 +50,36 @@ class PackageController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name_package' => 'required|string',
+            'benefit_package' => 'required|string',
+            'price_package' => 'required|integer',
+            'duration_package' => 'required|integer',
+            'token_package'  => 'nullable|integer'
+        ]);
         $package = Package::findOrFail($id);
-        $package->title = $request->title;
-        $package->description = $request->description;
-        $package->price = $request->price;
-        $package->duration = $request->duration;
-        $package->token_price = $request->token_price;
+        $package->title = $request->name_package;
+        $package->description = $request->benefit_package;
+        $package->price = $request->price_package;
+        $package->duration = $request->duration_package;
+        $package->token_price = $request->token_package ?? 0;
         $package->save();
-        return redirect()->back()->with('success', 'package for "' . $package->service->title . '" updated successfully');
+        return redirect()->back()->with(
+            'success', "package for " . $package->service->title . " updated successfully"
+        );
     }
 
     public function destroy($id)
     {
         $package = Package::findOrFail($id);
         if (Order::where('package_id', $id)->where('status', '!=', 'finished')->count() > 0) {
-            return redirect()->back()->with('error', 'Failed to delete package, because it\'s still have unfinished orders');
+            return redirect()->back()->with(
+                'error', 'Failed to delete package, because it\'s still have unfinished orders'
+            );
         }
         $package->delete();
-        return redirect()->back()->with('success', 'package for "'+ $package->service->title +'" deleted successfully');
+        return redirect()->back()->with(
+            'success', 'package for "' . $package->service->title .'" deleted successfully'
+        );
     }
 }

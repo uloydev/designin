@@ -92,6 +92,9 @@ details summary::-webkit-details-marker {
 .text-gray {
     color: #676767;
 }
+.text-capitalize {
+    text-transform: capitalize;
+}
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,

@@ -104,6 +104,22 @@
                     <h2 class="service-single__subheading">About this service</h2>
                     <div>{!! $service->description !!}</div>
                 </div>
+                <div class="service-single__compare">
+                    <h2 class="service-single__subheading">Compare package</h2>
+                    <div class="service-single__package">
+                        @foreach($packages as $package)
+                            <article class="mb-3">
+                                <p class="mb-3 d-flex justify-content-between align-items-center font-bold text-capitalize">
+                                    {{ $package->title }}
+                                    <var class="font-style-normal font-bold order-price">
+                                        IDR {{ $package->price }}
+                                    </var>
+                                </p>
+                                <p>{!! $package->description !!}</p>
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
                 <div class="service-single__review">
                     <div class="service-single__header-review">
                         <h2 class="service-single__subheading mb-0">Review</h2>
@@ -153,7 +169,7 @@
                                         IDR {{ $package->price }}
                                     </var>
                                 </p>
-                                <p>{{ $package->description }}</p>
+                                <p>{!! $package->description !!}</p>
                             </div>
                             @auth
                                 <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
@@ -174,8 +190,6 @@
                                     Continue (IDR {{ $package->price }}
                                 </a>
                             @endguest
-                            {{-- edit discounted price if subscribe --}}
-                            {{-- <del class="d-block mt-3 text-center text-gray">IDR 600,000</del> --}}
                         </div>
                     @endforeach
                 </div>
