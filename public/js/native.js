@@ -596,35 +596,44 @@ $("#serviceCategoryPage .btn[data-target='#delete-category']").click(function ()
 });
 
 $("#manageAgentPage .btn[data-target='#modal-remove-agent'], " +
-    "#manageAgentPage .btn[data-target='#modal-edit-agent']").click(function () {
-    if ($(this).attr('id') === 'btn-create-agent') {
-        $("button[form='form-edit-agent']").text('Add new agent');
-        $("#manageAgentPage #modal-edit-agent form").find("input[name='_method']").prop('disabled', true);
-        $("#manageAgentPage #modal-edit-agent form")
-            .attr('action', window.location.origin + '/admin/manage/agent/');
+    "#manageAgentPage .btn[data-target='#modal-manipulate-agent']").click(function () {
+    let agentId = Number($(this).data('id')),
+        agentName = $(this).parents(".agent__detail").find(".agent__name").text(),
+        agentEmail = $(this).parents(".agent__detail").find(".agent__email").text(),
+        agentPhone = $(this).parents(".agent__detail").find(".agent__phone").text(),
+        agentBank = $(this).parents(".agent__detail").find(".agent__bank").text(),
+        agentAccount = $(this).parents(".agent__detail").find(".agent__acc-number").text(),
+        agentAddress = $(this).data('address');
+
+    console.log(agentBank);
+
+    if ($(this).hasClass('create-agent')) {
+        $("#manageAgentPage #modal-manipulate-agent input[name='agent_password']").prop({
+            readonly: true,
+            required: true
+        }).parent(".form-group").show();
+        $("button[form='form-manipulate-agent']").text('Add new agent');
+        $("#manageAgentPage #modal-manipulate-agent form").find("input[name='_method']").prop('disabled', true);
+        $("#manageAgentPage #modal-manipulate-agent form").attr('action', window.location.origin + '/admin/manage/agent');
     }
-    else {
-        let agentId = Number($(this).data('id')),
-            agentName = $(this).parents("tr").find("#agent__name").text(),
-            agentEmail = $(this).parents("tr").find("#agent__email").text(),
-            agentPhone = $(this).parents("tr").find("#agent__phone").text(),
-            agentBank = $(this).parents("tr").find("#agent__bankbank").text(),
-            agentAccount = $(this).parents("tr").find("#agent__acc-number").text(),
-            agentAddress = $(this).data('address');
-
+    else if ($(this).hasClass('edit-agent') || $(this).hasClass('delete-agent')) { //jika modal yg diklik adala
         if ($(this).hasClass('edit-agent')) {
-            $("#manageAgentPage #form-edit-agent").find("input[name='_method']").prop('disabled', false);
+            $("#manageAgentPage #form-manipulate-agent select[name='bank'] option:first-child").prop('selected', false);
+            $("button[form='form-manipulate-agent']").text('Update Agent Details');
+            $("#manageAgentPage #form-manipulate-agent").find("input[name='_method']").prop('disabled', false);
+            $("#manageAgentPage #modal-manipulate-agent input[name='agent_password']").prop({
+                readonly: false,
+                required: false
+            }).parent(".form-group").hide();
+            $("#manageAgentPage #form-manipulate-agent input[name='agent_name']").val(agentName);
+            $("#manageAgentPage #form-manipulate-agent input[name='agent_email']").val(agentEmail);
+            $("#manageAgentPage #form-manipulate-agent input[name='agent_phone']").val(agentPhone);
+            $(`#manageAgentPage #form-manipulate-agent select[name="bank"] option[value="${agentBank}"]`).prop('selected', true);
+            $("#manageAgentPage #form-manipulate-agent input[name='agent_account']").val(agentAccount);
+            $("#manageAgentPage #form-manipulate-agent textarea[name='agent_address']").val(agentAddress);
+            $("#manageAgentPage .agent-name").text(agentName);
         }
-
-        $("#manageAgentPage #form-edit-agent input[name='agent_name']").val(agentName);
-        $("#manageAgentPage #form-edit-agent input[name='agent_email']").val(agentEmail);
-        $("#manageAgentPage #form-edit-agent input[name='agent_phone']").val(agentPhone);
-        $("#manageAgentPage #form-edit-agent input[name='agent_bank']").val(agentBank);
-        $("#manageAgentPage #form-edit-agent input[name='agent_account']").val(agentAccount);
-        $("#manageAgentPage #form-edit-agent textarea[name='agent_address']").val(agentAddress);
-        $("#manageAgentPage .agent-name").text(agentName);
-        $("#manageAgentPage .modal[id*='agent'] form")
-            .attr('action', window.location.origin + '/admin/manage/agent/' + agentId);
+        $("#manageAgentPage .modal[id*='agent'] form").attr('action', window.location.origin + '/admin/manage/agent/' + agentId);
     }
 });
 

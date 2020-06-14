@@ -1,9 +1,13 @@
 <aside class="profile-aside">
     <figure class="profile-aside__box">
         @isset($profile)
-            <img src="{{ Storage::url($profile->avatar) }}" alt="Profile Picture" class="profile-aside__img">
+            @if(Auth::user()->provider === NULL)
+                <img src="{{ Storage::url($profile->avatar) }}" alt="Profile Picture" class="profile-aside__img">
+            @else
+                <img src="{{ url($profile->avatar) }}" alt="Profile Picture" class="profile-aside__img">
+            @endif
         @else
-            <img src="{{ Storage::url('temporary/people.webp') }}" alt="Profile Picture" class="profile-aside__img">
+            <img src="{{ Storage::url('files/people.webp') }}" alt="Profile Picture" class="profile-aside__img">
         @endempty
         <figcaption class="profile-aside__detail">
             <a href="" class="profile-aside__name">{{ Auth::user()->name }}</a>
@@ -14,7 +18,7 @@
     </figure>
     <div class="profile-aside__contact">
         <p class="profile-aside__text">
-            Email: <a href="mailto:email@gmail.com" class="profile-aside__link">{{ Auth::user()->email }}</a>
+            Email: <a href="mailto:{{ Auth::user()->email }}" class="profile-aside__link">{{ Auth::user()->email }}</a>
         </p>
         <p class="profile-aside__text">
             Your bank: <span>{{ Auth::user()->profile->bank }}</span>

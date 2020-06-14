@@ -114,7 +114,7 @@
                     </div>
                     @forelse ($testimonies as $testimony)
                         <article class="service-single__comment">
-                            <img src="{{ Storage::url($testimony->user->profile->avatar ?? 'temporary/people.webp') }}"
+                            <img src="{{ Storage::url($testimony->user->profile->avatar ?? 'files/people.webp') }}"
                                  height="20" alt="People comment image">
                             <div class="service-single__comment-detail">
                                 <p class="service-single__comment-title">{{ $testimony->user->name }}</p>
