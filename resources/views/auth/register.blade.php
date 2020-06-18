@@ -18,8 +18,8 @@
       </h2>
       <div class="form-holder">
         <input type="text" name="name" class="input" placeholder="Name" value="{{ old('name') }}" required>
-        <input type="text" name="username" class="input" placeholder="username"
-               value="{{ old('username') }}" maxlength="12" required>
+        <input type="text" name="username" class="input" placeholder="username" value="{{ old('username') }}"
+               maxlength="20" required>
         <input type="email" name="email" class="input" placeholder="Email" value="{{ old('email') }}" required>
         <input type="password" name="password" class="input" placeholder="Password" minlength="8" required>
         <input type="password" class="input" placeholder="Password Confirmation"
