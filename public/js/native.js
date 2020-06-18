@@ -239,6 +239,7 @@ allPromoCode.forEach(function (codePromo) {
 $("#modal-single-extras #promo-code").focusout(function () {
     if ($(this).val().length !== 0) {
         let promoCode = $(this).val();
+
         if (allPromoCodeList.includes(promoCode) === true) {
             $("#modal-single-order input[name='promo_code']").val(promoCode);
             promo_discount = allPromoDiscount[allPromoCodeList.indexOf(promoCode)];

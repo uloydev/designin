@@ -60,7 +60,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'username' => 'bail|required|alpha_dash',
-            'password' => 'bail|required|max:12|min:8',
+            'password' => 'bail|required|min:8',
         ]);
 
         $credentials = $request->only('username', 'password');
