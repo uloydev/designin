@@ -59,7 +59,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'username' => 'bail|required|alpha_dash',
+            'username' => 'bail|required|regex:/^[A-Za-z. -]+$/',
             'password' => 'bail|required|min:8',
         ]);
 
