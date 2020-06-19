@@ -24,7 +24,7 @@
                         <div class="form-group">
                             <label for="agent_id">Agent</label>
                             <select class="custom-select" id="agent_id" name="agent_id" required>
-                                <option selected disabled>Choose agent</option>
+                                <option value="" selected disabled>Choose agent</option>
                                 @foreach ($agents as $agent)
                                     <option value="{{ $agent->id }}">{{ $agent->name }}</option>
                                 @endforeach
@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label for="categoryService">Service Category</label>
                         <select class="custom-select" id="categoryService" name="service_category_id" required>
-                            <option selected disabled>Choose category</option>
+                            <option value="" selected disabled>Choose category</option>
                             @foreach ($serviceCategories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach

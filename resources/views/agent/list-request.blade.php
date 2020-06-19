@@ -106,6 +106,10 @@
                                                 Click to chat
                                             </a>
                                         </li>
+                                        <li>
+                                            <span class="mr-auto">Order come in</span>
+                                            <time>{{ $order->created_at->format('d M Y') }}</time>
+                                        </li>
                                     </ul>
                                 </div>
                             </article>

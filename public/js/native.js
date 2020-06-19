@@ -1075,14 +1075,16 @@ $("#servicesPage .category [id^='service-slider']").slick({
 
 //quill js plugin
 if (window.location.href.indexOf('admin') === -1) {
-    const flexdatalist = $(".search-service__input").flexdatalist({
-        minLength: 1,
-        cache: false,
-        searchContain: true
-    });
-    $(".search-service__input").on('select:flexdatalist', function (event, set, options) {
-        $(this).parent().submit()
-    });
+    if ($(".search-service__input").length > 0) {
+        const flexdatalist = $(".search-service__input").flexdatalist({
+            minLength: 1,
+            cache: false,
+            searchContain: true
+        });
+        $(".search-service__input").on('select:flexdatalist', function (event, set, options) {
+            $(this).parent().submit()
+        });
+    }
 }
 
 if ($("#servicePage #service-rich-desc").length > 0) {
