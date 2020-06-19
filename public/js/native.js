@@ -140,7 +140,7 @@ transactionStatus.forEach(function (status) {
 let userSavingCash = $("#modal-single-extras #user-token").data('saving');
 let userSavingToken = Number($("#modal-single-extras #user-token").data('token'));
 let tokenWithDraw = $("#modal-single-extras #user-token").data('token-conversion');
-let originalPrice = $(".order-price").text().replace(/IDR /g, '');
+let originalPrice = $("#service-package-tab .order-price").text().replace(/IDR /g, '');
 let totalExtras = 0;
 let grand_total;
 let token_usage;
@@ -181,7 +181,7 @@ $("#form-extras-order input[type='checkbox']").change(function () {
 });
 
 $("#modal-single-extras .btn-close-modal").click(function () {
-    $(".modal-order-price").text($(".order-price").text().replace(/IDR /g, ''));
+    $(".modal-order-price").text($("#service-package-tab .order-price").text().replace(/IDR /g, ''));
     $("#modal-single-extras input[name='extras']").prop('checked', false);
     window.location.replace(window.location.href);
 });
@@ -191,19 +191,20 @@ $("#modal-single-extras #grand-total").text(grand_total);
 
 function grandTotal() {
     totalExtras = 0;
-    let input = document.getElementsByName("extras");
+    let input = document.querySelectorAll('#modal-single-extras input[name="extras"]');
     for (let i = 0; i < input.length; i++) {
         if (input[i].checked) {
             totalExtras += Number(input[i].dataset.priceCash);
         }
     }
     if (document.querySelector('#total_extras')) { //if element #total_extras exist
-        document.querySelector("#total_extras").value = "IDR " + totalExtras.toFixed(2);
+        document.querySelector("#total_extras").value = "IDR " + totalExtras;
     }
-    let price = Number($("#singleServicePage .order-price").text().replace(/IDR /, '')) * orderQuantity;
+    let price = Number($("#singleServicePage #service-package-tab .order-price").text().replace(/IDR /, '')) * orderQuantity;
+    let newPrice;
     if (promo_discount !== 0) {
-        newPrice =  Math.ceil(price - price * promo_discount / 100);
-    }else{
+        newPrice = Math.ceil(price - price * promo_discount / 100);
+    } else {
         newPrice = price;
     }
     grand_total = Number(newPrice) + Number(totalExtras);
@@ -1118,15 +1119,13 @@ if ($("#showPackagePage #benefit_package").length > 0) {
 }
 if ($('#blog-content').length > 0) {
     const blogContent = $('#blog-content').get(0);
-    const blogContentName = $('#blog-content').data('name');
     new Quill(blogContent, {
         theme: 'snow',
         placeholder: 'Insert content here . . .',
     });
-    $(`<textarea name="${blogContentName}" class="d-none" required></textarea>`).insertAfter('#blog-content');
     $("#blogEditPage form, #blogCreatePage form").submit(function () {
         let getBlogContent = $("#blog-content .ql-editor").html();
-        $(`textarea[name="${blogContentName}"]`).val(getBlogContent);
+        $('textarea[name="contents"]').val(getBlogContent);
     });
 }
 //end of quill js

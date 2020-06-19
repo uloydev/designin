@@ -16,8 +16,10 @@
     </button>
 </div>
 <div class="mb-3">
-  <label for="blog-content" class="mb-2 d-block">Content</label>
-  <div id="blog-content" data-name="contents">{!! $article->contents ?? '' !!}</div>
+    <label for="blog-content" class="mb-2 d-block">Content</label>
+    <div id="blog-content">{!! $article->contents ?? '' !!}</div>
+    <textarea name="contents" id="blog-content"
+              style="position:absolute; visibility: hidden; height: 0; width: 0; padding: 0"></textarea>
 </div>
 <div class="mb-3">
     <img src="" alt="cover preview">
