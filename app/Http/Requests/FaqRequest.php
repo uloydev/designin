@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
-class BlogRequest extends FormRequest
+class FaqRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +24,8 @@ class BlogRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required',
-            'header_image'=>'file|mimes:jpg,jpeg,png,gif,svg',
-            'category_id'=>'required',
-            'content'=>'required',
+            'question' => 'required|string',
+            'answer' => 'required|string'
         ];
     }
 }

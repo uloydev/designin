@@ -12,7 +12,7 @@ class LandingHeaderSliderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'slider' => 'required|file|mimes:jpg,jpeg,png,gif,svg,webp'
+            'slider' => 'required|image'
         ]);
         $slider = new LandingHeaderSlider;
         $slider->img = $request->file('slider')->store('public/files');
@@ -25,7 +25,7 @@ class LandingHeaderSliderController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'slider' => 'required|file|mimes:jpg,jpeg,png,gif,svg,webp'
+            'slider' => 'required|image'
         ]);
         $slider = LandingHeaderSlider::findOrFail($id);
         Storage::delete($slider->img);

@@ -330,6 +330,10 @@
     object-fit: cover;
 }
 
+#manageFaq .faq-item__category {
+    text-transform: capitalize;
+}
+
 footer {
     width: 100%;
     padding: 15px 0;

@@ -17,15 +17,14 @@
         </div>
     @endif
     <div class="card">
-        <!-- Card header -->
         <div class="card-header border-0 justify-content-between d-flex align-items-center flex-column flex-md-row">
             <h3 class="mb-0">Agent management</h3>
             <form action="{{ route('manage.agent.search') }}" class="flex-grow-1 mx-5 my-3 my-md-0" method="get">
-                <input type="search" name="search_agent" placeholder="Search agent by name or email and click enter"
+                <label for="search_agent" class="d-none">Search agent</label>
+                <input type="search" name="search_agent" id="search_agent" placeholder="Search agent by name or email and click enter"
                 class="form-control" value="{{ $query ?? '' }}">
             </form>
-            <button type="button" class="btn btn-default btn-sm create-agent"
-            data-toggle="modal" data-target="#modal-manipulate-agent">
+            <button type="button" class="btn btn-default btn-sm btn-create-agent" data-toggle="modal" data-target="#modal-manipulate-agent">
                 Add new agent
             </button>
         </div>
@@ -78,14 +77,13 @@
                                     <i class="fas fa-ellipsis-v"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <button type="button" class="dropdown-item btn btn-link text-warning edit-agent"
+                                    <button type="button" class="dropdown-item btn btn-link text-warning btn-edit-agent"
                                     data-toggle="modal" data-address="{{ $agent->profile->address }}"
                                     data-target="#modal-manipulate-agent" data-id="{{ $agent->id }}">
                                         Edit agent
                                     </button>
-                                    <button type="button" class="dropdown-item btn btn-link text-danger delete-agent"
-                                    data-toggle="modal" data-target="#modal-remove-agent"
-                                    data-id="{{ $agent->id }}">
+                                    <button type="button" class="dropdown-item btn btn-link text-danger btn-delete-agent"
+                                    data-toggle="modal" data-target="#modal-remove-agent" data-id="{{ $agent->id }}">
                                         Delete agent
                                     </button>
                                 </div>

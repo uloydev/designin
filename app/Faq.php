@@ -11,6 +11,6 @@ class Faq extends Model
 
     public function faqCategory()
     {
-      return $this->belongsTo('App\FaqCategory');
+      return $this->belongsTo('App\FaqCategory', 'faq_category_id', 'id');
     }
 }

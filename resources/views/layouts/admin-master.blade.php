@@ -81,6 +81,12 @@ The above copyright notice and this permission notice shall be included in all c
                                         <span class="nav-link-text">Message From Customer</span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('manage.faq.index') }}">
+                                        <i class="fas fa-envelope text-gray"></i>
+                                        <span class="nav-link-text">Manage FAQ</span>
+                                    </a>
+                                </li>
                             @else
                                 <li class="nav-item">
                                     <a class="nav-link" href="#navbar-components" data-toggle="collapse"

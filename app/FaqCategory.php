@@ -8,6 +8,7 @@ class FaqCategory extends Model
 {
 
   protected $table = 'faq_category';
+  protected $fillable = ['category'];
 
   public function faqs()
   {

@@ -95,7 +95,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link text-muted" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-success" form="form-manipulate-agent">{{--text on js--}}</button>
+                <button type="submit" class="btn btn-success" id="btn-manipulate-agent" form="form-manipulate-agent">
+                    {{--text on js--}}
+                </button>
             </div>
         </div>
     </div>

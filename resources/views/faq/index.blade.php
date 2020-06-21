@@ -9,7 +9,7 @@
         <img src="{{ asset('img/faq.png') }}" class="faq-header__cover" alt="FAQ Desainin">
         <div class="col-12 col-lg-6 faq-header__caption pr-0">
           <h1 class="faq-header__heading">How can we <br class="d-lg-none"> <strong>help you?</strong></h1>
-          <form class="faq-header__search-form" action="{{ route('faq.index') }}" method="get">
+          <form class="faq-header__search-form" action="{{ route('faq.search') }}" method="get">
               <label for="search-faq" class="d-none">Search FAQ</label>
               <input type="search" placeholder="Find anything you want..." class="faq-header__search-input"
                      id="search-faq" name="search_faq" value="{{ $query ?? '' }}" autofocus>

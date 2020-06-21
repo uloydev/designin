@@ -91,18 +91,11 @@ class HomeController extends Controller
         ]);
     }
 
-    public function faq(Request $request)
+    public function faq()
     {
-        $query = $request->search_faq;
-        if ($request->has('search_faq')) {
-            $faqs = Faq::where('question', 'LIKE', '%' . $query . '%')
-                    ->orWhere('answer', 'LIKE', '%' . $query . '%')->get();
-            $faqCategories = FaqCategory::all();
-        } else {
-            $faqs = Faq::all();
-            $faqCategories = FaqCategory::all();
-        }
-        return view('faq.index', ['faqs' => $faqs, 'faqCategories' => $faqCategories, 'query' => $query]);
+        $faqs = Faq::all();
+        $faqCategories = FaqCategory::all();
+        return view('faq.index', ['faqs' => $faqs, 'faqCategories' => $faqCategories]);
     }
 
     public function searchAgentJob(Request $request)
