@@ -13,7 +13,7 @@ class FaqController extends Controller
 
     public function index()
     {
-        $faqs = Faq::paginate(10);
+        $faqs = Faq::latest()->paginate(10);
         $faqCategory = FaqCategory::all();
         return view('faq.manage', ['faqs' => $faqs, 'faqCategory' => $faqCategory]);
     }
