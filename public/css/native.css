@@ -2818,7 +2818,7 @@ footer .row {
     display: block;
     text-align: center;
     font-size: 1rem;
-    width: 100%;
+    flex-grow: 1;
 }
 
 @media screen and (min-width: 768px) {
@@ -3062,6 +3062,9 @@ footer .row {
     }
     #primaryNav .container {
         flex-direction: row;
+    }
+    #primaryNav__logo {
+        filter: grayscale(1);
     }
     #primaryNav ul {
         display: flex;
