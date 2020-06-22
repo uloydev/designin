@@ -308,6 +308,10 @@ if (window.location.href.indexOf('/chat') > -1) {
     });
 }
 
+$("#singleServicePage select[name='review_filter']").change(function () {
+    $(this).parents("form").submit();
+});
+
 //agent js
 $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection'], " +
     "[data-target='#modal-result']").click(function () {

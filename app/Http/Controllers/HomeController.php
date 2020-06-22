@@ -72,15 +72,15 @@ class HomeController extends Controller
         return view('service.all', ['categories' => $categories]);
     }
 
-    public function showService($id)
+    public function showService(Request $request, $id)
     {
         $service = Service::findOrFail($id);
         $testimony = Testimony::where('service_id', $service->id)->pluck('rating');
         $rating = empty($testimony) ? 0 : $testimony->avg();
-        $testimonies = $service->testimonies;
         $packages = $service->package;
         $promos = Promo::whereDate('ended_at', '>', Carbon::now()->format('Y-m-d h:m:s'))->get();
         $extras_template = ServiceExtras::where('is_template', true)->get();
+        $testimonies = $service->testimonies;
         return view('service.single', [
             'service' => $service,
             'rating' => $rating,
@@ -88,6 +88,38 @@ class HomeController extends Controller
             'packages' => $packages,
             'promos' => $promos,
             'extras_template' => $extras_template
+        ]);
+    }
+
+    public function filterService(Request $request, $id)
+    {
+        $service = Service::findOrFail($id);
+        $testimony = Testimony::where('service_id', $service->id)->pluck('rating');
+        $rating = empty($testimony) ? 0 : $testimony->avg();
+        $packages = $service->package;
+        $promos = Promo::whereDate('ended_at', '>', Carbon::now()->format('Y-m-d h:m:s'))->get();
+        $extras_template = ServiceExtras::where('is_template', true)->get();
+
+        $filtering = $request->review_filter;
+        $testimonies = '';
+        if ($filtering == 'recent') {
+            $testimonies = $service->testimonies()->latest()->get();
+        }
+        else if ($filtering == 'asc') {
+            $testimonies = $service->testimonies()->orderBy('rating', 'asc')->get();
+        }
+        else if ($filtering == 'desc') {
+            $testimonies = $service->testimonies()->orderBy('rating', 'desc')->get();
+        }
+
+        return view('service.single', [
+            'service' => $service,
+            'rating' => $rating,
+            'testimonies' => $testimonies,
+            'packages' => $packages,
+            'promos' => $promos,
+            'extras_template' => $extras_template,
+            'filtering' => $filtering
         ]);
     }
 

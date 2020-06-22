@@ -12,6 +12,7 @@ Route::get('/', 'HomeController@index')->name('landing-page');
 Route::get('services/search', 'HomeController@searchAgentJob')->name('service.search');
 Route::get('services', 'HomeController@services')->name('services');
 Route::get('service/show/{id}', 'HomeController@showService')->name('service.show');
+Route::get('service/show/{id}/filter', 'HomeController@filterService')->name('service.filter-service');
 
 Route::post('order/package/{id}', 'HomeController@makeOrder')->name('order.store')->middleware('auth');
 Route::post('order/package/{id}/payment', 'PaymentController@orderPayment')->name('order.payment');

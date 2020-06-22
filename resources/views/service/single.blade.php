@@ -102,13 +102,12 @@
                 <div class="service-single__review">
                     <div class="service-single__header-review">
                         <h2 class="service-single__subheading mb-0">Review</h2>
-                        <form action="" method="get">
-                            @csrf
-                            <label for="review-filer" class="d-none">Review filter</label>
-                            <select id="review-filer" name="review_filter"
-                                    class="service-single__filter-review wide">
-                                <option value="">Recent</option>
-                                <option value="">Rating</option>
+                        <form action="{{ route('service.filter-service', $service->id) }}" method="get">
+                            <label for="review-filter" class="d-none">Review filter</label>
+                            <select name="review_filter" class="nice-select wide" id="review-filter" required>
+                                <option value="recent" {{ isset($filtering) == 'recent' ? 'selected' : '' }}>Recent</option>
+                                <option value="desc" {{ isset($filtering) == 'desc' ? 'selected' : '' }}>Highest Rating</option>
+                                <option value="asc" {{ isset($filtering) == 'asc' ? 'selected' : '' }}>Lowest Rating</option>
                             </select>
                         </form>
                     </div>
@@ -119,6 +118,18 @@
                             <div class="service-single__comment-detail">
                                 <p class="service-single__comment-title">{{ $testimony->user->name }}</p>
                                 <p class="service-single__comment-text">{{ $testimony->content }}</p>
+                                <p class="mt-3">Tanggal review : <time>{{ $testimony->created_at->format('d M Y') }}</time></p>
+                                <p class="mt-3">
+                                    Kualitas Review :
+                                    <span>
+                                        @for ($i = 0; $i < $testimony->rating; $i++)
+                                            {!! "<i class='bx bxs-star' ></i>" !!}
+                                        @endfor
+                                        @for ($i = 0; $i < 5 - $testimony->rating; $i++)
+                                            {!! "<i class='bx bx-star' ></i>" !!}
+                                        @endfor
+                                    </span>
+                                </p>
                             </div>
                         </article>
                     @empty
