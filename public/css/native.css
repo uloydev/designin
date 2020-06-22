@@ -3063,7 +3063,7 @@ footer .row {
     #primaryNav .container {
         flex-direction: row;
     }
-    #primaryNav__logo {
+    #landingPage #primaryNav__logo {
         filter: grayscale(1);
     }
     #primaryNav ul {

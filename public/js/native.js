@@ -107,8 +107,6 @@ else if (window.location.pathname === '/admin/manage/service') {
 
 if ($(window).width() >= 993) {
     $(".profile-main__orderBy").removeClass('wide');
-    // $(".nav__list--logo .nav__link").empty();
-    // $(".nav__list--logo .nav__link").text("Desainin");
 }
 else {
     let jobTitle = $("#manageJobPage .job-title");
@@ -116,9 +114,6 @@ else {
         let trimmedJobTitle = jobTitle.text().substring(0, 20);
         jobTitle.text(trimmedJobTitle + '...');
     }
-
-    // $(".nav__list--logo .nav__link").empty();
-    // $(".nav__list--logo .nav__link").append("<img src='" + appUrl + '/img/logo.png' + "'>");
 }
 
 const transactionStatus = document.querySelectorAll('#myTransactionPage .profile-main-item__status');
