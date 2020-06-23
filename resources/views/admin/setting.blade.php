@@ -42,43 +42,4 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between">
-                    <h1 class="mb-0 h3">Manage slider on landing page</h1>
-                    <button type="button" class="btn btn-primary shadow-none btn-sm"
-                            data-toggle="modal" data-target="#addSlider">
-                        Add new slider
-                    </button>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        @forelse($sliders as $slider)
-                            <li class="py-4 border-top-0 border-left-0 border-right-0 border-bottom d-flex justify-content-between align-items-center">
-                                <img src="{{ Storage::url($slider->img) }}" alt="" height="100">
-                                <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-secondary shadow-none bg-white text-warning"
-                                            data-toggle="modal" data-target="#updateSlider" data-id="{{ $slider->id }}">
-                                        Edit
-                                    </button>
-                                    <button type="button" class="btn btn-secondary shadow-none bg-white text-danger"
-                                            data-toggle="modal" data-target="#deleteSlider" data-id="{{ $slider->id }}">
-                                        Delete
-                                    </button>
-                                </div>
-                            </li>
-                        @empty
-                            <li>
-                                No slider on homepage
-                            </li>
-                        @endforelse
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-@section('element')
-    @include('admin.main-slider')
 @endsection

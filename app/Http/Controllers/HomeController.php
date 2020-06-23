@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Client;
-use App\LandingHeaderSlider;
 use App\Testimony;
 use App\Service;
 use App\CarouselImage;
