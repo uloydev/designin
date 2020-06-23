@@ -99,7 +99,7 @@ class LoginController extends Controller
 
         Auth::login($authUser);
         if (Auth::user()->email_verified_at == '') {
-            return redirect('email/verify');
+            return redirect('/email/verify');
         }
         else {
             return redirect('/');
