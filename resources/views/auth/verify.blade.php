@@ -1,12 +1,4 @@
 @extends('layouts.app')
-@section('script')
-    <script>
-        $("#form-send-again").one('submit', function (e) {
-            e.preventDefault();
-            $(this).submit();
-        });
-    </script>
-@endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
