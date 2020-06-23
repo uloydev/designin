@@ -27,7 +27,6 @@ Route::get('blog/search', 'BlogController@search')->name('blog.search');
 Route::resource('blog', 'BlogController')->only(['index', 'show']);
 Route::get('search/agentjob', 'HomeController@searchAgentJob')->name('agentjob.search');
 Route::get('blog/categories/{id}', 'BlogCategoryController@show')->name('blog-category.show');
-Route::resource('manage/main-slider', 'LandingHeaderSliderController', ['as' => 'manage'])->only(['store', 'update', 'destroy']);
 Route::name('message.')->prefix('message')->middleware('exceptAdmin')->group(function () {
     Route::get('/', 'MessageController@index')->name('index');
     Route::get('fetch/{session_id}', 'MessageController@fetch')->name('fetch');
