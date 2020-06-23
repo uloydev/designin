@@ -1,5 +1,12 @@
 @extends('layouts.app')
-
+@section('script')
+    <script>
+        $("#form-send-again").one('submit', function (e) {
+            e.preventDefault();
+            $(this).submit();
+        });
+    </script>
+@endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -16,7 +23,7 @@
 
                     {{ __('Before proceeding, please check your email for a verification link.') }}
                     {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}" id="form-send-again">
                         @csrf
                         <button type="submit" class="btn btn-link p-0 m-0 align-baseline">
                             {{ __('click here to request another.') }}
