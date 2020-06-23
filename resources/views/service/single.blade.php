@@ -105,9 +105,15 @@
                         <form action="{{ route('service.filter-service', $service->id) }}" method="get">
                             <label for="review-filter" class="d-none">Review filter</label>
                             <select name="review_filter" class="nice-select wide" id="review-filter" required>
-                                <option value="recent" {{ isset($filtering) == 'recent' ? 'selected' : '' }}>Recent</option>
-                                <option value="desc" {{ isset($filtering) == 'desc' ? 'selected' : '' }}>Highest Rating</option>
-                                <option value="asc" {{ isset($filtering) == 'asc' ? 'selected' : '' }}>Lowest Rating</option>
+                                @isset($filtering)
+                                    <option value="recent" {{ $filtering == 'recent' ? 'selected' : '' }}>Recent</option>
+                                    <option value="desc" {{ $filtering == 'desc' ? 'selected' : '' }}>Highest Rating</option>
+                                    <option value="asc" {{ $filtering == 'asc' ? 'selected' : '' }}>Lowest Rating</option>
+                                @else
+                                    <option value="recent">Recent</option>
+                                    <option value="desc">Highest Rating</option>
+                                    <option value="asc">Lowest Rating</option>
+                                @endisset
                             </select>
                         </form>
                     </div>
