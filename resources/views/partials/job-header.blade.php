@@ -10,8 +10,8 @@
                                 <i class="fas fa-search"></i>
                             </label>
                         </div>
-                        <input class="form-control" placeholder="Search by date or budget and click enter . . ." value="{{ $searching ?? '' }}"
-                        type="text" id="search-job" name="search_order" required>
+                        <input class="form-control" placeholder="Search by title or customer info like email and name and click enter . . ."
+                               value="{{ $searching ?? '' }}" type="text" id="search-job" name="search_order" required>
                     </div>
                 </div>
             </form>

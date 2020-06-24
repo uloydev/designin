@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Blog;
 use App\BlogCategory;
-use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -34,6 +33,12 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'header_image' => 'required|image',
+            'category_id' => 'required',
+            'contents' => 'required',
+        ]);
         $img_path = $request->file('header_image')->store('public/files');
         $createBlog = new Blog;
         $createBlog->header_image = $img_path;
@@ -77,20 +82,13 @@ class BlogController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param  int  $id
-     * @return RedirectResponse
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title'=>'required',
-            'header_image'=>'nullable|image',
-            'category_id'=>'required',
-            'contents'=>'required',
+            'title' => 'required',
+            'header_image' => 'nullable|image',
+            'category_id' => 'required',
+            'contents' => 'required',
         ]);
         $blog = Blog::findOrFail($id);
         $blog->title = $request->title;
@@ -100,12 +98,7 @@ class BlogController extends Controller
             Storage::delete($blog->header_image);
             $blog->header_image = $request->file('header_image')->store('public/files');
         }
-        if ($request->has('is_main')) {
-            $blog->is_main = intval($request->is_main);
-        }
-        else {
-            $blog->is_main = Blog::findOrFail($id)->is_main;
-        }
+        $blog->is_main = intval($request->is_main);
         $blog->save();
         return redirect()->route('manage.blog.index')->with('success', 'Blog update succefully');
     }

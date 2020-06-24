@@ -10,7 +10,9 @@ The above copyright notice and this permission notice shall be included in all c
 <html lang="en">
     <head>
         @include('partials.meta')
-        <title>Desainin {{ in_array('agent' , explode('.', Route::currentRouteName())) ? 'Agent' : 'Admin'}} - @yield('page-title')</title>
+        <title>
+            Desainin {{ in_array('agent' , explode('.', Route::currentRouteName())) ? 'Agent' : 'Admin'}} - @yield('page-title')
+        </title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
         <link rel="stylesheet" href="{{ asset('plugin/argon-dashboard/assets/vendor/nucleo/css/nucleo.css') }}">
         <link rel="stylesheet"
@@ -79,6 +81,12 @@ The above copyright notice and this permission notice shall be included in all c
                                     <a class="nav-link" href="{{ route('manage.contact-us.index') }}">
                                         <i class="fas fa-envelope text-gray"></i>
                                         <span class="nav-link-text">Message From Customer</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('manage.faq.index') }}">
+                                        <i class="fas fa-envelope text-gray"></i>
+                                        <span class="nav-link-text">Manage FAQ</span>
                                     </a>
                                 </li>
                             @else

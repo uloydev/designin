@@ -3,16 +3,28 @@
 @section('page-title', 'Manage Agent')
 @section('page-name', 'Manage Agent')
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger" role="alert">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @elseif(session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="card">
-        <!-- Card header -->
         <div class="card-header border-0 justify-content-between d-flex align-items-center flex-column flex-md-row">
             <h3 class="mb-0">Agent management</h3>
             <form action="{{ route('manage.agent.search') }}" class="flex-grow-1 mx-5 my-3 my-md-0" method="get">
-                <input type="search" name="search_agent" placeholder="Search agent by name or email and click enter"
+                <label for="search_agent" class="d-none">Search agent</label>
+                <input type="search" name="search_agent" id="search_agent" placeholder="Search agent by name or email and click enter"
                 class="form-control" value="{{ $query ?? '' }}">
             </form>
-            <button type="button" class="btn btn-default btn-sm" id="btn-create-agent"
-            data-toggle="modal" data-target="#modal-edit-agent">
+            <button type="button" class="btn btn-default btn-sm btn-create-agent" data-toggle="modal" data-target="#modal-manipulate-agent">
                 Add new agent
             </button>
         </div>
@@ -32,7 +44,7 @@
                 </thead>
                 <tbody class="list">
                 @forelse ($agents as $agent)
-                    <tr>
+                    <tr class="agent__detail">
                         <td>
                             <div class="media align-items-center">
                                 <a class="avatar rounded-circle mr-3" href="#">
@@ -40,15 +52,24 @@
                                          src="{{ Storage::url($agent->profile->avatar) }}">
                                 </a>
                                 <div class="media-body">
-                                    <span class="name mb-0 text-sm" id="agent__name">{{ $agent->name }}</span>
+                                    <span class="name mb-0 text-sm agent__name">{{ $agent->name }}</span>
                                 </div>
                             </div>
                         </td>
-                        <td id="agent__email">{{ $agent->email }}</td>
-                        <td id="agent__phone">{{ $agent->profile->handphone }}</td>
-                        <td id="agent__name-card">{{ $agent->profile->name_card }}</td>
-                        <td id="agent__acc-number">{{ $agent->profile->account_number }}</td>
-                        <td id="agent__bank" class="text-uppercase">{{ $agent->profile->bank }}</td>
+                        <td class="agent__email">{{ $agent->email }}</td>
+                        <td class="agent__phone">{{ $agent->profile->handphone }}</td>
+                        <td class="agent__name-card">
+                            @if($agent->profile->name_card != null)
+                                <a href="{{ Storage::url($agent->profile->name_card) }}"
+                                   class="text-link" target="_blank">
+                                    See name card
+                                </a>
+                            @else
+                                No name card provide
+                            @endif
+                        </td>
+                        <td class="agent__acc-number">{{ $agent->profile->account_number }}</td>
+                        <td class="agent__bank">{{ $agent->profile->bank }}</td>
                         <td class="text-right">
                             <div class="dropdown">
                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
@@ -56,14 +77,13 @@
                                     <i class="fas fa-ellipsis-v"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <button type="button" class="dropdown-item btn btn-link text-warning edit-agent"
+                                    <button type="button" class="dropdown-item btn btn-link text-warning btn-edit-agent"
                                     data-toggle="modal" data-address="{{ $agent->profile->address }}"
-                                    data-target="#modal-edit-agent" data-id="{{ $agent->id }}">
+                                    data-target="#modal-manipulate-agent" data-id="{{ $agent->id }}">
                                         Edit agent
                                     </button>
-                                    <button type="button" class="dropdown-item btn btn-link text-danger"
-                                    data-toggle="modal" data-target="#modal-remove-agent"
-                                    data-id="{{ $agent->id }}">
+                                    <button type="button" class="dropdown-item btn btn-link text-danger btn-delete-agent"
+                                    data-toggle="modal" data-target="#modal-remove-agent" data-id="{{ $agent->id }}">
                                         Delete agent
                                     </button>
                                 </div>

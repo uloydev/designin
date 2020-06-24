@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\FaqCategory;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FaqRequest;
 use Illuminate\Http\Request;
 use App\Faq;
 
@@ -11,8 +13,9 @@ class FaqController extends Controller
 
     public function index()
     {
-        $faqs = Faq::paginate(10);
-        return view('admin.faq.index', ['faqs' => $faqs]);
+        $faqs = Faq::latest()->paginate(10);
+        $faqCategory = FaqCategory::all();
+        return view('faq.manage', ['faqs' => $faqs, 'faqCategory' => $faqCategory]);
     }
 
     public function create()
@@ -22,12 +25,17 @@ class FaqController extends Controller
 
     public function store(Request $request)
     {
-        $request->vlaidate([
-            'question'=>'required',
-            'answer'=>'required'
-        ]);
         Faq::create($request->all());
-        return redirect()->route('manage.faq.create')->with('success', 'Faq Created Successfully');
+        return redirect()->route('manage.faq.index')->with('success', 'Faq Created Successfully');
+    }
+
+    public function storeCategory(Request $request)
+    {
+        $request->validate([
+            'category' => 'required|unique:faq_category'
+        ]);
+        FaqCategory::create(["category" => $request->category]);
+        return redirect()->back()->with('success', 'Successfully Created category');
     }
 
     public function edit($id)
@@ -36,12 +44,8 @@ class FaqController extends Controller
         return view('admin.faq.edit')->with('faq', $faq);
     }
 
-    public function update(Request $request, $id)
+    public function update(FaqRequest $request, $id)
     {
-        $request->vlaidate([
-            'question'=>'required',
-            'answer'=>'required'
-        ]);
         $faq = Faq::findOrFail($id);
         $faq->question = $request->question;
         $faq->answer = $request->answer;
@@ -53,5 +57,22 @@ class FaqController extends Controller
     {
         Faq::findOrFail($id)->delete();
         return redirect()->back()->with('success', 'Faq Deleted Successfully');
+    }
+
+    public function destroyCategory($id)
+    {
+        $faqCategory = FaqCategory::findOrFail($id);
+        $faqCategory->faqs()->delete();
+        $faqCategory->delete();
+        return redirect()->back()->with('success', 'Succesfully delete ' . $faqCategory->category . ' category');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->search_faq;
+        $faqs = Faq::where('question', 'LIKE', '%' . $query . '%')
+            ->orWhere('answer', 'LIKE', '%' . $query . '%')->get();
+        $faqCategories = FaqCategory::all();
+        return view('faq.index', ['faqs' => $faqs, 'faqCategories' => $faqCategories, 'query' => $query]);
     }
 }

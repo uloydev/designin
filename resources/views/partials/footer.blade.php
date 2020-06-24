@@ -41,7 +41,7 @@
       <div class="footer__legal">
           <a href="" class="footer__logo-text">Desainin</a>
           <small class="footer__copyright d-none d-md-block">
-              &copy; Dickson synergy inc. <span id="footer__time"></span>
+              &copy; {{ env('APP_NAME') }} inc. <span id="footer__time"></span>
           </small>
         <ul class="footer__socmed">
           <li class="footer__socmed-item">

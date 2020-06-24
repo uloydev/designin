@@ -47,7 +47,7 @@ class OrderController extends Controller
             }
             $orders = $orders->paginate(10);
             $pagination = $orders->appends([
-                'sort' => $request->sort 
+                'sort' => $request->sort
             ]);
             $request->session()->flash('sort', $request->sort);
         }else{
@@ -91,7 +91,7 @@ class OrderController extends Controller
             }
             $orders = $orders->paginate(10);
             $pagination = $orders->appends([
-                'sort' => $request->sort 
+                'sort' => $request->sort
             ]);
             $request->session()->flash('sort', $request->sort);
         }else{
@@ -121,7 +121,7 @@ class OrderController extends Controller
             }
             $orders = $orders->paginate(10);
             $orders->appends([
-                'sort' => $request->sort 
+                'sort' => $request->sort
             ]);
             $request->session()->flash('sort', $request->sort);
         }else{
@@ -167,7 +167,7 @@ class OrderController extends Controller
             }
             $orders = $orders->paginate(10);
             $pagination = $orders->appends([
-                'sort' => $request->sort 
+                'sort' => $request->sort
             ]);
             $request->session()->flash('sort', $request->sort);
         }else{
@@ -264,8 +264,10 @@ class OrderController extends Controller
     {
         $searching = $request->search_order;
         $orders = Order::where('agent_id', Auth::id())->whereHas('package.service', function (Builder $query) use ($request) {
-            $query->where('title', 'LIKE', '%' . $request->search_order . '%')
-            ->orWhere('budget', 'LIKE', '%' . $request->search_order . '%');
+            $query->where('title', 'LIKE', '%' . $request->search_order . '%');
+        })->orWhereHas('user', function (Builder $query) use ($request) {
+            $query->where('email', 'LIKE', '%' . $request->search_order . '%')
+                  ->orWhere('name', $request->search_order);
         });
         if($request->has('sort') and !empty($request->sort)){
             if ($request->sort == 'budget-desc') {
@@ -285,7 +287,7 @@ class OrderController extends Controller
             }
             $orders = $orders->paginate(10);
             $pagination = $orders->appends([
-                'sort' => $request->sort 
+                'sort' => $request->sort
             ]);
             $request->session()->flash('sort', $request->sort);
         }else{

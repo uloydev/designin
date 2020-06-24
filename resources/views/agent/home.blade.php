@@ -108,15 +108,20 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item text-default" href="#">See detail</a>
-                                            <button type="button" class="dropdown-item text-warning"
-                                            data-toggle="modal" data-target="#dashboard-edit-service">
+                                            <a class="dropdown-item text-default" target="_blank"
+                                               href="{{ route('service.show', $service->id) }}">
+                                                See service
+                                            </a>
+                                            <a href="{{ route('agent.service.edit', $service->id) }}"
+                                               class="dropdown-item text-warning">
                                                 Edit service
-                                            </button>
-                                            <button type="button" class="dropdown-item text-danger"
-                                            data-toggle="modal" data-target="#dashboard-delete-service">
-                                                Delete
-                                            </button>
+                                            </a>
+                                            <form action="{{ route('agent.service.destroy', $service->id) }}">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="dropdown-item text-danger">
+                                                    Edit service
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </td>
@@ -139,31 +144,34 @@
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                         <tr>
-                            <th>Service Title</th>
-                            <th>Price</th>
-                            <th colspan="2">Category</th>
+                            <th>Order Title</th>
+                            <th>Order come in</th>
+                            <th>Customer email</th>
+                            <th>Status</th>
+                            <th colspan="2">Action</th>
                         </tr>
                         </thead>
                         <tbody class="list">
-                        @foreach($services as $service)
+                        @foreach($orders as $order)
                             <tr>
                                 <td>
                                     <div class="media align-items-center">
-                                        <a href="{{ route('service.show', $service->id) }}"
+                                        <a href="{{ route('service.show', $order->id) }}"
                                            class="avatar rounded-circle mr-2">
                                             <img alt="Service Cover" height="50px"
-                                                 src="{{ Storage::url($service->image) }}"
+                                                 src="{{ Storage::url($order->package->service->image) }}"
                                                  style="width: 50px !important;">
                                         </a>
                                         <div class="media-body">
                                             <span class="name mb-0 text-sm">
-                                                {{ Str::words($service->title, 5) }}
+                                                {{ Str::words($order->package->service->title, 5) }}
                                             </span>
                                         </div>
                                     </div>
                                 </td>
-                                <td><var>IDR 300,000</var></td>
-                                <td>{{ $service->serviceCategory->name }}</td>
+                                <td>{{ $order->created_at->format('d M Y') }}</td>
+                                <td>{{ $order->user->email }}</td>
+                                <td>{{ $order->status }}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a class="btn btn-sm btn-icon-only text-light" href="#"
@@ -172,15 +180,22 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item text-default" href="#">See detail</a>
-                                            <button type="button" class="dropdown-item text-warning"
-                                            data-toggle="modal" data-target="#dashboard-edit-service">
-                                                Edit service
-                                            </button>
-                                            <button type="button" class="dropdown-item text-danger"
-                                            data-toggle="modal" data-target="#dashboard-delete-service">
-                                                Delete
-                                            </button>
+                                            @switch($order->status)
+                                                @case('process')
+                                                <a class="dropdown-item text-default"
+                                                   href="{{ route('agent.list-request.index') .
+                                                   '#availableReqest' . ($loop->index + 1) }}">
+                                                    See detail
+                                                </a>
+                                                @break
+                                                @case('complaint')
+                                                <a class="dropdown-item text-default"
+                                                   href="{{ route('agent.list-request.complaint') .
+                                                   '#complaintRequest' . ($loop->index + 1) }}">
+                                                    See detail
+                                                </a>
+                                                @break
+                                            @endswitch
                                         </div>
                                     </div>
                                 </td>

@@ -7,10 +7,10 @@ class BlogCategorySeeder extends Seeder {
     public function run() {
         $categories = [
             [
-                'name'=>'News'
+                'name' => 'News'
             ],
             [
-                'name'=>'Promo'
+                'name' => 'Promo'
             ],
         ];
         foreach ($categories as $value) {

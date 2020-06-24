@@ -67,7 +67,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="name-edit">Extra name</label>
-                            <input type="email" class="form-control" id="name" name="name_extra"
+                            <input type="text" class="form-control" id="name" name="name_extra"
                             placeholder="Ex: Reduce delivery by 1 day" required>
                         </div>
                         <div class="input-group form-group">
@@ -94,7 +94,7 @@
                     <button type="button" class="btn btn-link text-gray" data-dismiss="modal">
                         Cancel
                     </button>
-                    <button type="button" class="btn btn-success" form="form-manipulate-extra">
+                    <button type="submit" class="btn btn-success" form="form-manipulate-extra">
                         <span class="modal-manipulate-title"></span> extra
                     </button>
                 </div>

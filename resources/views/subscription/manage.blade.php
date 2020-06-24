@@ -64,16 +64,16 @@
                                     <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <button type="button" class="dropdown-item text-warning" data-id="{{ $subscription->id }}"
-                                    data-target="#editSubscription" data-desc="{{ $subscription->desc }}"
-                                    data-duration="{{ $subscription->duration }}" data-toggle="modal"
-                                    data-title="{{ $subscription->title }}" data-price="{{ $subscription->price }}"
-                                    data-token="{{ $subscription->token }}">
-                                        edit
+                                    <button type="button" class="dropdown-item text-warning dropdown-item--edit-subscription"
+                                            data-id="{{ $subscription->id }}" data-token="{{ $subscription->token }}"
+                                            data-target="#editSubscription" data-desc="{{ $subscription->desc }}"
+                                            data-duration="{{ $subscription->duration }}" data-toggle="modal"
+                                            data-title="{{ $subscription->title }}" data-price="{{ $subscription->price }}">
+                                        Edit
                                     </button>
-                                    <button type="button" class="dropdown-item text-danger" data-toggle="modal"
-                                     data-target="#deleteSubscription" data-id="{{ $subscription->id }}">
-                                        delete
+                                    <button type="button" class="dropdown-item text-danger dropdown-item--delete-subscription"
+                                            data-toggle="modal" data-target="#deleteSubscription" data-id="{{ $subscription->id }}">
+                                        Delete
                                     </button>
                                 </div>
                             </div>

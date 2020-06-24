@@ -19,13 +19,13 @@
                         <i class="fas fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <button type="button" class="dropdown-item text-warning"
-                        data-toggle="modal" data-id="{{ $subscription->id }}" data-duration="{{ $subscription->duration }}"
-                        data-target="#editSubscription" data-desc="{{ $subscription->desc }}"
-                        data-title="{{ $subscription->title }}" data-price="{{ $subscription->price }}"
-                        data-token="{{ $subscription->token }}">Edit</button>
-                        <button type="button" class="btn btn-link text-danger dropdown-item" data-toggle="modal"
-                        data-target="#deleteSubscription" data-id="{{ $subscription->id }}">
+                        <button type="button" class="dropdown-item text-warning dropdown-item--edit-subscription"
+                                data-toggle="modal" data-id="{{ $subscription->id }}" data-duration="{{ $subscription->duration }}"
+                                data-target="#editSubscription" data-desc="{{ $subscription->desc }}"
+                                data-title="{{ $subscription->title }}" data-price="{{ $subscription->price }}"
+                                data-token="{{ $subscription->token }}">Edit</button>
+                        <button type="button" class="btn btn-link text-danger dropdown-item dropdown-item--delete-subscription"
+                                data-toggle="modal" data-target="#deleteSubscription" data-id="{{ $subscription->id }}">
                             Delete
                         </button>
                     </div>

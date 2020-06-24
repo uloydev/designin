@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
+use App\Order;
 use Illuminate\Support\Facades\Auth;
 // use App\Service;
 use Illuminate\Http\Request;
@@ -18,11 +19,15 @@ class HomeController extends Controller
         $serviceCount = $user->service->count();
         $unfinishedJobCount = $user->agentOrders->where('status', 'process')->count();
         $lastMonthJobCount = $user->agentOrders->where('started_at' ,'>=',Carbon::now()->addDays(-30))->count();
+        $orders = Order::where('agent_id', Auth::id())->where(function ($query) {
+            $query->where('status', 'process')->orWhere('status', 'complaint');
+        })->oldest()->take(10)->get();
         return view('agent.home', [
-            'services' => $services, 
+            'services' => $services,
             'serviceCount' => $serviceCount,
             'unfinishedJobCount'=>$unfinishedJobCount,
-            'lastMonthJobCount'=>$lastMonthJobCount
+            'lastMonthJobCount'=>$lastMonthJobCount,
+            'orders' => $orders
         ]);
     }
 

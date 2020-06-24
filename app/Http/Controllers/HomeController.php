@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Client;
-use App\LandingHeaderSlider;
 use App\Testimony;
 use App\Service;
 use App\CarouselImage;
@@ -72,15 +71,15 @@ class HomeController extends Controller
         return view('service.all', ['categories' => $categories]);
     }
 
-    public function showService($id)
+    public function showService(Request $request, $id)
     {
         $service = Service::findOrFail($id);
         $testimony = Testimony::where('service_id', $service->id)->pluck('rating');
         $rating = empty($testimony) ? 0 : $testimony->avg();
-        $testimonies = $service->testimonies;
         $packages = $service->package;
         $promos = Promo::whereDate('ended_at', '>', Carbon::now()->format('Y-m-d h:m:s'))->get();
         $extras_template = ServiceExtras::where('is_template', true)->get();
+        $testimonies = $service->testimonies;
         return view('service.single', [
             'service' => $service,
             'rating' => $rating,
@@ -91,18 +90,43 @@ class HomeController extends Controller
         ]);
     }
 
-    public function faq(Request $request)
+    public function filterService(Request $request, $id)
     {
-        $query = $request->search_faq;
-        if ($request->has('search_faq')) {
-            $faqs = Faq::where('question', 'LIKE', '%' . $query . '%')
-                    ->orWhere('answer', 'LIKE', '%' . $query . '%')->get();
-            $faqCategories = FaqCategory::all();
-        } else {
-            $faqs = Faq::all();
-            $faqCategories = FaqCategory::all();
+        $service = Service::findOrFail($id);
+        $testimony = Testimony::where('service_id', $service->id)->pluck('rating');
+        $rating = empty($testimony) ? 0 : $testimony->avg();
+        $packages = $service->package;
+        $promos = Promo::whereDate('ended_at', '>', Carbon::now()->format('Y-m-d h:m:s'))->get();
+        $extras_template = ServiceExtras::where('is_template', true)->get();
+
+        $filtering = $request->review_filter;
+        $testimonies = '';
+        if ($filtering == 'recent') {
+            $testimonies = $service->testimonies()->latest()->get();
         }
-        return view('faq.index', ['faqs' => $faqs, 'faqCategories' => $faqCategories, 'query' => $query]);
+        else if ($filtering == 'asc') {
+            $testimonies = $service->testimonies()->orderBy('rating', 'asc')->get();
+        }
+        else if ($filtering == 'desc') {
+            $testimonies = $service->testimonies()->orderBy('rating', 'desc')->get();
+        }
+
+        return view('service.single', [
+            'service' => $service,
+            'rating' => $rating,
+            'testimonies' => $testimonies,
+            'packages' => $packages,
+            'promos' => $promos,
+            'extras_template' => $extras_template,
+            'filtering' => $filtering
+        ]);
+    }
+
+    public function faq()
+    {
+        $faqs = Faq::all();
+        $faqCategories = FaqCategory::all();
+        return view('faq.index', ['faqs' => $faqs, 'faqCategories' => $faqCategories]);
     }
 
     public function searchAgentJob(Request $request)

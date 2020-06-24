@@ -91,13 +91,13 @@
                                                                 </button>
                                                                 <div class="dropdown-menu">
                                                                     <div class="dropdown-item">
-                                                                            <a class="btn btn-link btn-sm text-gray-dark"
+                                                                            <a class="btn btn-link btn-sm text-gray-dark d-block"
                                                                                href="{{ route('manage.service-extras.index', $service->id) }}">
                                                                                 See extras
                                                                             </a>
                                                                     </div>
                                                                     <div class="dropdown-item">
-                                                                        <a class="btn btn-link btn-sm mr-auto text-gray-dark"
+                                                                        <a class="btn btn-link btn-sm mr-auto text-gray-dark d-block"
                                                                            href="{{ route('manage.package.index', $service->id) }}">
                                                                             Manage package
                                                                         </a>
@@ -175,13 +175,13 @@
                                                             </button>
                                                             <div class="dropdown-menu">
                                                                 <div class="dropdown-item">
-                                                                    <a class="btn btn-link btn-sm text-gray-dark"
+                                                                    <a class="btn btn-link btn-sm text-gray-dark d-block"
                                                                        href="{{ route('manage.service-extras.index', $service->id) }}">
                                                                         See extras
                                                                     </a>
                                                                 </div>
                                                                 <div class="dropdown-item">
-                                                                    <a class="btn btn-link btn-sm mr-auto text-gray-dark"
+                                                                    <a class="btn btn-link btn-sm mr-auto text-gray-dark d-block"
                                                                        href="{{ route('manage.package.index', $service->id) }}">
                                                                         Manage package
                                                                     </a>

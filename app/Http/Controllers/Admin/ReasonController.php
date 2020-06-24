@@ -21,7 +21,7 @@ class ReasonController extends Controller
 
     public function store(Request $request)
     {
-        $request->vlaidate([
+        $request->validate([
             'title'=>'required',
             'description'=>'required'
         ]);
@@ -37,7 +37,7 @@ class ReasonController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->vlaidate([
+        $request->validate([
             'title'=>'required',
             'description'=>'required'
         ]);

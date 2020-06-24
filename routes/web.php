@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify'=>true]);
-// Route::get('login', 'Auth\LoginController@loginlogin')->name('login');
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider')->name('auth.index');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('auth.callback');
 
@@ -13,23 +12,21 @@ Route::get('/', 'HomeController@index')->name('landing-page');
 Route::get('services/search', 'HomeController@searchAgentJob')->name('service.search');
 Route::get('services', 'HomeController@services')->name('services');
 Route::get('service/show/{id}', 'HomeController@showService')->name('service.show');
-// Route::get('subscription/show/{id}', 'HomeController@showSubscription')->name('subscription.show');
-// Route::post('service/show/{id}/contact', 'HomeController@contactAgent')->name('service.contact');
-// Route::redirect('/service/show/{id}/contact', '/service/show/{id}');
+Route::get('service/show/{id}/filter', 'HomeController@filterService')->name('service.filter-service');
+
 Route::post('order/package/{id}', 'HomeController@makeOrder')->name('order.store')->middleware('auth');
 Route::post('order/package/{id}/payment', 'PaymentController@orderPayment')->name('order.payment');
 Route::get('order/package/{id}', 'HomeController@redirectOrderPage');
 Route::post('payment/notification', 'PaymentController@notification');
 Route::get('promo/check', 'HomeController@checkPromoCode')->name('promo.check');
 Route::get('contact-us', 'ContactController@index')->name('contact-us.index');
-//Route::get('faq/search', 'HomeController@searchFaq')->name('faq.search');
 Route::get('faq', 'HomeController@faq')->name('faq.index');
+Route::get('faq/search', 'Admin\FaqController@seach')->name('faq.search');
 Route::get('testimony', 'HomeController@testimonies')->name('testimony');
 Route::get('blog/search', 'BlogController@search')->name('blog.search');
 Route::resource('blog', 'BlogController')->only(['index', 'show']);
 Route::get('search/agentjob', 'HomeController@searchAgentJob')->name('agentjob.search');
 Route::get('blog/categories/{id}', 'BlogCategoryController@show')->name('blog-category.show');
-Route::resource('manage/main-slider', 'LandingHeaderSliderController', ['as' => 'manage'])->only(['store', 'update', 'destroy']);
 Route::name('message.')->prefix('message')->middleware('exceptAdmin')->group(function () {
     Route::get('/', 'MessageController@index')->name('index');
     Route::get('fetch/{session_id}', 'MessageController@fetch')->name('fetch');
@@ -48,6 +45,8 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::resource('user', 'UserController');
         Route::resource('agent', 'AgentController');
         Route::resource('admin', 'AdminController')->except('index');
+        Route::post('faq-category/store', 'FaqController@storeCategory')->name('faq.store-category');
+        Route::get('faq-category/destroy/{id}', 'FaqController@destroyCategory')->name('faq.destroy-category');
         Route::resource('faq', 'FaqController')->except(['show']);
         Route::resource('blog', 'BlogController');
         Route::resource('blog-category', 'BlogCategoryController')->only(['store', 'update', 'destroy']);
@@ -122,16 +121,5 @@ Route::prefix('agent')->name('agent.')->middleware(['agent', 'verified'])->group
         Route::get('list-request/search', 'OrderController@search')->name('list-request.search');
         Route::resource('list-request', 'OrderController');
         Route::resource('portfolio', 'PortfolioController');
-
-        //preview mailable
-        Route::get('accept', function () {
-            $invoice = Order::findOrFail(3);
-            if ($invoice->status == 'canceled' or $invoice->status == 'process') {
-                return new App\Mail\OrderAcceptedNotification($invoice);
-            }
-            else {
-                return "you don't need an email";
-            }
-        });
     });
 });

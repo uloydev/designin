@@ -8,7 +8,9 @@
                         <span class="ml-3" style="color: #9e9e9e">Official Blog</span>
                     </a>
                 @else
-                    <a href="{{ route('landing-page') }}" class="nav__link">Desainin</a>
+                    <a href="{{ route('landing-page') }}" class="nav__link">
+                        <img src='{{ asset("img/logo.png") }}' height="30" id="primaryNav__logo">
+                    </a>
                 @endif
                 <i class='bx bx-menu-alt-right nav__toggle'></i>
             </li>

@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
@@ -58,8 +59,8 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'username' => 'bail|required|alpha_dash',
-            'password' => 'bail|required|max:12|min:8',
+            'username' => 'bail|required|max:20|regex:/^\S*$/u',
+            'password' => 'bail|required|min:8',
         ]);
 
         $credentials = $request->only('username', 'password');
@@ -85,24 +86,20 @@ class LoginController extends Controller
         $authUser = User::firstOrCreate(
             ['email' => $user->getEmail()],
             [
-                'name' => $user->name,
+                'username' => Str::snake($user->getName()),
+                'name' => $user->getName(),
                 'provider' => $provider,
-                'provider_id' => $user->id,
-                'email_verified_at' => Carbon::now()
+                'provider_id' => $user->getId(),
+		'email_verified_at' => Carbon::now()
             ]
         );
         UserProfile::create([
-            'avatar' => 'files/people.webp',
+            'avatar' => $user->getAvatar() ?? 'files/people.webp',
             'user_id' => $authUser->id
         ]);
 
         Auth::login($authUser);
-        if (Auth::user()->email_verified_at == '') {
-            return redirect('email/verify');
-        }
-        else {
-            return redirect('/');
-        }
+        return redirect('/user/order');
     }
 
 }

@@ -24,8 +24,7 @@
                                 </label>
                             </div>
                             <input class="form-control" type="text" id="search-message"
-                            value="{{ $searching ?? '' }}" name="search"
-                            placeholder="Search by email, name sender, or date like 2020-05-16">
+                            value="{{ $searching ?? '' }}" name="search" placeholder="Search by email or name sender" required>
                         </div>
                     </div>
                     <button type="button" class="close" data-action="search-close"

@@ -20,7 +20,7 @@
                 <div class="card-body">
                     <div class="accordion" id="accordion-request">
                         @forelse ($complaints as $order)
-                            <article class="accordion__item">
+                            <article class="accordion__item" id="complaintRequest{{ $loop->index + 1 }}">
                                 <div id="heading{{ $order->id }}" class="d-flex mb-2 align-items-center">
                                     <h2 class="mb-0 d-inline-block mr-auto job-agent-title">
                                         <button class="btn btn-link collapsed text-capitalize" type="button"
@@ -51,13 +51,19 @@
                                 </div>
                                 @if (!empty($order->result))
                                         <div class="mb-3 d-flex flex-column flex-md-row">
-                                            <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-warning">Download Result</a>
+                                            <a href="{{ route('order.result.download',
+                                            ['id'=>$order->id, 'result_id'=>$order->result->id]) }}" class="btn text-warning">
+                                                Download Result
+                                            </a>
                                         </div>
                                     @endif
                                     @if ($order->revision->count() > 0)
                                         @foreach ($order->revision as $revision)
                                             <div class="mb-3 d-flex flex-column flex-md-row">
-                                                <a href="{{ route('order.result.download', ['id'=>$order->id, 'result_id'=>$revision->id]) }}" class="btn text-warning">Download Revision {{ $loop->iteration }}</a>
+                                                <a href="{{ route('order.result.download',
+                                                ['id'=>$order->id, 'result_id'=>$revision->id]) }}" class="btn text-warning">
+                                                    Download Revision {{ $loop->iteration }}
+                                                </a>
                                             </div>
                                         @endforeach
                                     @endif
