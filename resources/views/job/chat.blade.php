@@ -61,6 +61,7 @@
                         <label for="chat" class="d-none">send chat</label>
                         <input type="text" id="chat" name="message" class="input-custom input-custom--rounding"
                         placeholder="Type a message . . ." autocomplete="off" required>
+                        <input type="file" name="image" accept="image/*">
                         <button type="submit" class="btn order-chat__send-btn"><i class='bx bxs-send'></i></button>
                     </form>
                 @elseif (Route::currentRouteName() === 'user.chat.index')
@@ -71,6 +72,7 @@
                         <label for="chat" class="d-none">send chat</label>
                         <input type="text" id="chat" name="message" class="input-custom input-custom--rounding"
                         placeholder="Type a message . . ." autocomplete="off" required>
+                        <input type="file" name="image" accept="image/*">
                         <button type="submit" class="btn order-chat__send-btn"><i class='bx bxs-send'></i></button>
                     </form>
                 @endif

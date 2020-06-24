@@ -856,20 +856,18 @@ $("#readMessagePage .accordion__item input").filter("[readonly]").parent().sibli
 $('.order-chat__send-box').submit(function (e) {
     e.preventDefault();
     let token = $('meta[name="csrf-token"]').attr('content');
-
+    var formData = new FormData();
+    formData.append('sender_id', $('input[name="sender_id"]').val());
+    formData.append('order_id', $('input[name="order_id"]').val());
+    formData.append('message' ,$('input[name="message"]').val());
+    formData.append('image' ,$('input[name="image"]').prop('files')[0]);
     fetch(chatUrl,{
         headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json, text-plain, */*",
             "X-Requested-With": "XMLHttpRequest",
             "X-CSRF-TOKEN": token
         },
         method : 'POST',
-        body : JSON.stringify({
-            'sender_id' : $('input[name="sender_id"]').val(),
-            'order_id' : $('input[name="order_id"]').val(),
-            'message' : $('input[name="message"]').val()
-        }),
+        body : formData,
     }).then((data) => {
         $('.order-chat__send-box')[0].reset();
     }).catch(function(error) {

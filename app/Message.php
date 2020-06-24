@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Message extends Model
 {
-    protected $fillable = ['content', 'sender_id', 'order_id', 'is_read'];
+    protected $fillable = ['content', 'sender_id', 'order_id', 'is_read', 'image'];
 //    protected $with = ['sender'];
 
     public function sender()

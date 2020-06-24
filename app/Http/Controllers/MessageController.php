@@ -10,7 +10,6 @@ use App\Message;
 use App\ChatSession;
 use App\Events\MsgSentEvent;
 use Illuminate\Support\Facades\Route;
-
 class MessageController extends Controller
 {
     public function index()
@@ -69,6 +68,9 @@ class MessageController extends Controller
     {
         $chat = new Message;
         $chat->content = strval($request->message);
+        if ($request->hasFile('image')) {
+            $chat->image = $request->file('image')->store('public/files');
+        }
         $chat->order_id = $request->order_id;
         $chat->sender_id = intval($request->sender_id);
         $chat->save();

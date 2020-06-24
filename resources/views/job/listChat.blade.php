@@ -5,24 +5,30 @@
                 <img class="order-chat__avatar" src="{{ Storage::url($message->sender->profile->avatar ?? 'files/men.jpg') }}"
                      alt="Agent avatar">
                 <div class="order-chat__box">
-                    <p class="order-chat__message">
-                        @if (Auth::user()->name === $message->sender->name)
-                            <span class="mr-1">You:</span>
-                        @else
-                            <span class="mr-1">{{ $message->sender->name . ':' }}</span>
-                        @endif
-                        {{ $message->content }}
-                    </p>
-                    @if (Auth::user()->role === 'agent')
-                        @if ($message->is_read == false)
-                            <span class="order-chat__delivery">
-                                <i class='bx bx-check-double'></i>
-                            </span>
-                        @else
-                            <span class="order-chat__read">
-                                <i class='bx bx-check'></i>
-                                {{ $message->updated_at->diffForHumans() }}
-                            </span>
+                    @if ($message->image)
+                    {{-- need to style --}}
+                    <img src="{{Storage::url($message->image)}}" alt="image">
+                    @endif
+                    @if ($message->content)
+                        <p class="order-chat__message">
+                            @if (Auth::user()->name === $message->sender->name)
+                                <span class="mr-1">You:</span>
+                            @else
+                                <span class="mr-1">{{ $message->sender->name . ':' }}</span>
+                            @endif
+                            {{ $message->content }}
+                        </p>
+                        @if (Auth::user()->role === 'agent')
+                            @if ($message->is_read == false)
+                                <span class="order-chat__delivery">
+                                    <i class='bx bx-check-double'></i>
+                                </span>
+                            @else
+                                <span class="order-chat__read">
+                                    <i class='bx bx-check'></i>
+                                    {{ $message->updated_at->diffForHumans() }}
+                                </span>
+                            @endif
                         @endif
                     @endif
                 </div>
@@ -35,17 +41,23 @@
                 <img class="order-chat__avatar" src="{{ Storage::url($message->sender->profile->avatar ?? 'files/people.webp') }}"
                      alt="Agent avatar">
                 <div class="order-chat__box">
-                    <p class="order-chat__message">{{ $message->content }}</p>
-                    @if (Auth::user()->role === 'user')
-                        @if ($message->is_read == false)
-                            <span class="order-chat__delivery">
-                                <i class='bx bx-check-double'></i>
-                            </span>
-                        @else
-                            <span class="order-chat__read">
-                                <i class='bx bx-check'></i>
-                                {{ $message->updated_at->diffForHumans() }}
-                            </span>
+                    @if ($message->image)
+                        {{-- need to style --}}
+                        <img src="{{Storage::url($message->image)}}" alt="image">
+                    @endif
+                    @if ($message->content)
+                        <p class="order-chat__message">{{ $message->content }}</p>
+                        @if (Auth::user()->role === 'user')
+                            @if ($message->is_read == false)
+                                <span class="order-chat__delivery">
+                                    <i class='bx bx-check-double'></i>
+                                </span>
+                            @else
+                                <span class="order-chat__read">
+                                    <i class='bx bx-check'></i>
+                                    {{ $message->updated_at->diffForHumans() }}
+                                </span>
+                            @endif
                         @endif
                     @endif
                 </div>
