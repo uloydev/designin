@@ -8,7 +8,7 @@
     </header>
 @endsection
 @section('script')
-    <script data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}" src="https://app.sandbox.midtrans.com/snap/snap.js"></script>
+    <script data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}" src="https://app.midtrans.com/snap/snap.js"></script>
     <script>
         let filter = $('#order-filter').val();
         $('#order-filter').change(function(){

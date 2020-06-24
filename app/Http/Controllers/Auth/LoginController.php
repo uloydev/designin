@@ -89,7 +89,8 @@ class LoginController extends Controller
                 'username' => Str::snake($user->getName()),
                 'name' => $user->getName(),
                 'provider' => $provider,
-                'provider_id' => $user->getId()
+                'provider_id' => $user->getId(),
+		'email_verified_at' => Carbon::now()
             ]
         );
         UserProfile::create([
@@ -98,12 +99,7 @@ class LoginController extends Controller
         ]);
 
         Auth::login($authUser);
-        if (Auth::user()->email_verified_at == '') {
-            return redirect('/email/verify');
-        }
-        else {
-            return redirect('/');
-        }
+        return redirect('/user/order');
     }
 
 }
