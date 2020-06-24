@@ -3,11 +3,9 @@
 @section('page-name', 'Dashboard')
 @section('page-title', 'Dashboard')
 @section('header')
-    <!-- Card stats -->
     <div class="row">
       <div class="col-xl-3 col-md-6">
         <div class="card card-stats">
-          <!-- Card body -->
           <div class="card-body">
             <div class="row">
               <div class="col">
@@ -88,6 +86,60 @@
                         <!-- Chart wrapper -->
                         <canvas id="income-value" class="chart-canvas"></canvas>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row mx-0 align-items-center justify-content-between">
+                        <h3 class="mb-0">Ongoing / unfinished project</h3>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>No</th>
+                            <th>Service title</th>
+                            <th>On worker</th>
+                            <th>Price</th>
+                            <th>Progress</th>
+                            <th>Status</th>
+                            <th>Deadline</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($orders as $order)
+                            <tr>
+                                <td>{{ $orders->firstItem() + $loop->index }}</td>
+                                <td>{{ $order->package->service->title }}</td>
+                                <td>{{ $order->agent->email }}</td>
+                                <td>{{ 'IDR ' . $order->package->price}}</td>
+                                <td>
+                                    <div class="progress" style="height: 30px">
+                                        <div class="progress-bar px-2" role="progressbar" style="width: {{ $order->progress . '%' }}"
+                                             aria-valuenow="{{ $order->progress }}" aria-valuemin="0" aria-valuemax="100">
+                                            {{ $order->progress . '%' }}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @if ($order->status == 'complaint')
+                                        <span class="badge badge-warning">{{ $order->status }}</span>
+                                    @else
+                                        <span class="badge badge-info">{{ $order->status }}</span>
+                                    @endif
+                                </td>
+                                <td>{{ $order->deadline->diffForHumans() }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    {{ $orders->links() }}
                 </div>
             </div>
         </div>

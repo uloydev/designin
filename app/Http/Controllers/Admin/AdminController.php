@@ -39,6 +39,8 @@ class AdminController extends Controller
         $totalAgent = User::where('role', 'agent')->count();
         $totalCustomer = User::where('role', 'user')->count();
         $services = Service::take(10)->get();
+
+        $orders = Order::where('status', 'process')->orWhere('status', 'complaint')->oldest()->paginate(20);
         return view('admin.dashboard', [
             'articles' => $articles,
             'totalAgent' => $totalAgent,
@@ -46,7 +48,8 @@ class AdminController extends Controller
             'totalPromo' => $totalPromo,
             'services' => $services,
             'incomeArr' => $incomeArr,
-            'totalArticle' => $totalArticle
+            'totalArticle' => $totalArticle,
+            'orders' => $orders
         ]);
     }
 

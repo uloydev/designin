@@ -125,7 +125,6 @@
                     <li>Project description</li>
                     <li>Specific instructions</li>
                     <li>Relevant files</li>
-                    <li>Your budget</li>
                 </ul>
             </div>
             <div class="col">
