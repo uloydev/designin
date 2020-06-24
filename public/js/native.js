@@ -306,6 +306,17 @@ if (window.location.href.indexOf('/chat') > -1) {
             }
         }
     });
+
+    $("#userChatPage .attachment__input").change(function () {
+        if ($(this).val().length > 0) {
+            $(this).next().find('.bxs-cloud-upload').addClass('d-none');
+            $(this).next().find('.bx-check-circle').removeClass('d-none');
+        }
+        else {
+            $(this).next().find('.bxs-cloud-upload').removeClass('d-none');
+            $(this).next().find('.bx-check-circle').addClass('d-none');
+        }
+    });
 }
 
 $("#singleServicePage select[name='review_filter']").change(function () {
