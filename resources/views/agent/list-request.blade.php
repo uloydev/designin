@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <div class="accordion" id="accordion-request">
                         @forelse ($orders as $order)
-                            <article class="accordion__item">
+                            <article class="accordion__item" id="availableReqest{{ $loop->index + 1 }}">
                                 <div id="heading{{$order->id}}" class="d-flex mb-2 align-items-center">
                                     <h2 class="mb-0 d-inline-block mr-auto job-agent-title">
                                         <button class="btn btn-link collapsed text-capitalize" type="button"
