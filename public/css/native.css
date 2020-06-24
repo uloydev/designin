@@ -1569,8 +1569,13 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #singleServicePage #modal-single-extras #quantity {
     width: 30px;
+    padding-left: 5px;
     text-align: center;
     height: 20px;
+}
+#singleServicePage #modal-single-extras #quantity:hover, #singleServicePage #modal-single-extras #quantity:focus {
+    width: 35px;
+    padding-left: 0;
 }
 #singleServicePage .modal-extras__content {
     overflow: auto;
@@ -1621,15 +1626,6 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 }
 #singleServicePage .modal-extras__submit-btn:hover {
     background-color: var(--primary-color-hover) !important;
-}
-#singleServicePage #modal-single-extras #quantity::-webkit-outer-spin-button,
-#singleServicePage #modal-single-extras #quantity::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
 }
 #singleServicePage #modal-single-extras .modal-order-title {
     margin-bottom: 30px;
