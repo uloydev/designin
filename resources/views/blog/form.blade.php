@@ -38,7 +38,6 @@
     </p>
     @endisset
 </div>
-@if ($mainArticles < 6)
 <div class="mb-3 checkbox-custom">
     <input type="checkbox" name="is_main" class="checkbox-custom__input" id="is_main"
            value="1" {{ $article->is_main == true ? 'checked' : '' }}>
@@ -47,4 +46,3 @@
         Make article primary
     </label>
 </div>
-@endif

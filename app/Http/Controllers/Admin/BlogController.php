@@ -98,12 +98,7 @@ class BlogController extends Controller
             Storage::delete($blog->header_image);
             $blog->header_image = $request->file('header_image')->store('public/files');
         }
-        if ($request->has('is_main')) {
-            $blog->is_main = intval($request->is_main);
-        }
-        else {
-            $blog->is_main = Blog::findOrFail($id)->is_main;
-        }
+        $blog->is_main = intval($request->is_main);
         $blog->save();
         return redirect()->route('manage.blog.index')->with('success', 'Blog update succefully');
     }

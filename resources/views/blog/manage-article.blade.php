@@ -71,6 +71,7 @@
                                     <th>Category</th>
                                     <th>Title</th>
                                     <th class="text-center">Show article</th>
+                                    <th>Show on homepage</th>
                                     <th>Created At</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -86,6 +87,13 @@
                                             class="btn btn-primary btn-sm" target="_blank">
                                                 See article
                                             </a>
+                                        </td>
+                                        <td>
+                                            @if ($article->is_main == 1)
+                                                True
+                                            @else
+                                                False
+                                            @endif
                                         </td>
                                         <td>{{ $article->created_at->format('d M Y') }}</td>
                                         <td class="text-center">
