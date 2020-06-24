@@ -408,6 +408,10 @@ nav .search-service__btn {
 .btn-danger:active {
     background-color: #d43c33;
 }
+.btn-success:disabled {
+    opacity: 0.4;
+    user-select: none;
+}
 .btn-success {
     background-color: var(--primary-color) !important;
     color: #fff;
@@ -1246,9 +1250,8 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #landingPage .help__bg {
     max-width: 100%;
     z-index: -1;
-    object-fit: cover;
-    height: 350px;
-    display: none;
+    max-height: 350px;
+    /*display: none;*/
 }
 #landingPage #help h1 {
     color: #000;
@@ -1260,6 +1263,8 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    width: 90%;
 }
 #landingPage .help__btn {
     margin-top: 1rem;
@@ -3206,7 +3211,6 @@ footer .row {
     }
     #landingPage .help__box {
         max-width: 60%;
-        position: absolute;
         top: 50%;
         transform: translateY(-50%);
     }

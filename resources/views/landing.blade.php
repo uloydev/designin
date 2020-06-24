@@ -157,7 +157,7 @@
       </section>
       <section id="inspire">
           <div class="container">
-              <h1>Inspirasi desain dari jaringan desainer kami</h1>
+              <h1>Inspirasi desain dari jaringan desainer <br> kami</h1>
               <div class="inspire__slider">
                   @foreach($inspirations as $inspire)
                   <figure class="inspire__item">
@@ -247,7 +247,7 @@
                                   <div class="subscription__caption">
                                       <p class="subscription__duration">Berlaku: {{ $sub->duration }} Day</p>
                                       <p class="subscription__price">
-                                          <var class="subscription__currency">IDR {{$sub->price}}</var>
+                                          <var class="subscription__currency">IDR {{ number_format($sub->price) }}</var>
                                       </p>
                                   </div>
                               </div>

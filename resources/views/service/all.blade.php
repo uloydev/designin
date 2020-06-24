@@ -34,7 +34,7 @@
                                     {!! Str::words($service->description, 12) !!}
                                 </div>
                                 <div class="service__action">
-                                    <p class="service__rating">Rating : 
+                                    <p class="service__rating">Rating :
                                         @if ($service->rating <= 5)
                                             @for ($i = 0; $i < $service->rating; $i++)
                                                 {!! "<i class='bx bxs-star' ></i>" !!}
@@ -43,9 +43,11 @@
                                                 {!! "<i class='bx bx-star' ></i>" !!}
                                             @endfor
                                         @endif
-                                        ( {{ ceil($service->rating) }} / 5 )    
+                                        ( {{ ceil($service->rating) }} / 5 )
                                     </p>
-                                    <span class="service__price">Start at: <var>IDR 300,000</var></span>
+                                    <span class="service__price">
+                                        Start at: <var>{{ collect($service->package)->min('price')}}</var>
+                                    </span>
                                     <a href="{{ route('service.show', $service->id) }}" class="service__goto">
                                         <span>click service</span>
                                     </a>

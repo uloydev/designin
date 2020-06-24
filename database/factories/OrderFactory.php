@@ -27,7 +27,7 @@ $factory->define(Order::class, function (Faker $faker) {
     if ($status != 'unpaid' and $status != 'waiting') {
         $data['started_at'] = Carbon::now();
         $data['deadline'] = Carbon::now()->addDays(3);
-        $data['progress'] = $status == 'process' ? $faker->numberBetween(0,100) : 100;
+        $data['progress'] = $status == 'process' ? $faker->numberBetween(0, 90) : 100;
     }
     return $data;
 });

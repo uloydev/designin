@@ -154,6 +154,10 @@
                                        data-target="#modal-review{{ $loop->index + 1 }}">
                                         Review
                                     </a>
+                                @elseif($order->is_reviewed == true)
+                                    <button type="button" class="btn-success" disabled>
+                                        Already Reviewed
+                                    </button>
                                 @endif
                             </div>
                         </article>

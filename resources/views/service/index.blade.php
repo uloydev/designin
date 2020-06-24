@@ -12,9 +12,6 @@
             Create Service
         </button>
         @if (Auth::user()->role === 'admin')
-            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editServiceFee">
-                Edit service fee
-            </button>
             <a href="{{ route('manage.service-category.index') }}" class="btn btn-sm btn-default">
                 Manage category
             </a>
