@@ -7,7 +7,7 @@
                 <div class="order-chat__box">
                     @if ($message->image)
                     {{-- need to style --}}
-                        <a href="{{Storage::url($message->image)}}" target="_blank">Click to see attachment</a>
+                        <a href="{{Storage::url($message->image)}}" target="_blank" class="text-link">Click to see attachment</a>
 {{--                        <img src="{{Storage::url($message->image)}}" alt="image" height="300">--}}
                     @endif
                     @if ($message->content)
@@ -44,7 +44,7 @@
                 <div class="order-chat__box">
                     @if ($message->image)
                         {{-- need to style --}}
-                        <a href="{{Storage::url($message->image)}}" target="_blank">Click to see attachment</a>
+                        <a href="{{Storage::url($message->image)}}" target="_blank" class="text-link">Click to see attachment</a>
 {{--                        <img src="{{Storage::url($message->image)}}" alt="image" height="300">--}}
                     @endif
                     @if ($message->content)
