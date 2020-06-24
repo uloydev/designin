@@ -5,11 +5,6 @@
                 <img class="order-chat__avatar" src="{{ Storage::url($message->sender->profile->avatar ?? 'files/men.jpg') }}"
                      alt="Agent avatar">
                 <div class="order-chat__box">
-                    @if ($message->image)
-                    {{-- need to style --}}
-                        <a href="{{Storage::url($message->image)}}" target="_blank" class="text-link">Click to see attachment</a>
-{{--                        <img src="{{Storage::url($message->image)}}" alt="image" height="300">--}}
-                    @endif
                     @if ($message->content)
                         <p class="order-chat__message">
                             @if (Auth::user()->name === $message->sender->name)
@@ -32,6 +27,11 @@
                             @endif
                         @endif
                     @endif
+                    @if ($message->image)
+                        <a href="{{Storage::url($message->image)}}" target="_blank" class="text-link mt-2 d-block">
+                            Click to see attachment
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -42,11 +42,6 @@
                 <img class="order-chat__avatar" src="{{ Storage::url($message->sender->profile->avatar ?? 'files/people.webp') }}"
                      alt="Agent avatar">
                 <div class="order-chat__box">
-                    @if ($message->image)
-                        {{-- need to style --}}
-                        <a href="{{Storage::url($message->image)}}" target="_blank" class="text-link">Click to see attachment</a>
-{{--                        <img src="{{Storage::url($message->image)}}" alt="image" height="300">--}}
-                    @endif
                     @if ($message->content)
                         <p class="order-chat__message">{{ $message->content }}</p>
                         @if (Auth::user()->role === 'user')
@@ -61,6 +56,12 @@
                                 </span>
                             @endif
                         @endif
+                    @endif
+
+                    @if ($message->image)
+                        <a href="{{Storage::url($message->image)}}" target="_blank" class="text-link mt-2 d-block">
+                            Click to see attachment
+                        </a>
                     @endif
                 </div>
             </div>
