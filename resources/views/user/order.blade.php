@@ -60,7 +60,7 @@
                                 <div class="mb-3">
                                     What you order
                                     <span class="profile-main__title">
-                                        {{ $order->package->service->title ?? 'service deleted by admin'}}
+                                        {{ Str::limit($order->package->service->title, 30) ?? 'service deleted by admin'}}
                                     </span>
                                 </div>
                                 <div class="mb-3">
@@ -149,8 +149,9 @@
                                 <a href="{{ route('user.chat.index', $order->id) }}" class="profile-main__btn-chat">
                                     Chat agent
                                 </a>
-                                @if (!$order->is_reviewed AND $order->status === 'finished')
-                                    <a href="javascript:void(0);" class="btn-success btn-modal" data-target="#modal-review">
+                                @if (!$order->is_reviewed AND $order->status === 'finished' and $order->is_reviewed == false)
+                                    <a href="javascript:void(0);" class="btn-success btn-modal"
+                                       data-target="#modal-review{{ $loop->index + 1 }}">
                                         Review
                                     </a>
                                 @endif
@@ -167,7 +168,9 @@
     </div>
 @endsection
 @push('element')
-    @isset($order)
-        @includeWhen($order->is_reviewed == false AND $order->status === 'finished', 'partials.review-job')
+    @isset($orders)
+        @foreach($orders as $order)
+            @include('partials.review-job')
+        @endforeach
     @endisset
 @endpush

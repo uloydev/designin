@@ -1,4 +1,4 @@
-<div class="modal" id="modal-review">
+<div class="modal" id="modal-review{{ $loop->index + 1 }}">
     <div class="modal__content">
         <div class="modal__header">
             <h2 class="modal__title">Review job</h2>
