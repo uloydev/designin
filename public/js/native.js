@@ -319,6 +319,13 @@ if (window.location.href.indexOf('/chat') > -1) {
     });
 }
 
+const subscriptionPrices = document.querySelectorAll('#landingPage .subscription__currency');
+subscriptionPrices.forEach(function (eachSubscription) {
+    let eachPrice = Number(eachSubscription.textContent);
+    eachPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(eachPrice);
+    eachSubscription.textContent = eachPrice;
+});
+
 $("#singleServicePage select[name='review_filter']").change(function () {
     $(this).parents("form").submit();
 });
