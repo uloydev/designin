@@ -2043,6 +2043,10 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
     color: #9d9d9d;
 }
 
+#userSubscriptionPage #modal-subscription-detail .modal__content {
+    overflow: auto;
+}
+
 #userOrderPage main, #manageJobPage main, #myTransactionPage main, #userSubscriptionPage main {
     margin-top: 10px;
     background-color: var(--almost-white);
@@ -3300,11 +3304,12 @@ footer .row {
     }
     .profile-main__order-img {
         margin: 0;
+        max-width: 50%;
     }
 
     .profile-main__order-detail {
         align-self: center;
-        margin-left: 1.8rem;
+        margin-left: 1.8rem !important;
         max-width: 500px;
     }
 

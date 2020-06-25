@@ -40,11 +40,11 @@
                     </select>
                 </form>
                 <div class="profile-main__content">
-                    @if (!empty($mySubscription))
+                    @isset ($mySubscription)
                         <article class="profile-main-item">
                             <img src="{{ Storage::url($mySubscription->img) }}" class="profile-main__order-img"
                                  alt="order image">
-                            <div class="profile-main__order-detail ml-lg-5">
+                            <div class="profile-main__order-detail ml-lg-auto">
                                 <p class="mb-3">
                                     Subscription name:
                                     <span class="subscription__title">
@@ -57,7 +57,7 @@
                                     <var class="profile-main-item__price">{{ 'IDR ' . $mySubscription->price }}</var>
                                 </p>
                                 <p class="mb-3">Status : {{ $mySubscription->payment_status }}</p>
-                                <a href="javascript:void(0);" class="profile-main-item__link"
+                                <a href="javascript:void(0);" class="profile-main-item__link btn-modal"
                                    data-target="#modal-subscription-detail"
                                    data-subscription-title="{{ $mySubscription->title }}"
                                    data-subscription-detail="{{ $mySubscription->desc }}"
@@ -71,7 +71,7 @@
                             <article class="profile-main-item">
                                 <img src="{{ Storage::url($order->subscription->img) }}" class="profile-main__order-img"
                                     alt="order image">
-                                <div class="profile-main__order-detail ml-lg-5">
+                                <div class="profile-main__order-detail ml-lg-auto">
                                     <p class="mb-3">
                                         Subscription name: <span>{{ Str::words($order->subscription->title, 5) }}</span>
                                     </p>
@@ -83,13 +83,13 @@
                                     <p class="mb-3">Status : {{ $order->payment_status }}</p>
                                     @if ($order->payment_status == "unpaid")
                                         <div class="mb-3">
-                                            <a href="javascript:void(0);" class="btn btn-success"
+                                            <a href="javascript:void(0);" class="btn btn-success d-flex"
                                             data-payment-token="{{$order->payment_token ?? ''}}">
                                                 Pay now
                                             </a>
                                         </div>
                                     @endif
-                                    <a href="javascript:void(0);" class="profile-main-item__link"
+                                    <a href="javascript:void(0);" class="profile-main-item__link btn-modal"
                                        data-target="#modal-subscription-detail"
                                        data-subscription-title="{{ $mySubscription->title }}"
                                        data-subscription-detail="{{ $mySubscription->desc }}"
@@ -117,7 +117,7 @@
                                 </a>
                             </p>
                         </article>
-                    @endif
+                    @endisset
                 </div>
             </section>
         </div>
@@ -125,7 +125,7 @@
 @endsection
 @push('element')
     <div class="modal" id="modal-subscription-detail">
-        <div class="modal__content" style="overflow: auto">
+        <div class="modal__content">
             <div class="modal__header">
                 <h1 class="modal__title mb-0">{{--text on js--}}</h1>
                 <a href="javascript:void(0);" class="btn-close-modal"><i class='bx bx-x'></i></a>
