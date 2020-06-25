@@ -56,7 +56,8 @@
                                     Price:
                                     <var class="profile-main-item__price">{{ 'IDR ' . $mySubscription->price }}</var>
                                 </p>
-                                <a href="{{ route('user.subscription.show', $mySubscription->id)  }}" class="profile-main-item__link"
+                                <p class="mb-3">Status : {{$order->payment_status}}</p>
+                                <a href="javascript:void(0);" class="profile-main-item__link"
                                    data-target="#modal-subscription-detail"
                                    data-subscription-title="{{ $mySubscription->title }}"
                                    data-subscription-detail="{{ $mySubscription->desc }}"
@@ -66,8 +67,6 @@
                                 </a>
                             </div>
                         </article>
-                        {{-- need to style from line 61 to 91 --}}
-                        <h4>Subscription History</h4>
                         @forelse ($subscriptionHistory as $order)
                             <article class="profile-main-item">
                                 <img src="{{ Storage::url($order->subscription->img) }}" class="profile-main__order-img"
@@ -90,6 +89,14 @@
                                             </a>
                                         </div>
                                     @endif
+                                    <a href="javascript:void(0);" class="profile-main-item__link"
+                                       data-target="#modal-subscription-detail"
+                                       data-subscription-title="{{ $mySubscription->title }}"
+                                       data-subscription-detail="{{ $mySubscription->desc }}"
+                                       data-subscription-img="{{ Storage::url($mySubscription->img) }}"
+                                       data-subscription-duration="{{ $mySubscription->duration }}">
+                                        See details
+                                    </a>
                                 </div>
                             </article>
                         @empty
