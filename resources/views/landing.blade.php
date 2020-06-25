@@ -247,7 +247,7 @@
                                   <div class="subscription__caption">
                                       <p class="subscription__duration">Berlaku: {{ $sub->duration }} Day</p>
                                       <p class="subscription__price">
-                                          <var class="subscription__currency">{{ $sub->price }}</var>
+                                          <var class="subscription__currency money-formatting">{{ $sub->price }}</var>
                                       </p>
                                   </div>
                               </div>

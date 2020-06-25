@@ -16,7 +16,7 @@
                         name="quantity" required>
                     </div>
                     <p class="my-3">
-                        Price: IDR <var class="modal-order-price" data-original-price=""></var>
+                        Price: <var class="modal-order-price money-formatting" data-original-price=""></var>
                     </p>
 
                     @auth
@@ -43,7 +43,7 @@
                         </p>
                     @endauth
                     <p class="mb-3" id="grand-total-text">
-                        Grand total: IDR <output id="grand-total" name="grand_total"></output>
+                        Grand total: <output id="grand-total" class="money-formatting" name="grand_total"></output>
                     </p>
                     <input type="hidden" name="modal_order_title">
                     @if (count($extras_template) > 0)
@@ -65,7 +65,7 @@
                                         Price
                                         (
                                         IDR
-                                        <var class="form-extras-order__money extra-price-cash">
+                                        <var class="form-extras-order__money extra-price-cash money-formatting">
                                             {{ $extra->template->price }}
                                         </var>
                                         )
@@ -86,7 +86,7 @@
                                     <span class="ml-lg-2 text-success mt-2 mt-lg-0" style="transform: translateX(-1.5rem)">
                                         Price
                                         (IDR
-                                        <var class="form-extras-order__money extra-price-cash">
+                                        <var class="form-extras-order__money extra-price-cash money-formatting">
                                             {{ $extra->price }}
                                         </var>)
                                     </span>

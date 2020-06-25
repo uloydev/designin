@@ -90,8 +90,8 @@
                             <article class="mb-3">
                                 <p class="mb-3 d-flex justify-content-between align-items-center font-bold text-capitalize">
                                     {{ $package->title }}
-                                    <var class="font-style-normal font-bold order-price">
-                                        IDR {{ $package->price }}
+                                    <var class="font-style-normal font-bold order-price money-formatting">
+                                        {{ $package->price }}
                                     </var>
                                 </p>
                                 <p>{!! $package->description !!}</p>
@@ -102,7 +102,7 @@
                 <div class="service-single__review">
                     <div class="service-single__header-review">
                         <h2 class="service-single__subheading mb-0">Review</h2>
-                        <form action="{{ route('service.filter-service', $service->id) }}" method="get">
+                        <form action="{{ route('service.filter-service', $service->id) }}" method="get" class="col-lg-5">
                             <label for="review-filter" class="d-none">Review filter</label>
                             <select name="review_filter" class="nice-select wide" id="review-filter" required>
                                 @isset($filtering)
@@ -124,9 +124,9 @@
                             <div class="service-single__comment-detail">
                                 <p class="service-single__comment-title">{{ $testimony->user->name }}</p>
                                 <p class="service-single__comment-text">{{ $testimony->content }}</p>
-                                <p class="mt-3">Tanggal review : <time>{{ $testimony->created_at->format('d M Y') }}</time></p>
+                                <p class="mt-3">Review date: <time>{{ $testimony->created_at->format('d M Y') }}</time></p>
                                 <p class="mt-3">
-                                    Kualitas Review :
+                                    Review Quality:
                                     <span>
                                         @for ($i = 0; $i < $testimony->rating; $i++)
                                             {!! "<i class='bx bxs-star' ></i>" !!}
@@ -161,8 +161,9 @@
                             <div class="single-package__top mb-4">
                                 <p class="mb-3 d-flex justify-content-between align-items-center">
                                     {{ $package->title }}
-                                    <var class="font-style-normal font-bold order-price">
-                                        IDR {{ $package->price }}
+                                    <var class="font-style-normal font-bold order-price money-formatting"
+                                         data-price-package="{{ $package->price }}">
+                                        {{ $package->price }}
                                     </var>
                                 </p>
                                 <p>{!! $package->description !!}</p>
@@ -171,19 +172,21 @@
                                 <button class="btn-modal single-package__btn" data-target="#modal-single-extras"
                                 data-package-id="{{ $package->id }}" data-agent-id="{{ $service->agent_id }}"
                                 data-package-title="{{ $package->title }}">
-                                    Continue (IDR {{ $package->price }})
+                                    Continue (<var class="money-formatting">{{ $package->price }}</var>)
                                 </button>
                                 @if (Auth::user()->is_subscribe)
                                 <p class="mt-3 text-gray text-center">
                                     Token you have: {{ Auth::user()->subscribe_token . ' token' ?? 0 . ' token' }}
-                                    <span class="text-small d-block mt-2">(1 token = IDR {{ '10000' }})</span>
+                                    <span class="text-small d-block mt-2">
+                                        (1 token = IDR <var class="money-formatting">{{ $tokenConversion->numeral }}</var>)
+                                    </span>
                                 </p>
                                 @endif
                             @endauth
                             @guest
                                 <a class="btn-modal single-package__btn"
                                    href="{{route('login').'?redirect='.URL::current()}}">
-                                    Continue (IDR {{ $package->price }}
+                                    Continue (<var class="money-formatting">{{ $package->price }}</var>)
                                 </a>
                             @endguest
                         </div>

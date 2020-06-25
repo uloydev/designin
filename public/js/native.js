@@ -141,7 +141,7 @@ transactionStatus.forEach(function (status) {
 let userSavingCash = $("#modal-single-extras #user-token").data('saving');
 let userSavingToken = Number($("#modal-single-extras #user-token").data('token'));
 let tokenWithDraw = $("#modal-single-extras #user-token").data('token-conversion');
-let originalPrice = $("#service-package-tab .order-price").text().replace(/IDR /g, '');
+let originalPrice = $("#service-package-tab .order-price").data('price-package');
 let totalExtras = 0;
 let grand_total;
 let token_usage;
@@ -182,7 +182,7 @@ $("#form-extras-order input[type='checkbox']").change(function () {
 });
 
 $("#modal-single-extras .btn-close-modal").click(function () {
-    $(".modal-order-price").text($("#service-package-tab .order-price").text().replace(/IDR /g, ''));
+    $(".modal-order-price").text($("#service-package-tab .order-price").data('price-package'));
     $("#modal-single-extras input[name='extras']").prop('checked', false);
     window.location.replace(window.location.href);
 });
@@ -199,9 +199,10 @@ function grandTotal() {
         }
     }
     if (document.querySelector('#total_extras')) { //if element #total_extras exist
-        document.querySelector("#total_extras").value = "IDR " + totalExtras;
+        document.querySelector("#total_extras").value =
+            new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(totalExtras);
     }
-    let price = Number($("#singleServicePage #service-package-tab .order-price").text().replace(/IDR /, '')) * orderQuantity;
+    let price = Number($("#service-package-tab .order-price").data('price-package')) * orderQuantity;
     let newPrice;
     if (promo_discount !== 0) {
         newPrice = Math.ceil(price - price * promo_discount / 100);
@@ -220,7 +221,9 @@ function grandTotal() {
             grand_total -= Number(userSavingCash);
         }
     }
-    $("#modal-single-extras #grand-total").text(grand_total);
+    $("#modal-single-extras #grand-total").text(
+        new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(grand_total)
+    );
     if (Number(token_usage) > 0) {
         $("#modal-single-order input[name='token_usage']").val(token_usage);
     }
@@ -271,7 +274,8 @@ $(".modal-extras__submit-btn").click(function () {
         $("#modal-single-extras").removeClass('show-modal');
         $("#modal-single-order").addClass('show-modal');
     }
-    if ($("#modal-single-order #data-extras").val().length === 0 || $("#modal-single-order #data-extras").val() === '[]') {
+    if ($("#modal-single-order #data-extras").val().length === 0 ||
+        $("#modal-single-order #data-extras").val() === '[]') {
         $("#modal-single-order #data-extras").val("").removeAttr("value");
     }
 });
@@ -319,11 +323,11 @@ if (window.location.href.indexOf('/chat') > -1) {
     });
 }
 
-const subscriptionPrices = document.querySelectorAll('#landingPage .subscription__currency');
-subscriptionPrices.forEach(function (eachSubscription) {
-    let eachPrice = Number(eachSubscription.textContent);
+const moneyFormattings = document.querySelectorAll('.money-formatting');
+moneyFormattings.forEach(function (eachMoneyFormat) {
+    let eachPrice = Number(eachMoneyFormat.textContent);
     eachPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(eachPrice);
-    eachSubscription.textContent = eachPrice;
+    eachMoneyFormat.textContent = eachPrice;
 });
 
 $("#singleServicePage select[name='review_filter']").change(function () {
@@ -1224,8 +1228,7 @@ $('#subscribe-form').submit(function(e) {
         data: $(this).serialize(),
         success: function (response) {
             if (response.status === 'success') {
-                snap.pay(response.token);
-                // redirect to user/order after payment
+                snap.pay(response.token); // redirect to user/order after payment
             }
             else {
                 alert('something went wrong with your order');

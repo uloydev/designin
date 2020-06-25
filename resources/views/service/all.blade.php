@@ -46,7 +46,10 @@
                                         ( {{ ceil($service->rating) }} / 5 )
                                     </p>
                                     <span class="service__price">
-                                        Start at: <var>{{ collect($service->package)->min('price')}}</var>
+                                        Start at:
+                                        <var class="money-formatting">
+                                            {{ collect($service->package)->min('price') }}
+                                        </var>
                                     </span>
                                     <a href="{{ route('service.show', $service->id) }}" class="service__goto">
                                         <span>click service</span>
