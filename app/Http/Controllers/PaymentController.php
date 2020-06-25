@@ -159,6 +159,7 @@ class PaymentController extends Controller
         $order->user_id = $user->id;
         $order->subscription_id = $sub->id;
         $order->quantity = $request->quantity;
+        $order->payment_status = "unpaid";
         $order->save();
         $transaction_details = [
             'order_id' => 'sub-'.$order->id.'-'.time(),
