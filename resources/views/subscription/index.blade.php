@@ -83,7 +83,7 @@
                                     <p class="mb-3">Status : {{ $order->payment_status }}</p>
                                     @if ($order->payment_status == "unpaid")
                                         <div class="mb-3">
-                                            <a href="javascript:void(0);" class="btn btn-success d-flex"
+                                            <a href="javascript:void(0);" class="btn btn-success d-flex" id="pay-button"
                                             data-payment-token="{{$order->payment_token ?? ''}}">
                                                 Pay now
                                             </a>
