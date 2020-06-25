@@ -56,7 +56,7 @@
                                     Price:
                                     <var class="profile-main-item__price">{{ 'IDR ' . $mySubscription->price }}</var>
                                 </p>
-                                <p class="mb-3">Status : {{$order->payment_status}}</p>
+                                <p class="mb-3">Status : {{ $mySubscription->payment_status }}</p>
                                 <a href="javascript:void(0);" class="profile-main-item__link"
                                    data-target="#modal-subscription-detail"
                                    data-subscription-title="{{ $mySubscription->title }}"
@@ -80,7 +80,7 @@
                                         Price:
                                         <var class="profile-main-item__price">{{ 'IDR ' . $order->subscription->price }}</var>
                                     </p>
-                                    <p class="mb-3">Status : {{$order->payment_status}}</p>
+                                    <p class="mb-3">Status : {{ $order->payment_status }}</p>
                                     @if ($order->payment_status == "unpaid")
                                         <div class="mb-3">
                                             <a href="javascript:void(0);" class="btn btn-success"
