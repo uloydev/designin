@@ -171,7 +171,7 @@
                               <small>By {{ $inspire->agent->name }}</small>
                           </div>
                       </figcaption>
-                      <a href="" class="inspire__link">item link</a>
+                      <a href="{{ route('service.show', $inspire->id) }}" class="inspire__link">item link</a>
                   </figure>
                   @endforeach
               </div>
