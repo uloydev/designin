@@ -35,7 +35,6 @@
                     $("#progress-payment").removeClass('show-modal');
                     if (response.status === 'success') {
                         snap.pay(response.token);
-                        // redirect to user/order after payment
                     }
                     else if(response === ''){
                         alert('something went wrong with internal server');

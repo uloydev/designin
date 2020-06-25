@@ -72,7 +72,7 @@ class PaymentController extends Controller
         $order->save();
         // midtrans
         $transaction_details = [
-            'order_id' => 'order-'.$order->id,
+            'order_id' => 'order-'.$order->id.'-'.time(),
             // 'order_id' => time(), // only for testing
             'gross_amount' => $order->budget
         ];
@@ -130,7 +130,6 @@ class PaymentController extends Controller
             'secure' => true,
             'channel' => 'migs'
         ];
-
         $transaction_data = [
             'transaction_details' => $transaction_details,
             'item_details' => $item_details,
@@ -162,7 +161,7 @@ class PaymentController extends Controller
         $order->quantity = $request->quantity;
         $order->save();
         $transaction_details = [
-            'order_id' => 'sub-'.$order->id,
+            'order_id' => 'sub-'.$order->id.'-'.time(),
             // 'order_id' => time(), // only for testing
             'gross_amount' => $order->subscription->price * $order->quantity
         ];
