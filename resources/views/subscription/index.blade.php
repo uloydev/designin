@@ -28,10 +28,12 @@
                         </a>
                     </label>
                     <select name="filter" id="sub-filter" class="profile-main__orderBy wide mt-3 mt-lg-0">
-                        <option value="latest" {{(!session('filter') or session('filter') == 'latest') ? 'selected=selected' : ''}}>
+                        <option value="latest"
+                            {{ (!session('filter') or session('filter') == 'latest') ? 'selected=selected' : '' }}>
                             Latest
                         </option>
-                        <option value="oldest" {{(session('filter') == 'oldest' ? 'selected=selected' : '')}}>
+                        <option value="oldest"
+                            {{ (session('filter') == 'oldest' ? 'selected=selected' : '') }}>
                             Oldest
                         </option>
                     </select>
@@ -43,14 +45,24 @@
                                  alt="order image">
                             <div class="profile-main__order-detail ml-lg-5">
                                 <p class="mb-3">
-                                    Subscription name: <span>{{ Str::words($subscription->title, 5) }}</span>
+                                    Subscription name:
+                                    <span class="subscription__title">
+                                        {{ Str::words($subscription->title, 5) }}
+                                    </span>
                                 </p>
                                 <p class="mb-3">From: <time>{{ $subscription->created_at->format('d M Y') }}</time></p>
                                 <p class="mb-3">
                                     Price:
                                     <var class="profile-main-item__price">{{ 'IDR ' . $subscription->price }}</var>
                                 </p>
-                                <a href="{{ route('user.subscription.show', $subscription->id)  }}" class="profile-main-item__link">
+                                <a href="" class="btn btn-success mb-3">Pay now</a>
+                                <a class="profile-main-item__link btn-modal"
+                                   data-target="#modal-subscription-detail"
+                                   data-subscription-title="{{ $subscription->title }}"
+                                   data-subscription-detail="{{ $subscription->desc }}"
+                                   data-subscription-img="{{ Storage::url($subscription->img) }}"
+                                   data-subscription-duration="{{ $subscription->duration }}"
+                                   href="javascript:void(0);">
                                     See details
                                 </a>
                             </div>
@@ -72,3 +84,16 @@
         </div>
     </div>
 @endsection
+@push('element')
+    <div class="modal" id="modal-subscription-detail">
+        <div class="modal__content" style="overflow: auto">
+            <div class="modal__header">
+                <h1 class="modal__title mb-0">{{--text on js--}}</h1>
+                <a href="javascript:void(0);" class="btn-close-modal"><i class='bx bx-x'></i></a>
+            </div>
+            <div class="modal__body">
+                <span id="modal-subscription-duration" class="mb-3 d-block text-success font-bold"></span>
+            </div>
+        </div>
+    </div>
+@endpush

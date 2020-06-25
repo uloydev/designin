@@ -334,6 +334,17 @@ $("#singleServicePage select[name='review_filter']").change(function () {
     $(this).parents("form").submit();
 });
 
+$(".profile-main-item__link").click(function () {
+    let subscriptionTitle = $(this).data('subscription-title');
+    let subscriptionDetail = $(this).data('subscription-detail');
+    let subscriptionDuration = $(this).data('subscription-duration');
+
+    $("#modal-subscription-detail .modal__title").text(subscriptionTitle);
+    $("#modal-subscription-detail .modal__body #modal-subscription-duration")
+        .html("Duration: <time>" + subscriptionDuration + "</time> days");
+    $("#modal-subscription-detail .modal__body").append(subscriptionDetail);
+});
+
 //agent js
 $("[data-target='#modal-progress'], [data-target='#modal-approval'], [data-target='#modal-rejection'], " +
     "[data-target='#modal-result']").click(function () {

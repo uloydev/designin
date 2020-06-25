@@ -520,9 +520,6 @@ nav .search-service__btn {
     align-items: center;
     padding: 0 20px 30px;
 }
-.modal__btn-action {
-
-}
 .modal__btn---block {
     display: block;
     width: 100%;
@@ -2601,7 +2598,8 @@ body[id*='blog'] .search-service__btn {
     text-align: center;
 }
 #seeSubscriptionPage .subscription__desc p, #seeSubscriptionPage .subscription__desc h1,
-#seeSubscriptionPage .subscription__desc ul, #seeSubscriptionPage .subscription__desc ol {
+#seeSubscriptionPage .subscription__desc ul, #seeSubscriptionPage .subscription__desc ol,
+#modal-subscription-detail p, #modal-subscription-detail ul, #modal-subscription-detail h1, #modal-subscription-detail ol {
     margin-bottom: 30px;
 }
 #seeSubscriptionPage .subscription__action {
