@@ -54,7 +54,9 @@
                                 <p class="mb-3">From: <time>{{ $mySubscription->created_at->format('d M Y') }}</time></p>
                                 <p class="mb-3">
                                     Price:
-                                    <var class="profile-main-item__price">{{ 'IDR ' . $mySubscription->price }}</var>
+                                    <var class="profile-main-item__price money-formatting">
+                                        {{ $mySubscription->price }}
+                                    </var>
                                 </p>
                                 <p class="mb-3">Status : {{ $mySubscription->payment_status }}</p>
                                 <a href="javascript:void(0);" class="profile-main-item__link btn-modal"
@@ -78,7 +80,9 @@
                                     <p class="mb-3">From: <time>{{ $order->subscription->created_at->format('d M Y') }}</time></p>
                                     <p class="mb-3">
                                         Price:
-                                        <var class="profile-main-item__price">{{ 'IDR ' . $order->subscription->price }}</var>
+                                        <var class="profile-main-item__price money-formatting">
+                                            {{ 'IDR ' . $order->subscription->price }}
+                                        </var>
                                     </p>
                                     <p class="mb-3">Status : {{ $order->payment_status }}</p>
                                     @if ($order->payment_status == "unpaid")
