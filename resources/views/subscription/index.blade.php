@@ -40,7 +40,7 @@
                     </select>
                 </form>
                 <div class="profile-main__content">
-                    @isset ($mySubscription)
+                    @if (!empty($mySubscription))
                         <article class="profile-main-item">
                             <img src="{{ Storage::url($mySubscription->img) }}" class="profile-main__order-img"
                                  alt="order image">
@@ -121,7 +121,7 @@
                                 </a>
                             </p>
                         </article>
-                    @endisset
+                    @endif
                 </div>
             </section>
         </div>
