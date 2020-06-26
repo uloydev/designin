@@ -69,48 +69,6 @@
                                 </a>
                             </div>
                         </article>
-                        @forelse ($subscriptionHistory as $order)
-                            <article class="profile-main-item">
-                                <img src="{{ Storage::url($order->subscription->img) }}" class="profile-main__order-img"
-                                    alt="order image">
-                                <div class="profile-main__order-detail ml-lg-auto">
-                                    <p class="mb-3">
-                                        Subscription name: <span>{{ Str::words($order->subscription->title, 5) }}</span>
-                                    </p>
-                                    <p class="mb-3">From: <time>{{ $order->subscription->created_at->format('d M Y') }}</time></p>
-                                    <p class="mb-3">
-                                        Price:
-                                        <var class="profile-main-item__price money-formatting">
-                                            {{ $order->subscription->price }}
-                                        </var>
-                                    </p>
-                                    <p class="mb-3">Status : {{ $order->payment_status }}</p>
-                                    @if ($order->payment_status == "unpaid")
-                                        <div class="mb-3">
-                                            <a href="javascript:void(0);" class="btn btn-success d-flex" id="pay-button"
-                                            data-payment-token="{{$order->payment_token ?? ''}}">
-                                                Pay now
-                                            </a>
-                                        </div>
-                                    @endif
-                                    <a href="javascript:void(0);" class="profile-main-item__link btn-modal"
-                                       data-target="#modal-subscription-detail"
-                                       data-subscription-title="{{ $mySubscription->title }}"
-                                       data-subscription-detail="{{ $mySubscription->desc }}"
-                                       data-subscription-img="{{ Storage::url($mySubscription->img) }}"
-                                       data-subscription-duration="{{ $mySubscription->duration }}">
-                                        See details
-                                    </a>
-                                </div>
-                            </article>
-                        @empty
-                            <article class="profile-main-item flex-column align-items-center justify-content-start col-12">
-                                <p class="mt-4">
-                                    You don't have subscription history.
-                                </p>
-                            </article>
-                        @endforelse
-                        {{ $subscriptionHistory->links() }}
                     @else
                         <article class="profile-main-item flex-column align-items-center justify-content-start col-12">
                             <img src="{{ asset('img/zero-state.svg') }}" alt="No subscribtion found">
@@ -122,6 +80,47 @@
                             </p>
                         </article>
                     @endif
+                    @forelse ($subscriptionHistory as $order)
+                        <article class="profile-main-item">
+                            <img src="{{ Storage::url($order->subscription->img) }}" class="profile-main__order-img" alt="order image">
+                            <div class="profile-main__order-detail ml-lg-auto">
+                                <p class="mb-3">
+                                    Subscription name: <span>{{ Str::words($order->subscription->title, 5) }}</span>
+                                </p>
+                                <p class="mb-3">From: <time>{{ $order->subscription->created_at->format('d M Y') }}</time></p>
+                                <p class="mb-3">
+                                    Price:
+                                    <var class="profile-main-item__price money-formatting">
+                                        {{ $order->subscription->price }}
+                                    </var>
+                                </p>
+                                <p class="mb-3">Status : {{ $order->payment_status }}</p>
+                                @if ($order->payment_status == "unpaid")
+                                    <div class="mb-3">
+                                        <a href="javascript:void(0);" class="btn btn-success d-flex" id="pay-button"
+                                        data-payment-token="{{$order->payment_token ?? ''}}">
+                                            Pay now
+                                        </a>
+                                    </div>
+                                @endif
+                                <a href="javascript:void(0);" class="profile-main-item__link btn-modal"
+                                    data-target="#modal-subscription-detail"
+                                    data-subscription-title="{{ $order->subscription->title }}"
+                                    data-subscription-detail="{{ $order->subscription->desc }}"
+                                    data-subscription-img="{{ Storage::url($order->subscription->img) }}"
+                                    data-subscription-duration="{{ $order->subscription->duration }}">
+                                    See details
+                                </a>
+                            </div>
+                        </article>
+                    @empty
+                        <article class="profile-main-item flex-column align-items-center justify-content-start col-12">
+                            <p class="mt-4">
+                                You don't have subscription history.
+                            </p>
+                        </article>
+                    @endforelse
+                    {{ $subscriptionHistory->links() }}
                 </div>
             </section>
         </div>
