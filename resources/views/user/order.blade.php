@@ -95,7 +95,7 @@
                                     </div>
                                     @if (!empty($order->invoice))
                                         <div class="mb-3 d-flex flex-column flex-md-row">
-                                            <a href="javascript:void(0);" class="btn" id="pay-button"
+                                            <a href="javascript:void(0);" class="btn btn-pay"
                                             data-payment-token="{{$order->invoice->payment_token ?? ''}}">
                                                 Pay now
                                             </a>

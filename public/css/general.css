@@ -191,6 +191,19 @@ progress::-moz-progress-bar {
   max-width: 100%;
 }
 
+.btn-pay {
+    display: block;
+    width: 100%;
+    background-color: var(--primary-color) !important;
+    color: #fff;
+}
+.btn-pay:hover {
+    background-color: var(--primary-color-hover) !important;
+}
+.btn-pay:active {
+    background-color: #109e5b !important;
+}
+
 .loader {
     height: 100px;
     width: 100%;

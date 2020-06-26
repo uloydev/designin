@@ -1225,7 +1225,7 @@ $("#editPromo #edit-promo-start, #addPromo #add-promo-start").datepicker({
     minDate: new Date()
 });
 // user order dashboard page
-$('#pay-button').click(function(){
+$('.btn-pay').click(function(){
     let token = $(this).data('payment-token');
     snap.pay(token);
 });

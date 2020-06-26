@@ -2070,18 +2070,6 @@ body:not(#landingPage):not([id*='blog']) .nav__list--separate {
 #userOrderPage .profile-main__btn-chat:active {
     background-color: #236e9e !important;
 }
-#userOrderPage #pay-button {
-    display: block;
-    width: 100%;
-    background-color: var(--primary-color) !important;
-    color: #fff;
-}
-#userOrderPage #pay-button:hover {
-    background-color: var(--primary-color-hover) !important;
-}
-#userOrderPage #pay-button:active {
-    background-color: #109e5b !important;
-}
 
 .profile-aside {
     background-color: #fff;
