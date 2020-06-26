@@ -64,7 +64,8 @@
                                 @if (!$order->is_reviewed)
                                 <div class="mb-3 d-flex justify-content-between align-items-center">
                                     Review
-                                    <a href="javascript:void(0);" class="btn-success btn-modal" data-target="#modal-review">
+                                    <a href="javascript:void(0);" class="btn-success btn-modal"
+                                       data-target="#modal-review{{ $loop->index + 1 }}">
                                         Click to review
                                     </a>
                                 </div>
@@ -83,7 +84,9 @@
     </div>
 @endsection
 @push('element')
-    @isset($order)
-        @includeWhen($order->is_reviewed == false AND $order->status === 'finished', 'partials.review-job')
+    @isset($orders)
+        @foreach($orders as $order)
+            @include('partials.review-job')
+        @endforeach
     @endisset
 @endpush
