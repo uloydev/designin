@@ -39,7 +39,7 @@
                     <div class="form-group">
                         <label for="name">Price token</label>
                         <input type="number" class="form-control" id="name" name="token_package" min="0" value="0"
-                               placeholder="Price for this package if they are using token">
+                               placeholder="Price for this package if they are using token. Ex: 0" required>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
