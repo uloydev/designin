@@ -227,7 +227,7 @@ class PaymentController extends Controller
         $input = $orderId.$statusCode.$grossAmount.$serverKey;
         $signature = openssl_digest($input, 'sha512');
         if ($signature !== $notif->signature_key) {
-            return;
+	    return;
         }
         $fraud = $notif->fraud_status;
         $invoice->payment_type = $type;
