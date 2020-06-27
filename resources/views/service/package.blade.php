@@ -46,7 +46,7 @@
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                 data-duration="{{ $package->duration }}" data-target="#modal-manipulate-package"
                                 data-id="{{ $package->id }}" id="btn-edit-package"
-                                data-desc="{{ $package->description }}" data-token="{{ $service->price_token }}">
+                                data-desc="{{ $package->description }}" data-token="{{ $service->price_token ?? 0 }}">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" id="btn-delete-package"
