@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 use App\User;
 use App\SubscriptionOrder;
 
-class UsersubscriptionNotification extends Mailable
+class UserSubscriptionNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
