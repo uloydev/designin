@@ -58,7 +58,6 @@
                                         {{ $mySubscription->price }}
                                     </var>
                                 </p>
-                                <p class="mb-3">Status : {{ $mySubscription->payment_status }}</p>
                                 <a href="javascript:void(0);" class="profile-main-item__link btn-modal"
                                    data-target="#modal-subscription-detail"
                                    data-subscription-title="{{ $mySubscription->title }}"
