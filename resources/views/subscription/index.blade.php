@@ -95,7 +95,7 @@
                                     </var>
                                 </p>
                                 <p class="mb-3">Status : {{ $order->payment_status }}</p>
-                                @if ($order->payment_status == "unpaid")
+                                @if ($order->payment_status == "pending")
                                     <div class="mb-3">
                                         <a href="javascript:void(0);" class="btn d-flex btn-pay"
                                         data-payment-token="{{$order->payment_token ?? ''}}">

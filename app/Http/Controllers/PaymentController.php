@@ -136,7 +136,7 @@ class PaymentController extends Controller
             'customer_details' => $customer_details,
             'credit_card' => $credit_card_option,
         ];
-        try {
+        // try {
             $token = Midtrans::getSnapToken($transaction_data);
             $data = ['token' => $token, 'status'=>'success'];
             $invoice = new Invoice;
@@ -145,9 +145,9 @@ class PaymentController extends Controller
             $invoice->save();
             $order->invoice_id = $invoice->id;
             $order->save();
-        } catch (\Throwable $th) {
-            $data = ['status' => 'error'];
-        }
+    //     } catch (\Throwable $th) {
+    //         $data = ['status' => 'error'];
+    //     }
         return $data;
     }
 
@@ -159,7 +159,7 @@ class PaymentController extends Controller
         $order->user_id = $user->id;
         $order->subscription_id = $sub->id;
         $order->quantity = $request->quantity;
-        $order->payment_status = "unpaid";
+        $order->payment_status = "pending";
         $order->save();
         $transaction_details = [
             'order_id' => 'sub-'.$order->id.'-'.time(),
@@ -214,7 +214,7 @@ class PaymentController extends Controller
         $order_type = $arr[0];
         if ($order_type == 'order') {
             $orderId = $arr[1];
-            $invoice = Invoice::where('order_id', $orderId)->get();
+            $invoice = Invoice::where('order_id', $orderId)->first();
         }elseif ($order_type == 'sub') {
             $orderId = $arr[1];
             $invoice = SubscriptionOrder::findOrFail($orderId);
@@ -222,7 +222,7 @@ class PaymentController extends Controller
         // signature verification
         $orderId = $notif->order_id;
         $statusCode = $notif->status_code;
-        $grossAmount = $notif->gross_ammount;
+        $grossAmount = $notif->gross_amount;
         $serverKey = env('MIDTRANS_SERVER_KEY');
         $input = $orderId.$statusCode.$grossAmount.$serverKey;
         $signature = openssl_digest($input, 'sha512');
@@ -231,6 +231,7 @@ class PaymentController extends Controller
         }
         $fraud = $notif->fraud_status;
         $invoice->payment_type = $type;
+        $invoice->payment_status_code = $notif->status_code;
         if ($transaction == 'capture') {
             // For credit card transaction, we need to check whether transaction is challenge by FDS or not
             if ($type == 'credit_card') {
@@ -270,6 +271,7 @@ class PaymentController extends Controller
             }
         } elseif ($transaction == 'settlement') {
             // TODO set payment status in merchant's database to 'Settlement'
+            $invoice->setSuccess();
             if ($order_type == 'order') {
                 $order = $invoice->order;
                 if (!empty(json_decode($order->extras))) {
