@@ -14,3 +14,4 @@ yarn-error.log
 */.idea
 temp*.json
 /public/storage
+_ide_helper.php
