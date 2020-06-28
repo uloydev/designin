@@ -90,7 +90,7 @@
                                 <p class="mb-3">
                                     Price:
                                     <var class="profile-main-item__price money-formatting">
-                                        {{ $order->subscription->price }}
+                                        {{ $order->quantity * $order->subscription->price }}
                                     </var>
                                 </p>
                                 <p class="mb-3">Status : {{ $order->payment_status }}</p>
