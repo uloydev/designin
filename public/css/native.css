@@ -2657,7 +2657,7 @@ body[id*='blog'] .search-service__btn {
     align-items: center;
     left: 0;
     width: 100%;
-    z-index: 1;
+    /*z-index: 1;*/
     transition: box-shadow 200ms;
 }
 #userChatPage .order-detail__info {
