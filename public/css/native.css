@@ -2680,7 +2680,7 @@ body[id*='blog'] .search-service__btn {
 }
 #userChatPage .order-detail.scrolled {
     padding-top: 1rem;
-    position: fixed;
+    /*position: sticky;*/
     box-shadow: 0 2px 6px 3px rgba(74, 74, 74, 0.2);
 }
 #userChatPage .order-detail__img {
