@@ -320,20 +320,6 @@ $("#modal-single-order form").submit(function (e) {
 
 if (window.location.href.indexOf('/chat') > -1) {
     $("footer").remove();
-    $(window).scroll(function () {
-        if ($(this).width() <= 993) {
-            if ($(document).scrollTop() >= $("nav").outerHeight(true)) {
-                $("#userChatPage .order-detail").addClass('scrolled');
-                $("#userChatPage .order-detail__img").addClass('order-detail__img--hide');
-                $("#userChatPage .order-detail__back-btn").addClass('d-none');
-            }
-            else {
-                $("#userChatPage .order-detail").removeClass('scrolled');
-                $("#userChatPage .order-detail__img").removeClass('order-detail__img--hide');
-                $("#userChatPage .order-detail__back-btn").removeClass('d-none');
-            }
-        }
-    });
 
     $("#userChatPage .attachment__input").change(function () {
         if ($(this).val().length > 0) {

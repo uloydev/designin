@@ -2678,21 +2678,8 @@ body[id*='blog'] .search-service__btn {
 #userChatPage .order-detail__back-btn:active {
     background-color: #2675a7 !important;
 }
-#userChatPage .order-detail.scrolled {
-    padding-top: 1rem;
-    /*position: sticky;*/
-    box-shadow: 0 2px 6px 3px rgba(74, 74, 74, 0.2);
-}
 #userChatPage .order-detail__img {
-    transition: all 150ms;
     height: 200px;
-}
-#userChatPage .order-detail__img--hide {
-    visibility: hidden;
-    opacity: 0;
-    height: 0;
-    width: 0;
-    overflow: hidden;
 }
 #userChatPage .order-chat__avatar {
     border-radius: 50%;
@@ -3031,13 +3018,6 @@ footer .row {
     #userChatPage .order-detail__info {
         width: 50%;
         margin-bottom: 1.5rem;
-    }
-    #userChatPage .order-detail.scrolled {
-        height: 100px;
-    }
-    #userChatPage .order-detail.scrolled .order-detail__info {
-        width: 100%;
-        flex-direction: row;
     }
     #userChatPage .order-detail__capt {
         flex-grow: 1;
