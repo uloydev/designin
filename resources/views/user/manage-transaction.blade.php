@@ -61,7 +61,7 @@
                                         {{ $order->status }}
                                     </span>
                                 </div>
-                                @if ($order->is_reviewed == false and $order->status != 'unpaid' and $order->status != 'process' and $order->status != 'canceled'))
+                                @if ($order->is_reviewed == false and $order->status != 'unpaid' and $order->status != 'process' and $order->status != 'canceled')
                                 <div class="mb-3 d-flex justify-content-between align-items-center">
                                     Review
                                     <a href="javascript:void(0);" class="btn-success btn-modal"

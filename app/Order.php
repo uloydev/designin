@@ -9,7 +9,7 @@ class Order extends Model
 {
     protected $table = 'order';
     protected $fillable = [
-        'user_id', 'agent_id', 'package_id', 'started_at', 'status', 'progress', 'request', 'duration', 'extras',
+        'user_id', 'agent_id', 'package_id', 'started_at', 'status', 'progress', 'request', 'extras',
         'deadline', 'is_reviewed', 'budget', 'promo_id', 'attachment', 'quantity', 'max_revision', 'invoice_id'
     ];
     protected $casts = ['start_at' => 'datetime', 'deadline' => 'datetime'];

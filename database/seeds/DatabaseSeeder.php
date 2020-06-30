@@ -34,7 +34,8 @@ class DatabaseSeeder extends Seeder
           PromoSeeder::class,
           ServiceExtrasTemplateSeeder::class,
           ServiceExtrasSeeder::class,
-          TokenConversionSeeder::class
+          TokenConversionSeeder::class,
+          SubscribeDataSeeder::class
       ]);
     }
 }

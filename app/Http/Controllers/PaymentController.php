@@ -20,6 +20,7 @@ use App\Mail\UserSubscriptionNotification;
 use App\Subscription;
 use App\SubscriptionOrder;
 use App\TokenConversion;
+use App\SubscribeData;
 
 class PaymentController extends Controller
 {
@@ -34,6 +35,8 @@ class PaymentController extends Controller
         $order = new Order;
         $quantity = intval($request->quantity);
         $budget = $package->price * $quantity;
+        $userSubscriptions = $user->subscription;
+        $userToken = $userSubscriptions->sum('token');
         if (!empty($request->promo_code)) {
             $promo = Promo::where('code' , $request->promo_code)->first();
             $promo_discount = floor($budget * $promo->discount / 100);
@@ -49,11 +52,13 @@ class PaymentController extends Controller
                 $budget += ServiceExtras::findOrFail($extras_id)->price;
             }
         }
-        if (!empty($user->subscribe_at) and !empty($user->subscribe_duration)){
-            if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)) {
-                if (ceil($budget / $token_conversion->numeral) > $user->subscribe_token){
-                    $budget -= $user->subscribe_token * $token_conversion->numeral;
-                    $token_usage = $user->subscribe_token;
+        if ($user->subscription->count() > 0){
+            if (ceil($budget / $token_conversion->numeral) > $userToken){
+                $budget -= $userToken * $token_conversion->numeral;
+                $token_usage = $userToken;
+                foreach($userSubscriptions as $subscription){
+                    $subscription->token = 0;
+                    $subscription->save();
                 }
             }
         }
@@ -66,14 +71,11 @@ class PaymentController extends Controller
         $order->quantity = $quantity;
         if (isset($token_usage)) {
             $order->token_usage = $token_usage;
-            $user->subscribe_token -= $token_usage;
-            $user->save();
         }
         $order->save();
         // midtrans
         $transaction_details = [
             'order_id' => 'order-'.$order->id.'-'.time(),
-            // 'order_id' => time(), // only for testing
             'gross_amount' => $order->budget
         ];
 
@@ -91,7 +93,6 @@ class PaymentController extends Controller
                 'price' => $package->price
             ]
         ];
-
         if (!empty(json_decode($order->extras))) {
             foreach(json_decode($order->extras) as $extras_id){
                 $extras = ServiceExtras::findOrFail($extras_id);
@@ -136,7 +137,7 @@ class PaymentController extends Controller
             'customer_details' => $customer_details,
             'credit_card' => $credit_card_option,
         ];
-        // try {
+        try {
             $token = Midtrans::getSnapToken($transaction_data);
             $data = ['token' => $token, 'status'=>'success'];
             $invoice = new Invoice;
@@ -145,9 +146,9 @@ class PaymentController extends Controller
             $invoice->save();
             $order->invoice_id = $invoice->id;
             $order->save();
-    //     } catch (\Throwable $th) {
-    //         $data = ['status' => 'error'];
-    //     }
+        } catch (\Throwable $th) {
+            $data = ['status' => 'error'];
+        }
         return $data;
     }
 
@@ -163,7 +164,6 @@ class PaymentController extends Controller
         $order->save();
         $transaction_details = [
             'order_id' => 'sub-'.$order->id.'-'.time(),
-            // 'order_id' => time(), // only for testing
             'gross_amount' => $order->subscription->price * $order->quantity
         ];
 
@@ -244,12 +244,14 @@ class PaymentController extends Controller
                     $invoice->setSuccess();
                     if ($order_type == 'order') {
                         $order = $invoice->order;
+                        $order->started_at = Carbon::now();
+                        $order->deadline = Carbon::now()->addDays($order->package->duration);
                         if (!empty(json_decode($order->extras))) {
                             foreach(json_decode($order->extras) as $extras_id) {
                                 $extras = ServiceExtras::findOrFail($extras_id);
                                 if ($extras->is_template) {
                                     if ($extras->template->effect == 'duration-1') {
-                                        $order->deadline = Carbon::now()->addDays($package->duration - 1);
+                                        $order->deadline = Carbon::now()->addDays($order->package->duration - 1);
                                     }
                                 }
                             }
@@ -258,14 +260,16 @@ class PaymentController extends Controller
                         $order->save();
                         Mail::to($order->agent->email)->send(new NewOrderNotification($order));
                     }elseif ($order_type == 'sub') {
-                        $user = $invoice->user;
-                        $user->is_subscribe = true;
-                        $user->subscribe_to = $invoice->subscription_id;
-                        $user->subscribe_at = Carbon::now();
-                        $user->subscribe_duration = $invoice->subscription->duration * $invoice->quantity;
-                        $user->subscribe_token = $invoice->subscription->token * $invoice->quantity;
-                        $user->save();
-                        Mail::to($user->email)->send(new UserSubscriptionNotification($user, $invoice));
+                        $subscribeData = new SubscribeData();
+                        $subscribeData->user_id = $invoice->user->id;
+                        $subscribeData->subscription_id = $invoice->subscription_id;
+                        $subscribeData->duration = $invoice->subscription->duration * $invoice->quantity;
+                        $subscribeData->token = $invoice->subscription->token * $invoice->quantity;
+                        $subscribeData->subscribe_at = Carbon::now();
+                        $subscribeData->expired_at = $subscribeData->subscribe_at->addDays($subscribeData->duration);
+                        $subscribeData->price = $grossAmount;
+                        $subscribeData->save();
+                        Mail::to($invoice->user->email)->send(new UserSubscriptionNotification($invoice->user, $invoice));
                     }
                 }
             }
@@ -274,12 +278,14 @@ class PaymentController extends Controller
             $invoice->setSuccess();
             if ($order_type == 'order') {
                 $order = $invoice->order;
+                $order->started_at = Carbon::now();
+                $order->deadline = Carbon::now()->addDays($order->package->duration);
                 if (!empty(json_decode($order->extras))) {
                     foreach(json_decode($order->extras) as $extras_id) {
                         $extras = ServiceExtras::findOrFail($extras_id);
                         if ($extras->is_template) {
                             if ($extras->template->effect == 'duration-1') {
-                                $order->deadline = Carbon::now()->addDays($package->duration - 1);
+                                $order->deadline = Carbon::now()->addDays($order->package->duration - 1);
                             }
                         }
                     }
@@ -288,14 +294,16 @@ class PaymentController extends Controller
                 $order->save();
                 Mail::to($order->agent->email)->send(new NewOrderNotification($order));
             }elseif ($order_type == 'sub') {
-                $user = $invoice->user;
-                $user->is_subscribe = true;
-                $user->subscribe_to = $invoice->subscription_id;
-                $user->subscribe_at = Carbon::now();
-                $user->subscribe_duration = $invoice->subscription->duration * $invoice->quantity;
-                $user->subscribe_token = $invoice->subscription->token * $invoice->quantity;
-                $user->save();
-                Mail::to($user->email)->send(new UserSubscriptionNotification($user, $invoice));
+                $subscribeData = new SubscribeData();
+                $subscribeData->user_id = $invoice->user->id;
+                $subscribeData->subscription_id = $invoice->subscription_id;
+                $subscribeData->duration = $invoice->subscription->duration * $invoice->quantity;
+                $subscribeData->token = $invoice->subscription->token * $invoice->quantity;
+                $subscribeData->subscribe_at = Carbon::now();
+                $subscribeData->expired_at = $subscribeData->subscribe_at->addDays($subscribeData->duration);
+                $subscribeData->price = $grossAmount;
+                $subscribeData->save();
+                Mail::to($invoice->user->email)->send(new UserSubscriptionNotification($invoice->user, $invoice));
             }
         } elseif($transaction == 'pending'){
             // TODO set payment status in merchant's database to 'Pending'

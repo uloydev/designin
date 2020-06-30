@@ -37,7 +37,7 @@
         <p class="profile-aside__text flex-row">
             My token:
             <var class="profile-aside__info">
-                {{ Auth::user()->subscribe_token ?? 0 . ' token' }}
+                {{ Auth::user()->subscription->sum('token') ?? 0 . ' token' }}
             </var>
         </p>
         <p class="profile-aside__text flex-row">

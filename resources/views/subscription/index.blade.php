@@ -40,35 +40,35 @@
                     </select>
                 </form>
                 <div class="profile-main__content">
-                    @if (!empty($mySubscription))
+                    @forelse ($mySubscription as $data)
                         <article class="profile-main-item">
-                            <img src="{{ Storage::url($mySubscription->img) }}" class="profile-main__order-img"
+                            <img src="{{ Storage::url($data->subscription->img) }}" class="profile-main__order-img"
                                  alt="order image">
                             <div class="profile-main__order-detail ml-lg-auto">
                                 <p class="mb-3">
                                     Subscription name:
                                     <span class="subscription__title">
-                                        {{ Str::words($mySubscription->title, 5) }}
+                                        {{ Str::words($data->subscription->title, 5) }}
                                     </span>
                                 </p>
-                                <p class="mb-3">From: <time>{{ $mySubscription->created_at->format('d M Y') }}</time></p>
+                                <p class="mb-3">From: <time>{{ $data->subscribe_at->format('d M Y') }}</time></p>
                                 <p class="mb-3">
                                     Price:
                                     <var class="profile-main-item__price money-formatting">
-                                        {{ $mySubscription->price }}
+                                        {{ $data->price }}
                                     </var>
                                 </p>
                                 <a href="javascript:void(0);" class="profile-main-item__link btn-modal"
                                    data-target="#modal-subscription-detail"
-                                   data-subscription-title="{{ $mySubscription->title }}"
-                                   data-subscription-detail="{{ $mySubscription->desc }}"
-                                   data-subscription-img="{{ Storage::url($mySubscription->img) }}"
-                                   data-subscription-duration="{{ $mySubscription->duration }}">
+                                   data-subscription-title="{{ $data->subscription->title }}"
+                                   data-subscription-detail="{{ $data->subscription->desc }}"
+                                   data-subscription-img="{{ Storage::url($data->subscription->img) }}"
+                                   data-subscription-duration="{{ $data->duration }}">
                                     See details
                                 </a>
                             </div>
                         </article>
-                    @else
+                    @empty
                         <article class="profile-main-item flex-column align-items-center justify-content-start col-12">
                             <img src="{{ asset('img/zero-state.svg') }}" alt="No subscribtion found">
                             <p class="mt-4">
@@ -78,7 +78,15 @@
                                 </a>
                             </p>
                         </article>
-                    @endif
+                    @endforelse
+                </div>
+                <div class="profile-main__filter">
+                    <label for="sub-filter">
+                        <h1>Subscription Order History</h1>
+                    </label>
+                    
+                </div>
+                <div class="profile-main__content">
                     @forelse ($subscriptionHistory as $order)
                         <article class="profile-main-item">
                             <img src="{{ Storage::url($order->subscription->img) }}" class="profile-main__order-img" alt="order image">

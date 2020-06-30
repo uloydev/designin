@@ -173,9 +173,9 @@
                                 data-package-title="{{ $package->title }}">
                                     Continue (<var class="money-formatting">{{ $package->price }}</var>)
                                 </button>
-                                @if (Auth::user()->is_subscribe)
+                                @if (Auth::user()->subscription->count() > 0)
                                 <p class="mt-3 text-gray text-center">
-                                    Token you have: {{ Auth::user()->subscribe_token . ' token' ?? 0 . ' token' }}
+                                    Token you have: {{ Auth::user()->subscription->sum('token') . ' token' ?? 0 . ' token' }}
                                     <span class="text-small d-block mt-2">
                                         (1 token = IDR <var class="money-formatting">{{ $tokenConversion->numeral }}</var>)
                                     </span>

@@ -39,7 +39,6 @@ class CreateOrdersTable extends Migration
             $table->text('extras')->nullable();
             $table->unsignedInteger('quantity');
             $table->unsignedInteger('max_revision')->default(3);
-            $table->unsignedInteger('duration')->nullable();
             $table->unsignedInteger('token_usage')->nullable();
             $table->unsignedInteger('invoice_id')->nullable();
             $table->timestamps();

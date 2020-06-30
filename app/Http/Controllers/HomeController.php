@@ -154,11 +154,14 @@ class HomeController extends Controller
         $order = new Order;
         $quantity = intval($request->quantity);
         $budget = $package->price * $quantity;
+        $userSubscriptions = $user->subscription;
+        $userToken = $userSubscriptions->sum('token');
         if (!empty($request->promo_code)) {
             $promo = Promo::where('code' , $request->promo_code)->first();
             $budget -= $budget * $promo->discount / 100;
             $order->promo_id = $promo->id;
         }
+        $order->deadline = Carbon::now()->addDays($package->duration);
         if ($request->has('extras') and !empty($request->extras)) {
             $order->extras = $request->extras;
             foreach(json_decode($order->extras) as $extras_id) {
@@ -171,13 +174,23 @@ class HomeController extends Controller
                 }
             }
         }
-        if (!empty($user->subscribe_at) and !empty($user->subscribe_duration)){
-            if ($user->is_subscribe and Carbon::now() <= $user->subscribe_at->addDays($user->subscribe_duration)){
-                if ($user->subscribe_token >= ceil($budget / $token_conversion->numeral)) {
-                    $token_usage = ceil($budget / $token_conversion->numeral);
-                    $budget = 0;
-                }else{
-                    return abort(401);
+        if ($user->subscription->count() > 0){
+            if ($userToken >= ceil($budget / $token_conversion->numeral)){
+                $token_usage = ceil($budget / $token_conversion->numeral);
+                $budget = 0;
+                $token = $token_usage;
+                foreach($userSubscriptions as $subscription){
+                    if ($token >= $subscription->token) {
+                        $token -= $subscription->token;
+                        $subscription->token = 0;
+                    }else{
+                        $subscription->token -= $token;
+                        $token = 0;
+                    }
+                    $subscription->save();
+                    if ($token == 0) {
+                        break;
+                    }
                 }
             }else{
                 return abort(401);
@@ -198,8 +211,6 @@ class HomeController extends Controller
         }
         if (isset($token_usage)) {
             $order->token_usage = $token_usage;
-            $user->subscribe_token -= $token_usage;
-            $user->save();
         }
         $order->save();
         Mail::to($order->agent->email)->send(new NewOrderNotification($order));

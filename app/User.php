@@ -5,9 +5,9 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable implements MustVerifyEmail
-
 {
     use Notifiable;
 
@@ -47,7 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function subscription()
     {
-        return $this->belongsTo('App\Subscription', 'subscribe_to');
+        return $this->hasMany('App\SubscribeData')->where('expired_at', '>', Carbon::now())->orderBy('expired_at', 'ASC');
     }
 
     public function subscriptionOrder()
