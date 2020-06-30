@@ -15,7 +15,7 @@ class SubscribeDataSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 5; $i++) { 
+        for ($i=0; $i < 5; $i++) {
             $subscription = Subscription::inRandomOrder()->first();
             $data = [
                 'user_id' => User::where('role', 'user')->inRandomOrder()->first()->id,
