@@ -1,6 +1,6 @@
 (function(){
     /* change these variables as you wish */
-    const due_date = new Date('2020-07-07');
+    const due_date = new Date('2020-07-08');
     const days_deadline = 1;
     const current_date = new Date();
 
